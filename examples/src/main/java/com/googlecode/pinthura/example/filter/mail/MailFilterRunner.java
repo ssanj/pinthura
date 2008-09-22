@@ -23,20 +23,25 @@ import java.util.List;
 
 public final class MailFilterRunner {
 
-    private static final int ATTACHMENT_LIMIT = 50;
+    private static final int ATTACHMENT_LIMIT_OF_50 = 50;
+    private static final int ATTACHMENT_OF_40       = 40;
+    private static final int ATTACHMENT_OF_60       = 60;
+    private static final int ATTACHMENT_OF_100      = 100;
 
-    public static void main(String[] args) {
-        List<FilterLink<Mail,Boolean>> filters = new ArrayList<FilterLink<Mail, Boolean>>();
+    private MailFilterRunner() { }
+
+    public static void main(final String[] args) {
+        List<FilterLink<Mail, Boolean>> filters = new ArrayList<FilterLink<Mail, Boolean>>();
         MailManImpl mailMan = new MailManImpl();
         filters.add(new SpamFilter(new SpamDetectorImpl(), mailMan));
-        filters.add(new LargeAttachmentFilter(ATTACHMENT_LIMIT, mailMan));
+        filters.add(new LargeAttachmentFilter(ATTACHMENT_LIMIT_OF_50, mailMan));
         filters.add(new InboxFilter(mailMan));
 
-        FilterLink<Mail,Boolean> chainOfResp = new FilterChainImpl<Mail, Boolean>(filters);
-        
-        chainOfResp.filter(new MailImpl(100, true));//caught by the spam detector.
-        chainOfResp.filter(new MailImpl(100, false));//caught by the large attachment detector.
-        chainOfResp.filter(new MailImpl(40, false));//goes into the inbox.
-        chainOfResp.filter(new MailImpl(60, false));//caught by the large attachment detector.
+        FilterLink<Mail, Boolean> chainOfResp = new FilterChainImpl<Mail, Boolean>(filters);
+
+        chainOfResp.filter(new MailImpl(ATTACHMENT_OF_100, true)); //caught by the spam detector.
+        chainOfResp.filter(new MailImpl(ATTACHMENT_OF_100, false)); //caught by the large attachment detector.
+        chainOfResp.filter(new MailImpl(ATTACHMENT_OF_40, false)); //goes into the inbox.
+        chainOfResp.filter(new MailImpl(ATTACHMENT_OF_60, false)); //caught by the large attachment detector.
     }
 }
