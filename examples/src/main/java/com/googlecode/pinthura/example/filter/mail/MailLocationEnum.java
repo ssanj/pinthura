@@ -16,7 +16,7 @@
 package com.googlecode.pinthura.example.filter.mail;
 
 public enum MailLocationEnum implements MailLocation {
-    
+
     SPAM, INBOX, LARGE_ATTACHMENTS;
 
     public String getName() {

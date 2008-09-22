@@ -16,7 +16,7 @@
 package com.googlecode.pinthura.example.filter.mail;
 
 public final class MailManImpl implements MailMan {
-       
+
     public void moveMail(final MailLocation location) {
 
         System.out.println("moving mail to " + location.getName() + " folder");
