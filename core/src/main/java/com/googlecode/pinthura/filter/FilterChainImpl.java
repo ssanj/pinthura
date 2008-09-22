@@ -17,6 +17,13 @@ package com.googlecode.pinthura.filter;
 
 import java.util.List;
 
+/**
+ * An implementation of the (Gof) Chain of Responsibility pattern. This class handles passing the input parameter to each successor on the
+ * <code>FilterLink</code> list supplied to its constructor.
+ *
+ * If a <code>FilterLink</code> processes the input, then the result is returned.
+ * If not a MatchNotFoundException is thrown when there are no more <code>FilterLink</code>s to process the input.
+ */
 public final class FilterChainImpl<Input, Output> implements FilterLink<Input, Output> {
 
     private static final String FILTER_CHAIN = "FilterChain";

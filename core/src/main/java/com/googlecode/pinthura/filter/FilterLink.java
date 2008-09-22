@@ -16,37 +16,33 @@
 package com.googlecode.pinthura.filter;
 
 /**
- * Represents a single filter. Each <code>FilterLink</code> should accept a default value of type <R>.
- * <S> Type of input.
- * <R> Type of output.
+ * This represents a "Handler" in the Gof Chain of Responsibility pattern.
+ * This implementation of the Chain of Responsibility pattern has been modified such that the passing of the input parameter to subsequent
+ * successors when it can't be handled, is not performed by each Handler/FilterLink. It is done by the <code>FilterChainImpl</code>
  *
+ * The <code>FilterChainImpl</code> takes in a list of <code>FilterLink</code>s. The filters are mutallually exclusive. If a filter can't
+ * handle a request it throws a <code>MatchNotFoundException</code>.
+ * If it can handle the request it simply returns the value of the processing of the request.
  *
- * Eg. for a DivideByTwoLink:
+ * <Input> Type of input.
+ * <Output> Type of output.
  *
- * public class DivideByTwoLink implements FilterLink<Integer, Boolean> {
+ * Eg. FilterLink<String, Integer>
  *
- *  private final Boolean defaulValue;
- *
- *  DivideByTwoLink(Boolean defaultValue) {
- *      this.defaultValue = defaulValue;
- *  }
- *  Boolean filter(final Integer input) {
- *      return (input % 2 == 0) ? true : defaultValue;
- *  }
- * }
-
+ * @see FilterChainImpl
  */
 public interface FilterLink<Input, Output> {
 
     /**
-     * Filters an input. This method should can be called multiple times. Therefore it's state should be handled accordingly.
-     * @param input The input to filter.
-     * @return The output of filtering if successful.
-     * @throws MatchNotFoundException If a match is not found.
-     * <S> Type of input.
-     * <R> Type of output.
+     * Either processes an input and returns its value or throws a MatchNotFoundException to indicate that another filter should handle it.
+     * @param input The input parameter.
+     * @return The result of processing the input paramater.
+     * @throws MatchNotFoundException If the input parameter can't be handled by this filter.
      */
     Output filter(final Input input) throws MatchNotFoundException;
 
+    /**
+     * @return The name of this filter.
+     */
     String getFilterName();
 }
