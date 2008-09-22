@@ -27,7 +27,7 @@ public final class InboxFilter implements FilterLink<Mail, Boolean> {
     }
 
     public Boolean filter(final Mail mail) throws MatchNotFoundException {
-        mailMan.moveMail(MailLocationEnum.INBOX);        
+        mailMan.moveMail(MailLocationEnum.INBOX);
         return true;
     }
 
