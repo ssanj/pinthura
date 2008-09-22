@@ -15,6 +15,9 @@
  */
 package com.googlecode.pinthura.filter;
 
+/**
+ * Throw this exception when a <code>FilterLink</code> can't process its input.
+ */
 public final class MatchNotFoundException extends RuntimeException {
 
     public MatchNotFoundException() {
