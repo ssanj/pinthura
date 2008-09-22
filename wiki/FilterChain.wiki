@@ -1,5 +1,5 @@
 #labels FilterChain,ChainofResponsibility
-Describes the FilterChain class.
+Describes the _Filter Chain_ class.
 
 = Introduction =
 
