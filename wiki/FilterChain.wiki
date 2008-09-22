@@ -1,5 +1,5 @@
 #labels FilterChain,ChainofResponsibility
-#Gives examples on how to use the FilterChain class.
+Describes the FilterChain class.
 
 = Introduction =
 
