@@ -5,7 +5,7 @@ Describes the {{{FilterChainImpl}}} class.
 
 The {{{FilterChainImpl}}} is an implementation of the (Gof) [http://dofactory.com/Patterns/PatternChain.aspx Chain of Responsibility] (COR) pattern. 
 
-The basic premise is, that, one of many handlers, may handle a given input. At runtime each handler will be given a chance to handle the input. If it can't handle the input it passes it to the next handler in the chain until a handler is found or all handlers are exhausted.
+The basic premise is, that, one of many handlers, may handle a given input. At runtime each handler will be given a chance to handle the input. If it can't handle the input, it passes it to the next handler in the chain, until a handler is found or all handlers are exhausted.
 
 The main benefits of the COR are:
 
