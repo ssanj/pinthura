@@ -13,7 +13,7 @@ The basic premise is, that, one of many handlers, may handle a given input. At r
  # Dynamically updating the chain of handlers for a given request. (no if-else nastiness)
 
 
-= Overview =
+= How {{{FilterChainImpl}}} implements the Chain of Responsibility =
 
 The {{{FilterChainImpl}}} class and the {{{FilterLink}}} interface are used to implement the COR pattern. In this setting the _Handlers_ are called {{{FilterLinks}}}. The {{{FilterChainImpl}}} is initialized through a constructor that takes in a {{{List<FilterLink>}}}. 
 
