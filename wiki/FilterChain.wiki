@@ -43,8 +43,8 @@ try {
 
 This example models a simple mail filtering system that filters mail based on:
 
-1. Whether it has marketing information.
-2. If it has large attachments.
+ # Whether it has marketing information.
+ # If it has large attachments.
 
 The {{{SpamFilter}}}:
 
