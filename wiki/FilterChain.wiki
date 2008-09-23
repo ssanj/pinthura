@@ -164,7 +164,7 @@ public final class MailFilterRunner {
 
     public static void main(final String[] args) {
         List<FilterLink<Mail, Boolean>> filters = new ArrayList<FilterLink<Mail, Boolean>>();
-        MailManImpl mailMan = new MailManImpl();
+        MailMan mailMan = new MailManImpl();
         filters.add(new SpamFilter(new SpamDetectorImpl(), mailMan));
         filters.add(new LargeAttachmentFilter(ATTACHMENT_LIMIT_OF_50, mailMan));
         filters.add(new InboxFilter(mailMan));
