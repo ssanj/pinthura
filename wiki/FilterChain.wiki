@@ -43,7 +43,7 @@ try {
 
 This example models a simple mail filtering system that filters mail based on:
 
- # Whether it has marketing information.
+ # Whether it has marketing information. (spam)
  # If it has large attachments.
 
 The {{{SpamFilter}}}:
@@ -70,6 +70,34 @@ public final class SpamFilter implements FilterLink<Mail, Boolean> {
 
     public String getFilterName() {
         return "Spam Filter";
+    }
+}
+}}}
+
+The {{{LargeAttachmentFilter}}}:
+
+{{{
+public final class LargeAttachmentFilter implements FilterLink<Mail, Boolean> {
+
+    private final MailMan mailMan;
+    private final long attachmentLimit;
+
+    public LargeAttachmentFilter(final long attachmentLimit, final MailMan mailMan) {
+        this.mailMan = mailMan;
+        this.attachmentLimit = attachmentLimit;
+    }
+
+    public Boolean filter(final Mail mail) throws MatchNotFoundException {
+        if (mail.getAttachmentSize() > attachmentLimit) {
+            mailMan.moveMail(MailLocationEnum.LARGE_ATTACHMENTS);
+            return true;
+        }
+
+        throw new MatchNotFoundException();
+    }
+
+    public String getFilterName() {
+        return "Large Attachment Filter";
     }
 }
 }}}
