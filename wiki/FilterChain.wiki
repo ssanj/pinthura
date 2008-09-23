@@ -47,7 +47,7 @@ This example models a simple mail filtering system that filters mail based on:
  # If it has large attachments.
  # If it has neither of the above (Inbox)
 
- _Each `FilterLink` accepts a `Mail` instance as Input and returns a `Boolean` as Output._
+*Each `FilterLink` accepts a `Mail` instance as Input and returns a `Boolean` as Output.*
 
 The {{{SpamFilter}}}:
 
