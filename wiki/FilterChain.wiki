@@ -39,7 +39,7 @@ try {
 
 }}}
 
-= A Mail Example =
+= A Mail Filter Example =
 
 This example models a simple mail filtering system that filters mail based on:
 
