@@ -25,7 +25,7 @@ The {{{FilterChainImpl}}} class and the {{{FilterLink}}} interface are used to i
 
 *Guidelines for using the {{{FilterChainImpl}}} class*:
 
- # The {{{FilterChainImpl}}} class is an implementation of the {{{FilterLink}}} interface and may throw a {{{MatchNotFoundException}}} if none of the supplied {{{FilterLink}}}s can handle the input. In such a situation it catch the {{{MatchNotFoundException}}} and rethrow a more specific exception.
+ # The {{{FilterChainImpl}}} class is an implementation of the {{{FilterLink}}} interface and may throw a {{{MatchNotFoundException}}} if none of the supplied {{{FilterLink}}}s can handle the input. In such a situation, catching the {{{MatchNotFoundException}}} and rethrowing a more specific exception is better:
 
 Eg.
 
