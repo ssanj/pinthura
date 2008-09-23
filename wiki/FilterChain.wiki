@@ -3,7 +3,9 @@
 
 = Introduction =
 
-Add your content here.
+The FilterChain is an implementation of the (Gof) Chain of Responsibility (COR) pattern. The basic premise is that one of many handles may handle a given input. Each handler will be given a chance to handle the input. If it can't handle the input it passes it to the next handler in the chain.
+
+The {{{FilterChainImpl}} class and the {{{FilterLink}}} interface are used to implement the COR pattern. In this setting the _Handlers_ are called {{{FilterLinks}}}. Typically a {{{FilterChainImpl}}} constructor takes in a {{{List}}} of {{{FilterLinks}}} each accepting the same type Input and returning the same type of Output. Each {{{FilterLink}}} implementation either handles the input or throws {{{MatchNotFoundException}}} to indicate that it can't handle the request.
 
 
 = Details =
