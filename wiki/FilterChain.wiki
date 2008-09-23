@@ -1,5 +1,5 @@
-#labels FilterChain,ChainofResponsibility
-{{{Describes the FilterChain class.}}}
+#labels FilterChainImpl,ChainofResponsibility
+Describes the {{{FilterChainImpl}}} class.
 
 = Introduction =
 
