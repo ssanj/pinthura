@@ -9,8 +9,6 @@ The basic premise is, that, one of many handlers, may handle a given input. At r
 
 = Why use the Chain of Responsibility? =
 
-The main benefits of the COR are:
-
  # Decouples the sender of a request from the object that handles the request.
  # Dynamically updating the chain of handlers for a given request. (no if-else nastiness)
 
