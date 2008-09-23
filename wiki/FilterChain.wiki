@@ -126,6 +126,29 @@ public final class InboxFilter implements FilterLink<Mail, Boolean> {
 }
 }}}
 
+The `MailImpl`:
+
+{{{
+public final class MailImpl implements Mail {
+
+    private final long attachmentSize;
+    private final boolean sellingSomething;
+
+    public MailImpl(final long attachmentSize, final boolean sellingSomething) {
+        this.attachmentSize = attachmentSize;
+        this.sellingSomething = sellingSomething;
+    }
+
+    public long getAttachmentSize() {
+        return attachmentSize;
+    }
+
+    public boolean isSellingSomething() {
+        return sellingSomething;
+    }
+}
+}}}
+
 The `MailFilterRunner`:
 
 {{{
