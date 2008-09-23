@@ -3,7 +3,7 @@ Describes the {{{FilterChainImpl}}} class.
 
 = Introduction =
 
-The {{{FilterChainImpl}}} is an implementation of the (Gof) [http://dofactory.com/Patterns/PatternChain.aspx Chain of Responsibility] (COR) pattern. 
+The {{{FilterChainImpl}}} is an implementation of the (Gof) [http://dofactory.com/Patterns/PatternChain.aspx Chain of Responsibility] pattern. 
 
 The basic premise is, that, one of many handlers, may handle a given input. At runtime each handler will be given a chance to handle the input. If it can't handle the input, it passes it to the next handler in the chain, until a handler is found or all handlers are exhausted.
 
@@ -19,7 +19,7 @@ The {{{FilterChainImpl}}} class and the {{{FilterLink}}} interface are used to i
 
 *Guidelines for implementing the {{{FilterLink}}} interface*:
  # Each implementation in the List of {{{FilterLink}}}s have to accept the same input and same output types.
- # If the {{{FilterLink}}} can handle the input, then it must return the result. 
+ # If the {{{FilterLink}}} can handle the input, it must return the result. 
  # A {{{FilterLink}}} must throw a {{{MatchNotFoundException}}} to indicate it can't handle the request.
  # Each {{{FilterLink}}} will be called multiple times. The state of the {{{FilterLink}}} should remain constant between calls.
 
