@@ -20,7 +20,7 @@ The {{{FilterChainImpl}}} class and the {{{FilterLink}}} interface are used to i
 *Guidelines for implementing the {{{FilterLink}}} interface*:
  # Each implementation in the List of {{{FilterLink}}}s have to accept the same input and same output types.
  # If the {{{FilterLink}}} can handle the input, it must return the result. 
- # A {{{FilterLink}}} must throw a {{{MatchNotFoundException}}} to indicate it can't handle the request.
+ # A {{{FilterLink}}} must throw a {{{MatchNotFoundException}}} to indicate it can't handle the input.
  # Each {{{FilterLink}}} will be called multiple times. The state of the {{{FilterLink}}} should remain constant between calls.
 
 *Guidelines for using the {{{FilterChainImpl}}} class*:
