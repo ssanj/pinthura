@@ -46,6 +46,8 @@ This example models a simple mail filtering system that filters mail based on:
  # Whether it has marketing information. (spam)
  # If it has large attachments.
 
+ All other mail goes into the Inbox.
+
 The {{{SpamFilter}}}:
 
 {{{
@@ -98,6 +100,28 @@ public final class LargeAttachmentFilter implements FilterLink<Mail, Boolean> {
 
     public String getFilterName() {
         return "Large Attachment Filter";
+    }
+}
+}}}
+
+The `InboxFilter`:
+
+{{{
+public final class InboxFilter implements FilterLink<Mail, Boolean> {
+
+    private final MailMan mailMan;
+
+    public InboxFilter(final MailMan mailMan) {
+        this.mailMan = mailMan;
+    }
+
+    public Boolean filter(final Mail mail) throws MatchNotFoundException {
+        mailMan.moveMail(MailLocationEnum.INBOX);
+        return true;
+    }
+
+    public String getFilterName() {
+        return "Inbox Filter";
     }
 }
 }}}
