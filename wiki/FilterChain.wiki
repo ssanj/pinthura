@@ -7,6 +7,8 @@ The {{{FilterChainImpl}}} is an implementation of the (Gof) [http://dofactory.co
 
 The basic premise is, that, one of many handlers, may handle a given input. At runtime each handler will be given a chance to handle the input. If it can't handle the input, it passes it to the next handler in the chain, until a handler is found or all handlers are exhausted.
 
+= Why use the Chain of Responsibility? =
+
 The main benefits of the COR are:
 
  # Decouples the sender of a request from the object that handles the request.
