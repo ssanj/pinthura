@@ -38,3 +38,38 @@ try {
 }
 
 }}}
+
+= A Mail Example =
+
+This example models a simple mail filtering system that filters mail based on:
+
+1. Whether it has marketing information.
+2. If it has large attachments.
+
+The {{{SpamFilter}}}:
+
+{{{
+public final class SpamFilter implements FilterLink<Mail, Boolean> {
+
+    private final SpamDetector spamDetector;
+    private final MailMan mailMan;
+
+    public SpamFilter(final SpamDetector spamDetector, final MailMan mailMan) {
+        this.spamDetector = spamDetector;
+        this.mailMan = mailMan;
+    }
+
+    public Boolean filter(final Mail mail) throws MatchNotFoundException {
+        if (spamDetector.isSpam(mail)) {
+            mailMan.moveMail(MailLocationEnum.SPAM);
+            return true;
+        }
+
+        throw new MatchNotFoundException();
+    }
+
+    public String getFilterName() {
+        return "Spam Filter";
+    }
+}
+}}}
