@@ -14,13 +14,13 @@ The main benefits of the COR are:
 
 The {{{FilterChainImpl}}} class and the {{{FilterLink}}} interface are used to implement the COR pattern. In this setting the _Handlers_ are called {{{FilterLinks}}}. The {{{FilterChainImpl}}} is initialized through a constructor that takes in a {{{List<FilterLink>}}}. 
 
-Guidelines for implementing the {{{FilterLink}}} interface:
+*Guidelines for implementing the {{{FilterLink}}} interface*:
  # Each implementation in the List of {{{FilterLink}}}s have to accept the same input and same output types.
- # If the {{{FilterLink}}} can handle the input then return the result. 
- # Throw a {{{MatchNotFoundException}}} to indicate that the {{{FilterLink}}} can't handle the request.
- # Each {{{FilterLink}}} could be called multiple times so don't change the state of the {{{FilterLink}}} between calls.
+ # If the {{{FilterLink}}} can handle the input, then it must return the result. 
+ # A {{{FilterLink}}} must throw a {{{MatchNotFoundException}}} to indicate it can't handle the request.
+ # Each {{{FilterLink}}} will be called multiple times. The state of the {{{FilterLink}}} should remain constant between calls.
 
-Guidelines for using the {{{FilterChainImpl}}} class:
+*Guidelines for using the {{{FilterChainImpl}}} class*:
 
  # The {{{FilterChainImpl}}} class is an implementation of the {{{FilterLink}}} interface and may throw a {{{MatchNotFoundException}}} if none of the supplied {{{FilterLink}}}s can handle the input. In such a situation it catch the {{{MatchNotFoundException}}} and rethrow a more specific exception.
 
