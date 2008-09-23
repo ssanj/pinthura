@@ -15,7 +15,13 @@ The basic premise is, that, one of many handlers, may handle a given input. At r
 
 = How does {{{FilterChainImpl}}} implements the Chain of Responsibility? =
 
-The {{{FilterChainImpl}}} class and the {{{FilterLink}}} interface are used to implement the COR pattern. In this setting the _Handlers_ are called {{{FilterLinks}}}. The {{{FilterChainImpl}}} is initialized through a constructor that takes in a {{{List<FilterLink>}}}. 
+The {{{FilterChainImpl}}} class and the {{{FilterLink}}} interface are used to implement the COR pattern. 
+
+`public final class FilterChainImpl<Input, Output> implements FilterLink<Input, Output>`
+
+`public interface FilterLink<Input, Output>`
+
+In this setting the _Handlers_ are called {{{FilterLinks}}}. The {{{FilterChainImpl}}} is initialized through a constructor that takes in a {{{List<FilterLink>}}}. 
 
 *Guidelines for implementing the {{{FilterLink}}} interface*:
  # Each implementation in the List of {{{FilterLink}}}s have to accept the same input and same output types.
