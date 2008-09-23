@@ -13,7 +13,21 @@ Guidelines for implementing the {{{FilterLink}}} interface:
  # Throw a {{{MatchNotFoundException}}} to indicate that the {{{FilterLink}}} can't handle the request.
  # Each {{{FilterLink}}} could be called multiple times so don't change the state of the {{{FilterLink}}} between calls.
 
+Guidelines for using the {{{FilterChainImpl}}} class:
 
+ # The {{{FilterChainImpl}}} class is an implementation of the {{{FilterLink}}} interface and may throw a {{{MatchNotFoundException}}} if none of the supplied {{{FilterLink}}}s can handle the input. In such a situation it catch the {{{MatchNotFoundException}}} and rethrow a more specific exception.
+
+Eg.
+
+{{{
+
+try {
+  filterChain.filter(fileName);
+} catch (MatchNotFoundException e) {
+   throw new ConfigFileNotFoundException(e);
+}
+
+}}}
 
 
 = Details =
