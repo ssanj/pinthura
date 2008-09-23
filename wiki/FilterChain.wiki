@@ -3,7 +3,14 @@
 
 = Introduction =
 
-The FilterChain is an implementation of the (Gof) Chain of Responsibility (COR) pattern. The basic premise is that one of many handles may handle a given input. Each handler will be given a chance to handle the input. If it can't handle the input it passes it to the next handler in the chain.
+The FilterChain is an implementation of the (Gof) [http://dofactory.com/Patterns/PatternChain.aspx Chain of Responsibility] (COR) pattern. 
+
+The basic premise is, that one of many handlers may handle a given input. Each handler will be given a chance to handle the input. If it can't handle the input it passes it to the next handler in the chain.
+
+The main benefits of the COR are:
+
+ # Decouples the sender of a request from the object that handles the request.
+ # Allows you to dynamically update the chain of handlers for a given request.
 
 The {{{FilterChainImpl}}} class and the {{{FilterLink}}} interface are used to implement the COR pattern. In this setting the _Handlers_ are called {{{FilterLinks}}}. Typically a {{{FilterChainImpl}}} constructor takes in a {{{List}}} of {{{FilterLinks}}}. 
 
