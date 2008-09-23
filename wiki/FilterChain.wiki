@@ -12,9 +12,8 @@ The main benefits of the COR are:
  # Decouples the sender of a request from the object that handles the request.
  # Allows you to dynamically update the chain of handlers for a given request.
 
-= Details =
 
-== Overview ==
+= Overview =
 
 The {{{FilterChainImpl}}} class and the {{{FilterLink}}} interface are used to implement the COR pattern. In this setting the _Handlers_ are called {{{FilterLinks}}}. The {{{FilterChainImpl}}} is initialized through a constructor that takes in a {{{List<FilterLink>}}}. 
 
