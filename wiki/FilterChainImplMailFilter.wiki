@@ -1,0 +1,1 @@
+#Describes the *Mail Filter* example of the FilterChainImpl.
