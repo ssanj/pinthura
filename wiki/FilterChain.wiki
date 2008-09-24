@@ -45,6 +45,12 @@ try {
 
 }}}
 
+= Examples =
+
+ * FilterChainImplMailFilter
+ * [FilterChainImplVersionFilter XML Version Filter]
+
+
 = A Mail Filter Example =
 
 This example models a simple mail filtering system that filters mail based on:
