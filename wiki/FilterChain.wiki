@@ -47,8 +47,8 @@ try {
 
 = Examples =
 
- * FilterChainImplMailFilter
- * [FilterChainImplVersionFilter XML Version Filter]
+ * [FilterChainImplMailFilter Mail Filter]
+ * [FilterChainImplXMLVersionFilter XML Version Filter]
 
 
 = A Mail Filter Example =
