@@ -1,4 +1,4 @@
-#summary Describes the Mail Filter example
+#summary Describes the Mail Filter example.
 #labels FilterChainImpl,Tutorial,ChainOfResponsibility
 
 = A Mail Filter Example =
