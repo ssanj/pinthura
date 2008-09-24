@@ -120,7 +120,7 @@ public final class MailFilterRunner {
 }
 }}}
 
-The output is:
+The output of `MailFilterRunner` is:
 
 {{{
 moving mail to SPAM folder
