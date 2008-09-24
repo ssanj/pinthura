@@ -184,3 +184,14 @@ public final class MailFilterRunner {
     }
 }
 }}}
+
+The output is:
+
+{{{
+moving mail to SPAM folder
+moving mail to LARGE_ATTACHMENTS folder
+moving mail to INBOX folder
+moving mail to LARGE_ATTACHMENTS folder
+
+Process finished with exit code 0
+}}}
