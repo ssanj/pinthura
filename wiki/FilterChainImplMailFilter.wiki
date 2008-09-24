@@ -1,4 +1,6 @@
+#summary Describes the Mail Filter example
 #labels FilterChainImpl,Tutorial,ChainOfResponsibility
+
 = A Mail Filter Example =
 
 This example models a simple mail filtering system that filters mail based on:
