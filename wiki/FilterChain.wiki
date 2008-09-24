@@ -1,4 +1,4 @@
-#summary Describes the {{{FilterChainImpl}}} class.
+#summary Describes the FilterChainImpl class.
 #labels FilterChainImpl,ChainofResponsibility
 
 = Introduction =
