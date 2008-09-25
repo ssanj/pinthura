@@ -1,5 +1,5 @@
 #summary Describes the FilterChainImpl class.
-#labels FilterChainImpl,ChainofResponsibility
+#labels FilterChainImpl,ChainofResponsibility,StartingPoint
 
 = Introduction =
 
