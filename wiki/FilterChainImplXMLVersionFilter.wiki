@@ -4,7 +4,7 @@
 
 This example demonstrates how different versions of an XML message are transformed into the same business object. Currently versions 1 & 2 are supported. All other versions are not supported.
 
-*Each `FilterLink` accepts a `XMLInformation` instance as Input and returns a `BusinessInformationObject` as Output.
+*Each `FilterLink` accepts an `XMLInformation` instance as Input and returns a `BusinessInformationObject` as Output.
 
 The {{{VersionOneFilter}}}:
 
