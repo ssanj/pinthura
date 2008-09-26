@@ -1,5 +1,5 @@
 #summary Describes the XML Version Filter example.
-#labels FilterChainImpl,ChainofResponsibility
+#labels FilterChainImpl,ChainofResponsibility,Tutorial,Example,Phase-Implementation
 
 = An XML Version Filter Example =
 
