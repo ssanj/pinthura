@@ -1,0 +1,28 @@
+#summary Describes the XML Version Filter example.
+
+= An XML Version Filter Example =
+
+This example follows how different versions of an XML message are transformed into business objects. Currently versions 1 & 2 are supported. All other versions are not supported.
+
+*Each `FilterLink` accepts a `XMLInformation` instance as Input and returns a `BusinessInformationObject` as Output.
+
+The {{{VersionOneFilter}}}:
+
+{{{
+}}}
+
+The {{{VersionTwoFilter}}}:
+
+{{{
+}}}
+
+
+The `XMLVersionFilterRunner`:
+
+{{{
+}}}
+
+The output of `XMLVersionFilterRunner` is:
+
+{{{
+}}}
