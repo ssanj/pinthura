@@ -16,6 +16,29 @@ public interface ReportFactory {
 }
 }}}
 
+The `ReportImpl` class that is created by the `ReportFactory`:
+
+{{{
+package com.googlecode.pinthura.factory.report;
+
+public final class ReportImpl implements Report {
+
+    private final Information info;
+
+    public ReportImpl(final Information info) {
+        this.info = info;
+    }
+
+    public void generate() {
+        String groupName = info.getGroupName();
+        int memberCount = info.getMemberCount();
+        System.out.println("-----------------------------");
+        System.out.println("Group " + groupName + " has " + memberCount + " members");
+        System.out.println("-----------------------------");
+    }
+}
+}}}
+
 The `ReportGeneratorImpl` class that uses the `ReportFactory` to create a `Report`:
 
 {{{
