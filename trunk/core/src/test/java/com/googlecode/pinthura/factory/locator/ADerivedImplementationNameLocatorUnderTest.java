@@ -17,7 +17,6 @@ package com.googlecode.pinthura.factory.locator;
 
 import com.googlecode.pinthura.data.UrlBoundary;
 import com.googlecode.pinthura.factory.MethodParam;
-import com.googlecode.pinthura.factory.boundary.ClassBoundary;
 import com.googlecode.pinthura.factory.locator.deriver.ClassNameDeriver;
 import com.googlecode.pinthura.filter.MatchNotFoundException;
 import static junit.framework.Assert.fail;
@@ -30,7 +29,7 @@ import org.junit.Test;
 
 import java.util.Collection;
 
-public final class ASimpleImplementationLocatorUnderTest {
+public final class ADerivedImplementationNameLocatorUnderTest {
 
     private static final String URL_BOUNDARY_IMPL   = "com.googlecode.pinthura.data.UrlBoundaryImpl";
     private static final String COLLECTION_IMPL     = "java.util.CollectionImpl";
@@ -50,8 +49,7 @@ public final class ASimpleImplementationLocatorUnderTest {
     public void shouldLocateAnImplementationThatExists() {
         EasyMock.expect(mockMethodParam.getReturnType());
         EasyMock.expectLastCall().andReturn(UrlBoundary.class);
-        EasyMock.expect(mockClassNameDeriver.derive(EasyMock.isA(ClassBoundary.class))).
-                andReturn(URL_BOUNDARY_IMPL);
+        EasyMock.expect(mockClassNameDeriver.derive(UrlBoundary.class)).andReturn(URL_BOUNDARY_IMPL);
         mockControl.replay();
 
         assertThat(getImplementationClass().getName(), equalTo(URL_BOUNDARY_IMPL));
@@ -63,8 +61,7 @@ public final class ASimpleImplementationLocatorUnderTest {
     public void shouldThrowAMatchNotFoundExceptionForAnImplementationThatDoesNotExist() {
         EasyMock.expect(mockMethodParam.getReturnType());
         EasyMock.expectLastCall().andReturn(Collection.class);
-        EasyMock.expect(mockClassNameDeriver.derive(EasyMock.isA(ClassBoundary.class))).
-                andReturn(COLLECTION_IMPL);
+        EasyMock.expect(mockClassNameDeriver.derive(Collection.class)).andReturn(COLLECTION_IMPL);
         mockControl.replay();
 
         try {
@@ -77,10 +74,10 @@ public final class ASimpleImplementationLocatorUnderTest {
 
     @Test
     public void shouldReturnItsName() {
-        assertThat(new SimpleImplementationLocator(mockClassNameDeriver).getFilterName(), equalTo("Simple Implementation Locator"));
+        assertThat(new DerivedImplementationNameLocator(mockClassNameDeriver).getFilterName(), equalTo("Simple Implementation Locator"));
     }
 
     private Class<?> getImplementationClass() {
-        return new SimpleImplementationLocator(mockClassNameDeriver).filter(mockMethodParam);
+        return new DerivedImplementationNameLocator(mockClassNameDeriver).filter(mockMethodParam);
     }
 }

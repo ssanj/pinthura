@@ -17,17 +17,16 @@ package com.googlecode.pinthura.factory.locator;
 
 import com.googlecode.pinthura.factory.ClassLocator;
 import com.googlecode.pinthura.factory.MethodParam;
-import com.googlecode.pinthura.factory.boundary.ClassBoundaryImpl;
 import com.googlecode.pinthura.factory.locator.deriver.ClassNameDeriver;
 import com.googlecode.pinthura.filter.MatchNotFoundException;
 
-public final class SimpleImplementationLocator implements ClassLocator {
+public final class DerivedImplementationNameLocator implements ClassLocator {
 
     private static final String FILTER_NAME = "Simple Implementation Locator";
 
     private final ClassNameDeriver classNameDeriver;
 
-    public SimpleImplementationLocator(final ClassNameDeriver classNameDeriver) {
+    public DerivedImplementationNameLocator(final ClassNameDeriver classNameDeriver) {
         this.classNameDeriver = classNameDeriver;
     }
 
@@ -41,14 +40,13 @@ public final class SimpleImplementationLocator implements ClassLocator {
     }
 
     @SuppressWarnings({ "unchecked" })
-    private <T> Class<T> getImplementationClassName(final Class<T> returnType)  {
-        //TODO: Does the boundary make sense here?
-        String clazz = classNameDeriver.derive(new ClassBoundaryImpl(returnType));
+    private <T> Class<T> getImplementationClassName(final Class<T> interfaceClass)  {
+        String implClass = classNameDeriver.derive(interfaceClass);
 
         try {
-            return (Class<T>) Class.forName(clazz);
+            return (Class<T>) Class.forName(implClass);
         } catch (ClassNotFoundException e) {
-            throw new MatchNotFoundException("Could not load implementation for class: " + clazz, e);
+            throw new MatchNotFoundException("Could not load implementation for class: " + implClass, e);
         }
     }
 }
