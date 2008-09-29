@@ -53,7 +53,7 @@ At the moment, the `FactoryCreatorImpl` class finds implementations in 2 ways:
  # By annotation.
  # By generating an implementation class name derived from the interface name.
 
-The above default strategies are initialized in the the `InvocationFactoryImpl`.
+The above default strategies are initialized in the the `InvocationFactoryImpl`
 class:
 {{{
 public final class InvocationFactoryImpl implements InvocationFactory {
