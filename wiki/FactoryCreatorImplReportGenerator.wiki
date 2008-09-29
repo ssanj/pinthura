@@ -1,0 +1,6 @@
+#summary Describes the Report Generator example.
+#labels Phase-Implementation,FactoryCreatorImpl,Tutorial
+
+= A Report Generator Example =
+
+
