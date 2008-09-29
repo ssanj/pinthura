@@ -1,0 +1,8 @@
+#summary Describes the FactoryCreatorImpl class.
+#labels Phase-Implementation,FactoryCreator,StartingPoint
+
+= Introduction =
+
+= Why use the FactoryCreator? =
+
+= Examples =
