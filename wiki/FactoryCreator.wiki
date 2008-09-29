@@ -48,4 +48,4 @@ The `FactoryCreatorImpl` manages the link between a factory interface and the co
 
 = Examples =
 
- * [ReportGenerator Report Generator]
+ * [FactoryCreatorImplReportGenerator Report Generator]
