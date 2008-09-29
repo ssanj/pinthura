@@ -17,12 +17,19 @@ package com.googlecode.pinthura.factory.locator;
 
 import com.googlecode.pinthura.factory.ClassLocator;
 import com.googlecode.pinthura.factory.MethodParam;
+import com.googlecode.pinthura.factory.boundary.ClassBoundaryImpl;
+import com.googlecode.pinthura.factory.locator.deriver.ClassNameDeriver;
 import com.googlecode.pinthura.filter.MatchNotFoundException;
 
 public final class SimpleImplementationLocator implements ClassLocator {
 
-    private static final String DEFAULT_SUFFIX  = "Impl";
-    private static final String FILTER_NAME     = "Simple Implementation Locator";
+    private static final String FILTER_NAME = "Simple Implementation Locator";
+
+    private final ClassNameDeriver classNameDeriver;
+
+    public SimpleImplementationLocator(final ClassNameDeriver classNameDeriver) {
+        this.classNameDeriver = classNameDeriver;
+    }
 
     @SuppressWarnings({ "unchecked" })
     public Class<?> filter(final MethodParam methodParam) {
@@ -35,7 +42,8 @@ public final class SimpleImplementationLocator implements ClassLocator {
 
     @SuppressWarnings({ "unchecked" })
     private <T> Class<T> getImplementationClassName(final Class<T> returnType)  {
-        String clazz = new StringBuilder().append(returnType.getName()).append(DEFAULT_SUFFIX).toString();
+        //TODO: Does the boundary make sense here?
+        String clazz = classNameDeriver.derive(new ClassBoundaryImpl(returnType));
 
         try {
             return (Class<T>) Class.forName(clazz);

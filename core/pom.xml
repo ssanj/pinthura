@@ -54,6 +54,7 @@
                   <instrumentation>
                     <excludes>
                       <exclude>**/*UnderTest.class</exclude>
+                      <exclude>**/*BoundaryImpl.class</exclude>
                       <exclude>**/*Exception.class</exclude>
                       <exclude>**/*FactoryImpl.class</exclude>
                     </excludes>

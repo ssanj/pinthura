@@ -22,6 +22,7 @@ import com.googlecode.pinthura.factory.MethodParam;
 import com.googlecode.pinthura.factory.locator.AnnotationLocatorImpl;
 import com.googlecode.pinthura.factory.locator.MethodParamBuilder;
 import com.googlecode.pinthura.factory.locator.SimpleImplementationLocator;
+import com.googlecode.pinthura.factory.locator.deriver.ImplSuffixingDeriver;
 import org.junit.Test;
 
 public final class AFilterContractUnderTest {
@@ -31,7 +32,7 @@ public final class AFilterContractUnderTest {
     @Test
     public void shouldBeHonouredBySimpleImplementationLocator() throws NoSuchMethodException {
         FilterLinkContractChecker.checkContract(
-                new SimpleImplementationLocator(),
+                new SimpleImplementationLocator(new ImplSuffixingDeriver()),
                 buildValidSimpleMethodParam(),
                 buildInvalidSimpleMethodParam());
     }
