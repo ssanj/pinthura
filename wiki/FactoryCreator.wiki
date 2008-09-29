@@ -5,7 +5,7 @@
 
 When TDDing/BDDing, using of the keyword *new*, makes it hard to test interactions, as you have no control over, how an object is created, within another class. One way to get around this is by passing in a Factory interface to abstract all object creation behind methods of its interface. 
 
-For example take a Factory that abstracts the creation of UrlBoundary objects as per below:
+For example take a Factory that abstracts the creation of `UrlBoundary` objects:
 
 {{{
 package com.googlecode.pinthura.data;
