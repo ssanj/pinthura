@@ -120,7 +120,10 @@ The output of `XMLVersionFilterRunner` is:
 {{{
 Version One information
 Version Two information
-Exception in thread "main" com.googlecode.pinthura.example.filter.version.UnknownXMLVersionException: com.googlecode.pinthura.filter.MatchNotFoundException: No match found for: [XMLInformationImpl - version: Unknown Version] with filters: Version One Filter, Version Two Filter
-	at com.googlecode.pinthura.example.filter.version.XMLVersionFilterRunner.main(XMLVersionFilterRunner.java:54)
+Exception in thread "main" com.googlecode.pinthura.example.filter.version.UnknownXMLVersionException:
+com.googlecode.pinthura.filter.MatchNotFoundException:
+No match found for: [XMLInformationImpl - version: Unknown Version] with filters: Version One Filter, Version Two Filter
+	at
+com.googlecode.pinthura.example.filter.version.XMLVersionFilterRunner.main(XMLVersionFilterRunner.java:54)
 	...
 }}}
