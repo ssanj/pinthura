@@ -47,3 +47,5 @@ At some point we need a concrete implementation of the `ReportFactory` interface
 The `FactoryCreatorImpl` manages the link between a factory interface and the concrete implementation, of each of the factory methods. This means that we don't need to write a concrete implementation and tests for the factory interface.
 
 = Examples =
+
+ * [ReportGenerator Report Generator]
