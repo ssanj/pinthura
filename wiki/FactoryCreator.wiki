@@ -82,7 +82,14 @@ public final class InvocationFactoryImpl implements InvocationFactory {
 }
 }}}
 
-Calling the default constructor gives us the 2 default class location strategies. If we want to customize these strategies we can pass in a list of our own through the second constructor.
+Calling the default constructor gives us the two default class locator strategies. If we want to customize these strategies we can pass in a list of our own ClassLocator implementations, through the second constructor.
+
+The `ClassLocator` interface:
+
+{{{
+public interface ClassLocator extends FilterLink<MethodParam, Class<?>> {
+}}}
+
 = Examples =
 
  * [FactoryCreatorImplReportGenerator Report Generator]
