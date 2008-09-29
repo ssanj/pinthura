@@ -3,7 +3,7 @@
 
 = A Report Generator Example =
 
-This (somewhat contrived) example demonstrates how to use the `FactoryCreatorImpl` class to dynamically generate and instance of the `ReportFactory` interface.
+This (somewhat contrived) example demonstrates how to use the `FactoryCreatorImpl` class to dynamically generate an instance of the `Report` interface defined on the `ReportFactory` interface.
 
 The `ReportFactory` interface:
 
