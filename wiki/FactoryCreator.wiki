@@ -7,7 +7,7 @@ When TDDing/BDDing using of the keywords "new" makes it hard to test interaction
 
 At some point you will need a concrete implementation of the Factory interface. The class that implements this interface may be simple but can be hard to test if it interacts directly with concrete classes. Thus in many instances these Factory implementations are not tested or have rudimentary tests that don't warrant a test at all.
 
-= Why do I need th FactoryCreator? =
+= Why do I need the FactoryCreator? =
 
 The FactoryCreator manages the link between a Factory interface and the real implementation of each of the factory methods on that interface. This means that you don't have to write a concrete implementation of the Factory interface or its test case, thereby allowing you to concentrate on other more pressing matters!
 
