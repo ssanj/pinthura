@@ -70,8 +70,8 @@ public interface ReportFactory {
 }}}
 
 {{{
-        FactoryCreator factoryCreator = new FactoryCreatorImpl(new InvocationFactoryImpl());
-        ReportFactory reportFactory = factoryCreator.create(ReportFactory.class);
+    FactoryCreator factoryCreator = new FactoryCreatorImpl(new InvocationFactoryImpl());
+    ReportFactory reportFactory = factoryCreator.create(ReportFactory.class);
 }}}
 
 Using the derived implementation name strategy, the implementation located for the `ReportFactory`'s create method is `ReportImpl`. This is done by simply appending an 'Impl' to the end of the return type for the create method on the ReportFactory interface. (`com.googlecode.pinthura.factory.report.Report`+'Impl' -> `com.googlecode.pinthura.factory.report.ReportImpl`
