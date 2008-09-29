@@ -48,10 +48,17 @@ The `FactoryCreatorImpl` manages the link between a factory interface and the co
 
 = How does FactoryCreator locate the Correct Implementations? =
 
-At the moment, the `FactoryCreatorImpl` class finds implementations in 2 ways:
+At the moment, the `FactoryCreatorImpl` class finds implementations using two Locator strategies:
 
  # By annotation.
  # By generating an implementation class name derived from the interface name.
+
+== How do I use the Annotation strategy? ==
+
+
+== How do I use the Derived Implementation Name strategy? ==
+
+== Where can I update the Default Locator Strategies? ==
 
 The above default strategies are initialized in the the `InvocationFactoryImpl`
 class:
