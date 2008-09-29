@@ -46,6 +46,43 @@ At some point we need a concrete implementation of the `ReportFactory` interface
 
 The `FactoryCreatorImpl` manages the link between a factory interface and the concrete implementation, of each of the factory methods. This means that we don't need to write a concrete implementation and tests for the factory interface.
 
+= How does FactoryCreator locate the Correct Implementations? =
+
+At the moment, the `FactoryCreatorImpl` class finds implementations in 2 ways:
+
+ # By annotation.
+ # By generating an implementation class name from the interface name.
+
+The above default strategies are initialized in the the `InvocationFactoryImpl`.
+class:
+{{{
+public final class InvocationFactoryImpl implements InvocationFactory {
+
+    private final List<ClassLocator> locators;
+    private final MethodParamFactory factory;
+
+    public InvocationFactoryImpl() {
+        factory = new MethodParamFactoryImpl();
+        locators = createDefaultLocators();
+    }
+
+    public InvocationFactoryImpl(final List<ClassLocator> locators) {
+        factory = new MethodParamFactoryImpl();
+        this.locators = locators;
+    }
+
+    ...
+
+    private List<ClassLocator> createDefaultLocators() {
+        List<ClassLocator> filters = new ArrayList<ClassLocator>();
+        filters.add(new AnnotationLocatorImpl(new AnnotationFinderImpl()));
+        filters.add(new DerivedImplementationNameLocator(new ImplSuffixingDeriver()));
+        return filters;
+    }
+}
+}}}
+
+Calling the default constructor gives us the 2 default class location strategies. If we want to customize these strategies we can pass in a list of our own through the second constructor.
 = Examples =
 
  * [FactoryCreatorImplReportGenerator Report Generator]
