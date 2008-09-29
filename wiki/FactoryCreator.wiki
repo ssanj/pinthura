@@ -38,12 +38,12 @@ public final class ReportGeneratorImpl implements ReportGenerator {
 }}}
 
 
-When driving out the ReportGeneratorImpl class, we can quite easily mock out the `ReportFactory` and perform behaviour-based testing via mocks. See [http://www.easymock.org/ EasyMock] [http://www.jmock.org/ jMock]
+When driving out the `ReportGeneratorImpl` class, we can quite easily mock out the `ReportFactory` and perform behaviour-based testing via mocks. See [http://www.easymock.org/ EasyMock], [http://www.jmock.org/ jMock]
 
-At some point you will need a concrete implementation of the Factory interface. The class that implements this interface may be simple but can be hard to test if it interacts directly with concrete classes. Thus in many instances these Factory implementations are not tested or have rudimentary tests that don't warrant a test at all.
+At some point we need a concrete implementation of the `ReportFactory` interface. The class that implements this interface may be simple but can be hard to test if it interacts directly with concrete classes. Thus in many instances these Factory implementations are not tested or have rudimentary tests that simply create a new instance of an object.
 
 = Why do I need the FactoryCreator? =
 
-The FactoryCreator manages the link between a Factory interface and the real implementation of each of the factory methods on its interface. This means that you don't have to write a concrete implementation of the Factory interface or its test case.
+The `FactoryCreatorImpl` manages the link between a factory interface and the concrete implementation, of each of the factory methods. This means that we don't need to write a concrete implementation and tests for the factory interface.
 
 = Examples =
