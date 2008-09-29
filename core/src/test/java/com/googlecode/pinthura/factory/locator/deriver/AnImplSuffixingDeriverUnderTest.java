@@ -15,9 +15,8 @@
  */
 package com.googlecode.pinthura.factory.locator.deriver;
 
-import com.googlecode.pinthura.factory.boundary.ClassBoundary;
-import org.easymock.EasyMock;
-import org.easymock.IMocksControl;
+import com.googlecode.pinthura.data.Square;
+import com.googlecode.pinthura.data.UrlBoundary;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertThat;
 import org.junit.Before;
@@ -25,33 +24,25 @@ import org.junit.Test;
 
 public final class AnImplSuffixingDeriverUnderTest {
 
-    private final IMocksControl mockControl = EasyMock.createControl();
-
     private ClassNameDeriver locator;
-    private ClassBoundary mockClassBoundary;
 
     @Before
     public void setup() {
         locator = new ImplSuffixingDeriver();
-        mockClassBoundary = mockControl.createMock(ClassBoundary.class);
     }
 
     @Test
     public void shouldReturnAnInterfaceNameSuffixedWithAnImpl() {
-        expectImplementation("com.googlecode.pinthura.data.UrlBoundary.Blah", "com.googlecode.pinthura.data.UrlBoundary.BlahImpl");
+        expectImplementation(UrlBoundary.class, "com.googlecode.pinthura.data.UrlBoundaryImpl");
     }
 
     @Test
     public void shouldReturnAnotherInfaceNameSuffixedWithAnImpl() {
-        expectImplementation("java.lang.Comparable", "java.lang.ComparableImpl");
+        expectImplementation(Square.class, "com.googlecode.pinthura.data.SquareImpl");
     }
 
-    private void expectImplementation(final String interfaceClass, final String implementationClass) {
-        EasyMock.expect(mockClassBoundary.getName()).andReturn(interfaceClass);
-        mockControl.replay();
+    private void expectImplementation(final Class<?> interfaceClass, final String implementationClass) {
+        assertThat(locator.derive(interfaceClass), equalTo(implementationClass));
 
-        assertThat(locator.derive(mockClassBoundary), equalTo(implementationClass));
-
-        mockControl.verify();
     }
 }

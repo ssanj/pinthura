@@ -15,9 +15,7 @@
  */
 package com.googlecode.pinthura.factory.locator.deriver;
 
-import com.googlecode.pinthura.factory.boundary.ClassBoundary;
-
 public interface ClassNameDeriver {
 
-    String derive(ClassBoundary interfaceClass);
+    String derive(Class<?> interfaceClass);
 }

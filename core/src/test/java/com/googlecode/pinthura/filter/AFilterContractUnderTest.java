@@ -20,8 +20,8 @@ import com.googlecode.pinthura.data.UrlBoundaryFactory;
 import com.googlecode.pinthura.data.WidgetFactory;
 import com.googlecode.pinthura.factory.MethodParam;
 import com.googlecode.pinthura.factory.locator.AnnotationLocatorImpl;
+import com.googlecode.pinthura.factory.locator.DerivedImplementationNameLocator;
 import com.googlecode.pinthura.factory.locator.MethodParamBuilder;
-import com.googlecode.pinthura.factory.locator.SimpleImplementationLocator;
 import com.googlecode.pinthura.factory.locator.deriver.ImplSuffixingDeriver;
 import org.junit.Test;
 
@@ -32,7 +32,7 @@ public final class AFilterContractUnderTest {
     @Test
     public void shouldBeHonouredBySimpleImplementationLocator() throws NoSuchMethodException {
         FilterLinkContractChecker.checkContract(
-                new SimpleImplementationLocator(new ImplSuffixingDeriver()),
+                new DerivedImplementationNameLocator(new ImplSuffixingDeriver()),
                 buildValidSimpleMethodParam(),
                 buildInvalidSimpleMethodParam());
     }
