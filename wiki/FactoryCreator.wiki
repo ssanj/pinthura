@@ -16,7 +16,7 @@ public interface UrlBoundaryFactory {
 }
 }}}
 
-The UrlBoundaryFactory interface can be easily mocked out and creation of UrlBoundary instances can be controlled through mocking.[http://www.easymock.org/ 1] [http://www.jmock.org/ 2]
+The `UrlBoundaryFactory` interface can be easily mocked out and creation of `UrlBoundary` instances can be controlled through mocking.[http://www.easymock.org/ 1] [http://www.jmock.org/ 2]
 
 At some point you will need a concrete implementation of the Factory interface. The class that implements this interface may be simple but can be hard to test if it interacts directly with concrete classes. Thus in many instances these Factory implementations are not tested or have rudimentary tests that don't warrant a test at all.
 
