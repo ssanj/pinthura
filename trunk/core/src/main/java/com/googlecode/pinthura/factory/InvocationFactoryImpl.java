@@ -18,6 +18,7 @@ package com.googlecode.pinthura.factory;
 import com.googlecode.pinthura.annotation.AnnotationFinderImpl;
 import com.googlecode.pinthura.factory.locator.AnnotationLocatorImpl;
 import com.googlecode.pinthura.factory.locator.SimpleImplementationLocator;
+import com.googlecode.pinthura.factory.locator.deriver.ImplSuffixingDeriver;
 import com.googlecode.pinthura.filter.FilterChainImpl;
 
 import java.lang.reflect.InvocationHandler;
@@ -47,7 +48,7 @@ public final class InvocationFactoryImpl implements InvocationFactory {
     private List<ClassLocator> createDefaultLocators() {
         List<ClassLocator> filters = new ArrayList<ClassLocator>();
         filters.add(new AnnotationLocatorImpl(new AnnotationFinderImpl()));
-        filters.add(new SimpleImplementationLocator());
+        filters.add(new SimpleImplementationLocator(new ImplSuffixingDeriver()));
         return filters;
     }
 }

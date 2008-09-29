@@ -17,6 +17,8 @@ package com.googlecode.pinthura.factory.locator;
 
 import com.googlecode.pinthura.data.UrlBoundary;
 import com.googlecode.pinthura.factory.MethodParam;
+import com.googlecode.pinthura.factory.boundary.ClassBoundary;
+import com.googlecode.pinthura.factory.locator.deriver.ClassNameDeriver;
 import com.googlecode.pinthura.filter.MatchNotFoundException;
 import static junit.framework.Assert.fail;
 import org.easymock.EasyMock;
@@ -30,33 +32,43 @@ import java.util.Collection;
 
 public final class ASimpleImplementationLocatorUnderTest {
 
+    private static final String URL_BOUNDARY_IMPL   = "com.googlecode.pinthura.data.UrlBoundaryImpl";
+    private static final String COLLECTION_IMPL     = "java.util.CollectionImpl";
+
     private final IMocksControl mockControl = EasyMock.createControl();
+
     private MethodParam mockMethodParam;
+    private ClassNameDeriver mockClassNameDeriver;
 
     @Before
     public void setup() {
         mockMethodParam = mockControl.createMock(MethodParam.class);
+        mockClassNameDeriver = mockControl.createMock(ClassNameDeriver.class);
     }
 
     @Test
-    public void shouldLocateAnImplementationBySuffixingImpl() {
+    public void shouldLocateAnImplementationThatExists() {
         EasyMock.expect(mockMethodParam.getReturnType());
         EasyMock.expectLastCall().andReturn(UrlBoundary.class);
+        EasyMock.expect(mockClassNameDeriver.derive(EasyMock.isA(ClassBoundary.class))).
+                andReturn(URL_BOUNDARY_IMPL);
         mockControl.replay();
 
-        assertThat(filter().getName(), equalTo("com.googlecode.pinthura.data.UrlBoundaryImpl"));
+        assertThat(getImplementationClass().getName(), equalTo(URL_BOUNDARY_IMPL));
 
         mockControl.verify();
     }
 
     @Test
-    public void shouldThrowAMatchNotFoundExceptionIfTheClassCantBeLoaded() {
+    public void shouldThrowAMatchNotFoundExceptionForAnImplementationThatDoesNotExist() {
         EasyMock.expect(mockMethodParam.getReturnType());
         EasyMock.expectLastCall().andReturn(Collection.class);
+        EasyMock.expect(mockClassNameDeriver.derive(EasyMock.isA(ClassBoundary.class))).
+                andReturn(COLLECTION_IMPL);
         mockControl.replay();
 
         try {
-            filter();
+            getImplementationClass();
             fail();
         } catch (MatchNotFoundException e) {
             assertThat(e.getMessage(), equalTo("Could not load implementation for class: java.util.CollectionImpl"));
@@ -65,10 +77,10 @@ public final class ASimpleImplementationLocatorUnderTest {
 
     @Test
     public void shouldReturnItsName() {
-        assertThat(new SimpleImplementationLocator().getFilterName(), equalTo("Simple Implementation Locator"));
+        assertThat(new SimpleImplementationLocator(mockClassNameDeriver).getFilterName(), equalTo("Simple Implementation Locator"));
     }
 
-    private Class<?> filter() {
-        return new SimpleImplementationLocator().filter(mockMethodParam);
+    private Class<?> getImplementationClass() {
+        return new SimpleImplementationLocator(mockClassNameDeriver).filter(mockMethodParam);
     }
 }
