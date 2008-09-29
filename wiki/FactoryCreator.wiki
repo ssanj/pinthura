@@ -3,20 +3,42 @@
 
 = Introduction =
 
-When TDDing/BDDing, using of the keyword *new*, makes it hard to test interactions, as you have no control over, how an object is created, within another class. One way to get around this is by passing in a Factory interface to abstract all object creation behind methods of its interface. 
+Using the keyword *new* when driving out code, makes interactions hard to test. Instances created within a test case and those created within the code proper as different. We are forced to resort to state-based testing in these scenarios. 
 
-For example take a Factory that abstracts the creation of `UrlBoundary` objects:
+One way to get around this is by passing in a factory interface to abstract object creation. 
+
+For example take a factory interface that creates Reports:
 
 {{{
-package com.googlecode.pinthura.data;
+package com.googlecode.pinthura.factory.report;
 
-public interface UrlBoundaryFactory {
+public interface ReportFactory {
 
-    UrlBoundary createUrlBoundary(String url);
+    Report create(Information info);
 }
 }}}
 
-The `UrlBoundaryFactory` interface can be easily mocked out and creation of `UrlBoundary` instances can be controlled through mocking.[http://www.easymock.org/ 1] [http://www.jmock.org/ 2]
+A `ReportGeneratorImpl` that uses the `ReportFactory`:
+
+{{{
+package com.googlecode.pinthura.factory.report;
+
+public final class ReportGeneratorImpl implements ReportGenerator {
+
+    private final ReportFactory reportFactory;
+
+    public ReportGeneratorImpl(final ReportFactory reportFactory) {
+        this.reportFactory = reportFactory;
+    }
+
+    public void generate(final Information info) {
+        reportFactory.create(info).generate();
+    }
+}
+}}}
+
+
+When driving out the ReportGeneratorImpl class, we can quite easily mock out the `ReportFactory` and perform behaviour-based testing via mocks. See [http://www.easymock.org/ EasyMock] [http://www.jmock.org/ jMock]
 
 At some point you will need a concrete implementation of the Factory interface. The class that implements this interface may be simple but can be hard to test if it interacts directly with concrete classes. Thus in many instances these Factory implementations are not tested or have rudimentary tests that don't warrant a test at all.
 
