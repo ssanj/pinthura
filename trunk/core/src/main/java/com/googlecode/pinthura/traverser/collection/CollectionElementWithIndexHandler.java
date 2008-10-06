@@ -15,8 +15,10 @@
  */
 package com.googlecode.pinthura.traverser.collection;
 
-public interface CollectionElementHandler<Input, Output> {
+public interface CollectionElementWithIndexHandler<Input, Output> {
 
-    void handle(Input element);
+    void handle(Input element, final boolean first, final boolean last, final Long index);
     Output getResult();
 }
+
+

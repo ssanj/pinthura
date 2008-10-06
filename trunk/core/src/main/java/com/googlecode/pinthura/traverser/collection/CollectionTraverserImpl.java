@@ -25,7 +25,17 @@ public final class CollectionTraverserImpl implements CollectionTraverser {
     public <Input, Output> Output forEach(final Collection<? extends Input> collection,
                           final CollectionElementHandler< Input, Output> handler) {
 
-        Iterator<? extends Input> iterator = collection.iterator();
+        for (Input input : collection) {
+            handler.handle(input);
+        }
+
+        return handler.getResult();
+    }
+
+    public <Input, Output> Output forEach(final Collection<? extends Input> collection,
+                                          final CollectionElementWithIndexHandler<Input, Output> handler) {
+
+        final Iterator<? extends Input> iterator = collection.iterator();
 
         long index = 0;
         while (iterator.hasNext()) {
@@ -33,5 +43,5 @@ public final class CollectionTraverserImpl implements CollectionTraverser {
         }
 
         return handler.getResult();
-    }    
+    }
 }

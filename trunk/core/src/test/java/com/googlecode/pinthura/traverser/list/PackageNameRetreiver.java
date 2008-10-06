@@ -24,11 +24,11 @@ public final class PackageNameRetreiver implements CollectionElementHandler<Clas
 
     private final List<String> packageNames = new ArrayList<String>();
 
-    public void handle(final Class<?> element, final boolean isFirst, final boolean isLast, final Long index) {
+    public void handle(final Class<?> element) {
         packageNames.add(element.getPackage().getName());
     }
 
     public List<String> getResult() {
-        return packageNames;
+        return new ArrayList<String>(packageNames);
     }
 }

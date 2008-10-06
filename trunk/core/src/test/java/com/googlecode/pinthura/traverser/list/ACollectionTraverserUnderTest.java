@@ -17,6 +17,7 @@ package com.googlecode.pinthura.traverser.list;
 
 import com.googlecode.pinthura.traverser.CollectionTraverser;
 import com.googlecode.pinthura.traverser.collection.CollectionElementHandler;
+import com.googlecode.pinthura.traverser.collection.CollectionElementWithIndexHandler;
 import com.googlecode.pinthura.traverser.collection.CollectionTraverserImpl;
 import org.easymock.EasyMock;
 import org.easymock.IMocksControl;
@@ -39,28 +40,30 @@ public final class ACollectionTraverserUnderTest {
     private final IMocksControl mockControl = EasyMock.createControl();
     private CollectionTraverser traverser;
     private CollectionElementHandler mockCollectionElementHandler;
+    private CollectionElementWithIndexHandler mockCollectionElementWithIndexHandler;
 
     @Before
     public void setup() {
         traverser = new CollectionTraverserImpl();
         mockCollectionElementHandler = mockControl.createMock(CollectionElementHandler.class);
+        mockCollectionElementWithIndexHandler = mockControl.createMock(CollectionElementWithIndexHandler.class);
     }
 
     @SuppressWarnings({ "unchecked" })
     @Test
-    public void shouldCallTheHandlerForEachElementInTheCollection() {
+    public void shouldCallTheHandlerForEachElementInACollectionWithIndex() {
         //CHECKSTYLE_OFF
-        mockCollectionElementHandler.handle(5, true,  false, 0L);
-        mockCollectionElementHandler.handle(4, false, false, 1L);
-        mockCollectionElementHandler.handle(3, false, false, 2L);
-        mockCollectionElementHandler.handle(2, false, false, 3L);
-        mockCollectionElementHandler.handle(1, false, true,  4L);
-        EasyMock.expect(mockCollectionElementHandler.getResult()).andReturn(RESULT1);
+        mockCollectionElementWithIndexHandler.handle(5, true,  false, 0L);
+        mockCollectionElementWithIndexHandler.handle(4, false, false, 1L);
+        mockCollectionElementWithIndexHandler.handle(3, false, false, 2L);
+        mockCollectionElementWithIndexHandler.handle(2, false, false, 3L);
+        mockCollectionElementWithIndexHandler.handle(1, false, true,  4L);
+        EasyMock.expect(mockCollectionElementWithIndexHandler.getResult()).andReturn(RESULT1);
         mockControl.replay();
 
         List<Integer> integerList = Arrays.asList(5, 4, 3, 2, 1);
         //CHECKSTYLE_ON
-        String result = traverser.<Integer, String>forEach(integerList, mockCollectionElementHandler);
+        String result = traverser.<Integer, String>forEach(integerList, mockCollectionElementWithIndexHandler);
         assertThat(result, equalTo(RESULT1));
 
         mockControl.verify();
@@ -68,10 +71,10 @@ public final class ACollectionTraverserUnderTest {
 
     @SuppressWarnings({ "unchecked" })
     @Test
-    public void shouldCallTheHandlerForEachElementInAnotherCollection() {
-        mockCollectionElementHandler.handle("A", true,  false, 0L);
-        mockCollectionElementHandler.handle("B", false, false, 1L);
-        mockCollectionElementHandler.handle("C", false, true,  2L);
+    public void shouldCallTheHandlerForEachElementInACollection() {
+        mockCollectionElementHandler.handle("A");
+        mockCollectionElementHandler.handle("B");
+        mockCollectionElementHandler.handle("C");
         EasyMock.expect(mockCollectionElementHandler.getResult()).andReturn(RESULT_2);
         mockControl.replay();
 
