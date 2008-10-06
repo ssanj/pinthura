@@ -90,6 +90,11 @@ Number of squares: 10
 You have now created an instance of `SquareImpl` which is used in the `ShapeCanvas#calcSquaresOnCanvas` method, without using the `new` keyword or implementing the `SquareFactory` interface.
 
  * [FactoryCreatorImpl_Why_Hide_Instantiation_In_Factory Why Hide the Instantiation of Objects in a Factory?]
+
+ # Ties the implementation class to the using class
+ # Can't swap in/out implementations
+ # Can't control the instance used within a test. 
+
  * [FactoryCreatorImpl_Why_Need_FactoryCreator Why do I need the FactoryCreator?]
  * [FactoryCreatorImpl_Default_Locator_Strategies Where can I update the Default Locator Strategies?]
 
