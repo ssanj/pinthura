@@ -89,6 +89,10 @@ Number of squares: 10
 
 You have now created an instance a `SquareImpl` which is used in the `ShapeCanvas#calcSquaresOnCanvas` class, without using the `new` keyword or implementing the `SquareFactory` interface.
 
+[FactoryCreatorImpl Why Hide the Instantiation of Objects in a Factory?]
+[FactoryCreatorImpl Why do I need the FactoryCreator?]
+[FactoryCreatorImpl Where can I update the Default Locator Strategies?]
+
 = Why Hide the Instantiation of Objects in a Factory? =
 
  # Ties the implementation class to the using class
@@ -96,10 +100,6 @@ You have now created an instance a `SquareImpl` which is used in the `ShapeCanva
  # Can't control the instance used within a test.
 
 = Why do I need Factory anyways? =
-
- # Ties the using class to the implementation class
- # Can't swap in new implementations of the interface
- # Harder to test because we can't control the instance being used.
 
 Using the keyword *new* when driving out code, makes interactions hard to test. Instances created within a test case and those created within the code proper are different. We are forced to resort to state-based testing in these scenarios. 
 
