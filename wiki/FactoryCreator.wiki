@@ -105,11 +105,11 @@ public final class ShapeCanvas {
 }
 
 }}}
- # Dependencies on implementations - By directly `new`ing up an instance of a `SquareImpl`, the `ShapeCanvas` class now depends on the `SqaureImpl` class. Thus changing the the `SquareImpl` class directly affects the `ShapeCanvas`. This is not the case when using a factory as the implementation is hidden behind the `Square` inteface.
+ 1. Dependencies on implementations - By directly `new`ing up an instance of a `SquareImpl`, the `ShapeCanvas` class now depends on the `SqaureImpl` class. Thus changing the the `SquareImpl` class directly affects the `ShapeCanvas`. This is not the case when using a factory as the implementation is hidden behind the `Square` inteface.
 
  We also can't swap out the `SquareImpl` for another implementation of the `Sqaure` interface. We can do this via a factory as the factory returns a `Square` interface.
 
- # We can't test in isolation - We have to resort to state-bases tests as we can't mock out the `SquareImpl` class since it is created within the `calcSquaresOnCanvas()` method . When testing the `calcSquaresOnCanvas()` method, we would be testing both the `SquareImpl` class's `getArea()` method as well as the calcSquaresOnCanvas()` method in the same test.
+ 2. We can't test in isolation - We have to resort to state-bases tests as we can't mock out the `SquareImpl` class since it is created within the `calcSquaresOnCanvas()` method . When testing the `calcSquaresOnCanvas()` method, we would be testing both the `SquareImpl` class's `getArea()` method as well as the calcSquaresOnCanvas()` method in the same test.
 
  * [FactoryCreatorImpl_Why_Need_FactoryCreator Why do I need the FactoryCreator?]
  * [FactoryCreatorImpl_Default_Locator_Strategies Where can I update the Default Locator Strategies?]
