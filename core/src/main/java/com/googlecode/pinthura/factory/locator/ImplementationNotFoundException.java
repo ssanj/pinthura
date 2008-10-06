@@ -17,6 +17,8 @@ package com.googlecode.pinthura.factory.locator;
 
 public final class ImplementationNotFoundException extends RuntimeException {
 
+    private static final long serialVersionUID = -9106520329616164680L;
+
     public ImplementationNotFoundException(final String message, final Throwable cause) {
         super(message, cause);
     }

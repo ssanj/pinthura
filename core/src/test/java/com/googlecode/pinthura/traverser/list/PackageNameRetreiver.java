@@ -22,7 +22,7 @@ import java.util.List;
 
 public final class PackageNameRetreiver implements CollectionElementHandler<Class<?>, List<String>> {
 
-    private List<String> packageNames = new ArrayList<String>();
+    private final List<String> packageNames = new ArrayList<String>();
 
     public void handle(final Class<?> element, final boolean isFirst, final boolean isLast, final Long index) {
         packageNames.add(element.getPackage().getName());

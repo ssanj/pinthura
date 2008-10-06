@@ -19,7 +19,7 @@ import com.googlecode.pinthura.traverser.collection.CollectionElementHandler;
 
 import java.util.Collection;
 
-public interface CollectionTraverser<Input, Output> {
+public interface CollectionTraverser {
 
-    Output forEach(Collection<? extends Input> collection, CollectionElementHandler<Input, Output> handler);
+    <Input, Output> Output forEach(Collection<? extends Input> collection, CollectionElementHandler<Input, Output> handler);
 }

@@ -16,9 +16,11 @@
 package com.googlecode.pinthura.traverser.list;
 
 import com.googlecode.pinthura.data.UrlBoundary;
+import com.googlecode.pinthura.traverser.CollectionTraverser;
 import com.googlecode.pinthura.traverser.collection.CollectionTraverserImpl;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertThat;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.sql.Connection;
@@ -31,13 +33,20 @@ public final class ACollectionTraverserUnderIntTest {
 
     private static final int NO_OF_PACKAGES = 4;
 
+    private CollectionTraverser traverser;
+
+    @Before
+    public void setup() {
+        traverser = new CollectionTraverserImpl();
+    }
+
     @Test
     public void shouldSumAListOfNumbers() {
         //CHECKSTYLE_OFF
         Collection<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5);
         //CHECKSTYLE_ON
 
-        Integer result = new CollectionTraverserImpl<Integer, Integer>().forEach(numbers, new TotalHandler());
+        Integer result = traverser.forEach(numbers, new TotalHandler());
         //CHECKSTYLE_OFF
         assertThat(result, equalTo(15));
         //CHECKSTYLE_ON
@@ -47,15 +56,15 @@ public final class ACollectionTraverserUnderIntTest {
     public void shouldDisplayAListOfFormattedCharacters() {
         Collection<Character> characters = Arrays.asList('A', 'B', 'C', 'D', 'E');
 
-        String result = new CollectionTraverserImpl<Character, String>().forEach(characters, new CharacterFormatter());
+        String result = traverser.forEach(characters, new CharacterFormatter());
         assertThat(result, equalTo("[A, B, C, D, E]"));
     }
 
     @Test
     public void shouldDisplayAListOfPackageNames() {
-        List<Class<?>> classes = Arrays.asList(UrlBoundary.class, Connection.class, String.class, Arrays.class);
+        List<Class<?>> classes = Arrays.<Class<?>>asList(UrlBoundary.class, Connection.class, String.class, Arrays.class);
 
-        List<String> result = new CollectionTraverserImpl<Class<?>, List<String>>().forEach(classes, new PackageNameRetreiver());
+        List<String> result = traverser.forEach(classes, new PackageNameRetreiver());
 
         assertThat(result.size(), equalTo(NO_OF_PACKAGES));
         assertThat(result.get(0), equalTo("com.googlecode.pinthura.data"));
