@@ -1,7 +1,7 @@
 #summary Describes how to dynamically create factory implementations.
 #labels Phase-Implementation,FactoryCreatorImpl,StartingPoint
 
-== A Simple Example ==
+== A simple example ==
 
 Assume you have a `Square` interface:
 
@@ -109,7 +109,28 @@ public final class ShapeCanvas {
 
 We also can't swap out the `SquareImpl` for another implementation of the `Sqaure` interface. We can do this via a factory as the factory returns a `Square` interface.
 
-2. We can't test in isolation - We have to resort to state-bases tests as we can't mock out the `SquareImpl` class since it is created within the `calcSquaresOnCanvas()` method . When testing the `calcSquaresOnCanvas()` method, we would be testing both the `SquareImpl` class's `getArea()` method as well as the calcSquaresOnCanvas()` method in the same test.
+2. We can't test in isolation - We have to resort to state-bases tests as we can't [http://www.easymock.org/ mock] [http://www.jmock.org/ out] the `SquareImpl` class since it is created within the `calcSquaresOnCanvas()` method . When testing the `calcSquaresOnCanvas()` method, we would be testing both the `SquareImpl` class's `getArea()` method as well as the calcSquaresOnCanvas()` method in the same test.
+
+If we use a factory to handle creation of `Squares`:
+
+{{{
+public final class ShapeCanvas {
+
+    ...
+
+    public ShapeCanvas(final int canvasArea, final SquareFactory squareFactory) {
+       ...
+    }
+
+    public int calcSquaresOnCanvas(int size) {
+        Square square = squareFactory.create(size);
+        ...
+    }
+}
+
+}}}
+
+In the above implementation, we can mock out the `SquareFactory` interface passed to the constructor very easily.
 
 = What does the FactoryCreator give me? =
 
