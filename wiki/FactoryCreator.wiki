@@ -91,7 +91,7 @@ You have now created an instance of `SquareImpl` which is used in the `ShapeCanv
 
 = Why hide the Instantiation of Objects in a Factory? =
 
-Here is an implementation of the `ShapeCanvas` `where a `SqaureImpl` is created directly with `new` instead of using a factory:
+Here is an implementation of the `ShapeCanvas` where a `SqaureImpl` is created directly with `new` instead of using a factory:
 {{{
 public final class ShapeCanvas {
 
