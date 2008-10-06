@@ -1,9 +1,54 @@
 #summary Describes the FactoryCreatorImpl class.
 #labels Phase-Implementation,FactoryCreatorImpl,StartingPoint
 
+== A Quick Sample ==
+
+ Assume you have a `Shape` interface:
+
+{{{
+public interface Shape {
+
+    int getLength();
+}
+}}}
+
+ And a `SquareImpl`:
+
+{{{
+public final class SquareImpl implements Shape {
+
+    private final int length;
+
+    public SquareImpl(final int length) {
+        this.length = length;
+    }
+    ...
+}
+
+}}}
+
+You now want to hide the instantiation of the `SquareImpl` behind a factory interface such as `ShapeFactory`. Assume the `ShapeFactory` interface is:
+
+{{{
+public interface ShapeFactory {
+
+    Square createSquare(int length);
+ }
+}}}
+
+To create a new instance of `SquareImpl` do this:
+
+{{{
+FactoryCreator creator = new FactoryCreatorImpl(new InvocationFactoryImpl());
+ShapeFactory shapeFactory = creator.create(ShapeFactory.class);
+Square square = shapeFactory.createSquare(4);
+}}}
+
+The above calls call to `creator.create` calls the following constructor: `SquareImpl(4)`. You have now created an instance of an class without using the `new` keyword or implementing a factory interface.
+
 = Introduction =
 
-Using the keyword *new* when driving out code, makes interactions hard to test. Instances created within a test case and those created within the code proper as different. We are forced to resort to state-based testing in these scenarios. 
+Using the keyword *new* when driving out code, makes interactions hard to test. Instances created within a test case and those created within the code proper are different. We are forced to resort to state-based testing in these scenarios. 
 
 One way to get around this is by passing in a factory interface to abstract object creation. 
 
