@@ -16,4 +16,6 @@
 package com.googlecode.pinthura.annotation;
 
 public final class AnnotationNotFoundException extends RuntimeException {
+
+    private static final long serialVersionUID = 6935883696946786764L;
 }

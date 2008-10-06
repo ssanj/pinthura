@@ -20,6 +20,8 @@ package com.googlecode.pinthura.filter;
  */
 public final class MatchNotFoundException extends RuntimeException {
 
+    private static final long serialVersionUID = -8483219804817241329L;
+
     public MatchNotFoundException() {
         //no arg constructor.
     }

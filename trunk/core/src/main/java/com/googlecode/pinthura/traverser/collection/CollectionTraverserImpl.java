@@ -20,9 +20,9 @@ import com.googlecode.pinthura.traverser.CollectionTraverser;
 import java.util.Collection;
 import java.util.Iterator;
 
-public final class CollectionTraverserImpl<Input, Output> implements CollectionTraverser<Input, Output> {
+public final class CollectionTraverserImpl implements CollectionTraverser {
 
-    public Output forEach(final Collection<? extends Input> collection,
+    public <Input, Output> Output forEach(final Collection<? extends Input> collection,
                           final CollectionElementHandler< Input, Output> handler) {
 
         Iterator<? extends Input> iterator = collection.iterator();

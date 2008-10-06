@@ -17,6 +17,8 @@ package com.googlecode.pinthura.example.filter.version;
 
 public final class UnknownXMLVersionException extends RuntimeException {
 
+    private static final long serialVersionUID = -7335539076207081391L;
+
     public UnknownXMLVersionException(final Throwable cause) {
         super(cause);
     }
