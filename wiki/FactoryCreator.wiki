@@ -1,7 +1,7 @@
 #summary Describes the FactoryCreatorImpl class.
 #labels Phase-Implementation,FactoryCreatorImpl,StartingPoint
 
-== A Quick Example ==
+== A Simple Example ==
 
 Assume you have a `Square` interface:
 
@@ -18,14 +18,22 @@ And an implementation:
 {{{
 public final class SquareImpl implements Square {
 
+    private static final int SIDES_OF_SQUARE = 4;
+
     private final int length;
 
     public SquareImpl(final int length) {
         this.length = length;
     }
-    ...
-}
 
+    public int getLength() {
+        return SIDES_OF_SQUARE * length;
+    }
+
+    public int getArea() {
+        return length * length;
+    }
+}
 }}}
 
 You now want to hide the instantiation of the `SquareImpl` behind a factory interface:
@@ -58,15 +66,28 @@ public final class ShapeCanvas {
 }
 }}}
 
-To create a new instance of `SquareImpl` through the factory we can do this:
+The `ShapeCanvas` is run through the `ShapeCanvasRunner`:
 
 {{{
-FactoryCreator creator = new FactoryCreatorImpl(new InvocationFactoryImpl());
-SquareFactory squareFactory = creator.create(SquareFactory.class);
-Square square = squareFactory.createSquare(4);
+public final class ShapeCanvasRunner {
+
+    public static void main(final String[] args) {
+        FactoryCreator factoryCreator = new FactoryCreatorImpl(new InvocationFactoryImpl());
+        SquareFactory squareFactory = factoryCreator.create(SquareFactory.class);
+
+        ShapeCanvas canvas = new ShapeCanvas(40, squareFactory);
+        System.out.println("Number of squares: " + canvas.calcSquaresOnCanvas(2));
+    }
+}
 }}}
 
-The above call to ` squareFactory.createSquare(4)` invokes the constructor of `SquareImpl` with a value of 4. You have now created an instance of a class without using the `new` keyword or implementing the `SquareFactory` interface.
+This gives the following output:
+
+{{{
+Number of squares: 10
+}}}
+
+You have now created an instance a `SquareImpl` which is used in the `ShapeCanvas#calcSquaresOnCanvas` class, without using the `new` keyword or implementing the `SquareFactory` interface.
 
 = Why Hide the Instantiation of Objects in a Factory? =
 
