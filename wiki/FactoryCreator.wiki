@@ -106,11 +106,8 @@ public final class ShapeCanvas {
 }
 
 }}}
-
 In the above modified snippet the `ShapeCanvas` class now depends on the `SqaureImpl` class. Thus changing the the `SquareImpl` class directly affects the `ShapeCanvas`. This is not the case when using a factory as the implementation is hidden from the using class.
- 
  # We also can't swap out the `SquareImpl` for another implementation of the `Sqaure` interface. We can do this via a factory as the factory returns a `Square` interface.
-
  # When testing we have to resort to state-bases tests as we can't mock out the `SquareImpl` class. We would then be testing both the `SquareImpl` class's `getArea()` method as well as the `ShapeCanvas`'s `calcSquaresOnCanvas()` method in the same test. Ideally we to test the `ShapeCanvas` in isolation which is not possible without mocks.
 
  * [FactoryCreatorImpl_Why_Need_FactoryCreator Why do I need the FactoryCreator?]
