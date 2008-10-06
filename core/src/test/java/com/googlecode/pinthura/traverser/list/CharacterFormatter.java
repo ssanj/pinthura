@@ -15,24 +15,24 @@
  */
 package com.googlecode.pinthura.traverser.list;
 
-import com.googlecode.pinthura.traverser.collection.CollectionElementHandler;
+import com.googlecode.pinthura.traverser.collection.CollectionElementWithIndexHandler;
 
-public final class CharacterFormatter implements CollectionElementHandler<Character, String> {
+public final class CharacterFormatter implements CollectionElementWithIndexHandler<Character, String> {
 
     private final StringBuilder builder = new StringBuilder();
 
-    public void handle(final Character element, final boolean isFirst, final boolean isLast, final Long index) {
-        if (isFirst) {
+    public void handle(final Character element, final boolean first, final boolean last, final Long index) {
+        if (first) {
             builder.append("[");
         }
 
         builder.append(element).append(index);
 
-        if (!isLast) {
+        if (!last) {
             builder.append(", ");
         }
 
-        if (isLast) {
+        if (last) {
             builder.append("]");
         }
     }

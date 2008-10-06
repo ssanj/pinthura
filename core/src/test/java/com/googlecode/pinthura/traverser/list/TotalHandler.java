@@ -21,7 +21,7 @@ public final class TotalHandler implements CollectionElementHandler<Integer, Int
 
     private int total = 0;
 
-    public void handle(final Integer element, final boolean isFirst, final boolean isLast, final Long index) {
+    public void handle(final Integer element) {
         total += element;
     }
 
