@@ -113,9 +113,9 @@ We also can't swap out the `SquareImpl` for another implementation of the `Sqaur
 
 = What does the FactoryCreator give me? =
 
-At some point we need a concrete implementation of the factory interface. In many instances these factory implementations are not tested or have rudimentary tests that simply create a new instance of an object. The `FactoryCreator` automates the creation of this implementation.
+At some point we need a concrete implementation of the factory interface. In many instances these factory implementations are not tested or have rudimentary tests that simply create a new instance of an object. The `FactoryCreator` automates the implementation of a factory interface.  
 
-In the above scenario the `SquareFactoryImpl` would be:
+In the above scenario the manual implementation of `SquareFactoryImpl` would be:
 {{{
 public final class SquareFactoryImpl implements SquareFactory {
 
@@ -125,10 +125,18 @@ public final class SquareFactoryImpl implements SquareFactory {
 }
 }}}
 
-Although factory implementations are simple, they can be cumbersome because:
+When using the `FactoryCreator` you can simply use:
+
+{{{
+SquareFactory squareFactory = factoryCreator.create(SquareFactory.class);
+}}}
+
+= Creating factories is easy. Why bother automating it? =
+
+Although factory implementations are usually simple, they can be cumbersome because:
 
  # The instances created through the factory maybe hard to setup and test.
- # An implementation class needs to be written for every factory interface. This is tedious in and of itself.
+ # An implementation class needs to be written for every factory interface. This is tedious in and of itself and if you are tdding, each implementation needs testcase. This can be a huge waste of time.
  # All implementations need to pass the usual quality checks (eg. [http://checkstyle.sourceforge.net/ Checkstyle], [http://cobertura.sourceforge.net/ Code Coverage] etc)
 
  * [FactoryCreatorImpl_Why_Need_FactoryCreator Why do I need the FactoryCreator?]
