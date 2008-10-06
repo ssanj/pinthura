@@ -9,6 +9,7 @@ Assume you have a `Square` interface:
 public interface Square {
 
     int getLength();
+    int getArea();
 }
 }}}
 
@@ -34,6 +35,27 @@ public interface SquareFactory {
 
     Square createSquare(int length);
  }
+}}}
+
+The `SquareFactory` is used in the `ShapeCanvas`:
+
+{{{
+public final class ShapeCanvas {
+
+    private final SquareFactory squareFactory;
+    private int canvasArea;
+
+    public ShapeCanvas(final int canvasArea, final SquareFactory squareFactory) {
+        this.canvasArea = canvasArea;
+        this.squareFactory = squareFactory;
+    }
+
+    public int calcSquaresOnCanvas(int size) {
+        Square square = squareFactory.create(size);
+        int area = square.getArea();
+        return canvasArea / area;
+    }
+}
 }}}
 
 To create a new instance of `SquareImpl` through the factory we can do this:
