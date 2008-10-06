@@ -91,8 +91,7 @@ You have now created an instance of `SquareImpl` which is used in the `ShapeCanv
 
  * Why Hide the Instantiation of Objects in a Factory?
 
- # If you directly `new` up an instance of a class within another class, the class that uses the instance is tied to the implementation of the using class.
-
+ Here an implementation of the `ShapeCanvas` `new`ing up a `SqaureImpl` directly without using a factory:
 {{{
 public final class ShapeCanvas {
 
@@ -106,7 +105,7 @@ public final class ShapeCanvas {
 }
 
 }}}
-In the above modified snippet the `ShapeCanvas` class now depends on the `SqaureImpl` class. Thus changing the the `SquareImpl` class directly affects the `ShapeCanvas`. This is not the case when using a factory as the implementation is hidden from the using class.
+ # By directly `new`ing up an instance of a `SquareImpl`, the `ShapeCanvas` class now depends on the `SqaureImpl` class. Thus changing the the `SquareImpl` class directly affects the `ShapeCanvas`. This is not the case when using a factory as the implementation is hidden behind the `Square` inteface.
  # We also can't swap out the `SquareImpl` for another implementation of the `Sqaure` interface. We can do this via a factory as the factory returns a `Square` interface.
  # When testing we have to resort to state-bases tests as we can't mock out the `SquareImpl` class. We would then be testing both the `SquareImpl` class's `getArea()` method as well as the `ShapeCanvas`'s `calcSquaresOnCanvas()` method in the same test. Ideally we to test the `ShapeCanvas` in isolation which is not possible without mocks.
 
