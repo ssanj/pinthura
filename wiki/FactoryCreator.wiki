@@ -111,6 +111,25 @@ We also can't swap out the `SquareImpl` for another implementation of the `Sqaur
 
 2. We can't test in isolation - We have to resort to state-bases tests as we can't mock out the `SquareImpl` class since it is created within the `calcSquaresOnCanvas()` method . When testing the `calcSquaresOnCanvas()` method, we would be testing both the `SquareImpl` class's `getArea()` method as well as the calcSquaresOnCanvas()` method in the same test.
 
+= What does the FactoryCreator give me? =
+
+At some point we need a concrete implementation of the factory interface. In many instances these factory implementations are not tested or have rudimentary tests that simply create a new instance of an object. In the above scenario the `SquareFactoryImpl` would be:
+
+{{{
+public final class SquareFactoryImpl implements SquareFactory {
+
+    public Square createSquare(int length) {
+       return new SquareImpl(length);
+    }
+}
+}}}
+
+Although factory implementations are simple, they can be cumbersome because:
+
+ # The instances created through the factory maybe hard to setup and test.
+ # An implementation class needs to be written for every factory interface. This is tedious in and of itself.
+ # All implementations need to pass the usual quality checks (eg. [http://checkstyle.sourceforge.net/ Checkstyle], [http://cobertura.sourceforge.net/ Code Coverage] etc)
+
  * [FactoryCreatorImpl_Why_Need_FactoryCreator Why do I need the FactoryCreator?]
  * [FactoryCreatorImpl_Default_Locator_Strategies Where can I update the Default Locator Strategies?]
 
