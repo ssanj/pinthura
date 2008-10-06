@@ -15,7 +15,7 @@ public interface Square {
  And an implementation:
 
 {{{
-public final class SquareImpl implements Shape {
+public final class SquareImpl implements Square {
 
     private final int length;
 
