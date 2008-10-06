@@ -1,7 +1,7 @@
-#summary Why do I need Factory anyways?
+#summary Why do I need a Factory anyways?
 #labels Phase-Implementation
 
-= Why do I need Factory anyways? =
+= Why do I need a Factory anyways? =
 
 Using the keyword *new* when driving out code, makes interactions hard to test. Instances created within a test case and those created within the code proper are different. We are forced to resort to state-based testing in these scenarios. 
 
