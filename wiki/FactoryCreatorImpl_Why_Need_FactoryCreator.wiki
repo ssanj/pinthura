@@ -41,3 +41,77 @@ public final class ReportGeneratorImpl implements ReportGenerator {
 When driving out the `ReportGeneratorImpl` class, we can quite easily mock out the `ReportFactory` and perform behaviour-based testing via mocks. See [http://www.easymock.org/ EasyMock], [http://www.jmock.org/ jMock]
 
 At some point we need a concrete implementation of the `ReportFactory` interface. The class that implements this interface may be simple but can be hard to test if it interacts directly with concrete classes. Thus in many instances these Factory implementations are not tested or have rudimentary tests that simply create a new instance of an object.
+
+= Why do I need the FactoryCreator? =
+
+The `FactoryCreatorImpl` manages the link between a factory interface and the concrete implementation, of each of the factory methods. This means that we don't need to write a concrete implementation and tests for the factory interface.
+
+= How does FactoryCreator locate the Correct Implementations? =
+
+At the moment, the `FactoryCreatorImpl` class finds implementations using two Locator strategies:
+
+ # By annotation.
+ # By generating an implementation class name derived from the interface name.
+
+== How do I use the Annotation strategy? ==
+
+
+== How do I use the Derived Implementation Name strategy? ==
+
+Using the `FactoryCreatorImpl` to create a default factory implementation for the the `ReportFactory` interface:
+
+{{{
+package com.googlecode.pinthura.factory.report;
+
+public interface ReportFactory {
+
+    Report create(Information info);
+}
+}}}
+
+{{{
+    FactoryCreator factoryCreator = new FactoryCreatorImpl(new InvocationFactoryImpl());
+    ReportFactory reportFactory = factoryCreator.create(ReportFactory.class);
+    Report report = reportFactory.create(new InformationImpl());
+}}}
+
+Using the derived implementation name strategy, the implementation located for the `ReportFactory`'s create method is `ReportImpl`. This is done by simply appending an 'Impl' to the end of the return type for the create method on the ReportFactory interface. (`com.googlecode.pinthura.factory.report.Report`+'Impl' -> `com.googlecode.pinthura.factory.report.ReportImpl`.
+
+== Where can I update the Default Locator Strategies? ==
+
+The above default strategies are initialized in the the `InvocationFactoryImpl`
+class:
+{{{
+public final class InvocationFactoryImpl implements InvocationFactory {
+
+    private final List<ClassLocator> locators;
+    private final MethodParamFactory factory;
+
+    public InvocationFactoryImpl() {
+        factory = new MethodParamFactoryImpl();
+        locators = createDefaultLocators();
+    }
+
+    public InvocationFactoryImpl(final List<ClassLocator> locators) {
+        factory = new MethodParamFactoryImpl();
+        this.locators = locators;
+    }
+
+    ...
+
+    private List<ClassLocator> createDefaultLocators() {
+        List<ClassLocator> filters = new ArrayList<ClassLocator>();
+        filters.add(new AnnotationLocatorImpl(new AnnotationFinderImpl()));
+        filters.add(new DerivedImplementationNameLocator(new ImplSuffixingDeriver()));
+        return filters;
+    }
+}
+}}}
+
+Calling the default constructor gives us the two default class locator strategies. If we want to customize these strategies we can pass in a list of our own ClassLocator implementations, through the second constructor.
+
+The `ClassLocator` interface:
+
+{{{
+public interface ClassLocator extends FilterLink<MethodParam, Class<?>> {
+}}}
