@@ -1,8 +1,0 @@
-#summary Why hide instantiations behind a factory interface?
-#labels Phase-Implementation
-
-= Details =
-
- # Ties the implementation class to the using class
- # Can't swap in/out implementations
- # Can't control the instance used within a test. 
