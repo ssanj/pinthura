@@ -1,4 +1,4 @@
-#summary Describes the FactoryCreatorImpl class.
+#summary Describes how to dynamically create factory implementations.
 #labels Phase-Implementation,FactoryCreatorImpl,StartingPoint
 
 == A Simple Example ==
