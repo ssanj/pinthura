@@ -12,7 +12,7 @@ public interface Square {
 }
 }}}
 
- And an implementation:
+And an implementation:
 
 {{{
 public final class SquareImpl implements Square {
@@ -44,7 +44,7 @@ SquareFactory squareFactory = creator.create(SquareFactory.class);
 Square square = squareFactory.createSquare(4);
 }}}
 
-The above calls call to `creator.create` calls the following constructor: `SquareImpl(4)`. You have now created an instance of an class without using the `new` keyword or implementing a factory interface.
+The above calls to `creator.create(SquareFactory.class)` invokes the constructor of `SquareImpl` with a value of 4.You have now created an instance of an class without using the `new` keyword or implementing a factory interface.
 
 = Introduction =
 
