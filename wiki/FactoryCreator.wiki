@@ -157,7 +157,7 @@ SquareFactory squareFactory = factoryCreator.create(SquareFactory.class);
 Although factory implementations are usually simple, they can be cumbersome because:
 
  # Hard to test - The instances created through the factory may be hard to setup and test.
- # Unnecessary classes - An implementation class needs to be written for every factory interface. This is tedious in and of itself. If you are tdding, each implementation also needs at least one [http://www.junit.org/ Test] [http://testng.org/doc/ Case] or [ http://code.google.com/p/instinct/ context].
+ # Unnecessary classes - An implementation class needs to be written for every factory interface. This is tedious in and of itself. If you are tdding/[http://code.google.com/p/instinct/ bdding], each implementation also needs at least one [http://www.junit.org/ Test] [http://testng.org/doc/ Case].
  # Time wasted - All implementations need to pass the usual quality checks (eg. [http://checkstyle.sourceforge.net/ Checkstyle], [http://cobertura.sourceforge.net/ Code Coverage] etc)
 
  * [FactoryCreatorImpl_Why_Need_FactoryCreator Why do I need the FactoryCreator?]
