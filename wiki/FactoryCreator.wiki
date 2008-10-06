@@ -46,7 +46,11 @@ Square square = squareFactory.createSquare(4);
 
 The above call to ` squareFactory.createSquare(4)` invokes the constructor of `SquareImpl` with a value of 4. You have now created an instance of a class without using the `new` keyword or implementing the `SquareFactory` interface.
 
-= What's so great about this? =
+= Why do I need Factory anyways? =
+
+ # Ties the using class to the implementation class
+ # Can't swap in new implementations of the interface
+ # Harder to test because we can't control the instance being used.
 
 Using the keyword *new* when driving out code, makes interactions hard to test. Instances created within a test case and those created within the code proper are different. We are forced to resort to state-based testing in these scenarios. 
 
