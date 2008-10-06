@@ -1,7 +1,7 @@
 #summary Describes the FactoryCreatorImpl class.
 #labels Phase-Implementation,FactoryCreatorImpl,StartingPoint
 
-== A Quick Sample ==
+== A Quick Example ==
 
 Assume you have a `Square` interface:
 
