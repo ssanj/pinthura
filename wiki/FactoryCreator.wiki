@@ -89,9 +89,9 @@ Number of squares: 10
 
 You have now created an instance of `SquareImpl` which is used in the `ShapeCanvas#calcSquaresOnCanvas` method, without using the `new` keyword or implementing the `SquareFactory` interface.
 
-= Why Hide the Instantiation of Objects in a Factory? =
+= Why hide the Instantiation of Objects in a Factory? =
 
- Here an implementation of the `ShapeCanvas` `new`ing up a `SqaureImpl` directly without using a factory:
+Here is an implementation of the `ShapeCanvas` `where a `SqaureImpl` is created directly with `new` instead of using a factory:
 {{{
 public final class ShapeCanvas {
 
