@@ -46,7 +46,11 @@ Square square = squareFactory.createSquare(4);
 
 The above call to ` squareFactory.createSquare(4)` invokes the constructor of `SquareImpl` with a value of 4. You have now created an instance of a class without using the `new` keyword or implementing the `SquareFactory` interface.
 
-= Why Hide the Instantiation of Objects in a Factory?
+= Why Hide the Instantiation of Objects in a Factory? =
+
+ # Ties the implementation class to the using class
+ # Can't swap in/out implementations
+ # Can't control the instance used within a test.
 
 = Why do I need Factory anyways? =
 
