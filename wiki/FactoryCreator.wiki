@@ -3,16 +3,16 @@
 
 == A Quick Sample ==
 
- Assume you have a `Shape` interface:
+Assume you have a `Square` interface:
 
 {{{
-public interface Shape {
+public interface Square {
 
     int getLength();
 }
 }}}
 
- And a `SquareImpl`:
+ And an implementation:
 
 {{{
 public final class SquareImpl implements Shape {
@@ -27,21 +27,21 @@ public final class SquareImpl implements Shape {
 
 }}}
 
-You now want to hide the instantiation of the `SquareImpl` behind a factory interface such as `ShapeFactory`. Assume the `ShapeFactory` interface is:
+You now want to hide the instantiation of the `SquareImpl` behind a factory interface:
 
 {{{
-public interface ShapeFactory {
+public interface SquareFactory {
 
     Square createSquare(int length);
  }
 }}}
 
-To create a new instance of `SquareImpl` do this:
+To create a new instance of `SquareImpl` through the factory we can do this:
 
 {{{
 FactoryCreator creator = new FactoryCreatorImpl(new InvocationFactoryImpl());
-ShapeFactory shapeFactory = creator.create(ShapeFactory.class);
-Square square = shapeFactory.createSquare(4);
+SquareFactory squareFactory = creator.create(SquareFactory.class);
+Square square = squareFactory.createSquare(4);
 }}}
 
 The above calls call to `creator.create` calls the following constructor: `SquareImpl(4)`. You have now created an instance of an class without using the `new` keyword or implementing a factory interface.
