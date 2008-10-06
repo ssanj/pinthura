@@ -57,7 +57,7 @@ public final class ACollectionTraverserUnderIntTest {
         Collection<Character> characters = Arrays.asList('A', 'B', 'C', 'D', 'E');
 
         String result = traverser.forEach(characters, new CharacterFormatter());
-        assertThat(result, equalTo("[A, B, C, D, E]"));
+        assertThat(result, equalTo("[A0, B1, C2, D3, E4]"));
     }
 
     @Test

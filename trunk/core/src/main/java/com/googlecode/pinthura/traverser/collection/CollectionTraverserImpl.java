@@ -33,5 +33,5 @@ public final class CollectionTraverserImpl implements CollectionTraverser {
         }
 
         return handler.getResult();
-    }
+    }    
 }

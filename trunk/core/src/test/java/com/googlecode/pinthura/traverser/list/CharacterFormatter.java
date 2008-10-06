@@ -26,7 +26,8 @@ public final class CharacterFormatter implements CollectionElementHandler<Charac
             builder.append("[");
         }
 
-        builder.append(element);
+        builder.append(element).append(index);
+
         if (!isLast) {
             builder.append(", ");
         }
