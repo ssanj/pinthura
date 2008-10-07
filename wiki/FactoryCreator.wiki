@@ -167,12 +167,29 @@ At the moment, the `FactoryCreator` finds implementations using two locator stra
  # By annotation. (`AnnotationLocatorImpl`)
  # By deriving the implementation class name. (`DerivedImplementationNameLocator`).
 
-= How do I use the AnnotationLocator Strategy? =
+= How do I use the AnnotationLocator strategy? =
 
 
 = How do I use the DerivedImplementationNameLocator strategy? =
 
-= Where can I update the default locator Strategies? =
+Taking the `SquareFactory` as an example:
+
+{{{
+public interface SquareFactory {
+
+    Square createSquare(int length);
+ }
+
+ ...
+
+ SquareFactory squareFactory = factoryCreator.create(SquareFactory.class);
+
+}}}
+
+When the `SquareFactory` interface is passed to the `FactoryCreator` it uses the `DerivedImplementationNameLocator` to find an instance of a class implementing the `Sqaure` interface. The default strategy for the `DerivedImplementationNameLocator` is the `ImplSuffixingDeriver`, which simply appends an *Impl* to the name of the interface (`Sqaure` -> `SquareImpl`).
+
+
+= Where can I update the default locator strategies? =
 
 The above default strategies are initialized in the the `InvocationFactoryImpl`
 class:
