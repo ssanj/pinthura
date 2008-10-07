@@ -164,7 +164,7 @@ Although factory implementations are usually simple, they can be cumbersome beca
 
 Each method defined in a factory interface has the following form:
 
- *Returned_Interface* Method_Name(*Constructor_Arguments*);
+ {{{Returned_Interface Method_Name(Constructor_Arguments);}}}
 
 Each implementation of the *Returned_Interface* is located as follows:
 
@@ -179,9 +179,11 @@ public interface SquareFactory {
 }
 }}}
 
-Returned_Interface -> `Square`
-Method_Name -> `createSquare`
-Constructor_Arguments -> `length`
+{{{
+Returned_Interface -> Square
+Method_Name -> createSquare
+Constructor_Arguments -> length
+}}}
 
 An implementation of `Square` will be located using a locator strategy. The constructor of the located class will then be called with `length`.
 
