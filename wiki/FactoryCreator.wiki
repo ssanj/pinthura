@@ -160,17 +160,56 @@ Although factory implementations are usually simple, they can be cumbersome beca
  # Unnecessary classes - An implementation class needs to be written for every factory interface. This is tedious in and of itself. If you are tdding/[http://code.google.com/p/instinct/ bdding], each implementation also needs at least one [http://www.junit.org/ Test] [http://testng.org/doc/ Case].
  # Time wasted - All implementations need to pass the usual quality checks (eg. [http://checkstyle.sourceforge.net/ Checkstyle], [http://cobertura.sourceforge.net/ Code Coverage] etc)
 
-= How does FactoryCreator locate the Correct Implementations? =
+= How does FactoryCreator locate implementations? =
 
-At the moment, the `FactoryCreatorImpl` class finds implementations using two Locator strategies:
+At the moment, the `FactoryCreator` finds implementations using two locator strategies:
 
- # By Annotation.
- # By generating an implementation class name derived from the interface name.
+ # By annotation. (`AnnotationLocatorImpl`)
+ # By deriving the implementation class name. (`DerivedImplementationNameLocator`).
 
-= How do I use the Annotation strategy? =
+= How do I use the AnnotationLocator Strategy? =
 
 
-= How do I use the Derived Implementation Name strategy? =
+= How do I use the DerivedImplementationNameLocator strategy? =
+
+= Where can I update the default locator Strategies? =
+
+The above default strategies are initialized in the the `InvocationFactoryImpl`
+class:
+{{{
+public final class InvocationFactoryImpl implements InvocationFactory {
+
+    private final List<ClassLocator> locators;
+    private final MethodParamFactory factory;
+
+    public InvocationFactoryImpl() {
+        factory = new MethodParamFactoryImpl();
+        locators = createDefaultLocators();
+    }
+
+    public InvocationFactoryImpl(final List<ClassLocator> locators) {
+        factory = new MethodParamFactoryImpl();
+        this.locators = locators;
+    }
+
+    ...
+
+    private List<ClassLocator> createDefaultLocators() {
+        List<ClassLocator> filters = new ArrayList<ClassLocator>();
+        filters.add(new AnnotationLocatorImpl(new AnnotationFinderImpl()));
+        filters.add(new DerivedImplementationNameLocator(new ImplSuffixingDeriver()));
+        return filters;
+    }
+}
+}}}
+
+Calling the default constructor gives us the two default class locator strategies. If we want to customize these strategies we can pass in a list of our own ClassLocator implementations, through the second constructor.
+
+The `ClassLocator` interface:
+
+{{{
+public interface ClassLocator extends FilterLink<MethodParam, Class<?>> {
+}}}
 
 = Examples =
 
