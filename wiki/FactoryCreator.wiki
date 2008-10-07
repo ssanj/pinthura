@@ -167,6 +167,8 @@ At the moment, the `FactoryCreator` finds implementations using two locator stra
  # By annotation. (`AnnotationLocatorImpl`)
  # By deriving the implementation class name. (`DerivedImplementationNameLocator`).
 
+http://pinthura.googlecode.com/svn/wiki/images/FactoryCreator.png
+
 = How do I use the `AnnotationLocator` strategy? =
 
 Taking a `WidgetFactory` as an example:
