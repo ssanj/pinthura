@@ -166,7 +166,7 @@ Each method defined in a factory interface has the following form:
 
  {{{Returned_Interface Method_Name(Constructor_Arguments);}}}
 
-Each implementation of the *Returned_Interface* is located as follows:
+Each implementation of the `Returned_Interface` is located as follows:
 
 http://pinthura.googlecode.com/svn/wiki/images/FactoryCreator.png
 
