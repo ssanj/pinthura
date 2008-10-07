@@ -231,7 +231,7 @@ When the `SquareFactory` interface is passed to the `FactoryCreator` it uses the
 
 = How do I extend the `DerivedImplementationNameLocator` to use another strategy instead of `ImplSuffixingDeriver`? =
 
- Pass in your implementation of the `ClassNameDeriver` interface into the constructor of `DerivedImplementationNameLocator`.
+Pass in your implementation of the `ClassNameDeriver` interface into the constructor of `DerivedImplementationNameLocator`.
 
 = Where can I update the default locator strategies? =
 
