@@ -162,12 +162,33 @@ Although factory implementations are usually simple, they can be cumbersome beca
 
 = How does FactoryCreator locate implementations? =
 
+Each method defined in a factory interface has the following form:
+
+ *Returned_Interface* Method_Name(*Constructor_Arguments*);
+
+Each implementation of the *Returned_Interface* is located as follows:
+
+http://pinthura.googlecode.com/svn/wiki/images/FactoryCreator.png
+
+If we take the `SquareFactory` as an example:
+
+{{{
+public interface SquareFactory {
+
+    Square createSquare(int length);
+}
+}}}
+
+Returned_Interface -> `Square`
+Method_Name -> `createSquare`
+Constructor_Arguments -> `length`
+
+An implementation of `Square` will be located using a locator strategy. The constructor of the located class will then be called with `length`.
+
 At the moment, the `FactoryCreator` finds implementations using two locator strategies:
 
  # By annotation. (`AnnotationLocatorImpl`)
  # By deriving the implementation class name. (`DerivedImplementationNameLocator`).
-
-http://pinthura.googlecode.com/svn/wiki/images/FactoryCreator.png
 
 = How do I use the `AnnotationLocator` strategy? =
 
