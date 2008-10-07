@@ -229,6 +229,9 @@ public interface SquareFactory {
 
 When the `SquareFactory` interface is passed to the `FactoryCreator` it uses the `DerivedImplementationNameLocator` to find an instance of a class implementing the `Sqaure` interface. The default strategy for the `DerivedImplementationNameLocator` is the `ImplSuffixingDeriver`, which simply appends an *Impl* to the name of the interface (`Sqaure` -> `SquareImpl`).
 
+= How do I extend the DerivedImplementationNameLocator to use another strategy instead of `ImplSuffixingDeriver`? =
+
+ Pass in your implementation of the `ClassNameDeriver` interface into the constructor of `DerivedImplementationNameLocator`.
 
 = Where can I update the default locator strategies? =
 
