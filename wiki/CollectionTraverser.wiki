@@ -85,7 +85,7 @@ Let's take a `DynamicMBean` implementation as an example:
 public final class ContextAwareMBean implements DynamicMBean
     ...
     public MBeanInfo getMBeanInfo() {
-        String name = this.getClass().getName();
+        String name =getClass().getName();
         String description = this.description;
         MBeanConstructorInfo[] constructors = {};
         MBeanOperationInfo[] operations = {};
@@ -99,8 +99,8 @@ public final class ContextAwareMBean implements DynamicMBean
 
     private List<MBeanAttributeInfo> buildAttributeList() {
         List<MBeanAttributeInfo> attributesList = new ArrayList<MBeanAttributeInfo>();
-        for (Iterator i = properties.keySet().iterator(); i.hasNext();) {
-            String propertyName = (String) i.next();
+        for (Iterator it = properties.keySet().iterator(); it.hasNext();) {
+            String propertyName = (String) it.next();
             if (propertyName.startsWith(context + "_")) {
                 String attributeName = propertyName.substring(context.length() + 1);
                 MBeanAttributeInfo attribute = new MBeanAttributeInfo(attributeName, String.class.getName(), "",true, true, false);
