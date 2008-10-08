@@ -11,7 +11,7 @@ Take a simple function that sums the `Integers` of a supplied `Collection`:
 
 {{{
    Collection<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5);
-   sum(numbers);
+   Integer result = sum(numbers);
    assertThat(result, equalTo(15));
 
    ...
