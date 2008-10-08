@@ -7,6 +7,8 @@ A `CollectionTraverser` abstracts the navigation of a `Collection` and allows th
 
 = A simple example =
 
+_This is a contrived example and you wouldn't normally use the `CollectionTraverser` to write something this simple_
+
 Take a simple function that sums the `Integers` of a supplied `Collection`:
 
 {{{
