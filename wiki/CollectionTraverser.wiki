@@ -19,10 +19,6 @@ assertThat(result, equalTo(15));
 If we have a look at `TotalHandler`:
 
 {{{
-package com.googlecode.pinthura.traverser.list;
-
-import com.googlecode.pinthura.traverser.collection.CollectionElementHandler;
-
 public final class TotalHandler implements CollectionElementHandler<Integer, Integer> {
 
     private int total = 0;
@@ -40,8 +36,6 @@ public final class TotalHandler implements CollectionElementHandler<Integer, Int
 and `CollectionElementHandler`:
 
 {{{
-package com.googlecode.pinthura.traverser.collection;
-
 public interface CollectionElementHandler<Input, Output> {
 
     void handle(Input element);
