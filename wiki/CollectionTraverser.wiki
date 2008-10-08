@@ -37,6 +37,18 @@ public final class TotalHandler implements CollectionElementHandler<Integer, Int
 }
 }}}
 
+and `CollectionElementHandler`:
+
+{{{
+package com.googlecode.pinthura.traverser.collection;
+
+public interface CollectionElementHandler<Input, Output> {
+
+    void handle(Input element);
+    Output getResult();
+}
+}}}
+
 We see that there is no explicit code for navigating the `Collection`. Every `Collection` element (in this case `Integer`s) is passed to implementation of the `CollectionElementHandler`.
 
 This contracts in the normal implementation which would be:
