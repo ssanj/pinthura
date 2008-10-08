@@ -85,7 +85,7 @@ Let's take a `DynamicMBean` implementation as an example:
 public final class ContextAwareMBean implements DynamicMBean
     ...
     public MBeanInfo getMBeanInfo() {
-        String name =getClass().getName();
+        String name = getClass().getName();
         String description = this.description;
         MBeanConstructorInfo[] constructors = {};
         MBeanOperationInfo[] operations = {};
@@ -114,3 +114,45 @@ public final class ContextAwareMBean implements DynamicMBean
 }}}
 
 The entry point for testing this class is at the `getMBeanInfo()` method. The `buildAttributeList ()` method which does the bulk of the work can't be tested directly, as it is a private method.
+
+Using the `CollectionTraverser` we could do this:
+
+{{{
+public final class AttributeListBuilder implements CollectionElementHandler<String, List< MBeanAttributeInfo>> {
+
+    private final List<MBeanAttributeInfo> attributesList = new ArrayList<MBeanAttributeInfo>();
+
+    public void handle(final String propertyName) {
+            if (propertyName.startsWith(context + "_")) {
+                String attributeName = propertyName.substring(context.length() + 1);
+                MBeanAttributeInfo attribute = new MBeanAttributeInfo(attributeName, String.class.getName(), "",true, true, false);
+                attributesList.add(attribute);
+            }
+    }
+
+    public List< MBeanAttributeInfo>> getResult() {
+       return attributesList;
+    }
+}
+}}}
+
+The `AttributeListBuilder` class is quite simple and it is easier to test. The `ContextAwareMBean` is also simpler because it delegates building of the attribute list to the `AttributeListBuilder`:
+
+public final class ContextAwareMBean implements DynamicMBean
+    ...
+    public MBeanInfo getMBeanInfo() {
+        String name = getClass().getName();
+        String description = this.description;
+        MBeanConstructorInfo[] constructors = {};
+        MBeanOperationInfo[] operations = {};
+        MBeanNotificationInfo[] notifications = {};
+        
+        List<MBeanAttributeInfo> attributesList = traverser.forEach(properties.keySet(), factory.createAttributeBuilder());
+        MBeanAttributeInfo[] attributes = attributesList.toArray(new MBeanAttributeInfo[0]);
+        return new MBeanInfo(name, description, attributes, constructors, 
+                operations, notifications);
+    }
+
+    ...
+}
+}}}
