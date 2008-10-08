@@ -54,6 +54,8 @@ public final class ACollectionTraverserUnderIntTest {
         traverser = new CollectionTraverserImpl();
     }
 
+    ... 
+
     @Test
     public void shouldDisplayAListOfPackageNames() {
         List<Class<?>> classes = Arrays.<Class<?>>asList(UrlBoundary.class, Connection.class, String.class, Arrays.class);
