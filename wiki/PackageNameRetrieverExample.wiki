@@ -1,0 +1,70 @@
+#summary Example of a simple CollectionElementHandler.
+#labels Phase-Implementation,Tutorial,Example,CollectionTraverser
+
+This example demonstrates a simple `CollectionElementHandler` that returns a list of packages when supplied with a list of classes.
+
+{{{
+package com.googlecode.pinthura.traverser.list;
+
+import com.googlecode.pinthura.traverser.collection.CollectionElementHandler;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public final class PackageNameRetreiver implements CollectionElementHandler<Class<?>, List<String>> {
+
+    private final List<String> packageNames = new ArrayList<String>();
+
+    public void handle(final Class<?> element) {
+        packageNames.add(element.getPackage().getName());
+    }
+
+    public List<String> getResult() {
+        return new ArrayList<String>(packageNames);
+    }
+}
+}}}
+
+This can be run as a [http://www.junit.org JUnit] test:
+
+{{{
+package com.googlecode.pinthura.traverser.list;
+
+import com.googlecode.pinthura.data.UrlBoundary;
+import com.googlecode.pinthura.traverser.CollectionTraverser;
+import com.googlecode.pinthura.traverser.collection.CollectionTraverserImpl;
+import static org.hamcrest.core.IsEqual.equalTo;
+import static org.junit.Assert.assertThat;
+import org.junit.Before;
+import org.junit.Test;
+
+import java.sql.Connection;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+
+public final class ACollectionTraverserUnderIntTest {
+
+    private static final int NO_OF_PACKAGES = 4;
+
+    private CollectionTraverser traverser;
+
+    @Before
+    public void setup() {
+        traverser = new CollectionTraverserImpl();
+    }
+
+    @Test
+    public void shouldDisplayAListOfPackageNames() {
+        List<Class<?>> classes = Arrays.<Class<?>>asList(UrlBoundary.class, Connection.class, String.class, Arrays.class);
+
+        List<String> result = traverser.forEach(classes, new PackageNameRetreiver());
+
+        assertThat(result.size(), equalTo(NO_OF_PACKAGES));
+        assertThat(result.get(0), equalTo("com.googlecode.pinthura.data"));
+        assertThat(result.get(1), equalTo("java.sql"));
+         assertThat(result.get(2), equalTo("java.lang"));
+        assertThat(result.get(3), equalTo("java.util"));
+     }
+}
+}}}
