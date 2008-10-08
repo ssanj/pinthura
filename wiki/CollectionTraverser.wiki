@@ -64,18 +64,15 @@ public interface CollectionElementHandler<Input, Output> {
 
 we see that there is no explicit code for navigating the `Collection`. Every `Collection` element (in this case an `Integer`) is passed to the 'handle(...)'  method of the `CollectionElementHandler`.
 
-= Why separate `Collection` traversal logic? =
-
- # A loop is a natural logic boundary and should be separated where possible.
- # To stop repeating yourself (SRY). Java developers are constantly writing for loops!
- # Loops that exist within private methods can't be tested directly. They must be tested through public entry points. By extracting them into separate classes they are easier to test.
- # Processing logic of an element is more cohesive (since it can separated into its own class).
-
 = This is so much longer than writing a for-loop. Why bother? =
 
- Granted that many IDES such as [http://www.jetbrains.com/idea/ Intellij] and [http://www.eclipse.org/ Eclipse] can automate the creation of template code for loops. That still does not prevent you from repeating yourself. It's just easier to repeat yourself in these cases!
+Granted that many IDES such as [http://www.jetbrains.com/idea/ Intellij] and [http://www.eclipse.org/ Eclipse] can automate the creation of template code for loops. That still does not prevent you from repeating the same iterative code. 
 
- By separating logic for processing an element within a `Collection` you ensure creation of cohesive classes.
+Some of the main reasons are:
+
+ # A loop is a natural logic boundary (everything within the loop usually has a single purpose) and is a good candidate for extracting a (cohesive) class.
+ # Loops that exist within private methods can't be tested directly. They must be tested through public entry points. By extracting them into separate classes they are easier to test.
+ # To stop you from writing or generating the same code over and over.
 
 = How about a more complex example? =
 
