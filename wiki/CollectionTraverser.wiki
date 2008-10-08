@@ -1,5 +1,5 @@
 #summary Separates the navigation of a Collection from its elements.
-#labels Phase-Implementation,StartingPoint
+#labels Phase-Implementation,CollectionTraverser,StartingPoint
 
 = Introduction =
 
@@ -124,7 +124,7 @@ public final class AttributeListBuilder implements CollectionElementHandler<MBea
 
     private final List<MBeanAttributeInfo> attributesList = new ArrayList<MBeanAttributeInfo>();
 
-    public AttributeListBuilder(MBeanFactory factory) {
+    public AttributeListBuilder(final String context, final MBeanFactory factory) {
        ...
     }
 
@@ -165,3 +165,5 @@ public final class ContextAwareMBean implements DynamicMBean
     ...
 }
 }}}
+
+= Examples =
