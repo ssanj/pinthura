@@ -68,7 +68,7 @@ we see that there is no explicit code for navigating the `Collection`. Every `Co
 
 Granted that many IDES such as [http://www.jetbrains.com/idea/ Intellij] and [http://www.eclipse.org/ Eclipse] can automate the creation of template code, for loops. That still does not prevent you from repeating the same iterative code. 
 
-Some of the main reasons are:
+Some of the main reasons for using a `CollectionTraverser` are:
 
  # A loop is a natural logic boundary (everything within the loop usually has a single purpose) and is a good candidate for extracting a (cohesive) class.
  # Loops that exist within private methods can't be tested directly. They must be tested through public entry points. Extracting separate classes, makes them easier to test.
