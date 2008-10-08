@@ -65,7 +65,7 @@ public final class ACollectionTraverserUnderIntTest {
         assertThat(result.size(), equalTo(NO_OF_PACKAGES));
         assertThat(result.get(0), equalTo("com.googlecode.pinthura.data"));
         assertThat(result.get(1), equalTo("java.sql"));
-         assertThat(result.get(2), equalTo("java.lang"));
+        assertThat(result.get(2), equalTo("java.lang"));
         assertThat(result.get(3), equalTo("java.util"));
      }
 }
