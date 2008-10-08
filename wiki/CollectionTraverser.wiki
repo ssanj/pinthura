@@ -3,12 +3,53 @@
 
 = Introduction =
 
-Add your content here.
+A `CollectionTraverser` abstracts the navigation of a `Collection` and allows the user to work on the elements of that `Collection`.
 
+= A simple example =
 
-= Details =
+Take a simple function that sums the numbers of a supplied list:
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+{{{
+CollectionTraverser traverser = new CollectionTraverserImpl();
+Collection<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5);
+Integer result = traverser.forEach(numbers, new TotalHandler());
+assertThat(result, equalTo(15));
+}}}
+
+If we have a look at `TotalHandler`:
+
+{{{
+package com.googlecode.pinthura.traverser.list;
+
+import com.googlecode.pinthura.traverser.collection.CollectionElementHandler;
+
+public final class TotalHandler implements CollectionElementHandler<Integer, Integer> {
+
+    private int total = 0;
+
+    public void handle(final Integer element) {
+        total += element;
+    }
+
+    public Integer getResult() {
+        return total;
+    }
+}
+}}}
+
+We see that there is no explicit code for navigating the `Collection`. Every `Collection` element (in this case `Integer`s) is passed to implementation of the `CollectionElementHandler`.
+
+This contracts in the normal implementation which would be:
+
+{{{
+   public void handle(Collection<Integer> collection) {
+      int total = 0;
+      for (Integer number : collection) {
+         total += number ;
+      }
+      
+      return total;
+   }   
+}}}
+
+= Why separate `Collection` traversal logic? =
