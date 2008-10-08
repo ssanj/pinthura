@@ -49,9 +49,9 @@ public interface CollectionElementHandler<Input, Output> {
 }
 }}}
 
-We see that there is no explicit code for navigating the `Collection`. Every `Collection` element (in this case `Integer`s) is passed to implementation of the `CollectionElementHandler`.
+We see that there is no explicit code for navigating the `Collection`. Every `Collection` element (in this case an `Integer`) is passed to implementation of the `CollectionElementHandler`.
 
-This contracts in the normal implementation which would be:
+This contrasts with the usual implementation which would be:
 
 {{{
    public void handle(Collection<Integer> collection) {
