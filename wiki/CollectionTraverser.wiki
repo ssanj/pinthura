@@ -70,7 +70,7 @@ Granted that many IDES such as [http://www.jetbrains.com/idea/ Intellij] and [ht
 
 Some of the main reasons for using a `CollectionTraverser` are:
 
- # A loop is a natural logic boundary (everything within the loop usually has a single purpose) and is a good candidate for extracting a (cohesive) class.
+ # A loop is a natural logic boundary (everything within the loop usually has a single purpose) and is a good candidate for extracting a (cohesive) class (A `CollectionElementHandler` or `CollectionElementWithIndexHandler` implementation).
  # Loops that exist within private methods can't be tested directly. They must be tested through public entry points. Extracting separate classes, makes them easier to test.
  # To stop you from writing or generating the same code over and over.
 
