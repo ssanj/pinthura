@@ -118,19 +118,20 @@ The entry point for testing this class is at the `getMBeanInfo()` method. The `b
 Using the `CollectionTraverser` we could do this:
 
 {{{
-public final class AttributeListBuilder implements CollectionElementHandler<String, List< MBeanAttributeInfo>> {
+public final class AttributeListBuilder implements CollectionElementHandler< MBeanAttributeInfo, List<MBeanAttributeInfo>> {
 
     private final List<MBeanAttributeInfo> attributesList = new ArrayList<MBeanAttributeInfo>();
 
-    public void handle(final String propertyName) {
+    public void handle(final MBeanAttributeInfo info) {
+            String propertyName = info.toString();
             if (propertyName.startsWith(context + "_")) {
                 String attributeName = propertyName.substring(context.length() + 1);
-                MBeanAttributeInfo attribute = new MBeanAttributeInfo(attributeName, String.class.getName(), "",true, true, false);
+                MBeanAttributeInfo attribute = new MBeanAttributeInfo(attributeName, String.class.getName(), "", true, true, false);
                 attributesList.add(attribute);
             }
     }
 
-    public List< MBeanAttributeInfo>> getResult() {
+    public List<MBeanAttributeInfo>> getResult() {
        return attributesList;
     }
 }
@@ -138,8 +139,15 @@ public final class AttributeListBuilder implements CollectionElementHandler<Stri
 
 The `AttributeListBuilder` class is quite simple and it is easier to test. The `ContextAwareMBean` is also simpler because it delegates building of the attribute list to the `AttributeListBuilder`:
 
+{{{
 public final class ContextAwareMBean implements DynamicMBean
+
+    public ContextAwareBean(CollectionTraverser traverser) {
+       ...
+    }
+
     ...
+
     public MBeanInfo getMBeanInfo() {
         String name = getClass().getName();
         String description = this.description;
