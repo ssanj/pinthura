@@ -167,4 +167,4 @@ public final class ContextAwareMBean implements DynamicMBean
 }}}
 
 = Examples =
- # PackageNameRetrieverExample
+ # [PackageNameRetrieverExample Package name retriever]
