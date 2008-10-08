@@ -137,7 +137,7 @@ public final class AttributeListBuilder implements CollectionElementHandler< MBe
 }
 }}}
 
-The `AttributeListBuilder` class is quite simple and it is easier to test. The `ContextAwareMBean` is also simpler because it delegates building of the attribute list to the `AttributeListBuilder`:
+The `AttributeListBuilder` class is quite simple and it is easier to test. The `ContextAwareMBean` is also simpler because it delegates building of the attribute list to the `AttributeListBuilder`. I've also hidden instantiation behind a `MBeanFactory`:
 
 {{{
 public final class ContextAwareMBean implements DynamicMBean
@@ -153,7 +153,7 @@ public final class ContextAwareMBean implements DynamicMBean
         //TODO: move this to the AttributeBuilder.
         MBeanAttributeInfo[] attributes = attributesList.toArray(new MBeanAttributeInfo[0]);
 
-        return factory.createMBeanInfo(getClass().getName(), description);
+        return factory.createMBeanInfo(getClass().getName(), description, attributes);
     }
 
     ...
