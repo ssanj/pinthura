@@ -118,15 +118,19 @@ The entry point for testing this class is at the `getMBeanInfo()` method. The `b
 Using the `CollectionTraverser` we could do this:
 
 {{{
-public final class AttributeListBuilder implements CollectionElementHandler< MBeanAttributeInfo, List<MBeanAttributeInfo>> {
+public final class AttributeListBuilder implements CollectionElementHandler<MBeanAttributeInfo, List<MBeanAttributeInfo>> {
 
     private final List<MBeanAttributeInfo> attributesList = new ArrayList<MBeanAttributeInfo>();
+
+    public AttributeListBuilder(MBeanFactory factory) {
+       ...
+    }
 
     public void handle(final MBeanAttributeInfo info) {
             String propertyName = info.toString();
             if (propertyName.startsWith(context + "_")) {
                 String attributeName = propertyName.substring(context.length() + 1);
-                MBeanAttributeInfo attribute = new MBeanAttributeInfo(attributeName, String.class.getName(), "blablablah", true, true, false);
+                MBeanAttributeInfo attribute = factory.createMBeabAttributeInfo(attributeName, String.class.getName());
                 attributesList.add(attribute);
             }
     }
