@@ -66,12 +66,12 @@ we see that there is no explicit code for navigating the `Collection`. Every `Co
 
 = This is so much longer than writing a for-loop. Why bother? =
 
-Granted that many IDES such as [http://www.jetbrains.com/idea/ Intellij] and [http://www.eclipse.org/ Eclipse] can automate the creation of template code for loops. That still does not prevent you from repeating the same iterative code. 
+Granted that many IDES such as [http://www.jetbrains.com/idea/ Intellij] and [http://www.eclipse.org/ Eclipse] can automate the creation of template code, for loops. That still does not prevent you from repeating the same iterative code. 
 
 Some of the main reasons are:
 
  # A loop is a natural logic boundary (everything within the loop usually has a single purpose) and is a good candidate for extracting a (cohesive) class.
- # Loops that exist within private methods can't be tested directly. They must be tested through public entry points. By extracting them into separate classes they are easier to test.
+ # Loops that exist within private methods can't be tested directly. They must be tested through public entry points. Extracting separate classes, makes them easier to test.
  # To stop you from writing or generating the same code over and over.
 
 = How about a more complex example? =
@@ -110,7 +110,7 @@ public final class ContextAwareMBean implements DynamicMBean
     ...
 }}}
 
-The entry point for testing this class is at the `getMBeanInfo()` method. The `buildAttributeList ()` method which does the bulk of the work can't be tested directly, as it is a private method.
+The entry point for testing this class is at the `getMBeanInfo()` method. The `buildAttributeList()` method which does the bulk of the work can't be tested directly - as it is a private method.
 
 Using the `CollectionTraverser` we could do this:
 
@@ -123,7 +123,7 @@ public final class AttributeListBuilder implements CollectionElementHandler< MBe
             String propertyName = info.toString();
             if (propertyName.startsWith(context + "_")) {
                 String attributeName = propertyName.substring(context.length() + 1);
-                MBeanAttributeInfo attribute = new MBeanAttributeInfo(attributeName, String.class.getName(), "", true, true, false);
+                MBeanAttributeInfo attribute = new MBeanAttributeInfo(attributeName, String.class.getName(), "blablablah", true, true, false);
                 attributesList.add(attribute);
             }
     }
