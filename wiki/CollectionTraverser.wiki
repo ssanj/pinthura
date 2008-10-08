@@ -7,13 +7,19 @@ A `CollectionTraverser` abstracts the navigation of a `Collection` and allows th
 
 = A simple example =
 
-Take a simple function that sums the `Integers`of a supplied `Collection`:
+Take a simple function that sums the `Integers` of a supplied `Collection`:
 
 {{{
+   Collection<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5);
+   sum(numbers);
+   assertThat(result, equalTo(15));
+
+   ...
+ 
    public int sum(Collection<Integer> collection) {
       int total = 0;
       for (Integer number : collection) {
-         total += number ;
+         total += number;
       }
       
       return total;
