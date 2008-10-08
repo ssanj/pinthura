@@ -65,3 +65,5 @@ public interface CollectionElementHandler<Input, Output> {
 we see that there is no explicit code for navigating the `Collection`. Every `Collection` element (in this case an `Integer`) is passed to the 'handle(...)'  method of the `CollectionElementHandler`.
 
 = Why separate `Collection` traversal logic? =
+
+= This is so much longer than writing a for-loop. Why bother? =
