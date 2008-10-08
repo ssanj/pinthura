@@ -7,7 +7,7 @@ A `CollectionTraverser` abstracts the navigation of a `Collection` and allows th
 
 = A simple example =
 
-Take a simple function that sums the numbers of a supplied list:
+Take a simple function that sums the numbers of a supplied `Collection`:
 
 {{{
    public void sum(Collection<Integer> collection) {
