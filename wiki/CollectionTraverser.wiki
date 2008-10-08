@@ -102,9 +102,8 @@ public final class ContextAwareMBean implements DynamicMBean
         for (Iterator i = properties.keySet().iterator(); i.hasNext();) {
             String propertyName = (String) i.next();
             if (propertyName.startsWith(context + "_")) {
-                String attributeName = propertyName.substring(mode.length() + 1);
-                MBeanAttributeInfo attribute = new MBeanAttributeInfo(attributeName, String.class.getName(), "", 
-                        true, true, false);
+                String attributeName = propertyName.substring(context.length() + 1);
+                MBeanAttributeInfo attribute = new MBeanAttributeInfo(attributeName, String.class.getName(), "",true, true, false);
                 attributesList.add(attribute);
             }
         }
