@@ -142,23 +142,18 @@ The `AttributeListBuilder` class is quite simple and it is easier to test. The `
 {{{
 public final class ContextAwareMBean implements DynamicMBean
 
-    public ContextAwareBean(CollectionTraverser traverser) {
+    public ContextAwareBean(CollectionTraverser traverser, MBeanFactory factory) {
        ...
     }
 
     ...
 
     public MBeanInfo getMBeanInfo() {
-        String name = getClass().getName();
-        String description = this.description;
-        MBeanConstructorInfo[] constructors = {};
-        MBeanOperationInfo[] operations = {};
-        MBeanNotificationInfo[] notifications = {};
-        
         List<MBeanAttributeInfo> attributesList = traverser.forEach(properties.keySet(), factory.createAttributeBuilder());
+        //TODO: move this to the AttributeBuilder.
         MBeanAttributeInfo[] attributes = attributesList.toArray(new MBeanAttributeInfo[0]);
-        return new MBeanInfo(name, description, attributes, constructors, 
-                operations, notifications);
+
+        return factory.createMBeanInfo(getClass().getName(), description);
     }
 
     ...
