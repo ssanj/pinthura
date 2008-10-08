@@ -66,12 +66,12 @@ we see that there is no explicit code for navigating the `Collection`. Every `Co
 
 = Why separate `Collection` traversal logic? =
 
- # To stop repeating yourself. (SRY)
- # It's easier to test complex code because you are not testing traversal logic as well.
- # You can reuse the processing logic of an element because it now can be separated into its own class. 
+ # To stop repeating yourself (SRY). Java developers are constantly writing for loops!
+ # It's easier to test complex code within loops because now you are not testing traversal logic as well.
+ # Processing logic of an element is more cohesive (since it can separated into its own class).
 
 = This is so much longer than writing a for-loop. Why bother? =
 
- Granted that many IDES such as [Intellij] and [Eclipse] can automate the creation of template code for loops. That still does not prevent you from repeating yourself. It's jus t easier to repeat yourself in these cases!
+ Granted that many IDES such as [http://www.jetbrains.com/idea/ Intellij] and [http://www.eclipse.org/ Eclipse] can automate the creation of template code for loops. That still does not prevent you from repeating yourself. It's jus t easier to repeat yourself in these cases!
 
  By separating logic for processing an element within a `Collection` you ensure creation of cohesive classes.
