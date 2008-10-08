@@ -10,6 +10,19 @@ A `CollectionTraverser` abstracts the navigation of a `Collection` and allows th
 Take a simple function that sums the numbers of a supplied list:
 
 {{{
+   public void sum(Collection<Integer> collection) {
+      int total = 0;
+      for (Integer number : collection) {
+         total += number ;
+      }
+      
+      return total;
+   }   
+}}}
+
+We could rewrite this with a `CollectionTraverser` as:
+
+{{{
 CollectionTraverser traverser = new CollectionTraverserImpl();
 Collection<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5);
 Integer result = traverser.forEach(numbers, new TotalHandler());
@@ -43,19 +56,6 @@ public interface CollectionElementHandler<Input, Output> {
 }
 }}}
 
-We see that there is no explicit code for navigating the `Collection`. Every `Collection` element (in this case an `Integer`) is passed to implementation of the `CollectionElementHandler`.
-
-This contrasts with the usual implementation which would be:
-
-{{{
-   public void handle(Collection<Integer> collection) {
-      int total = 0;
-      for (Integer number : collection) {
-         total += number ;
-      }
-      
-      return total;
-   }   
-}}}
+we see that there is no explicit code for navigating the `Collection`. Every `Collection` element (in this case an `Integer`) is passed to the 'handle(...)'  method of the `CollectionElementHandler`.
 
 = Why separate `Collection` traversal logic? =
