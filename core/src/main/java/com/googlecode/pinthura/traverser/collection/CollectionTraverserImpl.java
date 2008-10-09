@@ -44,4 +44,15 @@ public final class CollectionTraverserImpl implements CollectionTraverser {
 
         return handler.getResult();
     }
+
+    public <Input, Output> Output forEach(final Collection<? extends Input> collection,
+                                          final CollectionElementWithPartialResult<Input, Output> handler, final Output prevResult) {
+
+        Output result = prevResult;
+        for (Input input : collection) {
+            result = handler.handle(input, result);
+        }
+
+        return result;
+    }
 }
