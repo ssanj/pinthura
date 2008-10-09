@@ -13,9 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.pinthura.traverser.list;
-
-import com.googlecode.pinthura.traverser.collection.CollectionElementWithIndexHandler;
+package com.googlecode.pinthura.traverser.collection;
 
 public final class CharacterFormatter implements CollectionElementWithIndexHandler<Character, String> {
 
