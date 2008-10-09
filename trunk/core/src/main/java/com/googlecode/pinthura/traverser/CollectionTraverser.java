@@ -17,6 +17,7 @@ package com.googlecode.pinthura.traverser;
 
 import com.googlecode.pinthura.traverser.collection.CollectionElementHandler;
 import com.googlecode.pinthura.traverser.collection.CollectionElementWithIndexHandler;
+import com.googlecode.pinthura.traverser.collection.CollectionElementWithPartialResult;
 
 import java.util.Collection;
 
@@ -24,4 +25,6 @@ public interface CollectionTraverser {
 
     <Input, Output> Output forEach(Collection<? extends Input> collection, CollectionElementHandler<Input, Output> handler);
     <Input, Output> Output forEach(Collection<? extends Input> collection, CollectionElementWithIndexHandler<Input, Output> handler);
+    <Input, Output> Output forEach(Collection<? extends Input> collection, CollectionElementWithPartialResult<Input, Output> handler,
+                                   Output prevResult);
 }
