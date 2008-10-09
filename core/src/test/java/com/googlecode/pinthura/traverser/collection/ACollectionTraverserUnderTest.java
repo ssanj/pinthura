@@ -13,11 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.pinthura.traverser.list;
+package com.googlecode.pinthura.traverser.collection;
 
 import com.googlecode.pinthura.traverser.CollectionTraverser;
-import com.googlecode.pinthura.traverser.collection.CollectionElementHandler;
-import com.googlecode.pinthura.traverser.collection.CollectionTraverserImpl;
 import org.easymock.EasyMock;
 import org.easymock.IMocksControl;
 import static org.hamcrest.core.IsEqual.equalTo;

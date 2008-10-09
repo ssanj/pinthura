@@ -13,22 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.pinthura.traverser.list;
+package com.googlecode.pinthura.traverser.collection;
 
-import com.googlecode.pinthura.traverser.collection.CollectionElementHandler;
+public final class TotalHandler implements CollectionElementHandler<Integer, Integer> {
 
-import java.util.ArrayList;
-import java.util.List;
+    private int total = 0;
 
-public final class PackageNameRetreiver implements CollectionElementHandler<Class<?>, List<String>> {
-
-    private final List<String> packageNames = new ArrayList<String>();
-
-    public void handle(final Class<?> element) {
-        packageNames.add(element.getPackage().getName());
+    public void handle(final Integer element) {
+        total += element;
     }
 
-    public List<String> getResult() {
-        return new ArrayList<String>(packageNames);
+    public Integer getResult() {
+        return total;
     }
 }
+
