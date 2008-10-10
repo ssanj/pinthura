@@ -36,7 +36,7 @@ public final class PropertyFinderImpl implements PropertyFinder {
             }
         }
 
-        throw new PropertyFinderException();
+        throw new PropertyFinderException("Could not find property: " + property + " on " + parentClass);
     }
 
     private List<String> getCombinations(final String property) {

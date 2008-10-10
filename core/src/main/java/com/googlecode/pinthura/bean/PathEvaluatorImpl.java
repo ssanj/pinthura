@@ -32,8 +32,8 @@ public final class PathEvaluatorImpl implements PathEvaluator {
         String[] properties = path.split(PATH_SEPARATOR);
         Object currentInstance = instance;
         for (String property : properties) {
-            Method method = propertyFinder.executeMethod(property, currentInstance.getClass());
             try {
+                Method method = propertyFinder.executeMethod(property, currentInstance.getClass());
                 currentInstance = method.invoke(currentInstance);
             } catch (Exception e) {
                 throw new PathEvaluatorException(e);

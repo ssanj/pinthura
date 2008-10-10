@@ -20,7 +20,7 @@ import static org.junit.Assert.assertThat;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.lang.reflect.Method;
+import java.lang.reflect.Method;import static junit.framework.Assert.fail;
 
 public final class APropertyFinderUnderTest {
 
@@ -43,8 +43,13 @@ public final class APropertyFinderUnderTest {
         assertThat(result, equalTo(Package.class.getMethod("isSealed")));
     }
 
-    @Test(expected = PropertyFinderException.class)
+    @Test
     public void shouldThrownAnExceptionIfThePropertyIsNotFound() {
-        propertyFinder.executeMethod("blah", String.class);
+        try {
+            propertyFinder.executeMethod("blah", String.class);
+            fail();
+        } catch (PropertyFinderException e) {
+            assertThat(e.getMessage(), equalTo("Could not find property: blah on class java.lang.String"));
+        }
     }
 }
