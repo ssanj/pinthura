@@ -16,6 +16,7 @@
 package com.googlecode.pinthura.traverser.collection;
 
 import com.googlecode.pinthura.traverser.CollectionTraverser;
+import com.googlecode.pinthura.traverser.Break;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -26,7 +27,11 @@ public final class CollectionTraverserImpl implements CollectionTraverser {
                           final CollectionElementHandler< Input, Output> handler) {
 
         for (Input input : collection) {
-            handler.handle(input);
+            try {
+                handler.handle(input);
+            } catch (final Break b) {
+                break;
+            }
         }
 
         return handler.getResult();
@@ -39,7 +44,11 @@ public final class CollectionTraverserImpl implements CollectionTraverser {
 
         long index = 0;
         while (iterator.hasNext()) {
-            handler.handle(iterator.next(), (index == 0), !iterator.hasNext(), index++);
+            try {
+                handler.handle(iterator.next(), (index == 0), !iterator.hasNext(), index++);
+            } catch (Break b) {
+                break;
+            }
         }
 
         return handler.getResult();
@@ -50,7 +59,11 @@ public final class CollectionTraverserImpl implements CollectionTraverser {
 
         Output result = prevResult;
         for (Input input : collection) {
-            result = handler.handle(input, result);
+            try {
+                result = handler.handle(input, result);
+            } catch (Break b) {
+                break;
+            }
         }
 
         return result;
