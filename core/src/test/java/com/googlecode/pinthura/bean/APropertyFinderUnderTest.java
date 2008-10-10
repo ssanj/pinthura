@@ -20,7 +20,9 @@ import static org.junit.Assert.assertThat;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.lang.reflect.Method;import static junit.framework.Assert.fail;
+import java.lang.reflect.Method;
+
+import static junit.framework.Assert.fail;
 
 public final class APropertyFinderUnderTest {
 
@@ -32,24 +34,33 @@ public final class APropertyFinderUnderTest {
     }
 
     @Test
-    public void shouldReturnAProperty() throws NoSuchMethodException {
-        Method result = propertyFinder.executeMethod("package", Class.class);
-        assertThat(result, equalTo(Class.class.getMethod("getPackage")));
+    public void shouldReturnAGetterProperty() throws NoSuchMethodException {
+        expectProperty("package", Class.class, "getPackage");
     }
 
     @Test
     public void shouldReturnABooleanProperty() throws NoSuchMethodException {
-        Method result = propertyFinder.executeMethod("sealed", Package.class);
-        assertThat(result, equalTo(Package.class.getMethod("isSealed")));
+        expectProperty("sealed", Package.class, "isSealed");
+    }
+
+    @Test
+    public void shouldReturnANamedProperty() throws NoSuchMethodException {
+        expectProperty("toString", Integer.class, "toString");
     }
 
     @Test
     public void shouldThrownAnExceptionIfThePropertyIsNotFound() {
         try {
-            propertyFinder.executeMethod("blah", String.class);
+            propertyFinder.findMethodFor("blah", String.class);
             fail();
         } catch (PropertyFinderException e) {
             assertThat(e.getMessage(), equalTo("Could not find property: blah on class java.lang.String"));
         }
+    }
+
+    private void expectProperty(final String property, final Class<?> parentClass, final String methodName)
+            throws NoSuchMethodException {
+        Method result = propertyFinder.findMethodFor(property, parentClass);
+        assertThat(result, equalTo(parentClass.getMethod(methodName)));
     }
 }

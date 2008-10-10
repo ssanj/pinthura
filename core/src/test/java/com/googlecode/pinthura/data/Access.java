@@ -17,7 +17,7 @@ package com.googlecode.pinthura.data;
 
 public final class Access {
 
-    public enum Code {FULL, PARTIAL, ZERO}
+    public enum Code { FULL, PARTIAL, ZERO }
 
     public Code getCode() {
         return Code.PARTIAL;

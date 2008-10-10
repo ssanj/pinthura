@@ -22,8 +22,8 @@ import java.util.Locale;
 
 public final class PropertyFinderImpl implements PropertyFinder {
 
-    @SuppressWarnings({"unchecked", "ConstantConditions"})
-    public <ParentClass> Method executeMethod(final String property, final Class<ParentClass> parentClass) {
+    @SuppressWarnings({ "unchecked", "ConstantConditions" })
+    public <ParentClass> Method findMethodFor(final String property, final Class<ParentClass> parentClass) {
         List<String> properties = getCombinations(property);
 
         for (String methodName : properties) {
@@ -42,6 +42,7 @@ public final class PropertyFinderImpl implements PropertyFinder {
     private List<String> getCombinations(final String property) {
         String formattedProperty = property.substring(0, 1).toUpperCase(Locale.ENGLISH) + property.substring(1);
         return Arrays.asList(new StringBuilder("get").append(formattedProperty).toString(),
-                             new StringBuilder("is").append(formattedProperty).toString());
+                             new StringBuilder("is").append(formattedProperty).toString(),
+                             property);
     }
 }

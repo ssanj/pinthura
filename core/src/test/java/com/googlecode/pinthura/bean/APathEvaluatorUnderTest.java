@@ -19,7 +19,6 @@ import com.googlecode.pinthura.data.Access;
 import com.googlecode.pinthura.data.Authentication;
 import com.googlecode.pinthura.data.Authorization;
 import com.googlecode.pinthura.data.Employee;
-import static junit.framework.Assert.fail;
 import org.easymock.EasyMock;
 import org.easymock.IMocksControl;
 import static org.hamcrest.core.IsEqual.equalTo;
@@ -41,11 +40,20 @@ public final class APathEvaluatorUnderTest {
     }
 
     @Test
-    public void shouldEvaluateAGivenPath() throws NoSuchMethodException {
-        EasyMock.expect(mockPropertyFinder.executeMethod("package", Class.class));
-        EasyMock.expectLastCall().andReturn(Class.class.getMethod("getPackage"));
-        EasyMock.expect(mockPropertyFinder.executeMethod("name", Package.class));
-        EasyMock.expectLastCall().andReturn(Package.class.getMethod("getName"));
+    public void shouldEvaluateASinglePathElement() throws NoSuchMethodException {
+        expectProperty("package", Class.class, "getPackage");
+        mockControl.replay();
+
+        Package result = pathEvaluator.evaluate("package", Class.class);
+        assertThat(result, equalTo(Class.class.getPackage()));
+
+        mockControl.verify();
+    }
+
+    @Test
+    public void shouldEvaluateAMultiPathElement() throws NoSuchMethodException {
+        expectProperty("package", Class.class, "getPackage");
+        expectProperty("name", Package.class, "getName");
         mockControl.replay();
 
         String result = pathEvaluator.evaluate("package.name", Class.class);
@@ -55,7 +63,7 @@ public final class APathEvaluatorUnderTest {
     }
 
     @Test
-    public void shouldEvaluateAnotherGivenPath() throws NoSuchMethodException {
+    public void shouldEvaluateAnotherMultiPathElement() throws NoSuchMethodException {
         expectProperty("authentication", Employee.class, "getAuthentication");
         expectProperty("authorization", Authentication.class, "getAuthorization");
         expectProperty("access", Authorization.class, "getAccess");
@@ -68,38 +76,8 @@ public final class APathEvaluatorUnderTest {
         mockControl.verify();
     }
 
-    @SuppressWarnings({ "ThrowableInstanceNeverThrown", "unchecked" })
-    @Test
-    public void shouldThrowAnExceptionIfAPropertyFinderExceptionIsThrown() throws NoSuchMethodException {
-        expectProperty("authentication", Employee.class, "getAuthentication");
-        EasyMock.expect(mockPropertyFinder.executeMethod("boohoo", Authentication.class)).andThrow(new PropertyFinderException("test"));
-        mockControl.replay();
-
-        try {
-            pathEvaluator.evaluate("authentication.boohoo", new Employee());
-            fail();
-        } catch (PathEvaluatorException e) {
-            assertThat((Class<PropertyFinderException>) e.getCause().getClass(), equalTo(PropertyFinderException.class));
-            assertThat(e.getCause().getMessage(), equalTo("test"));
-        }
-    }
-
-    @SuppressWarnings({ "ThrowableInstanceNeverThrown", "unchecked" })
-    @Test
-    public void shouldThrowAnExceptionIfAnyExceptionIsThrown() throws NoSuchMethodException {
-        EasyMock.expect(mockPropertyFinder.executeMethod("boohoo", Authentication.class)).andThrow(new NullPointerException());
-        mockControl.replay();
-
-        try {
-            pathEvaluator.evaluate("boohoo", new Authentication());
-            fail();
-        } catch (PathEvaluatorException e) {
-            assertThat((Class<NullPointerException>) e.getCause().getClass(), equalTo(NullPointerException.class));
-        }
-    }
-
     private void expectProperty(final String property, final Class<?> parentClass, final String methodName) throws NoSuchMethodException {
-        EasyMock.expect(mockPropertyFinder.executeMethod(property, parentClass)).
+        EasyMock.expect(mockPropertyFinder.findMethodFor(property, parentClass)).
                 andReturn(parentClass.getMethod(methodName));
     }
 }
