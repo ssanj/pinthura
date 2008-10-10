@@ -42,7 +42,7 @@ public final class APathEvaluatorWithExceptionsUnderTest {
     @Test
     public void shouldThrowAnExceptionIfAPropertyFinderExceptionIsThrown() throws NoSuchMethodException {
         expectProperty("authentication", Employee.class, "getAuthentication");
-        EasyMock.expect(mockPropertyFinder.executeMethod("boohoo", Authentication.class)).andThrow(new PropertyFinderException("test"));
+        EasyMock.expect(mockPropertyFinder.findMethodFor("boohoo", Authentication.class)).andThrow(new PropertyFinderException("test"));
         mockControl.replay();
 
         try {
@@ -57,7 +57,7 @@ public final class APathEvaluatorWithExceptionsUnderTest {
     @SuppressWarnings({ "ThrowableInstanceNeverThrown", "unchecked" })
     @Test
     public void shouldThrowAnExceptionIfAnyExceptionIsThrown() throws NoSuchMethodException {
-        EasyMock.expect(mockPropertyFinder.executeMethod("boohoo", Authentication.class)).andThrow(new NullPointerException());
+        EasyMock.expect(mockPropertyFinder.findMethodFor("boohoo", Authentication.class)).andThrow(new NullPointerException());
         mockControl.replay();
 
         try {
@@ -69,7 +69,7 @@ public final class APathEvaluatorWithExceptionsUnderTest {
     }
 
     private void expectProperty(final String property, final Class<?> parentClass, final String methodName) throws NoSuchMethodException {
-        EasyMock.expect(mockPropertyFinder.executeMethod(property, parentClass)).
+        EasyMock.expect(mockPropertyFinder.findMethodFor(property, parentClass)).
                 andReturn(parentClass.getMethod(methodName));
     }
 }

@@ -19,5 +19,5 @@ import java.lang.reflect.Method;
 
 public interface PropertyFinder {
 
-    <ParentClass> Method executeMethod(String property, Class<ParentClass> parentClass) throws PropertyFinderException;
+    <ParentClass> Method findMethodFor(String property, Class<ParentClass> parentClass) throws PropertyFinderException;
 }

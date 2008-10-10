@@ -18,6 +18,6 @@ package com.googlecode.pinthura.data;
 public final class Authentication {
 
     public Authorization getAuthorization() {
-        return new Authorization();        
+        return new Authorization();
     }
 }
