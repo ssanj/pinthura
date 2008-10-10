@@ -19,4 +19,7 @@ public final class PropertyFinderException extends RuntimeException {
 
     private static final long serialVersionUID = -5068782218505188166L;
 
+    public PropertyFinderException(final String message) {
+        super(message);
+    }
 }
