@@ -15,6 +15,8 @@
  */
 package com.googlecode.pinthura.traverser.collection;
 
+import com.googlecode.pinthura.bean.PathEvaluatorImpl;
+import com.googlecode.pinthura.bean.PropertyFinderImpl;
 import com.googlecode.pinthura.data.Shape;
 import com.googlecode.pinthura.data.Square;
 import com.googlecode.pinthura.traverser.CollectionTraverser;
@@ -39,7 +41,7 @@ public final class ACollectionTraverserWithIndexUnderTest {
 
     @Before
     public void setup() {
-        traverser = new CollectionTraverserImpl();
+        traverser = new CollectionTraverserImpl(new PathEvaluatorImpl(new PropertyFinderImpl()));
         mockCollectionElementWithIndexHandler = mockControl.createMock(CollectionElementWithIndexHandler.class);
     }
 
