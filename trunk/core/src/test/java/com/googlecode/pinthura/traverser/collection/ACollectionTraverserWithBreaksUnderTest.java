@@ -15,8 +15,6 @@
  */
 package com.googlecode.pinthura.traverser.collection;
 
-import com.googlecode.pinthura.bean.PathEvaluatorImpl;
-import com.googlecode.pinthura.bean.PropertyFinderImpl;
 import com.googlecode.pinthura.traverser.Break;
 import com.googlecode.pinthura.traverser.CollectionTraverser;
 import org.easymock.EasyMock;
@@ -36,22 +34,28 @@ public final class ACollectionTraverserWithBreaksUnderTest {
 
     private CollectionTraverser traverser;
     private List<Integer> numbers;
+    private PathResolver mockPathResolver;
 
     @Before
     public void setup() {
-        traverser = new CollectionTraverserImpl(new PathEvaluatorImpl(new PropertyFinderImpl()));
         //CHECKSTYLE_OFF
         numbers = Arrays.asList(1, 2, 3, 4);
         //CHECKSTYLE_ON
+        mockPathResolver = mockControl.createMock(PathResolver.class);
+        traverser = new CollectionTraverserImpl(mockPathResolver);
     }
 
     @SuppressWarnings({ "unchecked", "ThrowableInstanceNeverThrown" })
     @Test
     public void shouldExitEarlyWhenABreakIsThrown() {
         CollectionElementHandler mockHandler = mockControl.createMock(CollectionElementHandler.class);
+        EasyMock.expect(mockPathResolver.resolvePath(PathResolver.NO_PATH, 1)).andReturn(1);
+        EasyMock.expect(mockPathResolver.resolvePath(PathResolver.NO_PATH, 2)).andReturn(2);
+
         mockHandler.handle(1);
         mockHandler.handle(2);
         EasyMock.expectLastCall().andThrow(new Break());
+
         EasyMock.expect(mockHandler.getResult()).andReturn(2);
         mockControl.replay();
 
@@ -65,11 +69,13 @@ public final class ACollectionTraverserWithBreaksUnderTest {
     @Test
     public void shouldExitEarlyWhenABreakIsThrownWithIndex() {
         CollectionElementWithIndexHandler mockHandler = mockControl.createMock(CollectionElementWithIndexHandler.class);
+        EasyMock.expect(mockPathResolver.resolvePath(PathResolver.NO_PATH, 1)).andReturn(1);
+
         mockHandler.handle(1, true, false, 0L);
         EasyMock.expectLastCall().andThrow(new Break());
+
         EasyMock.expect(mockHandler.getResult()).andReturn(1);
         mockControl.replay();
-
 
         final Integer result = traverser.<Integer, Integer>forEach(numbers, mockHandler);
         assertThat(result, equalTo(1));

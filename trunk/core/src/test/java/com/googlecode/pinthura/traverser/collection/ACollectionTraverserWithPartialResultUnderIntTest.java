@@ -32,7 +32,7 @@ public final class ACollectionTraverserWithPartialResultUnderIntTest {
 
     @Before
     public void setup() {
-        traverser = new CollectionTraverserImpl(new PathEvaluatorImpl(new PropertyFinderImpl()));
+        traverser = new CollectionTraverserImpl(new PathResolverImpl(new PathEvaluatorImpl(new PropertyFinderImpl())));
     }
 
     @Test
