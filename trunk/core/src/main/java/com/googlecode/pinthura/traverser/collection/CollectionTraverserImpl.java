@@ -15,9 +15,9 @@
  */
 package com.googlecode.pinthura.traverser.collection;
 
-import com.googlecode.pinthura.traverser.CollectionTraverser;
-import com.googlecode.pinthura.traverser.Break;
 import com.googlecode.pinthura.bean.PathEvaluator;
+import com.googlecode.pinthura.traverser.Break;
+import com.googlecode.pinthura.traverser.CollectionTraverser;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -34,46 +34,22 @@ public final class CollectionTraverserImpl implements CollectionTraverser {
 
     public <Input, Target, Output> Output forEach(final Collection<? extends Input> collection, final String path,
                                                   final CollectionElementHandler<Target, Output> handler) {
-
         return simpleForEach(collection, path, handler);
     }
 
     public <Input, Output> Output forEach(final Collection<? extends Input> collection,
                           final CollectionElementHandler< Input, Output> handler) {
-
         return simpleForEach(collection, NO_PATH, handler);
     }
 
-    @SuppressWarnings({ "unchecked" })
-    private <Input, Target, Output> Output simpleForEach(final Collection<? extends Input> collection, final String path,
-                                                   final CollectionElementHandler<Target, Output> handler) {
-
-        for (Input input : collection) {
-            try {
-                handler.handle(NO_PATH.equals(path) ? (Target) input : (Target) pathEvaluator.evaluate(path,  input));
-            } catch (Break b) {
-                break;
-            }
-        }
-
-        return handler.getResult();
+    public <Input, Target, Output> Output forEach(final Collection<? extends Input> collection, final String path,
+                                          final CollectionElementWithIndexHandler<Target, Output> handler) {
+        return indexedforEach(collection, path, handler);
     }
 
     public <Input, Output> Output forEach(final Collection<? extends Input> collection,
                                           final CollectionElementWithIndexHandler<Input, Output> handler) {
-
-        final Iterator<? extends Input> iterator = collection.iterator();
-
-        long index = 0;
-        while (iterator.hasNext()) {
-            try {
-                handler.handle(iterator.next(), (index == 0), !iterator.hasNext(), index++);
-            } catch (Break b) {
-                break;
-            }
-        }
-
-        return handler.getResult();
+        return indexedforEach(collection, NO_PATH, handler);
     }
 
     public <Input, Output> Output forEach(final Collection<? extends Input> collection,
@@ -89,5 +65,43 @@ public final class CollectionTraverserImpl implements CollectionTraverser {
         }
 
         return result;
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    private <Input, Target, Output> Output indexedforEach(final Collection<? extends Input> collection, final String path,
+                                                          final CollectionElementWithIndexHandler<Target, Output> handler) {
+
+        final Iterator<? extends Input> iterator = collection.iterator();
+
+        long index = 0;
+        while (iterator.hasNext()) {
+            try {
+                handler.handle((Target) resolvePath(path, iterator.next()), (index == 0), !iterator.hasNext(), index++);
+            } catch (Break b) {
+                break;
+            }
+        }
+
+        return handler.getResult();
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    private <Input, Target, Output> Output simpleForEach(final Collection<? extends Input> collection, final String path,
+                                                         final CollectionElementHandler<Target, Output> handler) {
+
+        for (Input input : collection) {
+            try {
+                handler.handle((Target) resolvePath(path, input));
+            } catch (Break b) {
+                break;
+            }
+        }
+
+        return handler.getResult();
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    private <Input, Target> Target resolvePath(final String path, final Input input) {
+        return (Target) (NO_PATH.equals(path) ? input : pathEvaluator.evaluate(path,  input));
     }
 }
