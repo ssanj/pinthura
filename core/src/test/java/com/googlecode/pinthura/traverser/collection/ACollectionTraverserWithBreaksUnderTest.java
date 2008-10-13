@@ -15,18 +15,19 @@
  */
 package com.googlecode.pinthura.traverser.collection;
 
-import org.junit.Test;
-import org.junit.Before;
-import static org.junit.Assert.assertThat;
+import com.googlecode.pinthura.bean.PathEvaluatorImpl;
+import com.googlecode.pinthura.bean.PropertyFinderImpl;
+import com.googlecode.pinthura.traverser.Break;
+import com.googlecode.pinthura.traverser.CollectionTraverser;
 import org.easymock.EasyMock;
 import org.easymock.IMocksControl;
 import static org.hamcrest.core.IsEqual.equalTo;
+import static org.junit.Assert.assertThat;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.List;
-
-import com.googlecode.pinthura.traverser.CollectionTraverser;
-import com.googlecode.pinthura.traverser.Break;
 
 ///Checkstyle has been turned off for 'MagicNumbers'
 public final class ACollectionTraverserWithBreaksUnderTest {
@@ -38,7 +39,7 @@ public final class ACollectionTraverserWithBreaksUnderTest {
 
     @Before
     public void setup() {
-        traverser = new CollectionTraverserImpl();
+        traverser = new CollectionTraverserImpl(new PathEvaluatorImpl(new PropertyFinderImpl()));
         //CHECKSTYLE_OFF
         numbers = Arrays.asList(1, 2, 3, 4);
         //CHECKSTYLE_ON
@@ -56,6 +57,21 @@ public final class ACollectionTraverserWithBreaksUnderTest {
 
         final Integer result = traverser.<Integer, Integer>forEach(numbers, mockHandler);
         assertThat(result, equalTo(2));
+
+        mockControl.verify();
+    }
+
+    @SuppressWarnings({ "unchecked", "ThrowableInstanceNeverThrown" })
+    @Test
+    public void shouldExitEarlyWhenPathIsGivenAndABreakIsThrown() {
+        CollectionElementHandler mockHandler = mockControl.createMock(CollectionElementHandler.class);
+        mockHandler.handle(1);
+        EasyMock.expectLastCall().andThrow(new Break());
+        EasyMock.expect(mockHandler.getResult()).andReturn(1);
+        mockControl.replay();
+
+        final Integer result = traverser.<Integer, Integer, Integer>forEach(numbers, "", mockHandler);
+        assertThat(result, equalTo(1));
 
         mockControl.verify();
     }

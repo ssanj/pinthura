@@ -24,33 +24,34 @@ import java.util.Iterator;
 
 public final class CollectionTraverserImpl implements CollectionTraverser {
 
-    private final PathEvaluator pathEvaluator;
+    private static final String NO_PATH = "";
 
-    //TODO: Remove!
-    public CollectionTraverserImpl() {
-        pathEvaluator = null;
-    }
+    private final PathEvaluator pathEvaluator;
 
     public CollectionTraverserImpl(final PathEvaluator pathEvaluator) {
         this.pathEvaluator = pathEvaluator;
     }
 
-    public <Input, Target, Output> Output forEach(final Collection<? extends Input> collection, final PathElement<Target> pathElement,
+    public <Input, Target, Output> Output forEach(final Collection<? extends Input> collection, final String path,
                                                   final CollectionElementHandler<Target, Output> handler) {
-        for (Input input : collection) {
-            handler.handle(pathElement.getType().cast(pathEvaluator.evaluate(pathElement.getPath(),  input)));
-        }
 
-        return handler.getResult();
+        return simpleForEach(collection, path, handler);
     }
 
     public <Input, Output> Output forEach(final Collection<? extends Input> collection,
                           final CollectionElementHandler< Input, Output> handler) {
 
+        return simpleForEach(collection, NO_PATH, handler);
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    private <Input, Target, Output> Output simpleForEach(final Collection<? extends Input> collection, final String path,
+                                                   final CollectionElementHandler<Target, Output> handler) {
+
         for (Input input : collection) {
             try {
-                handler.handle(input);
-            } catch (final Break b) {
+                handler.handle(NO_PATH.equals(path) ? (Target) input : (Target) pathEvaluator.evaluate(path,  input));
+            } catch (Break b) {
                 break;
             }
         }

@@ -16,6 +16,8 @@
 package com.googlecode.pinthura.traverser.collection;
 
 import com.googlecode.pinthura.traverser.CollectionTraverser;
+import com.googlecode.pinthura.bean.PathEvaluatorImpl;
+import com.googlecode.pinthura.bean.PropertyFinderImpl;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertThat;
 import org.junit.Before;
@@ -30,7 +32,7 @@ public final class ACollectionTraverserWithPartialResultUnderIntTest {
 
     @Before
     public void setup() {
-        traverser = new CollectionTraverserImpl();
+        traverser = new CollectionTraverserImpl(new PathEvaluatorImpl(new PropertyFinderImpl()));
     }
 
     @Test

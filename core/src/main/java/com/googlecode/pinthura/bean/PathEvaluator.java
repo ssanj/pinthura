@@ -17,5 +17,5 @@ package com.googlecode.pinthura.bean;
 
 public interface PathEvaluator {
 
-    <Instance, Result> Result evaluate(final String path, final Instance instance) throws PathEvaluatorException;
+    <Instance, Ouput> Ouput evaluate(final String path, final Instance instance) throws PathEvaluatorException;
 }

@@ -58,14 +58,11 @@ public final class ACollectionTraverserWithPathUnderTest {
         EasyMock.expect(mockPathEvaluator.evaluate(PATH, employee2)).andReturn(authentication2);
         mockCollectionElementHandler.handle(authentication1);
         mockCollectionElementHandler.handle(authentication2);
-        PathElement<Authentication> mockPathElement = mockControl.createMock(PathElement.class);
-        EasyMock.expect(mockPathElement.getType()).andReturn(Authentication.class).times(2);
-        EasyMock.expect(mockPathElement.getPath()).andReturn(PATH).times(2);
         EasyMock.expect(mockCollectionElementHandler.getResult()).andReturn(true);
         mockControl.replay();
 
         List<Employee> employeeList = Arrays.asList(employee1, employee2);
-        Boolean result = (Boolean) traverser.forEach(employeeList, mockPathElement, mockCollectionElementHandler);
+        Boolean result = (Boolean) traverser.forEach(employeeList, PATH, mockCollectionElementHandler);
         assertThat(result, equalTo(true));
 
         mockControl.verify();

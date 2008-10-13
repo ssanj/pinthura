@@ -18,12 +18,12 @@ package com.googlecode.pinthura.traverser.collection;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class PackageNameRetreiver implements CollectionElementHandler<Class<?>, List<String>> {
+public final class PackageNameRetreiver implements CollectionElementHandler<String, List<String>> {
 
     private final List<String> packageNames = new ArrayList<String>();
 
-    public void handle(final Class<?> element) {
-        packageNames.add(element.getPackage().getName());
+    public void handle(final String element) {
+        packageNames.add(element);
     }
 
     public List<String> getResult() {
