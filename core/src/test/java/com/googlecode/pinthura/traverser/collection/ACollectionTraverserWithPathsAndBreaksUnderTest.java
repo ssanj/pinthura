@@ -37,7 +37,7 @@ public final class ACollectionTraverserWithPathsAndBreaksUnderTest {
 
     @Before
     public void setup() {
-        traverser = new CollectionTraverserImpl(new PathEvaluatorImpl(new PropertyFinderImpl()));
+        traverser = new CollectionTraverserImpl(new PathResolverImpl(new PathEvaluatorImpl(new PropertyFinderImpl())));
     }
 
     @SuppressWarnings({ "unchecked", "ThrowableInstanceNeverThrown" })
@@ -51,6 +51,7 @@ public final class ACollectionTraverserWithPathsAndBreaksUnderTest {
         mockHandler.handle(3);
         //CHECKSTYLE_ON
         EasyMock.expectLastCall().andThrow(new Break());
+
         EasyMock.expect(mockHandler.getResult()).andReturn(2);
         mockControl.replay();
 
@@ -71,9 +72,9 @@ public final class ACollectionTraverserWithPathsAndBreaksUnderTest {
         mockHandler.handle("1", true, false, 0L);
         mockHandler.handle("2", false, false, 1L);
         EasyMock.expectLastCall().andThrow(new Break());
+
         EasyMock.expect(mockHandler.getResult()).andReturn(2);
         mockControl.replay();
-
 
         final Integer result = (Integer) traverser.forEach(numbers, "toString", mockHandler);
         assertThat(result, equalTo(2));

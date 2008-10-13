@@ -15,10 +15,10 @@
  */
 package com.googlecode.pinthura.traverser.collection;
 
-import com.googlecode.pinthura.bean.PathEvaluatorImpl;
-import com.googlecode.pinthura.bean.PropertyFinderImpl;
 import com.googlecode.pinthura.data.Shape;
 import com.googlecode.pinthura.data.Square;
+import com.googlecode.pinthura.data.Authentication;
+import com.googlecode.pinthura.data.Authorization;
 import com.googlecode.pinthura.traverser.CollectionTraverser;
 import org.easymock.EasyMock;
 import org.easymock.IMocksControl;
@@ -33,30 +33,32 @@ import java.util.List;
 
 public final class ACollectionTraverserWithIndexUnderTest {
 
-    private static final String RESULT_1 = "tada!";
+    private static final String RESULT_1    = "tada!";
+    private static final Integer RESULT_2   = 2;
+    private static final String PATH        = "";
 
     private final IMocksControl mockControl = EasyMock.createControl();
     private CollectionTraverser traverser;
     private CollectionElementWithIndexHandler mockCollectionElementWithIndexHandler;
+    private PathResolver mockPathResolver;
 
     @Before
     public void setup() {
-        traverser = new CollectionTraverserImpl(new PathEvaluatorImpl(new PropertyFinderImpl()));
+        mockPathResolver = mockControl.createMock(PathResolver.class);
         mockCollectionElementWithIndexHandler = mockControl.createMock(CollectionElementWithIndexHandler.class);
+        traverser = new CollectionTraverserImpl(mockPathResolver);
     }
 
     @SuppressWarnings({ "unchecked" })
     @Test
     public void shouldCallTheHandlerForEachElementInACollection() {
-        //CHECKSTYLE_OFF
-        mockCollectionElementWithIndexHandler.handle(5, true,  false, 0L);
-        mockCollectionElementWithIndexHandler.handle(4, false, false, 1L);
-        mockCollectionElementWithIndexHandler.handle(3, false, false, 2L);
-        mockCollectionElementWithIndexHandler.handle(2, false, false, 3L);
-        mockCollectionElementWithIndexHandler.handle(1, false, true,  4L);
+        expectPathResolution();
+        expectHandlerCalled();
+
         EasyMock.expect(mockCollectionElementWithIndexHandler.getResult()).andReturn(RESULT_1);
         mockControl.replay();
 
+        //CHECKSTYLE_OFF
         List<Integer> integerList = Arrays.asList(5, 4, 3, 2, 1);
         //CHECKSTYLE_ON
         String result = traverser.<Integer, String>forEach(integerList, mockCollectionElementWithIndexHandler);
@@ -71,7 +73,9 @@ public final class ACollectionTraverserWithIndexUnderTest {
         Shape shape = mockControl.createMock(Shape.class);
         Square mockSquare = mockControl.createMock(Square.class);
 
+        EasyMock.expect(mockPathResolver.resolvePath(PathResolver.NO_PATH, shape)).andReturn(shape);
         mockCollectionElementWithIndexHandler.handle(shape, true,  true, 0L);
+
         EasyMock.expect(mockCollectionElementWithIndexHandler.getResult()).andReturn(mockSquare);
         mockControl.replay();
 
@@ -79,5 +83,50 @@ public final class ACollectionTraverserWithIndexUnderTest {
         assertThat(result, sameInstance(mockSquare));
 
         mockControl.verify();
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    @Test
+    public void shouldCallTheHandlerWithTheResolvedPathEachListElement() {
+        Authentication authentication1 = new Authentication();
+        Authentication authentication2 = new Authentication();
+        Authorization authorization1 = new Authorization();
+        Authorization authorization2 = new Authorization();
+
+        CollectionElementWithIndexHandler mockHandler = mockControl.createMock(CollectionElementWithIndexHandler.class);
+        EasyMock.expect(mockPathResolver.resolvePath(PATH, authentication1)).andReturn(authorization1);
+        EasyMock.expect(mockPathResolver.resolvePath(PATH, authentication2)).andReturn(authorization2);
+        mockHandler.handle(authorization1, true, false, 0L);
+        mockHandler.handle(authorization2, false, true, 1L);
+
+        EasyMock.expect(mockHandler.getResult()).andReturn(RESULT_2);
+        mockControl.replay();
+
+        Integer result = (Integer) traverser.forEach(Arrays.asList(authentication1, authentication2), PATH, mockHandler);
+        assertThat(result, equalTo(RESULT_2));
+
+        mockControl.verify();
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    private void expectHandlerCalled() {
+        //CHECKSTYLE_OFF
+        mockCollectionElementWithIndexHandler.handle(5, true,  false, 0L);
+        mockCollectionElementWithIndexHandler.handle(4, false, false, 1L);
+        mockCollectionElementWithIndexHandler.handle(3, false, false, 2L);
+        mockCollectionElementWithIndexHandler.handle(2, false, false, 3L);
+        mockCollectionElementWithIndexHandler.handle(1, false, true,  4L);
+        //CHECKSTYLE_ON
+    }
+
+    private void expectPathResolution() {
+        //CHECKSTYLE_OFF
+        EasyMock.expect(mockPathResolver.resolvePath(PathResolver.NO_PATH, 5)).andReturn(5);
+        EasyMock.expect(mockPathResolver.resolvePath(PathResolver.NO_PATH, 4)).andReturn(4);
+        EasyMock.expect(mockPathResolver.resolvePath(PathResolver.NO_PATH, 3)).andReturn(3);
+        //CHECKSTYLE_ON
+        EasyMock.expect(mockPathResolver.resolvePath(PathResolver.NO_PATH, 2)).andReturn(2);
+        EasyMock.expect(mockPathResolver.resolvePath(PathResolver.NO_PATH, 1)).andReturn(1);
+
     }
 }

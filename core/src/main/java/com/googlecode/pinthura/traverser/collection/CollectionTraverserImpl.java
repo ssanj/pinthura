@@ -15,7 +15,6 @@
  */
 package com.googlecode.pinthura.traverser.collection;
 
-import com.googlecode.pinthura.bean.PathEvaluator;
 import com.googlecode.pinthura.traverser.Break;
 import com.googlecode.pinthura.traverser.CollectionTraverser;
 
@@ -24,12 +23,10 @@ import java.util.Iterator;
 
 public final class CollectionTraverserImpl implements CollectionTraverser {
 
-    private static final String NO_PATH = "";
+    private final PathResolver pathResolver;
 
-    private final PathEvaluator pathEvaluator;
-
-    public CollectionTraverserImpl(final PathEvaluator pathEvaluator) {
-        this.pathEvaluator = pathEvaluator;
+    public CollectionTraverserImpl(final PathResolver pathResolver) {
+        this.pathResolver = pathResolver;
     }
 
     public <Input, Target, Output> Output forEach(final Collection<? extends Input> collection, final String path,
@@ -39,7 +36,7 @@ public final class CollectionTraverserImpl implements CollectionTraverser {
 
     public <Input, Output> Output forEach(final Collection<? extends Input> collection,
                           final CollectionElementHandler< Input, Output> handler) {
-        return simpleForEach(collection, NO_PATH, handler);
+        return simpleForEach(collection, PathResolver.NO_PATH, handler);
     }
 
     public <Input, Target, Output> Output forEach(final Collection<? extends Input> collection, final String path,
@@ -49,7 +46,7 @@ public final class CollectionTraverserImpl implements CollectionTraverser {
 
     public <Input, Output> Output forEach(final Collection<? extends Input> collection,
                                           final CollectionElementWithIndexHandler<Input, Output> handler) {
-        return indexedforEach(collection, NO_PATH, handler);
+        return indexedforEach(collection, PathResolver.NO_PATH, handler);
     }
 
     public <Input, Output> Output forEach(final Collection<? extends Input> collection,
@@ -102,6 +99,6 @@ public final class CollectionTraverserImpl implements CollectionTraverser {
 
     @SuppressWarnings({ "unchecked" })
     private <Input, Target> Target resolvePath(final String path, final Input input) {
-        return (Target) (NO_PATH.equals(path) ? input : pathEvaluator.evaluate(path,  input));
+        return (Target) pathResolver.resolvePath(path, input);
     }
 }

@@ -33,12 +33,13 @@ import java.util.List;
 public final class ACollectionTraverserUnderIntTest {
 
     private static final int NO_OF_PACKAGES = 4;
+    private static final int SUM_TOTAL      = 15;
 
     private CollectionTraverser traverser;
 
     @Before
     public void setup() {
-        traverser = new CollectionTraverserImpl(new PathEvaluatorImpl(new PropertyFinderImpl()));
+        traverser = new CollectionTraverserImpl(new PathResolverImpl(new PathEvaluatorImpl(new PropertyFinderImpl())));
     }
 
     @Test
@@ -48,9 +49,7 @@ public final class ACollectionTraverserUnderIntTest {
         //CHECKSTYLE_ON
 
         Integer result = traverser.forEach(numbers, new TotalHandler());
-        //CHECKSTYLE_OFF
-        assertThat(result, equalTo(15));
-        //CHECKSTYLE_ON
+        assertThat(result, equalTo(SUM_TOTAL));
     }
 
     @Test
