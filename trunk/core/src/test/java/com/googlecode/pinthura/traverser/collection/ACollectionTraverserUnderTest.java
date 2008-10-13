@@ -15,6 +15,7 @@
  */
 package com.googlecode.pinthura.traverser.collection;
 
+import com.googlecode.pinthura.bean.PathEvaluator;
 import com.googlecode.pinthura.traverser.CollectionTraverser;
 import org.easymock.EasyMock;
 import org.easymock.IMocksControl;
@@ -39,8 +40,10 @@ public final class ACollectionTraverserUnderTest {
 
     @Before
     public void setup() {
-        traverser = new CollectionTraverserImpl();
         mockCollectionElementHandler = mockControl.createMock(CollectionElementHandler.class);
+        PathEvaluator mockPathEvaluator = mockControl.createMock(PathEvaluator.class);
+
+        traverser = new CollectionTraverserImpl(mockPathEvaluator);
     }
 
     @SuppressWarnings({ "unchecked" })
@@ -62,7 +65,7 @@ public final class ACollectionTraverserUnderTest {
 
     @SuppressWarnings({ "unchecked" })
     @Test
-    public void shouldCallTheHandlerForEachElementInList() {
+    public void shouldCallTheHandlerForEachElementInAList() {
         mockCollectionElementHandler.handle(1);
         mockCollectionElementHandler.handle(2);
         //CHECKSTYLE_OFF

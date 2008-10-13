@@ -17,11 +17,32 @@ package com.googlecode.pinthura.traverser.collection;
 
 import com.googlecode.pinthura.traverser.CollectionTraverser;
 import com.googlecode.pinthura.traverser.Break;
+import com.googlecode.pinthura.bean.PathEvaluator;
 
 import java.util.Collection;
 import java.util.Iterator;
 
 public final class CollectionTraverserImpl implements CollectionTraverser {
+
+    private final PathEvaluator pathEvaluator;
+
+    //TODO: Remove!
+    public CollectionTraverserImpl() {
+        pathEvaluator = null;
+    }
+
+    public CollectionTraverserImpl(final PathEvaluator pathEvaluator) {
+        this.pathEvaluator = pathEvaluator;
+    }
+
+    public <Input, Target, Output> Output forEach(final Collection<? extends Input> collection, final PathElement<Target> pathElement,
+                                                  final CollectionElementHandler<Target, Output> handler) {
+        for (Input input : collection) {
+            handler.handle(pathElement.getType().cast(pathEvaluator.evaluate(pathElement.getPath(),  input)));
+        }
+
+        return handler.getResult();
+    }
 
     public <Input, Output> Output forEach(final Collection<? extends Input> collection,
                           final CollectionElementHandler< Input, Output> handler) {
