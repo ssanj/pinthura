@@ -29,71 +29,55 @@ import org.junit.Test;
 import java.util.Arrays;
 import java.util.List;
 
-///Checkstyle has been turned off for 'MagicNumbers'
-public final class ACollectionTraverserWithBreaksUnderTest {
+public final class ACollectionTraverserWithPathsAndBreaksUnderTest {
 
     private final IMocksControl mockControl = EasyMock.createControl();
 
     private CollectionTraverser traverser;
-    private List<Integer> numbers;
 
     @Before
     public void setup() {
         traverser = new CollectionTraverserImpl(new PathEvaluatorImpl(new PropertyFinderImpl()));
-        //CHECKSTYLE_OFF
-        numbers = Arrays.asList(1, 2, 3, 4);
-        //CHECKSTYLE_ON
     }
 
     @SuppressWarnings({ "unchecked", "ThrowableInstanceNeverThrown" })
     @Test
-    public void shouldExitEarlyWhenABreakIsThrown() {
+    public void shouldExitEarlyWhenPathIsGivenAndABreakIsThrown() {
+        List<String> strings = Arrays.asList("1", "12", "123");
         CollectionElementHandler mockHandler = mockControl.createMock(CollectionElementHandler.class);
         mockHandler.handle(1);
         mockHandler.handle(2);
+        //CHECKSTYLE_OFF
+        mockHandler.handle(3);
+        //CHECKSTYLE_ON
         EasyMock.expectLastCall().andThrow(new Break());
         EasyMock.expect(mockHandler.getResult()).andReturn(2);
         mockControl.replay();
 
-        final Integer result = traverser.<Integer, Integer>forEach(numbers, mockHandler);
+        final Integer result = traverser.<String, Integer, Integer>forEach(strings, "length", mockHandler);
         assertThat(result, equalTo(2));
 
         mockControl.verify();
     }
 
+
     @SuppressWarnings({ "unchecked", "ThrowableInstanceNeverThrown" })
     @Test
-    public void shouldExitEarlyWhenABreakIsThrownWithIndex() {
+    public void shouldExitEarlyWhenPathIsGivenAndABreakIsThrownWithIndex() {
+        //CHECKSTYLE_OFF
+        List<Integer> numbers = Arrays.asList(1, 2, 3, 4);
+        //CHECKSTYLE_ON
         CollectionElementWithIndexHandler mockHandler = mockControl.createMock(CollectionElementWithIndexHandler.class);
-        mockHandler.handle(1, true, false, 0L);
+        mockHandler.handle("1", true, false, 0L);
+        mockHandler.handle("2", false, false, 1L);
         EasyMock.expectLastCall().andThrow(new Break());
-        EasyMock.expect(mockHandler.getResult()).andReturn(1);
+        EasyMock.expect(mockHandler.getResult()).andReturn(2);
         mockControl.replay();
 
 
-        final Integer result = traverser.<Integer, Integer>forEach(numbers, mockHandler);
-        assertThat(result, equalTo(1));
+        final Integer result = (Integer) traverser.forEach(numbers, "toString", mockHandler);
+        assertThat(result, equalTo(2));
 
         mockControl.verify();
     }
-
-    @SuppressWarnings({ "unchecked", "ThrowableInstanceNeverThrown" })
-    @Test
-    public void shouldExitEarlyWhenABreakIsThrownWithPartialResult() {
-        CollectionElementWithPartialResult mockHandler = mockControl.createMock(CollectionElementWithPartialResult.class);
-        EasyMock.expect(mockHandler.handle(1, 0)).andReturn(1);
-        //CHECKSTYLE_OFF
-        EasyMock.expect(mockHandler.handle(2, 1)).andReturn(3);
-        EasyMock.expect(mockHandler.handle(3, 3)).andThrow(new Break());
-        //CHECKSTYLE_ON
-        mockControl.replay();
-
-        final Integer result = traverser.<Integer, Integer>forEach(numbers, mockHandler, 0);
-        //CHECKSTYLE_OFF
-        assertThat(result, equalTo(3));
-        //CHECKSTYLE_ON
-
-        mockControl.verify();
-    }
-
 }
