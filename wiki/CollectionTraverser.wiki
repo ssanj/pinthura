@@ -162,6 +162,10 @@ public final class ContextAwareMBean implements DynamicMBean
 
 = How do I use paths on `Collections` ? =
 
+All supported handlers (`CollectionElementHandler, CollectionElementWithIndexHandler and CollectionElementWithResultHandler`) support the use of bean paths. A bean path allows you to selected a nested bean property of an element within a `Collection`.
+
+If for example, you wanted the `Package` name of a `Class` you could use "package.name" as the path if the `Collection` contained `Class` elements. This would resolve to Class.getPackage().getName() for each element and the String value of the package name would be passed to the handler. See [PackageNameRetrieverExample].
+
 = What if I need the current index of an iteration? =
 
 = What if I need the previous result of an iteration? =
