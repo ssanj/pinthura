@@ -63,17 +63,12 @@ public interface CollectionElementHandler<Input, Output> {
 }
 }}}
 
-we see that there is no explicit code for navigating the `Collection`. Every `Collection` element (in this case an `Integer`) is passed to the 'handle(...)'  method of the `CollectionElementHandler`.
-
-= This is so much longer than writing a for-loop. Why bother? =
-
-You wouldn't use the `CollectionTraverser` for simple loops. It is to be used mainly for loops which are intermingled with other logic and is hard to test.
- 
-It also doesn't make it any easier to test complex logic within a loop.
+we see that there is no explicit code for navigating the `Collection`. Every `Collection` element (in this case an `Integer`) is passed to the 'handle(...)'  method of the `CollectionElementHandler`, via [http://martinfowler.com/bliki/InversionOfControl.html Inversion Of Control]
 
 Some of the main reasons for using a `CollectionTraverser` are:
  # To stop you from writing or generating the same code over and over - Granted that many IDES such as [http://www.jetbrains.com/idea/ Intellij] and [http://www.eclipse.org/ Eclipse] can automate the creation of template code, for loops. That still does not prevent you from repeating the same iterative code.
- # To make your life easier by being given each `Collection` element.[http://martinfowler.com/bliki/InversionOfControl.html (IOC)]. 
+ # To make your life easier by being given each `Collection` element. 
+ # Not having to worry about the looping mechanism and focus on the logic.
  # To help in testing - A loop is a natural logic boundary (everything within the loop usually has a single purpose) and is a good candidate for extracting a (cohesive) class. Loops that exist within private methods can't be tested directly. They must be tested through public entry points. Extracting separate classes, makes them easier to test.
 
 = How about a more complex example? =
