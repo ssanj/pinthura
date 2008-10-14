@@ -3,8 +3,6 @@
 
 This example demonstrates a simple CollectionElementWithIndexHandler that returns a formatted String with the contents of the supplied list.
 
-= Details =
-
 {{{
 package com.googlecode.pinthura.traverser.collection;
 
