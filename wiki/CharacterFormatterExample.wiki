@@ -35,3 +35,25 @@ public final class CharacterFormatter implements CollectionElementWithIndexHandl
 }}}
 
 This can be run as a [www.junit.org JUnit] test:
+
+{{{
+public final class ACollectionTraverserUnderIntTest {
+
+    private CollectionTraverser traverser;
+
+    @Before
+    public void setup() {
+        traverser = new CollectionTraverserImpl(new PathEvaluatorImpl(new PropertyFinderImpl()));
+    }
+
+    ...
+
+    @Test
+    public void shouldDisplayAListOfFormattedCharacters() {
+        Collection<Character> characters = Arrays.asList('A', 'B', 'C', 'D', 'E');
+
+        String result = traverser.forEach(characters, new CharacterFormatter());
+        assertThat(result, equalTo("[A0, B1, C2, D3, E4]"));
+    }
+}
+}}}
