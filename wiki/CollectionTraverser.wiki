@@ -31,7 +31,6 @@ Take a simple function that sums the `Integers` of a supplied `Collection`:
 We could rewrite this with a `CollectionTraverser` as:
 
 {{{
-CollectionTraverser traverser = new CollectionTraverserImpl();
 Collection<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5);
 Integer result = traverser.forEach(numbers, new TotalHandler());
 assertThat(result, equalTo(15));
@@ -70,14 +69,12 @@ we see that there is no explicit code for navigating the `Collection`. Every `Co
 
 You wouldn't use the `CollectionTraverser` for simple loops. It is to be used mainly for loops which are intermingled with other logic and is hard to test.
  
-Granted that many IDES such as [http://www.jetbrains.com/idea/ Intellij] and [http://www.eclipse.org/ Eclipse] can automate the creation of template code, for loops. That still does not prevent you from repeating the same iterative code. It also doesn't make it any easier to test complex logic within a loop.
+It also doesn't make it any easier to test complex logic within a loop.
 
 Some of the main reasons for using a `CollectionTraverser` are:
-
- # A loop is a natural logic boundary (everything within the loop usually has a single purpose) and is a good candidate for extracting a (cohesive) class (A `CollectionElementHandler` or `CollectionElementWithIndexHandler` implementation).
- # Loops that exist within private methods can't be tested directly. They must be tested through public entry points. Extracting separate classes, makes them easier to test.
- # To stop you from writing or generating the same code over and over.
- # To make your life easier by being given each `Collection` element [http://martinfowler.com/bliki/InversionOfControl.html (IOC)].
+ # To stop you from writing or generating the same code over and over - Granted that many IDES such as [http://www.jetbrains.com/idea/ Intellij] and [http://www.eclipse.org/ Eclipse] can automate the creation of template code, for loops. That still does not prevent you from repeating the same iterative code.
+ # To make your life easier by being given each `Collection` element.[http://martinfowler.com/bliki/InversionOfControl.html (IOC)]. 
+ # To help in testing - A loop is a natural logic boundary (everything within the loop usually has a single purpose) and is a good candidate for extracting a (cohesive) class. Loops that exist within private methods can't be tested directly. They must be tested through public entry points. Extracting separate classes, makes them easier to test.
 
 = How about a more complex example? =
 
