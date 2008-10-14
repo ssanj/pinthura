@@ -89,7 +89,9 @@ public final class ACollectionTraverserWithBreaksUnderTest {
         CollectionElementWithPartialResult mockHandler = mockControl.createMock(CollectionElementWithPartialResult.class);
         EasyMock.expect(mockPathResolver.resolvePath(PathResolver.NO_PATH, 1)).andReturn(1);
         EasyMock.expect(mockPathResolver.resolvePath(PathResolver.NO_PATH, 2)).andReturn(2);
+        //CHECKSTYLE_OFF
         EasyMock.expect(mockPathResolver.resolvePath(PathResolver.NO_PATH, 3)).andReturn(3);
+        //CHECKSTYLE_ON
 
         EasyMock.expect(mockHandler.handle(1, 0)).andReturn(1);
         //CHECKSTYLE_OFF
@@ -105,5 +107,4 @@ public final class ACollectionTraverserWithBreaksUnderTest {
 
         mockControl.verify();
     }
-
 }
