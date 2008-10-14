@@ -35,7 +35,7 @@ public final class ACollectionTraverserWithIndexUnderTest {
 
     private static final String RESULT_1    = "tada!";
     private static final Integer RESULT_2   = 2;
-    private static final String PATH        = "";
+    private static final String PATH        = "xy.zx";
 
     private final IMocksControl mockControl = EasyMock.createControl();
     private CollectionTraverser traverser;
@@ -61,7 +61,7 @@ public final class ACollectionTraverserWithIndexUnderTest {
         //CHECKSTYLE_OFF
         List<Integer> integerList = Arrays.asList(5, 4, 3, 2, 1);
         //CHECKSTYLE_ON
-        String result = traverser.<Integer, String>forEach(integerList, mockCollectionElementWithIndexHandler);
+        String result = traverser.<Integer, String>forEachWithIndex(integerList, mockCollectionElementWithIndexHandler);
         assertThat(result, equalTo(RESULT_1));
 
         mockControl.verify();
@@ -79,7 +79,7 @@ public final class ACollectionTraverserWithIndexUnderTest {
         EasyMock.expect(mockCollectionElementWithIndexHandler.getResult()).andReturn(mockSquare);
         mockControl.replay();
 
-        Square result = traverser.<Shape, Square>forEach(Arrays.asList(shape), mockCollectionElementWithIndexHandler);
+        Square result = traverser.<Shape, Square>forEachWithIndex(Arrays.asList(shape), mockCollectionElementWithIndexHandler);
         assertThat(result, sameInstance(mockSquare));
 
         mockControl.verify();
@@ -102,7 +102,7 @@ public final class ACollectionTraverserWithIndexUnderTest {
         EasyMock.expect(mockHandler.getResult()).andReturn(RESULT_2);
         mockControl.replay();
 
-        Integer result = (Integer) traverser.forEach(Arrays.asList(authentication1, authentication2), PATH, mockHandler);
+        Integer result = (Integer) traverser.forEachWithIndex(Arrays.asList(authentication1, authentication2), PATH, mockHandler);
         assertThat(result, equalTo(RESULT_2));
 
         mockControl.verify();

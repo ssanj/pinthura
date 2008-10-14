@@ -76,7 +76,7 @@ public final class ACollectionTraverserWithPathsAndBreaksUnderTest {
         EasyMock.expect(mockHandler.getResult()).andReturn(2);
         mockControl.replay();
 
-        final Integer result = (Integer) traverser.forEach(numbers, "toString", mockHandler);
+        final Integer result = (Integer) traverser.forEachWithIndex(numbers, "toString", mockHandler);
         assertThat(result, equalTo(2));
 
         mockControl.verify();

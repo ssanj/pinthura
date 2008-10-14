@@ -56,7 +56,7 @@ public final class ACollectionTraverserUnderIntTest {
     public void shouldDisplayAListOfFormattedCharacters() {
         Collection<Character> characters = Arrays.asList('A', 'B', 'C', 'D', 'E');
 
-        String result = traverser.forEach(characters, new CharacterFormatter());
+        String result = traverser.forEachWithIndex(characters, new CharacterFormatter());
         assertThat(result, equalTo("[A0, B1, C2, D3, E4]"));
     }
 
@@ -72,6 +72,19 @@ public final class ACollectionTraverserUnderIntTest {
         //CHECKSTYLE_OFF
         assertThat(result.get(2), equalTo("java.lang"));
         assertThat(result.get(3), equalTo("java.util"));
+        //CHECKSTYLE_ON
+    }
+
+    @Test
+    public void shouldSumAListOfNumbersWithResult() {
+        //CHECKSTYLE_OFF
+        Collection<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5);
+        //CHECKSTYLE_ON
+
+        Integer result = traverser.forEachWithResult(numbers, new TotalHandlerWithResult(), 0);
+
+        //CHECKSTYLE_OFF
+        assertThat(result, equalTo(15));
         //CHECKSTYLE_ON
     }
 }

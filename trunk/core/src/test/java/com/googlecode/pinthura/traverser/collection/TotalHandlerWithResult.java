@@ -15,7 +15,7 @@
  */
 package com.googlecode.pinthura.traverser.collection;
 
-public final class TotalHandlerWithPartialResult implements CollectionElementWithPartialResult<Integer, Integer> {
+public final class TotalHandlerWithResult implements CollectionElementWithPartialResult<Integer, Integer> {
 
     public Integer handle(final Integer element, final Integer prevResult) {
         return prevResult + element;
