@@ -39,17 +39,17 @@ public final class CollectionTraverserImpl implements CollectionTraverser {
         return simpleForEach(collection, PathResolver.NO_PATH, handler);
     }
 
-    public <Input, Target, Output> Output forEach(final Collection<? extends Input> collection, final String path,
+    public <Input, Target, Output> Output forEachWithIndex(final Collection<? extends Input> collection, final String path,
                                           final CollectionElementWithIndexHandler<Target, Output> handler) {
         return indexedforEach(collection, path, handler);
     }
 
-    public <Input, Output> Output forEach(final Collection<? extends Input> collection,
+    public <Input, Output> Output forEachWithIndex(final Collection<? extends Input> collection,
                                           final CollectionElementWithIndexHandler<Input, Output> handler) {
         return indexedforEach(collection, PathResolver.NO_PATH, handler);
     }
 
-    public <Input, Output> Output forEach(final Collection<? extends Input> collection,
+    public <Input, Output> Output forEachWithResult(final Collection<? extends Input> collection,
                                           final CollectionElementWithPartialResult<Input, Output> handler, final Output prevResult) {
 
         Output result = prevResult;

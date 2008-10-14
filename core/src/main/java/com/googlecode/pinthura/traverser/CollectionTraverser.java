@@ -28,11 +28,12 @@ public interface CollectionTraverser {
 
     <Input, Output> Output forEach(Collection<? extends Input> collection, CollectionElementHandler<Input, Output> handler);
 
-    <Input, Output> Output forEach(Collection<? extends Input> collection, CollectionElementWithIndexHandler<Input, Output> handler);
+    <Input, Output> Output forEachWithIndex(Collection<? extends Input> collection,
+                                            CollectionElementWithIndexHandler<Input, Output> handler);
 
-    <Input, Target, Output> Output forEach(Collection<? extends Input> collection, String path,
+    <Input, Target, Output> Output forEachWithIndex(Collection<? extends Input> collection, String path,
                                    CollectionElementWithIndexHandler<Target, Output> handler);
 
-    <Input, Output> Output forEach(Collection<? extends Input> collection, CollectionElementWithPartialResult<Input, Output> handler,
-                                   Output prevResult);
+    <Input, Output> Output forEachWithResult(Collection<? extends Input> collection,
+                                             CollectionElementWithPartialResult<Input, Output> handler, Output prevResult);
 }

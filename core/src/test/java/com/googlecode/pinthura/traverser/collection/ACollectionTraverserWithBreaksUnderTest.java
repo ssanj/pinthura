@@ -77,7 +77,7 @@ public final class ACollectionTraverserWithBreaksUnderTest {
         EasyMock.expect(mockHandler.getResult()).andReturn(1);
         mockControl.replay();
 
-        final Integer result = traverser.<Integer, Integer>forEach(numbers, mockHandler);
+        final Integer result = traverser.<Integer, Integer>forEachWithIndex(numbers, mockHandler);
         assertThat(result, equalTo(1));
 
         mockControl.verify();
@@ -85,7 +85,7 @@ public final class ACollectionTraverserWithBreaksUnderTest {
 
     @SuppressWarnings({ "unchecked", "ThrowableInstanceNeverThrown" })
     @Test
-    public void shouldExitEarlyWhenABreakIsThrownWithPartialResult() {
+    public void shouldExitEarlyWhenABreakIsThrownWithResult() {
         CollectionElementWithPartialResult mockHandler = mockControl.createMock(CollectionElementWithPartialResult.class);
         EasyMock.expect(mockHandler.handle(1, 0)).andReturn(1);
         //CHECKSTYLE_OFF
@@ -94,7 +94,7 @@ public final class ACollectionTraverserWithBreaksUnderTest {
         //CHECKSTYLE_ON
         mockControl.replay();
 
-        final Integer result = traverser.<Integer, Integer>forEach(numbers, mockHandler, 0);
+        final Integer result = traverser.<Integer, Integer>forEachWithResult(numbers, mockHandler, 0);
         //CHECKSTYLE_OFF
         assertThat(result, equalTo(3));
         //CHECKSTYLE_ON
