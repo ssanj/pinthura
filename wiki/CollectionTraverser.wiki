@@ -210,6 +210,10 @@ public final class PackageNameRetreiver implements CollectionElementHandler<Clas
 
  See [PackageNameRetrieverExample] for the full example.
 
+In addition to properties which would follow the standard getProperty or isProperty nomenclature, any arbitratry parameterless method is supported as long as it is fully specified. 
+
+For example, to call the `toString()` on a `Package` in the above example, you would use `"package.toString"`.
+
 = What if I need the current index of an iteration? =
 
 = What if I need the previous result of an iteration? =
