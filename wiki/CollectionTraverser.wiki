@@ -164,7 +164,36 @@ public final class ContextAwareMBean implements DynamicMBean
 
 All supported handlers (`CollectionElementHandler, CollectionElementWithIndexHandler and CollectionElementWithResultHandler`) support the use of bean paths. A bean path allows you to selected a nested bean property of an element within a `Collection`.
 
-If for example, you wanted the `Package` name of a `Class` you could use "package.name" as the path if the `Collection` contained `Class` elements. This would resolve to Class.getPackage().getName() for each element and the String value of the package name would be passed to the handler. See [PackageNameRetrieverExample].
+If for example, you wanted the `Package` name of a `Class` you could use "package.name" as the path if the `Collection` contained `Class` elements:
+
+{{{
+List<Class<?>> classes = Arrays.<Class<?>>asList(UrlBoundary.class, Connection.class, String.class, Arrays.class);
+List<String> result = traverser.forEach(classes, "package.name", new PackageNameRetreiver());
+}}}
+
+This would resolve to Class.getPackage().getName() for each element and the String value of the package name would be passed to the handler:
+{{{
+package com.googlecode.pinthura.traverser.collection;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public final class PackageNameRetreiver implements CollectionElementHandler<String, List<String>> {
+
+    private final List<String> packageNames = new ArrayList<String>();
+
+    public void handle(final String element) {
+        packageNames.add(element);
+    }
+
+    public List<String> getResult() {
+        return new ArrayList<String>(packageNames);
+    }
+}
+}}}
+
+
+ See [PackageNameRetrieverExample] for the full example.
 
 = What if I need the current index of an iteration? =
 
