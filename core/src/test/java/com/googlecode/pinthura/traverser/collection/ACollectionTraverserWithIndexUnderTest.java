@@ -39,13 +39,13 @@ public final class ACollectionTraverserWithIndexUnderTest {
 
     private final IMocksControl mockControl = EasyMock.createControl();
     private CollectionTraverser traverser;
-    private CollectionElementWithIndexHandler mockCollectionElementWithIndexHandler;
+    private CollectionElementWithIndexHandler mockHandler;
     private PathResolver mockPathResolver;
 
     @Before
     public void setup() {
         mockPathResolver = mockControl.createMock(PathResolver.class);
-        mockCollectionElementWithIndexHandler = mockControl.createMock(CollectionElementWithIndexHandler.class);
+        mockHandler = mockControl.createMock(CollectionElementWithIndexHandler.class);
         traverser = new CollectionTraverserImpl(mockPathResolver);
     }
 
@@ -55,13 +55,13 @@ public final class ACollectionTraverserWithIndexUnderTest {
         expectPathResolution();
         expectHandlerCalled();
 
-        EasyMock.expect(mockCollectionElementWithIndexHandler.getResult()).andReturn(RESULT_1);
+        EasyMock.expect(mockHandler.getResult()).andReturn(RESULT_1);
         mockControl.replay();
 
         //CHECKSTYLE_OFF
         List<Integer> integerList = Arrays.asList(5, 4, 3, 2, 1);
         //CHECKSTYLE_ON
-        String result = traverser.<Integer, String>forEachWithIndex(integerList, mockCollectionElementWithIndexHandler);
+        String result = traverser.<Integer, String>forEachWithIndex(integerList, mockHandler);
         assertThat(result, equalTo(RESULT_1));
 
         mockControl.verify();
@@ -74,12 +74,12 @@ public final class ACollectionTraverserWithIndexUnderTest {
         Square mockSquare = mockControl.createMock(Square.class);
 
         EasyMock.expect(mockPathResolver.resolvePath(PathResolver.NO_PATH, shape)).andReturn(shape);
-        mockCollectionElementWithIndexHandler.handle(shape, true,  true, 0L);
+        mockHandler.handle(shape, true,  true, 0L);
 
-        EasyMock.expect(mockCollectionElementWithIndexHandler.getResult()).andReturn(mockSquare);
+        EasyMock.expect(mockHandler.getResult()).andReturn(mockSquare);
         mockControl.replay();
 
-        Square result = traverser.<Shape, Square>forEachWithIndex(Arrays.asList(shape), mockCollectionElementWithIndexHandler);
+        Square result = traverser.<Shape, Square>forEachWithIndex(Arrays.asList(shape), mockHandler);
         assertThat(result, sameInstance(mockSquare));
 
         mockControl.verify();
@@ -109,13 +109,25 @@ public final class ACollectionTraverserWithIndexUnderTest {
     }
 
     @SuppressWarnings({ "unchecked" })
+    @Test
+    public void shouldReturnADefaultValueForAnEmptyCollection() {
+        EasyMock.expect(mockHandler.getResult()).andReturn("0");
+        mockControl.replay();
+
+        String result = traverser.<Integer, String>forEachWithIndex(Arrays.<Integer>asList(), mockHandler);
+        assertThat(result, equalTo("0"));
+
+        mockControl.verify();
+    }
+
+    @SuppressWarnings({ "unchecked" })
     private void expectHandlerCalled() {
         //CHECKSTYLE_OFF
-        mockCollectionElementWithIndexHandler.handle(5, true,  false, 0L);
-        mockCollectionElementWithIndexHandler.handle(4, false, false, 1L);
-        mockCollectionElementWithIndexHandler.handle(3, false, false, 2L);
-        mockCollectionElementWithIndexHandler.handle(2, false, false, 3L);
-        mockCollectionElementWithIndexHandler.handle(1, false, true,  4L);
+        mockHandler.handle(5, true,  false, 0L);
+        mockHandler.handle(4, false, false, 1L);
+        mockHandler.handle(3, false, false, 2L);
+        mockHandler.handle(2, false, false, 3L);
+        mockHandler.handle(1, false, true,  4L);
         //CHECKSTYLE_ON
     }
 

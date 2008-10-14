@@ -118,6 +118,18 @@ public final class ACollectionTraverserUnderTest {
     }
 
     @SuppressWarnings({ "unchecked" })
+    @Test
+    public void shouldReturnTheDefaultValueForAnEmptyCollection() {
+        EasyMock.expect(mockCollectionElementHandler.getResult()).andReturn(1.0d);
+        mockControl.replay();
+
+        Double result = traverser.<String, Double>forEach(Arrays.<String>asList(), mockCollectionElementHandler);
+        assertThat(result, equalTo(1.0d));
+
+        mockControl.verify();
+    }
+
+    @SuppressWarnings({ "unchecked" })
     private void expectHandler() {
         mockCollectionElementHandler.handle("A");
         mockCollectionElementHandler.handle("B");
