@@ -65,7 +65,7 @@ public interface CollectionElementHandler<Input, Output> {
 
 we see that there is no explicit code for navigating the `Collection`. Every `Collection` element (in this case an `Integer`) is passed to the 'handle(...)'  method of the `CollectionElementHandler`, via [http://martinfowler.com/bliki/InversionOfControl.html Inversion Of Control]
 
-= Why you a `CollectionTraverser`? =
+= Why use a `CollectionTraverser`? =
 
 Some of the main reasons for using a `CollectionTraverser` are:
  # To stop you from writing or generating the same code over and over - Granted that many IDES such as [http://www.jetbrains.com/idea/ Intellij] and [http://www.eclipse.org/ Eclipse] can automate the creation of template code, for loops. That still does not prevent you from repeating the same iterative code.
