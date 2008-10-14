@@ -87,6 +87,10 @@ public final class ACollectionTraverserWithBreaksUnderTest {
     @Test
     public void shouldExitEarlyWhenABreakIsThrownWithResult() {
         CollectionElementWithPartialResult mockHandler = mockControl.createMock(CollectionElementWithPartialResult.class);
+        EasyMock.expect(mockPathResolver.resolvePath(PathResolver.NO_PATH, 1)).andReturn(1);
+        EasyMock.expect(mockPathResolver.resolvePath(PathResolver.NO_PATH, 2)).andReturn(2);
+        EasyMock.expect(mockPathResolver.resolvePath(PathResolver.NO_PATH, 3)).andReturn(3);
+
         EasyMock.expect(mockHandler.handle(1, 0)).andReturn(1);
         //CHECKSTYLE_OFF
         EasyMock.expect(mockHandler.handle(2, 1)).andReturn(3);
@@ -94,7 +98,7 @@ public final class ACollectionTraverserWithBreaksUnderTest {
         //CHECKSTYLE_ON
         mockControl.replay();
 
-        final Integer result = traverser.<Integer, Integer>forEachWithResult(numbers, mockHandler, 0);
+        final Integer result = traverser.<Integer, Integer, Integer>forEachWithResult(numbers, mockHandler, 0);
         //CHECKSTYLE_OFF
         assertThat(result, equalTo(3));
         //CHECKSTYLE_ON
