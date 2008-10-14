@@ -1,9 +1,7 @@
-#summary An example of a index traverser.
+#summary Example of a CollectionElementWithIndexHandler.
+#labels Phase-Implementation,Tutorial,Example,CollectionTraverser,CollectionElementWithIndexHandler
 
-= Introduction =
-
-Add your content here.
-
+This example demonstrates a simple CollectionElementWithIndexHandler that returns a formatted String with the contents of the supplied list.
 
 = Details =
 
@@ -35,3 +33,5 @@ public final class CharacterFormatter implements CollectionElementWithIndexHandl
     }
 }
 }}}
+
+This can be run as a [www.junit.org JUnit] test:
