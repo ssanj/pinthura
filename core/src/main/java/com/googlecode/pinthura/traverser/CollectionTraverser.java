@@ -34,6 +34,6 @@ public interface CollectionTraverser {
     <Input, Target, Output> Output forEachWithIndex(Collection<? extends Input> collection, String path,
                                    CollectionElementWithIndexHandler<Target, Output> handler);
 
-    <Input, Output> Output forEachWithResult(Collection<? extends Input> collection,
-                                             CollectionElementWithPartialResult<Input, Output> handler, Output prevResult);
+    <Input, Target, Output> Output forEachWithResult(Collection<? extends Input> collection,
+                                             CollectionElementWithPartialResult<Target, Output> handler, Output prevResult);
 }
