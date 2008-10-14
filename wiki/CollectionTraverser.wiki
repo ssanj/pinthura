@@ -160,6 +160,12 @@ public final class ContextAwareMBean implements DynamicMBean
 }
 }}}
 
+= How do I use paths on `Collections` ? =
+
+= What if I need the current index of an iteration? =
+
+= What if I need the previous result of an iteration? =
+
 = Examples =
  # [PackageNameRetrieverExample Package name retriever]
  # [CharacterFormatterExample Character formatter]
