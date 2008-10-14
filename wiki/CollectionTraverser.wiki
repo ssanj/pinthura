@@ -160,3 +160,4 @@ public final class ContextAwareMBean implements DynamicMBean
 
 = Examples =
  # [PackageNameRetrieverExample Package name retriever]
+ # [CharacterFormatterExample Character formatter]
