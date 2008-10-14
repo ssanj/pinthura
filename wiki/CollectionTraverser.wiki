@@ -192,6 +192,21 @@ public final class PackageNameRetreiver implements CollectionElementHandler<Stri
 }
 }}}
 
+This saves you from having to call `getPackage().getName()` on each element manually:
+
+{{{
+public final class PackageNameRetreiver implements CollectionElementHandler<Class<?>, List<String>> {
+
+   ...
+
+    public void handle(final Class<?> element) {
+        packageNames.add(element.getPackage().getName());
+    }
+
+    ...
+}
+}}}
+
 
  See [PackageNameRetrieverExample] for the full example.
 
