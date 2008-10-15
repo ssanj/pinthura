@@ -256,8 +256,8 @@ public interface CollectionElementWithResult<Input, Output> {
 It can be called with the following methods on `CollectionTraverser`:
 
 {{{
-<Input, Target, Output> Output forEachWithResult(Collection<? extends Input> collection,
-                                             CollectionElementWithResult<Target, Output> handler, Output prevResult);
+<Input, Output> Output forEachWithResult(Collection<? extends Input> collection,
+                                             CollectionElementWithResult<Input, Output> handler, Output prevResult);
 
 <Input, Target, Output> Output forEachWithResult(Collection<? extends Input> collection, String path,
                                              CollectionElementWithResult<Target, Output> handler, Output prevResult);
