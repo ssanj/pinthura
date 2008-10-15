@@ -34,12 +34,12 @@ public final class ACollectionTraverserWithResultUnderTest {
     private final IMocksControl mockControl = EasyMock.createControl();
     private CollectionTraverser traverser;
     private PathResolver mockPathResolver;
-    private CollectionElementWithPartialResult mockHandler;
+    private CollectionElementWithResultHandler mockHandler;
 
     @Before
     public void setup() {
         mockPathResolver = mockControl.createMock(PathResolver.class);
-        mockHandler = mockControl.createMock(CollectionElementWithPartialResult.class);
+        mockHandler = mockControl.createMock(CollectionElementWithResultHandler.class);
         traverser = new CollectionTraverserImpl(mockPathResolver);
     }
 
@@ -57,7 +57,7 @@ public final class ACollectionTraverserWithResultUnderTest {
         //CHECKSTYLE_ON
         mockControl.replay();
 
-        Integer result = traverser.<String, String, Integer>forEachWithResult(Arrays.asList("this", "is", "simple"), mockHandler, 0);
+        Integer result = traverser.<String, Integer>forEachWithResult(Arrays.asList("this", "is", "simple"), mockHandler, 0);
         //CHECKSTYLE_OFF
         assertThat(result, equalTo(12));
         //CHECKSTYLE_ON
@@ -86,7 +86,7 @@ public final class ACollectionTraverserWithResultUnderTest {
         //CHECKSTYLE_ON
         mockControl.replay();
 
-        Integer result = traverser.<Integer, Integer, Integer>forEachWithResult(Arrays.asList(2), mockHandler, 1);
+        Integer result = traverser.<Integer, Integer>forEachWithResult(Arrays.asList(2), mockHandler, 1);
         //CHECKSTYLE_OFF
         assertThat(result, equalTo(3));
         //CHECKSTYLE_ON

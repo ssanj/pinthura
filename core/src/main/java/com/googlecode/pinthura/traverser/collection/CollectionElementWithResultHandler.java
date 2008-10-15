@@ -15,9 +15,7 @@
  */
 package com.googlecode.pinthura.traverser.collection;
 
-public final class TotalHandlerWithResult implements CollectionElementWithResultHandler<Integer, Integer> {
+public interface CollectionElementWithResultHandler<Input, Output> {
 
-    public Integer handle(final Integer element, final Integer prevResult) {
-        return prevResult + element;
-    }
+    Output handle(Input element, Output prevResult);
 }

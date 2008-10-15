@@ -86,7 +86,7 @@ public final class ACollectionTraverserWithBreaksUnderTest {
     @SuppressWarnings({ "unchecked", "ThrowableInstanceNeverThrown" })
     @Test
     public void shouldExitEarlyWhenABreakIsThrownWithResult() {
-        CollectionElementWithPartialResult mockHandler = mockControl.createMock(CollectionElementWithPartialResult.class);
+        CollectionElementWithResultHandler mockHandler = mockControl.createMock(CollectionElementWithResultHandler.class);
         EasyMock.expect(mockPathResolver.resolvePath(PathResolver.NO_PATH, 1)).andReturn(1);
         EasyMock.expect(mockPathResolver.resolvePath(PathResolver.NO_PATH, 2)).andReturn(2);
         //CHECKSTYLE_OFF
@@ -100,7 +100,7 @@ public final class ACollectionTraverserWithBreaksUnderTest {
         //CHECKSTYLE_ON
         mockControl.replay();
 
-        final Integer result = traverser.<Integer, Integer, Integer>forEachWithResult(numbers, mockHandler, 0);
+        final Integer result = traverser.<Integer, Integer>forEachWithResult(numbers, mockHandler, 0);
         //CHECKSTYLE_OFF
         assertThat(result, equalTo(3));
         //CHECKSTYLE_ON
