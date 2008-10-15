@@ -234,7 +234,7 @@ It can be called with the following methods on `CollectionTraverser`:
 <Input, Output> Output forEachWithIndex(Collection<? extends Input> collection,
                                             CollectionElementWithIndexHandler<Input, Output> handler);
 
-    <Input, Target, Output> Output forEachWithIndex(Collection<? extends Input> collection, String path,
+<Input, Target, Output> Output forEachWithIndex(Collection<? extends Input> collection, String path,
                                    CollectionElementWithIndexHandler<Target, Output> handler);
 }}}
 
@@ -256,12 +256,14 @@ public interface CollectionElementWithResult<Input, Output> {
 It can be called with the following methods on `CollectionTraverser`:
 
 {{{
-    <Input, Target, Output> Output forEachWithResult(Collection<? extends Input> collection,
-                                             CollectionElementWithPartialResult<Target, Output> handler, Output prevResult);
+<Input, Target, Output> Output forEachWithResult(Collection<? extends Input> collection,
+                                             CollectionElementWithResult<Target, Output> handler, Output prevResult);
 
-    <Input, Target, Output> Output forEachWithResult(Collection<? extends Input> collection, String path,
-                                             CollectionElementWithPartialResult<Target, Output> handler, Output prevResult);
+<Input, Target, Output> Output forEachWithResult(Collection<? extends Input> collection, String path,
+                                             CollectionElementWithResult<Target, Output> handler, Output prevResult);
 }}}
+
+See TotalHandlerWithResultExample for a full example.
 
 = Examples =
  # [PackageNameRetrieverExample Package name retriever]
