@@ -46,7 +46,7 @@ public final class ACollectionElementFilterHandlerUnderTest {
         mockPathResolver = mockControl.createMock(PathResolver.class);
         mockHandler = mockControl.createMock(CollectionElementHandler.class);
 
-        filterHandler = new CollectionElementFilterHandlerImpl(mockFilter, mockHandler);
+        filterHandler = new CollectionElementFilterHandler(mockFilter, mockHandler);
         traverser = new CollectionTraverserImpl(mockPathResolver);
     }
 

@@ -49,19 +49,19 @@ public final class CollectionTraverserImpl implements CollectionTraverser {
         return indexedforEach(collection, PathResolver.NO_PATH, handler);
     }
 
-    public <Input, Target, Output> Output forEachWithResult(final Collection<? extends Input> collection,
-                                          final CollectionElementWithPartialResult<Target, Output> handler, final Output prevResult) {
+    public <Input, Output> Output forEachWithResult(final Collection<? extends Input> collection,
+                                                    final CollectionElementWithResultHandler<Input, Output> handler, final Output prevResult) {
         return resultedForEach(collection, PathResolver.NO_PATH, handler, prevResult);
     }
 
     public <Input, Target, Output> Output forEachWithResult(final Collection<? extends Input> collection, final String path,
-        final CollectionElementWithPartialResult<Target, Output> handler, final Output prevResult) {
+        final CollectionElementWithResultHandler<Target, Output> handler, final Output prevResult) {
         return resultedForEach(collection, path, handler, prevResult);
     }
 
     @SuppressWarnings({ "unchecked" })
     private <Input, Target, Output> Output resultedForEach(final Collection<? extends Input> collection, final String path,
-        final CollectionElementWithPartialResult<Target, Output> handler, final Output prevResult) {
+        final CollectionElementWithResultHandler<Target, Output> handler, final Output prevResult) {
 
         Output result = prevResult;
         for (Input input : collection) {
