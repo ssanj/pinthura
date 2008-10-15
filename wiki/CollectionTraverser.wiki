@@ -216,7 +216,7 @@ For example, to call the `toString()` on a `Package` in the above example, you w
 
 = What if I need the current index of an iteration? =
 
-You should implement the `CollectionElementWithIndexHandler`. This will give you access to the index and whether the element is the first or element element:
+You should implement the `CollectionElementWithIndexHandler`. This will give you access to the index and whether the element is the first or last element:
 
 {{{
 package com.googlecode.pinthura.traverser.collection;
@@ -228,9 +228,40 @@ public interface CollectionElementWithIndexHandler<Input, Output> {
 }
 }}}
 
+It can be called with the following methods on `CollectionTraverser`:
+
+{{{
+<Input, Output> Output forEachWithIndex(Collection<? extends Input> collection,
+                                            CollectionElementWithIndexHandler<Input, Output> handler);
+
+    <Input, Target, Output> Output forEachWithIndex(Collection<? extends Input> collection, String path,
+                                   CollectionElementWithIndexHandler<Target, Output> handler);
+}}}
+
 See CharacterFormatterExample for a full example.
 
 = What if I need the previous result of an iteration? =
+
+You should implement the `CollectionElementWithResultHandler`. This will give you access to the previous result:
+
+{{{
+package com.googlecode.pinthura.traverser.collection;
+
+public interface CollectionElementWithResult<Input, Output> {
+
+    Output handle(Input element, Output prevResult);
+}
+}}}
+
+It can be called with the following methods on `CollectionTraverser`:
+
+{{{
+    <Input, Target, Output> Output forEachWithResult(Collection<? extends Input> collection,
+                                             CollectionElementWithPartialResult<Target, Output> handler, Output prevResult);
+
+    <Input, Target, Output> Output forEachWithResult(Collection<? extends Input> collection, String path,
+                                             CollectionElementWithPartialResult<Target, Output> handler, Output prevResult);
+}}}
 
 = Examples =
  # [PackageNameRetrieverExample Package name retriever]
