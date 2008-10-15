@@ -219,7 +219,13 @@ For example, to call the `toString()` on a `Package` in the above example, you w
 You should implement the `CollectionElementWithIndexHandler`. This will give you access to the index and whether the element is the first or element element:
 
 {{{
-public void handle(Input element, boolean first, boolean last, Long index)
+package com.googlecode.pinthura.traverser.collection;
+
+public interface CollectionElementWithIndexHandler<Input, Output> {
+
+    void handle(Input element, boolean first, boolean last, Long index);
+    Output getResult();
+}
 }}}
 
 See CharacterFormatterExample for a full example.
