@@ -265,6 +265,8 @@ It can be called with the following methods on `CollectionTraverser`:
 
 See TotalHandlerWithResultExample for a full example.
 
+= What if I want to filter elements that are handled? =
+
 = Examples =
  # [PackageNameRetrieverExample Package name retriever]
  # [CharacterFormatterExample Character formatter]
