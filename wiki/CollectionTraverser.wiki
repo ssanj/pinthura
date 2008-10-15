@@ -216,6 +216,14 @@ For example, to call the `toString()` on a `Package` in the above example, you w
 
 = What if I need the current index of an iteration? =
 
+You should implement the `CollectionElementWithIndexHandler`. This will give you access to the index and whether the element is the first or element element:
+
+{{{
+public void handle(Input element, final boolean first, final boolean last, final Long index)
+}}}
+
+See CharacterFormatterExample for a full example.
+
 = What if I need the previous result of an iteration? =
 
 = Examples =
