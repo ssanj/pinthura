@@ -219,7 +219,7 @@ For example, to call the `toString()` on a `Package` in the above example, you w
 You should implement the `CollectionElementWithIndexHandler`. This will give you access to the index and whether the element is the first or element element:
 
 {{{
-public void handle(Input element, final boolean first, final boolean last, final Long index)
+public void handle(Input element, boolean first, boolean last, Long index)
 }}}
 
 See CharacterFormatterExample for a full example.
