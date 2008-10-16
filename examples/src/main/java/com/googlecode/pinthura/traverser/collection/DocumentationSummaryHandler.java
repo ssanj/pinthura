@@ -16,18 +16,18 @@
 package com.googlecode.pinthura.traverser.collection;
 
 import java.util.Map;
-import java.util.HashMap;
 
-public final class LineFileReaderImpl implements LineFileReader {
+public final class DocumentationSummaryHandler extends SummaryHandler {
 
-    private final Map<String, String> fileMap = new HashMap<String, String>();
+    private final Map<String, String> docMap;
 
-    public LineFileReaderImpl() {
-        fileMap.put("build.txt", "# Describes how to build the project");
-        fileMap.put("readme.txt", "##Update## Important information about use of this project");
+    public DocumentationSummaryHandler(final String banner, final Map<String, String> docMap) {
+        super(banner);
+        this.docMap = docMap;
     }
 
-    public String readLine(final String file) {
-        return fileMap.get(file);
+    public void handle(final String file) {
+        getSummary().addSummaryLine(file + ":" + docMap.get(file));
     }
 }
+
