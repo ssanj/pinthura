@@ -13,25 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.pinthura.factory.shape;
+package com.googlecode.pinthura.traverser.collection;
 
-import com.googlecode.pinthura.factory.FactoryCreator;
-import com.googlecode.pinthura.factory.FactoryCreatorImpl;
-import com.googlecode.pinthura.factory.InvocationFactoryImpl;
+public final class FileSummaryRunner {
 
-public final class ShapeCanvasRunner {
-
-    private static final int CANVAS_AREA = 40;
-
-    private ShapeCanvasRunner() {
+    private FileSummaryRunner() {
         //Main class.
     }
 
     public static void main(final String[] args) {
-        FactoryCreator factoryCreator = new FactoryCreatorImpl(new InvocationFactoryImpl());
-        SquareFactory squareFactory = factoryCreator.create(SquareFactory.class);
+        FileSummary fileSummary = new FileSummary(new LineFileReaderImpl(), new DirectoryListerImpl());
+        fileSummary.getDirectorySummary("blah");
 
-        ShapeCanvas canvas = new ShapeCanvas(CANVAS_AREA, squareFactory);
-        System.out.println("Number of squares: " + canvas.calcSquaresOnCanvas(2));
     }
 }

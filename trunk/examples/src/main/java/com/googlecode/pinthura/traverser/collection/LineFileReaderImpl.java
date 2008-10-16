@@ -13,20 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.pinthura.factory.shape;
+package com.googlecode.pinthura.traverser.collection;
 
-public final class ShapeCanvas {
+import java.util.Map;
+import java.util.HashMap;
 
-    private final SquareFactory squareFactory;
-    private int canvasArea;
+public final class LineFileReaderImpl implements LineFileReader {
 
-    public ShapeCanvas(final int canvasArea, final SquareFactory squareFactory) {
-        this.canvasArea = canvasArea;
-        this.squareFactory = squareFactory;
+    private final Map<String, String> fileMap = new HashMap<String, String>();
+
+    public LineFileReaderImpl() {
+        fileMap.put("build.txt", "# Describes how to build the project");
+        fileMap.put("readme.txt", "##Update## Important information about use of this project");
     }
 
-    public int calcSquaresOnCanvas(final int size) {
-        Square square = squareFactory.create(size);
-        return canvasArea / square.getArea();
+    public String readLine(final String file) {
+        return fileMap.get(file);
     }
 }

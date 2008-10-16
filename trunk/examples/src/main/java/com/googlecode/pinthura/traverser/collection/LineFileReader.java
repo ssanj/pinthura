@@ -13,20 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.pinthura.factory.shape;
+package com.googlecode.pinthura.traverser.collection;
 
-public final class ShapeCanvas {
-
-    private final SquareFactory squareFactory;
-    private int canvasArea;
-
-    public ShapeCanvas(final int canvasArea, final SquareFactory squareFactory) {
-        this.canvasArea = canvasArea;
-        this.squareFactory = squareFactory;
-    }
-
-    public int calcSquaresOnCanvas(final int size) {
-        Square square = squareFactory.create(size);
-        return canvasArea / square.getArea();
-    }
+public interface LineFileReader {
+    String readLine(final String file);
 }
