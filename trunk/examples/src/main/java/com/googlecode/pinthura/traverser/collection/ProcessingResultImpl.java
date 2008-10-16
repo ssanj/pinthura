@@ -15,12 +15,24 @@
  */
 package com.googlecode.pinthura.traverser.collection;
 
+import java.util.Map;
 import java.util.List;
-import java.util.Arrays;
 
-public final class DirectoryListerImpl implements DirectoryLister {
+public final class ProcessingResultImpl implements ProcessingResult {
 
-    public List<String> list(final String directory) {
-        return Arrays.asList("pinthura-core.properties", "readme.txt", "Log4j.xml", "build.txt");
+    private final Map<String, String> documentation;
+    private final List<String> configFiles;
+
+    public ProcessingResultImpl(final Map<String, String> documentation, final List<String> configFiles) {
+        this.documentation = documentation;
+        this.configFiles = configFiles;
+    }
+
+    public Map<String, String> getDocumentation() {
+        return documentation;
+    }
+
+    public List<String> getConfigFiles() {
+        return configFiles;
     }
 }

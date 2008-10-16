@@ -13,22 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.pinthura.traverser.collection;
+package com.googlecode.pinthura.traverser.collection.old;
 
-public final class SummaryImpl implements Summary {
+import java.util.Map;
+import java.util.HashMap;
 
-    private int lineCount = 0;
-    public Summary addBanner(final String banner) {
-        System.out.println("-------------" + banner + "-------------");
-        return this;
+public final class LineFileReaderImpl implements LineFileReader {
+
+    private final Map<String, String> fileMap = new HashMap<String, String>();
+
+    public LineFileReaderImpl() {
+        fileMap.put("build.txt", "# Describes how to build the project");
+        fileMap.put("readme.txt", "##Update## Important information about use of this project");
     }
 
-    public Summary addSummaryLine(final String summaryLine) {
-        System.out.println(++lineCount + ". " + summaryLine);
-        return this;
-    }
-
-    public void close() {
-        System.out.println("");
+    public String readLine(final String file) {
+        return fileMap.get(file);
     }
 }

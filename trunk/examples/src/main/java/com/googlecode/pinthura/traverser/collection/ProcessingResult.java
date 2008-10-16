@@ -15,11 +15,12 @@
  */
 package com.googlecode.pinthura.traverser.collection;
 
-public interface Summary {
+import java.util.List;
+import java.util.Map;
 
-    Summary addBanner(String banner);
+public interface ProcessingResult {
 
-    Summary addSummaryLine(String summaryLine);
+    Map<String, String> getDocumentation();
 
-    void close();
+    List<String> getConfigFiles();
 }

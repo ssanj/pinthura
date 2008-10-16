@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.pinthura.traverser.collection;
+package com.googlecode.pinthura.traverser.collection.old;
 
 import java.util.HashMap;
 import java.util.List;
@@ -21,7 +21,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.ArrayList;
 
-public final class FileSummary {
+public final class FileSummarizer {
 
     private final Map<String, String> documentationMap = new HashMap<String, String>();
     private final List<String> configFilesList = new ArrayList<String>();
@@ -30,12 +30,12 @@ public final class FileSummary {
     private final List<Summary> summaryList = new ArrayList<Summary>();
 
 
-    public FileSummary(final LineFileReader reader, final DirectoryLister lister) {
+    public FileSummarizer(final LineFileReader reader, final DirectoryLister lister) {
         this.reader = reader;
         this.lister = lister;
     }
 
-    public List<Summary> getDirectorySummary(final String directory) {
+    public List<Summary> summarizeDictory(final String directory) {
         List<String> files = lister.list(directory);
         processFiles(files);
 
@@ -45,7 +45,7 @@ public final class FileSummary {
     }
 
     private Summary createSummary(final List<String> files, final String banner) {
-        Summary summary = new SummaryImpl().addBanner(banner);
+        Summary summary = new SummaryImpl(banner);
         for (String confFile : files) {
             summary.addSummaryLine(confFile);
         }
@@ -69,7 +69,7 @@ public final class FileSummary {
     }
 
     private Summary createSummary(final Set<String> files, final Map<String, String> contentsMap, final String banner) {
-        Summary summary = new SummaryImpl().addBanner(banner);
+        Summary summary = new SummaryImpl(banner);
         for (String confFile : files) {
             summary.addSummaryLine(confFile + ":" + contentsMap.get(confFile));
         }
