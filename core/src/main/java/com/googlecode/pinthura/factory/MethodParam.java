@@ -22,20 +22,17 @@ public interface MethodParam {
     Class<?> getReturnType();
     Object[] getArguments();
     Method getMethod();
-    Class<?> getFactoryInterface();
 
     public final class Impl implements MethodParam {
 
         private final Class<?> returnType;
         private final Object[] arguments;
         private final Method method;
-        private final Class<?> factoryInterface;
 
-        public Impl(final Method method, final Object[] arguments, final Class<?> factoryInterface) {
+        public Impl(final Method method, final Object[] arguments) {
             this.returnType = method.getReturnType();
             this.arguments = arguments;
             this.method = method;
-            this.factoryInterface = factoryInterface;
         }
 
         public Class<?> getReturnType() {
@@ -48,10 +45,6 @@ public interface MethodParam {
 
         public Method getMethod() {
             return method;
-        }
-
-        public Class<?> getFactoryInterface() {
-            return factoryInterface;
         }
     }
 }

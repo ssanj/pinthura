@@ -25,18 +25,16 @@ final class FactoryCreationInvocationHandler implements InvocationHandler {
 
     private final ClassLocator implLocators;
     private final MethodParamFactory methodParamFactory;
-    private final Class<?> factoryInterface;
 
     public FactoryCreationInvocationHandler(final ClassLocator implLocators,
-        final MethodParamFactory methodParamFactory, final Class<?> factoryInterface) {
+        final MethodParamFactory methodParamFactory) {
         this.implLocators = implLocators;
         this.methodParamFactory = methodParamFactory;
-        this.factoryInterface = factoryInterface;
     }
 
     public Object invoke(final Object proxy, final Method method, final Object[] args) throws Throwable {
         try {
-            Class<?> clazz = implLocators.filter(methodParamFactory.create(method, args, factoryInterface));
+            Class<?> clazz = implLocators.filter(methodParamFactory.create(method, args));
             return instantiateClass(clazz, method.getParameterTypes(), args);
         } catch (MatchNotFoundException e) {
             throw new ImplementationNotFoundException("Could not find implementation for " + method.getReturnType(), e);

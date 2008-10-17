@@ -40,9 +40,9 @@ public final class InvocationFactoryImpl implements InvocationFactory {
         this.locators = locators;
     }
 
-    public InvocationHandler create(final Class<?> factoryInterface) {
+    public InvocationHandler create() {
         ClassLocator locatorChain = new ClassLocatorChain(new FilterChainImpl<MethodParam, Class<?>>(locators));
-        return new FactoryCreationInvocationHandler(locatorChain, factory, factoryInterface);
+        return new FactoryCreationInvocationHandler(locatorChain, factory);
     }
 
     private List<ClassLocator> createDefaultLocators() {

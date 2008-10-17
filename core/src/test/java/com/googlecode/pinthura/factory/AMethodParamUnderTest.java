@@ -42,7 +42,6 @@ public final class AMethodParamUnderTest {
     public void shouldReturnTheSuppliedSetOfValues() {
         MethodParam param = createMethodParam(FACTORY_CLASS_1, FACTORY_METHOD_1, String.class, URL);
 
-        assertThat((Class<UrlBoundaryFactory>) param.getFactoryInterface(), equalTo(FACTORY_CLASS_1));
         assertThat(param.getMethod(), equalTo(getMethod(FACTORY_CLASS_1, FACTORY_METHOD_1, String.class)));
         assertThat((Class<UrlBoundary>) param.getReturnType(), equalTo(UrlBoundary.class));
 
@@ -56,7 +55,6 @@ public final class AMethodParamUnderTest {
     public void shouldReturnAnotherSuppliedSetOfValues() {
         MethodParam param = createMethodParam(FACTORY_CLASS_2, FACTORY_METHOD_2, int.class, LENGTH);
 
-        assertThat((Class<ShapeFactory>) param.getFactoryInterface(), equalTo(ShapeFactory.class));
         Method expectedMethod = getMethod(FACTORY_CLASS_2, FACTORY_METHOD_2, int.class);
         assertThat(param.getMethod(), equalTo(expectedMethod));
         assertThat((Class<Square>) param.getReturnType(), equalTo(Square.class));

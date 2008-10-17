@@ -38,16 +38,14 @@ public final class AFactoryCreationInvocationHandlerUnderTest {
     private InvocationHandler handler;
     private ClassLocator mockFilterChain;
     private MethodParamFactory mockMethodParamFactory;
-    private Class<UrlBoundaryFactory> factoryInterface;
 
     @SuppressWarnings({ "unchecked" })
     @Before
     public void setup() {
         mockFilterChain = mockControl.createMock(ClassLocator.class);
         mockMethodParamFactory = mockControl.createMock(MethodParamFactory.class);
-        factoryInterface = UrlBoundaryFactory.class;
 
-        handler = new FactoryCreationInvocationHandler(mockFilterChain, mockMethodParamFactory, factoryInterface);
+        handler = new FactoryCreationInvocationHandler(mockFilterChain, mockMethodParamFactory);
     }
 
     @Test
@@ -66,7 +64,7 @@ public final class AFactoryCreationInvocationHandlerUnderTest {
     private void expectCreateInstance(final String expectUrl, final Method method, final Object... params) throws Throwable {
         MethodParam mockMethodParam = mockControl.createMock(MethodParam.class);
 
-        EasyMock.expect(mockMethodParamFactory.create(method, params, factoryInterface)).andReturn(mockMethodParam);
+        EasyMock.expect(mockMethodParamFactory.create(method, params)).andReturn(mockMethodParam);
         EasyMock.expect(mockFilterChain.filter(mockMethodParam));
         EasyMock.expectLastCall().andReturn(UrlBoundaryImpl.class);
 

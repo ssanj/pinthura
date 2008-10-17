@@ -62,6 +62,6 @@ public final class AFilterContractUnderTest {
     }
 
     private MethodParam buildInvalidSimpleMethodParam() throws NoSuchMethodException {
-        return new MethodParam.Impl(Object.class.getMethod("toString"), new Object[] {}, null);
+        return new MethodParam.Impl(Object.class.getMethod("toString"), new Object[] {});
     }
 }

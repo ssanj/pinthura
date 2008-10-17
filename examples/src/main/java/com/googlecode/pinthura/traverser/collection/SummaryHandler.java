@@ -23,6 +23,7 @@ public abstract class SummaryHandler implements CollectionElementHandler<String,
     private final Summary summary;
 
     public SummaryHandler(final String banner) {
+        //TODO: Pass in a SummaryFactory.
         summary = new SummaryImpl(banner);
     }
 

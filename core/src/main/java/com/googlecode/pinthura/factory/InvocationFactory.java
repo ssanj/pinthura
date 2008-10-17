@@ -19,5 +19,5 @@ import java.lang.reflect.InvocationHandler;
 
 public interface InvocationFactory {
 
-    InvocationHandler create(Class<?> factoryInterface);
+    InvocationHandler create();
 }

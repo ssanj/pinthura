@@ -39,6 +39,6 @@ public final class MethodParamBuilder<A, I> {
     }
 
     public MethodParam build() {
-        return new MethodParam.Impl(method, args.toArray(), factoryInterface);
+        return new MethodParam.Impl(method, args.toArray());
     }
 }

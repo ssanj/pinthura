@@ -32,11 +32,11 @@ public final class FactoryCreatorImpl implements FactoryCreator {
 
     @SuppressWarnings({ "unchecked" })
     private <T> T createProxy(final Class<T> factoryInterface) {
-        return (T) Proxy.newProxyInstance(getClassLoader(), createInterfaces(factoryInterface), createHandler(factoryInterface));
+        return (T) Proxy.newProxyInstance(getClassLoader(), createInterfaces(factoryInterface), createHandler());
     }
 
-    private <T> InvocationHandler createHandler(final Class<T> factoryInterface) {
-        return invocationFactory.create(factoryInterface);
+    private InvocationHandler createHandler() {
+        return invocationFactory.create();
     }
 
     private <T> Class[] createInterfaces(final Class<T> factoryInterface) {
