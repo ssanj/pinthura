@@ -15,7 +15,6 @@
  */
 package com.googlecode.pinthura.factory;
 
-import com.googlecode.pinthura.data.UrlBoundaryFactory;
 import com.googlecode.pinthura.factory.locator.ImplementationNotFoundException;
 import com.googlecode.pinthura.filter.MatchNotFoundException;
 import static junit.framework.Assert.fail;
@@ -46,11 +45,10 @@ public final class AFactoryCreationInvocationHandlerWithErrorsUnderTest {
         mockFilterChain = mockControl.createMock(ClassLocator.class);
         mockMethodParam = mockControl.createMock(MethodParam.class);
 
-        Class<UrlBoundaryFactory> factoryInterface = UrlBoundaryFactory.class;
         method = getMethod(String.class, METHOD_GETBYTES);
-        EasyMock.expect(mockMethodParamFactory.create(method, NO_PARAM, factoryInterface)).andReturn(mockMethodParam);
+        EasyMock.expect(mockMethodParamFactory.create(method, NO_PARAM)).andReturn(mockMethodParam);
 
-        handler = new FactoryCreationInvocationHandler(mockFilterChain, mockMethodParamFactory, factoryInterface);
+        handler = new FactoryCreationInvocationHandler(mockFilterChain, mockMethodParamFactory);
     }
 
     @SuppressWarnings({ "ThrowableInstanceNeverThrown" })

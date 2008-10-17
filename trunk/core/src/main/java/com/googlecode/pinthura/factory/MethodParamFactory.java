@@ -19,5 +19,5 @@ import java.lang.reflect.Method;
 
 public interface MethodParamFactory {
 
-    MethodParam create(Method method, Object[] args, final Class<?> factoryInterface);
+    MethodParam create(Method method, Object[] args);
 }
