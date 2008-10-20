@@ -18,7 +18,7 @@ package com.googlecode.pinthura.factory;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
 
-//TODO: Test
+//TODO: Int Test
 public final class FactoryCreatorImpl implements FactoryCreator {
 
     private final InvocationHandler invocationHandler;
