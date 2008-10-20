@@ -15,9 +15,6 @@
  */
 package com.googlecode.pinthura.factory;
 
-import com.googlecode.pinthura.factory.locator.InstanceCreationException;
-import com.googlecode.pinthura.filter.MatchNotFoundException;
-
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 

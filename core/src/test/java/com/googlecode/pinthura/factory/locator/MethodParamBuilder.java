@@ -1,6 +1,7 @@
 package com.googlecode.pinthura.factory.locator;
 
 import com.googlecode.pinthura.factory.MethodParam;
+import com.googlecode.pinthura.factory.MethodParamImpl;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -39,6 +40,6 @@ public final class MethodParamBuilder<A, I> {
     }
 
     public MethodParam build() {
-        return new MethodParam.Impl(method, args.toArray());
+        return new MethodParamImpl(method, args.toArray());
     }
 }

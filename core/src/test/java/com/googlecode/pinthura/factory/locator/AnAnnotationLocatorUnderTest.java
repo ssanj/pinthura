@@ -15,23 +15,6 @@
  */
 package com.googlecode.pinthura.factory.locator;
 
-import com.googlecode.pinthura.annotation.AnnotationFinder;
-import com.googlecode.pinthura.data.UrlBoundaryFactory;
-import com.googlecode.pinthura.data.UrlBoundaryImpl;
-import com.googlecode.pinthura.data.WidgetFactory;
-import com.googlecode.pinthura.factory.MethodParam;
-import com.googlecode.pinthura.filter.FilterLink;
-import com.googlecode.pinthura.filter.MatchNotFoundException;
-import com.googlecode.pinthura.filter.annotation.InterfaceImpl;
-import org.easymock.EasyMock;
-import org.easymock.IMocksControl;
-import static org.hamcrest.core.IsEqual.equalTo;
-import static org.junit.Assert.assertThat;
-import org.junit.Before;
-import org.junit.Test;
-
-import java.lang.reflect.Method;
-
 public final class AnAnnotationLocatorUnderTest {
 
 //    private FilterLink<MethodParam, Class<?>> locator;

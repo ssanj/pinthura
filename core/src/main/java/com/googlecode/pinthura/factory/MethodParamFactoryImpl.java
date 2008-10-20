@@ -20,6 +20,6 @@ import java.lang.reflect.Method;
 public final class MethodParamFactoryImpl implements MethodParamFactory {
 
     public MethodParam create(final Method method, final Object[] args) {
-        return new MethodParam.Impl(method, args);
+        return new MethodParamImpl(method, args);
     }
 }

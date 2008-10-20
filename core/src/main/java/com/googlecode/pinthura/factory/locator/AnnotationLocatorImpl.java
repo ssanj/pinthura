@@ -15,13 +15,6 @@
  */
 package com.googlecode.pinthura.factory.locator;
 
-import com.googlecode.pinthura.annotation.AnnotationFinder;
-import com.googlecode.pinthura.annotation.AnnotationNotFoundException;
-import com.googlecode.pinthura.factory.InstanceCreator;
-import com.googlecode.pinthura.factory.MethodParam;
-import com.googlecode.pinthura.filter.MatchNotFoundException;
-import com.googlecode.pinthura.filter.annotation.InterfaceImpl;
-
 public final class AnnotationLocatorImpl {
 
 //    private static final String FILTER_NAME = "An Annotation Filter";

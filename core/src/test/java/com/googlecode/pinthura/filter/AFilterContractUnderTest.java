@@ -15,16 +15,6 @@
  */
 package com.googlecode.pinthura.filter;
 
-import com.googlecode.pinthura.annotation.AnnotationFinderImpl;
-import com.googlecode.pinthura.data.UrlBoundaryFactory;
-import com.googlecode.pinthura.data.WidgetFactory;
-import com.googlecode.pinthura.factory.MethodParam;
-import com.googlecode.pinthura.factory.locator.AnnotationLocatorImpl;
-import com.googlecode.pinthura.factory.locator.DerivedImplementationNameLocator;
-import com.googlecode.pinthura.factory.locator.MethodParamBuilder;
-import com.googlecode.pinthura.factory.locator.deriver.ImplSuffixingDeriver;
-import org.junit.Test;
-
 public final class AFilterContractUnderTest {
 
 //    private static final int WIDGET_ID = 100;
@@ -63,6 +53,6 @@ public final class AFilterContractUnderTest {
 //    }
 //
 //    private MethodParam buildInvalidSimpleMethodParam() throws NoSuchMethodException {
-//        return new MethodParam.Impl(Object.class.getMethod("toString"), new Object[] {});
+//        return new MethodParam.MethodParamImpl(Object.class.getMethod("toString"), new Object[] {});
 //    }
 }

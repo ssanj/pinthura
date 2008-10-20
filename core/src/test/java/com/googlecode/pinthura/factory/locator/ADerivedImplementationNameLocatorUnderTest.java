@@ -15,20 +15,6 @@
  */
 package com.googlecode.pinthura.factory.locator;
 
-import com.googlecode.pinthura.data.UrlBoundary;
-import com.googlecode.pinthura.factory.MethodParam;
-import com.googlecode.pinthura.factory.locator.deriver.ClassNameDeriver;
-import com.googlecode.pinthura.filter.MatchNotFoundException;
-import static junit.framework.Assert.fail;
-import org.easymock.EasyMock;
-import org.easymock.IMocksControl;
-import static org.hamcrest.core.IsEqual.equalTo;
-import static org.junit.Assert.assertThat;
-import org.junit.Before;
-import org.junit.Test;
-
-import java.util.Collection;
-
 public final class ADerivedImplementationNameLocatorUnderTest {
 
 //    private static final String URL_BOUNDARY_IMPL   = "com.googlecode.pinthura.data.UrlBoundaryImpl";

@@ -15,11 +15,6 @@
  */
 package com.googlecode.pinthura.factory.locator;
 
-import com.googlecode.pinthura.factory.InstanceCreator;
-import com.googlecode.pinthura.factory.MethodParam;
-import com.googlecode.pinthura.factory.locator.deriver.ClassNameDeriver;
-import com.googlecode.pinthura.filter.MatchNotFoundException;
-
 public final class DerivedImplementationNameLocator {
 
 //    private static final String FILTER_NAME = "Simple Implementation Locator";
