@@ -20,7 +20,7 @@ import com.googlecode.pinthura.data.UrlBoundaryFactory;
 import com.googlecode.pinthura.data.UrlBoundaryImpl;
 import org.easymock.EasyMock;
 import org.easymock.IMocksControl;
-import static org.hamcrest.core.IsEqual.equalTo;
+import static org.hamcrest.core.IsSame.sameInstance;
 import static org.junit.Assert.assertThat;
 import org.junit.Before;
 import org.junit.Test;
@@ -28,57 +28,42 @@ import org.junit.Test;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
-public final class AFactoryCreationInvocationHandlerUnderTest {
+public final class ADynamicFactoryInvocationHandlerUnderTest {
 
     private static final String URL1            = "http://test.org";
-    private static final String CREATION_METHOD = "createUrlBoundary";
+    private static final String METHOD_1        = "createUrlBoundary";
+    private static final Object PROXY           = null;
 
     private final IMocksControl mockControl = EasyMock.createControl();
-
     private InvocationHandler handler;
-    private ClassLocator mockFilterChain;
+    private InstanceCreator mockInstanceCreator;
     private MethodParamFactory mockMethodParamFactory;
 
     @SuppressWarnings({ "unchecked" })
     @Before
     public void setup() {
-        mockFilterChain = mockControl.createMock(ClassLocator.class);
+        mockInstanceCreator = mockControl.createMock(InstanceCreator.class);
         mockMethodParamFactory = mockControl.createMock(MethodParamFactory.class);
 
-        handler = new FactoryCreationInvocationHandler(mockFilterChain, mockMethodParamFactory);
+        handler = new DynamicFactoryInvocationHandler(mockInstanceCreator, mockMethodParamFactory);
     }
+
 
     @Test
-    public void shouldCreateAnInstanceWithConstructorArguments() throws Throwable {
-        Method method = getMethod(UrlBoundaryFactory.class, CREATION_METHOD, String.class);
-        expectCreateInstance(URL1, method, URL1);
-    }
-
-    @Test
-    public void shouldCreateAnInstanceWithANoArgConstructor() throws Throwable {
-        Method method = getMethod(UrlBoundaryFactory.class, CREATION_METHOD);
-        expectCreateInstance(UrlBoundaryImpl.DEFAULT_URL, method);
-    }
-
-    @SuppressWarnings({ "unchecked" })
-    private void expectCreateInstance(final String expectUrl, final Method method, final Object... params) throws Throwable {
+    public void shouldReturnAnInstanceOfTheRequestedType() throws Throwable {
+        UrlBoundary expectedResult = new UrlBoundaryImpl(URL1);
+        Method method = getMethod(UrlBoundaryFactory.class, METHOD_1, String.class);
+        Object[] arguments = {URL1};
         MethodParam mockMethodParam = mockControl.createMock(MethodParam.class);
 
-        EasyMock.expect(mockMethodParamFactory.create(method, params)).andReturn(mockMethodParam);
-        EasyMock.expect(mockFilterChain.filter(mockMethodParam));
-        EasyMock.expectLastCall().andReturn(UrlBoundaryImpl.class);
-
+        EasyMock.expect(mockMethodParamFactory.create(method, arguments)).andReturn(mockMethodParam);
+        EasyMock.expect(mockInstanceCreator.createInstance(mockMethodParam)).andReturn(expectedResult);
         mockControl.replay();
 
-        UrlBoundary result = (UrlBoundary) handler.invoke(null, method, params);
-        assertUrlBoundary(result, expectUrl);
+        UrlBoundary result = (UrlBoundary) handler.invoke(PROXY, method, arguments);
+        assertThat(result, sameInstance(expectedResult));
 
         mockControl.verify();
-    }
-
-    private void assertUrlBoundary(final UrlBoundary result, final String expectedUrl) {
-        assertThat(UrlBoundaryImpl.class.isAssignableFrom(result.getClass()), equalTo(true));
-        assertThat(result.getUrlAsString(), equalTo(expectedUrl));
     }
 
     private Method getMethod(final Class<?> clazz, final String methodName, final Class... classes) throws Exception {

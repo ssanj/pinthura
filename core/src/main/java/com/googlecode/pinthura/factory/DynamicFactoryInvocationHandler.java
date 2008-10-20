@@ -15,33 +15,23 @@
  */
 package com.googlecode.pinthura.factory;
 
-import com.googlecode.pinthura.factory.locator.ImplementationNotFoundException;
+import com.googlecode.pinthura.factory.locator.InstanceCreationException;
 import com.googlecode.pinthura.filter.MatchNotFoundException;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
-final class FactoryCreationInvocationHandler implements InvocationHandler {
+final class DynamicFactoryInvocationHandler implements InvocationHandler {
 
-    private final ClassLocator implLocators;
+    private final InstanceCreator instanceCreators;
     private final MethodParamFactory methodParamFactory;
 
-    public FactoryCreationInvocationHandler(final ClassLocator implLocators,
-        final MethodParamFactory methodParamFactory) {
-        this.implLocators = implLocators;
+    public DynamicFactoryInvocationHandler(final InstanceCreator instanceCreators, final MethodParamFactory methodParamFactory) {
+        this.instanceCreators = instanceCreators;
         this.methodParamFactory = methodParamFactory;
     }
 
     public Object invoke(final Object proxy, final Method method, final Object[] args) throws Throwable {
-        try {
-            Class<?> clazz = implLocators.filter(methodParamFactory.create(method, args));
-            return instantiateClass(clazz, method.getParameterTypes(), args);
-        } catch (MatchNotFoundException e) {
-            throw new ImplementationNotFoundException("Could not find implementation for " + method.getReturnType(), e);
-        }
-    }
-
-    private Object instantiateClass(final Class<?> clazz, final Class[] parameterTypes, final Object... args) throws Exception {
-        return clazz.getConstructor(parameterTypes).newInstance(args);
+        return instanceCreators.createInstance(methodParamFactory.create(method, args));
     }
 }

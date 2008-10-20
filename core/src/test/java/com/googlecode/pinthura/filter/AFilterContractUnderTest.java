@@ -26,42 +26,43 @@ import com.googlecode.pinthura.factory.locator.deriver.ImplSuffixingDeriver;
 import org.junit.Test;
 
 public final class AFilterContractUnderTest {
-    private static final int WIDGET_ID = 100;
 
-    @SuppressWarnings({ "unchecked" })
-    @Test
-    public void shouldBeHonouredBySimpleImplementationLocator() throws NoSuchMethodException {
-        FilterLinkContractChecker.checkContract(
-                new DerivedImplementationNameLocator(new ImplSuffixingDeriver()),
-                buildValidSimpleMethodParam(),
-                buildInvalidSimpleMethodParam());
-    }
-
-    @Test
-    public void shouldBeHonouredByAnnotationLocator() {
-        FilterLinkContractChecker.checkContract(
-                new AnnotationLocatorImpl(new AnnotationFinderImpl()),
-                buildValidAnnotationMethodParam(),
-                buildInvalidAnnotationMethodParam());
-    }
-
-    @SuppressWarnings({ "unchecked" })
-    private MethodParam buildInvalidAnnotationMethodParam() {
-        return new MethodParamBuilder().forInterface(WidgetFactory.class).havingMethod("createWidget").build();
-    }
-
-    @SuppressWarnings({ "unchecked" })
-    private MethodParam buildValidAnnotationMethodParam() {
-        return new MethodParamBuilder().forInterface(WidgetFactory.class).havingMethod("createWidget", Integer.class).
-                withArgument(WIDGET_ID).build();
-    }
-
-    @SuppressWarnings({ "unchecked" })
-    private MethodParam buildValidSimpleMethodParam() {
-        return new MethodParamBuilder().forInterface(UrlBoundaryFactory.class).havingMethod("createUrlBoundary").build();
-    }
-
-    private MethodParam buildInvalidSimpleMethodParam() throws NoSuchMethodException {
-        return new MethodParam.Impl(Object.class.getMethod("toString"), new Object[] {});
-    }
+//    private static final int WIDGET_ID = 100;
+//
+//    @SuppressWarnings({ "unchecked" })
+//    @Test
+//    public void shouldBeHonouredBySimpleImplementationLocator() throws NoSuchMethodException {
+//        FilterLinkContractChecker.checkContract(
+//                new DerivedImplementationNameLocator(new ImplSuffixingDeriver()),
+//                buildValidSimpleMethodParam(),
+//                buildInvalidSimpleMethodParam());
+//    }
+//
+//    @Test
+//    public void shouldBeHonouredByAnnotationLocator() {
+//        FilterLinkContractChecker.checkContract(
+//                new AnnotationLocatorImpl(new AnnotationFinderImpl()),
+//                buildValidAnnotationMethodParam(),
+//                buildInvalidAnnotationMethodParam());
+//    }
+//
+//    @SuppressWarnings({ "unchecked" })
+//    private MethodParam buildInvalidAnnotationMethodParam() {
+//        return new MethodParamBuilder().forInterface(WidgetFactory.class).havingMethod("createWidget").build();
+//    }
+//
+//    @SuppressWarnings({ "unchecked" })
+//    private MethodParam buildValidAnnotationMethodParam() {
+//        return new MethodParamBuilder().forInterface(WidgetFactory.class).havingMethod("createWidget", Integer.class).
+//                withArgument(WIDGET_ID).build();
+//    }
+//
+//    @SuppressWarnings({ "unchecked" })
+//    private MethodParam buildValidSimpleMethodParam() {
+//        return new MethodParamBuilder().forInterface(UrlBoundaryFactory.class).havingMethod("createUrlBoundary").build();
+//    }
+//
+//    private MethodParam buildInvalidSimpleMethodParam() throws NoSuchMethodException {
+//        return new MethodParam.Impl(Object.class.getMethod("toString"), new Object[] {});
+//    }
 }

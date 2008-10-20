@@ -15,8 +15,7 @@
  */
 package com.googlecode.pinthura.factory;
 
-import com.googlecode.pinthura.filter.FilterLink;
+public interface InstanceCreator {
 
-public interface ClassLocator extends FilterLink<MethodParam, Class<?>> {
-    //Interface added so that you don't have to use lengthy generics each time you use this interface.
+    Object createInstance(MethodParam param);
 }

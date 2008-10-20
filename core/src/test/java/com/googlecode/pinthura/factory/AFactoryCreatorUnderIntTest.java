@@ -20,10 +20,14 @@ import com.googlecode.pinthura.data.ShapeFactory;
 import com.googlecode.pinthura.data.Square;
 import com.googlecode.pinthura.data.SquareImpl;
 import com.googlecode.pinthura.data.WobblyCircle;
+import com.googlecode.pinthura.filter.FilterChainImpl;
+import com.googlecode.pinthura.filter.FilterLink;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertThat;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.Arrays;
 
 public final class AFactoryCreatorUnderIntTest {
 
@@ -36,7 +40,10 @@ public final class AFactoryCreatorUnderIntTest {
 
     @Before
     public void setup() {
-        creator = new FactoryCreatorImpl(new InvocationFactoryImpl());
+        FilterLink<MethodParam,Object> filterChain = new FilterChainImpl<MethodParam, Object>(null);
+        creator = new FactoryCreatorImpl(
+                new DynamicFactoryInvocationHandler(new InstanceCreatorImpl(filterChain),
+                new MethodParamFactoryImpl()));
     }
 
     @Test

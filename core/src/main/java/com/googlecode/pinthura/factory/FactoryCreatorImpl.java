@@ -18,12 +18,13 @@ package com.googlecode.pinthura.factory;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
 
+//TODO: Test
 public final class FactoryCreatorImpl implements FactoryCreator {
 
-    private final InvocationFactory invocationFactory;
+    private final InvocationHandler invocationHandler;
 
-    public FactoryCreatorImpl(final InvocationFactory invocationFactory) {
-        this.invocationFactory = invocationFactory;
+    public FactoryCreatorImpl(final InvocationHandler invocationHandler) {
+        this.invocationHandler = invocationHandler;
     }
 
     public <T> T create(final Class<T> factoryInterface) {
@@ -32,11 +33,7 @@ public final class FactoryCreatorImpl implements FactoryCreator {
 
     @SuppressWarnings({ "unchecked" })
     private <T> T createProxy(final Class<T> factoryInterface) {
-        return (T) Proxy.newProxyInstance(getClassLoader(), createInterfaces(factoryInterface), createHandler());
-    }
-
-    private InvocationHandler createHandler() {
-        return invocationFactory.create();
+        return (T) Proxy.newProxyInstance(getClassLoader(), createInterfaces(factoryInterface), invocationHandler);
     }
 
     private <T> Class[] createInterfaces(final Class<T> factoryInterface) {
@@ -44,6 +41,6 @@ public final class FactoryCreatorImpl implements FactoryCreator {
     }
 
     private ClassLoader getClassLoader() {
-        return FactoryCreatorImpl.class.getClassLoader();
+        return getClass().getClassLoader();
     }
 }

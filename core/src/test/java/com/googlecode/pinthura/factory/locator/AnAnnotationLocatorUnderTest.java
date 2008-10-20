@@ -34,57 +34,57 @@ import java.lang.reflect.Method;
 
 public final class AnAnnotationLocatorUnderTest {
 
-    private FilterLink<MethodParam, Class<?>> locator;
-
-    private final IMocksControl mockControl = EasyMock.createControl();
-
-    private AnnotationFinder mockAnnotationFinder;
-    private InterfaceImpl mockInterfaceImpl;
-
-    @Before
-    public void setup() {
-        mockAnnotationFinder = mockControl.createMock(AnnotationFinder.class);
-        mockInterfaceImpl = mockControl.createMock(InterfaceImpl.class);
-
-        locator = new AnnotationLocatorImpl(mockAnnotationFinder);
-    }
-
-    @Test
-    public void shouldLocateAnImplementationByAnnotations() {
-        EasyMock.expect(mockAnnotationFinder.find(EasyMock.isA(Method.class), EasyMock.eq(InterfaceImpl.class))).
-                andReturn(mockInterfaceImpl);
-        EasyMock.expect(mockInterfaceImpl.value());
-        EasyMock.expectLastCall().andReturn(UrlBoundaryImpl.class);
-        mockControl.replay();
-
-        Class<?> implClass  = locator.filter(createAnnotatedMethodParam());
-        assertThat(UrlBoundaryImpl.class == implClass, equalTo(true));
-
-        mockControl.verify();
-    }
-
-    @SuppressWarnings({ "ThrowableInstanceNeverThrown" })
-    @Test (expected = MatchNotFoundException.class)
-    public void shouldThrowAnExceptionIfTheAnnotationIsNotFound() {
-        EasyMock.expect(mockAnnotationFinder.find(EasyMock.isA(Method.class), EasyMock.eq(InterfaceImpl.class))).
-                andThrow(new MatchNotFoundException());
-        mockControl.replay();
-
-        locator.filter(createUnAnnotatedMethodParam());
-    }
-
-    @Test
-    public void shouldReturnItsName() {
-        assertThat(locator.getFilterName(), equalTo("An Annotation Filter"));
-    }
-
-    @SuppressWarnings({ "unchecked" })
-    private MethodParam createUnAnnotatedMethodParam() {
-        return new MethodParamBuilder().forInterface(WidgetFactory.class).havingMethod("createWidget").build();
-    }
-
-    @SuppressWarnings({ "unchecked" })
-    private MethodParam createAnnotatedMethodParam() {
-        return new MethodParamBuilder().forInterface(UrlBoundaryFactory.class).havingMethod("createUrlBoundary").build();
-    }
+//    private FilterLink<MethodParam, Class<?>> locator;
+//
+//    private final IMocksControl mockControl = EasyMock.createControl();
+//
+//    private AnnotationFinder mockAnnotationFinder;
+//    private InterfaceImpl mockInterfaceImpl;
+//
+//    @Before
+//    public void setup() {
+//        mockAnnotationFinder = mockControl.createMock(AnnotationFinder.class);
+//        mockInterfaceImpl = mockControl.createMock(InterfaceImpl.class);
+//
+//        locator = new AnnotationLocatorImpl(mockAnnotationFinder);
+//    }
+//
+//    @Test
+//    public void shouldLocateAnImplementationByAnnotations() {
+//        EasyMock.expect(mockAnnotationFinder.find(EasyMock.isA(Method.class), EasyMock.eq(InterfaceImpl.class))).
+//                andReturn(mockInterfaceImpl);
+//        EasyMock.expect(mockInterfaceImpl.value());
+//        EasyMock.expectLastCall().andReturn(UrlBoundaryImpl.class);
+//        mockControl.replay();
+//
+//        Class<?> implClass  = locator.filter(createAnnotatedMethodParam());
+//        assertThat(UrlBoundaryImpl.class == implClass, equalTo(true));
+//
+//        mockControl.verify();
+//    }
+//
+//    @SuppressWarnings({ "ThrowableInstanceNeverThrown" })
+//    @Test (expected = MatchNotFoundException.class)
+//    public void shouldThrowAnExceptionIfTheAnnotationIsNotFound() {
+//        EasyMock.expect(mockAnnotationFinder.find(EasyMock.isA(Method.class), EasyMock.eq(InterfaceImpl.class))).
+//                andThrow(new MatchNotFoundException());
+//        mockControl.replay();
+//
+//        locator.filter(createUnAnnotatedMethodParam());
+//    }
+//
+//    @Test
+//    public void shouldReturnItsName() {
+//        assertThat(locator.getFilterName(), equalTo("An Annotation Filter"));
+//    }
+//
+//    @SuppressWarnings({ "unchecked" })
+//    private MethodParam createUnAnnotatedMethodParam() {
+//        return new MethodParamBuilder().forInterface(WidgetFactory.class).havingMethod("createWidget").build();
+//    }
+//
+//    @SuppressWarnings({ "unchecked" })
+//    private MethodParam createAnnotatedMethodParam() {
+//        return new MethodParamBuilder().forInterface(UrlBoundaryFactory.class).havingMethod("createUrlBoundary").build();
+//    }
 }

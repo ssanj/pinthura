@@ -13,13 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.pinthura.factory.locator;
+package com.googlecode.pinthura.factory.boundary;
 
-public final class ImplementationNotFoundException extends RuntimeException {
+import java.lang.reflect.Method;
 
-    private static final long serialVersionUID = -9106520329616164680L;
+public interface MethodBoundary {
 
-    public ImplementationNotFoundException(final String message, final Throwable cause) {
-        super(message, cause);
-    }
+    ClassBoundary<?> getReturnType();
+
+    String getName();
+
+    Method getMethod();
 }

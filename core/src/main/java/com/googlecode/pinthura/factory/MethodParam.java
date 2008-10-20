@@ -15,36 +15,54 @@
  */
 package com.googlecode.pinthura.factory;
 
+import com.googlecode.pinthura.factory.boundary.ClassBoundary;
+import com.googlecode.pinthura.factory.boundary.MethodBoundary;
+import com.googlecode.pinthura.factory.boundary.MethodBoundaryImpl;
+
 import java.lang.reflect.Method;
+import java.util.Arrays;
 
 public interface MethodParam {
 
-    Class<?> getReturnType();
+    ClassBoundary<?> getReturnType();
     Object[] getArguments();
-    Method getMethod();
+    MethodBoundary getMethod();
 
     public final class Impl implements MethodParam {
 
-        private final Class<?> returnType;
+        private final MethodBoundary method;
         private final Object[] arguments;
-        private final Method method;
 
         public Impl(final Method method, final Object[] arguments) {
-            this.returnType = method.getReturnType();
+            this.method = new MethodBoundaryImpl(method);
             this.arguments = arguments;
-            this.method = method;
         }
 
-        public Class<?> getReturnType() {
-            return returnType;
+        public ClassBoundary<?> getReturnType() {
+            return method.getReturnType();
         }
 
         public Object[] getArguments() {
             return arguments;
         }
 
-        public Method getMethod() {
+        public MethodBoundary getMethod() {
             return method;
+        }
+
+        @Override
+        public boolean equals(final Object object) {
+            return object != null && object instanceof Impl &&
+                    method.equals(((Impl) object).getMethod()) &&
+                    Arrays.equals(arguments, ((Impl) object).getArguments());
+        }
+
+        @Override
+        public int hashCode() {
+            int result;
+            result = (method != null ? method.hashCode() : 0);
+            result = 31 * result + (arguments != null ? Arrays.hashCode(arguments) : 0);
+            return result;
         }
     }
 }

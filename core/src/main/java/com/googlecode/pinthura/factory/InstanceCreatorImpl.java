@@ -17,22 +17,22 @@ package com.googlecode.pinthura.factory;
 
 import com.googlecode.pinthura.filter.FilterLink;
 import com.googlecode.pinthura.filter.MatchNotFoundException;
+import com.googlecode.pinthura.factory.locator.InstanceCreationException;
 
-public final class ClassLocatorChain implements ClassLocator {
+//TODO: Needs to be tested.
+public final class InstanceCreatorImpl implements InstanceCreator {
 
-    private static final String FILTER_NAME = "Class Locator Chain";
+    private final FilterLink<MethodParam, Object> filterChain;
 
-    private final FilterLink<MethodParam, Class<?>> filterChain;
-
-    public ClassLocatorChain(final FilterLink<MethodParam, Class<?>> filterChain) {
+    public InstanceCreatorImpl(final FilterLink<MethodParam, Object> filterChain) {
         this.filterChain = filterChain;
     }
 
-    public Class<?> filter(final MethodParam methodParam) throws MatchNotFoundException {
-        return filterChain.filter(methodParam);
-    }
-
-    public String getFilterName() {
-        return FILTER_NAME;
+    public Object createInstance(final MethodParam param) {
+        try {
+            return filterChain.filter(param);
+        } catch (MatchNotFoundException e) {
+            throw new InstanceCreationException("Could not create instance of " + param.getReturnType(), e);
+        }
     }
 }

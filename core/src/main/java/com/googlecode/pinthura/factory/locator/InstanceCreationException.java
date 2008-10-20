@@ -13,11 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.pinthura.factory.boundary;
+package com.googlecode.pinthura.factory.locator;
 
-public interface ClassBoundary<T> {
+public final class InstanceCreationException extends RuntimeException {
 
-    String getName();
+    private static final long serialVersionUID = -9106520329616164680L;
 
-    Class<T> getClazz();
+    public InstanceCreationException(final String message, final Throwable cause) {
+        super(message, cause);
+    }
 }

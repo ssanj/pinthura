@@ -18,22 +18,21 @@ package com.googlecode.pinthura.traverser.collection;
 import com.googlecode.pinthura.bean.PathEvaluatorImpl;
 import com.googlecode.pinthura.bean.PropertyFinderImpl;
 import com.googlecode.pinthura.factory.FactoryCreatorImpl;
-import com.googlecode.pinthura.factory.InvocationFactoryImpl;
 import com.googlecode.pinthura.traverser.collection.old.DirectoryListerImpl;
 import com.googlecode.pinthura.traverser.collection.old.LineFileReaderImpl;
 
 public final class FileSummarizerRunner {
 
-    private FileSummarizerRunner() {
-        //Main class.
-    }
-
-    public static void main(final String[] args) {
-        CollectionTraverserImpl traverser = new CollectionTraverserImpl(new PathResolverImpl(new PathEvaluatorImpl(
-                new PropertyFinderImpl())));
-        FactoryCreatorImpl factoryCreator = new FactoryCreatorImpl(new InvocationFactoryImpl());
-        FileSummarizer fileSummarizer = new FileSummarizer(new DirectoryListerImpl(), traverser,
-                factoryCreator.create(SummarizerFactory.class));
-        fileSummarizer.summarizeDictory("blue", new LineFileReaderImpl());
-    }
+//    private FileSummarizerRunner() {
+//        //Main class.
+//    }
+//
+//    public static void main(final String[] args) {
+//        CollectionTraverserImpl traverser = new CollectionTraverserImpl(new PathResolverImpl(new PathEvaluatorImpl(
+//                new PropertyFinderImpl())));
+//        FactoryCreatorImpl factoryCreator = new FactoryCreatorImpl(new InvocationFactoryImpl());
+//        FileSummarizer fileSummarizer = new FileSummarizer(new DirectoryListerImpl(), traverser,
+//                factoryCreator.create(SummarizerFactory.class));
+//        fileSummarizer.summarizeDictory("blue", new LineFileReaderImpl());
+//    }
 }

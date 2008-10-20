@@ -15,29 +15,37 @@
  */
 package com.googlecode.pinthura.factory.boundary;
 
-public final class ClassBoundaryImpl<T> implements ClassBoundary<T> {
+import java.lang.reflect.Method;
 
-    private final Class<T> clazz;
+public final class MethodBoundaryImpl implements MethodBoundary {
 
-    public ClassBoundaryImpl(final Class<T> clazz) {
-        this.clazz = clazz;
+    private final Method method;
+
+    public MethodBoundaryImpl(final Method method) {
+        this.method = method;
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    public ClassBoundary<?> getReturnType() {
+        return new ClassBoundaryImpl(method.getReturnType());
     }
 
     public String getName() {
-        return clazz.getName();
+        return method.getName();
     }
 
-    public Class<T> getClazz() {
-        return clazz;
+    public Method getMethod() {
+        return method;
     }
 
     @Override
-    public boolean equals(final Object object) {
-        return object != null && object instanceof ClassBoundary && clazz.equals(((ClassBoundary) object).getClazz());
+    public boolean equals(final Object o) {
+        return o != null && o instanceof MethodBoundary && this.method.equals(((MethodBoundary) o).getMethod());
+
     }
 
     @Override
     public int hashCode() {
-        return clazz.hashCode();
+        return method.hashCode();
     }
 }

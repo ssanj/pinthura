@@ -17,18 +17,17 @@ package com.googlecode.pinthura.factory.report;
 
 import com.googlecode.pinthura.factory.FactoryCreator;
 import com.googlecode.pinthura.factory.FactoryCreatorImpl;
-import com.googlecode.pinthura.factory.InvocationFactoryImpl;
 
 public final class ReportGeneratorRunner {
 
-    private static final int POPULATION = 5023;
-
-    private ReportGeneratorRunner() { }
-
-    public static void main(final String[] args) {
-        FactoryCreator factoryCreator = new FactoryCreatorImpl(new InvocationFactoryImpl());
-        ReportFactory reportFactory = factoryCreator.create(ReportFactory.class);
-        ReportGenerator generator = new ReportGeneratorImpl(reportFactory);
-        generator.generate(new InformationImpl("Tok'ra", POPULATION));
-    }
+//    private static final int POPULATION = 5023;
+//
+//    private ReportGeneratorRunner() { }
+//
+//    public static void main(final String[] args) {
+//        FactoryCreator factoryCreator = new FactoryCreatorImpl(new InvocationFactoryImpl());
+//        ReportFactory reportFactory = factoryCreator.create(ReportFactory.class);
+//        ReportGenerator generator = new ReportGeneratorImpl(reportFactory);
+//        generator.generate(new InformationImpl("Tok'ra", POPULATION));
+//    }
 }

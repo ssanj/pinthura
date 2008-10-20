@@ -30,40 +30,38 @@ import java.lang.reflect.Proxy;
 
 public final class AFactoryCreatorUnderTest {
 
-    private final IMocksControl mockControl = EasyMock.createControl();
-
-    private InvocationFactory mockInvocationFactory;
-    private InvocationHandler mockInvocationHandler;
-
-    @Before
-    public void setup() {
-        mockInvocationFactory = mockControl.createMock(InvocationFactory.class);
-        mockInvocationHandler = mockControl.createMock(InvocationHandler.class);
-    }
-
-    @Test
-    public void shouldCreateAnInstanceForAGivenFactoryInterface() {
-        expectCreateFactory(UrlBoundaryFactory.class);
-    }
-
-    @Test
-    public void shouldCreateAnInstanceForAnotherFactoryInterface() {
-        expectCreateFactory(InvocationFactory.class);
-    }
-
-    private <T> void expectCreateFactory(final Class<T> factoryClass) {
-        EasyMock.expect(mockInvocationFactory.create()).andReturn(mockInvocationHandler);
-        mockControl.replay();
-
-        FactoryCreator fc = new FactoryCreatorImpl(mockInvocationFactory);
-        T proxy = fc.create(factoryClass);
-
-        assertThat(proxy, IsNull.notNullValue());
-        assertThat(Proxy.isProxyClass(proxy.getClass()), equalTo(true));
-        assertThat(Proxy.getInvocationHandler(proxy), IsSame.sameInstance(mockInvocationHandler));
-
-        mockControl.verify();
-    }
-
-
+//    private final IMocksControl mockControl = EasyMock.createControl();
+//
+//    private InvocationFactory mockInvocationFactory;
+//    private InvocationHandler mockInvocationHandler;
+//
+//    @Before
+//    public void setup() {
+//        mockInvocationFactory = mockControl.createMock(InvocationFactory.class);
+//        mockInvocationHandler = mockControl.createMock(InvocationHandler.class);
+//    }
+//
+//    @Test
+//    public void shouldCreateAnInstanceForAGivenFactoryInterface() {
+//        expectCreateFactory(UrlBoundaryFactory.class);
+//    }
+//
+//    @Test
+//    public void shouldCreateAnInstanceForAnotherFactoryInterface() {
+//        expectCreateFactory(InvocationFactory.class);
+//    }
+//
+//    private <T> void expectCreateFactory(final Class<T> factoryClass) {
+//        EasyMock.expect(mockInvocationFactory.create()).andReturn(mockInvocationHandler);
+//        mockControl.replay();
+//
+//        FactoryCreator fc = new FactoryCreatorImpl(mockInvocationFactory);
+//        T proxy = fc.create(factoryClass);
+//
+//        assertThat(proxy, IsNull.notNullValue());
+//        assertThat(Proxy.isProxyClass(proxy.getClass()), equalTo(true));
+//        assertThat(Proxy.getInvocationHandler(proxy), IsSame.sameInstance(mockInvocationHandler));
+//
+//        mockControl.verify();
+//    }
 }

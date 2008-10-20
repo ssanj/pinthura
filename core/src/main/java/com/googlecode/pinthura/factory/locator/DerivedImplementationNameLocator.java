@@ -15,38 +15,38 @@
  */
 package com.googlecode.pinthura.factory.locator;
 
-import com.googlecode.pinthura.factory.ClassLocator;
+import com.googlecode.pinthura.factory.InstanceCreator;
 import com.googlecode.pinthura.factory.MethodParam;
 import com.googlecode.pinthura.factory.locator.deriver.ClassNameDeriver;
 import com.googlecode.pinthura.filter.MatchNotFoundException;
 
-public final class DerivedImplementationNameLocator implements ClassLocator {
+public final class DerivedImplementationNameLocator {
 
-    private static final String FILTER_NAME = "Simple Implementation Locator";
-
-    private final ClassNameDeriver classNameDeriver;
-
-    public DerivedImplementationNameLocator(final ClassNameDeriver classNameDeriver) {
-        this.classNameDeriver = classNameDeriver;
-    }
-
-    @SuppressWarnings({ "unchecked" })
-    public Class<?> filter(final MethodParam methodParam) {
-        return getImplementationClassName(methodParam.getReturnType());
-    }
-
-    public String getFilterName() {
-        return FILTER_NAME;
-    }
-
-    @SuppressWarnings({ "unchecked" })
-    private <T> Class<T> getImplementationClassName(final Class<T> interfaceClass)  {
-        String implClass = classNameDeriver.derive(interfaceClass);
-
-        try {
-            return (Class<T>) Class.forName(implClass);
-        } catch (ClassNotFoundException e) {
-            throw new MatchNotFoundException("Could not load implementation for class: " + implClass, e);
-        }
-    }
+//    private static final String FILTER_NAME = "Simple Implementation Locator";
+//
+//    private final ClassNameDeriver classNameDeriver;
+//
+//    public DerivedImplementationNameLocator(final ClassNameDeriver classNameDeriver) {
+//        this.classNameDeriver = classNameDeriver;
+//    }
+//
+//    @SuppressWarnings({ "unchecked" })
+//    public Class<?> filter(final MethodParam methodParam) {
+//        return getImplementationClassName(methodParam.getReturnType());
+//    }
+//
+//    public String getFilterName() {
+//        return FILTER_NAME;
+//    }
+//
+//    @SuppressWarnings({ "unchecked" })
+//    private <T> Class<T> getImplementationClassName(final Class<T> interfaceClass)  {
+//        String implClass = classNameDeriver.derive(interfaceClass);
+//
+//        try {
+//            return (Class<T>) Class.forName(implClass);
+//        } catch (ClassNotFoundException e) {
+//            throw new MatchNotFoundException("Could not load implementation for class: " + implClass, e);
+//        }
+//    }
 }
