@@ -40,4 +40,8 @@ public final class ClassBoundaryImpl<T> implements ClassBoundary<T> {
     public int hashCode() {
         return clazz.hashCode();
     }
+
+    public String toString() {
+        return clazz.toString();
+    }
 }

@@ -19,7 +19,6 @@ import com.googlecode.pinthura.filter.FilterLink;
 import com.googlecode.pinthura.filter.MatchNotFoundException;
 import com.googlecode.pinthura.factory.locator.InstanceCreationException;
 
-//TODO: Needs to be tested.
 public final class InstanceCreatorImpl implements InstanceCreator {
 
     private final FilterLink<MethodParam, Object> filterChain;

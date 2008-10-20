@@ -15,19 +15,6 @@
  */
 package com.googlecode.pinthura.factory;
 
-import com.googlecode.pinthura.data.UrlBoundaryFactory;
-import org.easymock.EasyMock;
-import org.easymock.IMocksControl;
-import static org.hamcrest.core.IsEqual.equalTo;
-import org.hamcrest.core.IsNull;
-import org.hamcrest.core.IsSame;
-import static org.junit.Assert.assertThat;
-import org.junit.Before;
-import org.junit.Test;
-
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Proxy;
-
 public final class AFactoryCreatorUnderTest {
 
 //    private final IMocksControl mockControl = EasyMock.createControl();

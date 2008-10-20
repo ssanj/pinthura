@@ -42,7 +42,6 @@ public final class AnInstanceCreatorUnderTest {
         instanceCreator = new InstanceCreatorImpl(mockFilterLink);
     }
 
-    @SuppressWarnings({ "unchecked" })
     @Test
     public void shouldCreateAnInstanceGivenAMethodParam() {
         expectInstanceCreation(STRING_INSTANCE);

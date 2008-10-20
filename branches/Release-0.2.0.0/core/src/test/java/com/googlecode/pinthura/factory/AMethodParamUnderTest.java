@@ -19,8 +19,7 @@ import com.googlecode.pinthura.data.UrlBoundaryFactory;
 import com.googlecode.pinthura.data.WidgetFactory;
 import com.googlecode.pinthura.factory.locator.MethodParamBuilder;
 import static org.hamcrest.core.IsEqual.equalTo;
-import org.hamcrest.core.IsNot;
-import static org.hamcrest.core.IsNot.*;
+import static org.hamcrest.core.IsNot.not;
 import static org.junit.Assert.assertThat;
 import org.junit.Test;
 
@@ -52,7 +51,7 @@ public final class AMethodParamUnderTest {
 
     @SuppressWarnings({ "unchecked" })
     private MethodParam createMethodParam1() {
-        return new MethodParamBuilder().forInterface(FACTORY_CLASS_1).havingMethod( FACTORY_METHOD_1, String.class).withArgument(URL).
+        return new MethodParamBuilder().forInterface(FACTORY_CLASS_1).havingMethod(FACTORY_METHOD_1, String.class).withArgument(URL).
                 build();
     }
 

@@ -27,8 +27,6 @@ import static org.junit.Assert.assertThat;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Arrays;
-
 public final class AFactoryCreatorUnderIntTest {
 
     private static final int SIDE_OF_SQUARE         = 4;
@@ -40,7 +38,7 @@ public final class AFactoryCreatorUnderIntTest {
 
     @Before
     public void setup() {
-        FilterLink<MethodParam,Object> filterChain = new FilterChainImpl<MethodParam, Object>(null);
+        FilterLink<MethodParam, Object> filterChain = new FilterChainImpl<MethodParam, Object>(null);
         creator = new FactoryCreatorImpl(
                 new DynamicFactoryInvocationHandler(new InstanceCreatorImpl(filterChain),
                 new MethodParamFactoryImpl()));

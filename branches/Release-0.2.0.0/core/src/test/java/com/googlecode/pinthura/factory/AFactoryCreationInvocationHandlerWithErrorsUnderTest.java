@@ -15,19 +15,6 @@
  */
 package com.googlecode.pinthura.factory;
 
-import com.googlecode.pinthura.factory.locator.InstanceCreationException;
-import com.googlecode.pinthura.filter.MatchNotFoundException;
-import static junit.framework.Assert.fail;
-import org.easymock.EasyMock;
-import org.easymock.IMocksControl;
-import static org.hamcrest.core.IsEqual.equalTo;
-import static org.junit.Assert.assertThat;
-import org.junit.Before;
-import org.junit.Test;
-
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
-
 public final class AFactoryCreationInvocationHandlerWithErrorsUnderTest {
 
 //    private static final String METHOD_GETBYTES = "getBytes";
