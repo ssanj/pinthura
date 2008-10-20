@@ -17,7 +17,6 @@ package com.googlecode.pinthura.factory;
 
 import com.googlecode.pinthura.filter.FilterLink;
 import com.googlecode.pinthura.filter.MatchNotFoundException;
-import com.googlecode.pinthura.factory.locator.InstanceCreationException;
 
 public final class InstanceCreatorImpl implements InstanceCreator {
 

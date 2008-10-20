@@ -15,13 +15,11 @@
  */
 package com.googlecode.pinthura.factory.boundary;
 
-public interface ClassBoundary<T> {
+public final class ClassBoundaryException extends RuntimeException {
 
-    String getName();
+    private static final long serialVersionUID = -8111338550009053029L;
 
-    Class<T> getClazz();
-
-    ClassBoundary forName(String className);
-
-    Object newInstance();
+    public ClassBoundaryException(final Throwable cause) {
+        super(cause);
+    }
 }

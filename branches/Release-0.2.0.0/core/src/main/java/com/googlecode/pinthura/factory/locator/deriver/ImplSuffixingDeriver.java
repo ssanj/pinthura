@@ -15,11 +15,13 @@
  */
 package com.googlecode.pinthura.factory.locator.deriver;
 
+import com.googlecode.pinthura.factory.boundary.ClassBoundary;
+
 public final class ImplSuffixingDeriver implements ClassNameDeriver {
 
     private static final String DEFAULT_SUFFIX  = "Impl";
 
-    public String derive(final Class<?> interfaceClass) {
+    public <T> String derive(final ClassBoundary<T> interfaceClass) {
         return new StringBuilder().append(interfaceClass.getName()).append(DEFAULT_SUFFIX).toString();
     }
 }
