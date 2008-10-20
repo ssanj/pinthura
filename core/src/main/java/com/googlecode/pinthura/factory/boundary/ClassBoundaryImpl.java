@@ -44,7 +44,7 @@ public final class ClassBoundaryImpl<T> implements ClassBoundary<T> {
         try {
             return clazz.newInstance();
         } catch (Exception e) {
-            throw new ClassBoundaryException(e);    
+            throw new ClassBoundaryException(e);
         }
     }
 
