@@ -31,6 +31,23 @@ public final class ClassBoundaryImpl<T> implements ClassBoundary<T> {
         return clazz;
     }
 
+    @SuppressWarnings({ "unchecked" })
+    public ClassBoundary forName(final String className) {
+        try {
+            return new ClassBoundaryImpl(Class.forName(className));
+        } catch (ClassNotFoundException e) {
+            throw new ClassBoundaryException(e);
+        }
+    }
+
+    public Object newInstance() {
+        try {
+            return clazz.newInstance();
+        } catch (Exception e) {
+            throw new ClassBoundaryException(e);    
+        }
+    }
+
     @Override
     public boolean equals(final Object object) {
         return object != null && object instanceof ClassBoundary && clazz.equals(((ClassBoundary) object).getClazz());

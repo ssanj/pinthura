@@ -17,6 +17,8 @@ package com.googlecode.pinthura.factory.locator.deriver;
 
 import com.googlecode.pinthura.data.Square;
 import com.googlecode.pinthura.data.UrlBoundary;
+import com.googlecode.pinthura.factory.boundary.ClassBoundaryImpl;
+import com.googlecode.pinthura.factory.boundary.ClassBoundary;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertThat;
 import org.junit.Before;
@@ -33,15 +35,15 @@ public final class AnImplSuffixingDeriverUnderTest {
 
     @Test
     public void shouldReturnAnInterfaceNameSuffixedWithAnImpl() {
-        expectImplementation(UrlBoundary.class, "com.googlecode.pinthura.data.UrlBoundaryImpl");
+        expectImplementation(new ClassBoundaryImpl<UrlBoundary>(UrlBoundary.class), "com.googlecode.pinthura.data.UrlBoundaryImpl");
     }
 
     @Test
     public void shouldReturnAnotherInfaceNameSuffixedWithAnImpl() {
-        expectImplementation(Square.class, "com.googlecode.pinthura.data.SquareImpl");
+        expectImplementation(new ClassBoundaryImpl<Square>(Square.class), "com.googlecode.pinthura.data.SquareImpl");
     }
 
-    private void expectImplementation(final Class<?> interfaceClass, final String implementationClass) {
+    private <T> void expectImplementation(final ClassBoundary<T> interfaceClass, final String implementationClass) {
         assertThat(locator.derive(interfaceClass), equalTo(implementationClass));
 
     }
