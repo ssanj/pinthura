@@ -16,7 +16,7 @@
 package com.googlecode.pinthura.factory.creator;
 
 import com.googlecode.pinthura.factory.MethodParam;
-import com.googlecode.pinthura.factory.boundary.ClassBoundary;
+import com.googlecode.pinthura.factory.boundary.ConstructorBoundary;
 import com.googlecode.pinthura.factory.locator.deriver.ClassNameDeriver;
 import com.googlecode.pinthura.filter.MatchNotFoundException;
 
@@ -32,7 +32,7 @@ public final class SimpleInstantiator implements InstantiationStrategy {
 
     @SuppressWarnings({ "unchecked" })
     public Object filter(final MethodParam methodParam) {
-        return findAndInstantiate(methodParam.getReturnType());
+        return findAndInstantiate(methodParam);
     }
 
     public String getFilterName() {
@@ -40,13 +40,17 @@ public final class SimpleInstantiator implements InstantiationStrategy {
     }
 
     @SuppressWarnings({ "unchecked" })
-    private Object findAndInstantiate(final ClassBoundary<?> interfaceClass)  {
-        String implClass = classNameDeriver.derive(interfaceClass);
+    private Object findAndInstantiate(final MethodParam methodParam)  {
+        String implClass = classNameDeriver.derive(methodParam.getReturnType());
 
         try {
-            return interfaceClass.forName(implClass).newInstance();
+            return findConstructor(methodParam, implClass).newInstance(methodParam.getArguments());
         } catch (Exception e) {
             throw new MatchNotFoundException("Could not load implementation for class: " + implClass, e);
         }
+    }
+
+    private ConstructorBoundary<?> findConstructor(final MethodParam methodParam, final String implClass) {
+        return methodParam.getReturnType().forName(implClass).getConstructor(methodParam.getParameterTypes());
     }
 }

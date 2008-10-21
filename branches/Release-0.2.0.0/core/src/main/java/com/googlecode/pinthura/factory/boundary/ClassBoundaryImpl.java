@@ -15,6 +15,9 @@
  */
 package com.googlecode.pinthura.factory.boundary;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public final class ClassBoundaryImpl<T> implements ClassBoundary<T> {
 
     private final Class<T> clazz;
@@ -32,7 +35,7 @@ public final class ClassBoundaryImpl<T> implements ClassBoundary<T> {
     }
 
     @SuppressWarnings({ "unchecked" })
-    public ClassBoundary forName(final String className) {
+    public ClassBoundary<?> forName(final String className) {
         try {
             return new ClassBoundaryImpl(Class.forName(className));
         } catch (ClassNotFoundException e) {
@@ -40,9 +43,14 @@ public final class ClassBoundaryImpl<T> implements ClassBoundary<T> {
         }
     }
 
-    public Object newInstance() {
+    public ConstructorBoundary<?> getConstructor(final ClassBoundary<?>[] parameterTypes) {
+        List<Class<?>> classList = new ArrayList<Class<?>>();
+        for (ClassBoundary<?> parameterType : parameterTypes) {
+            classList.add(parameterType.getClazz());
+        }
+
         try {
-            return clazz.newInstance();
+            return new ConstructorBoundaryImpl<T>(clazz.getConstructor(classList.toArray(new Class<?>[classList.size()])));
         } catch (Exception e) {
             throw new ClassBoundaryException(e);
         }

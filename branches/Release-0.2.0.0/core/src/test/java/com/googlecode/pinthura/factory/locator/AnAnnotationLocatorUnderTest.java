@@ -15,6 +15,7 @@
  */
 package com.googlecode.pinthura.factory.locator;
 
+//TODO: Test
 public final class AnAnnotationLocatorUnderTest {
 
 //    private FilterLink<MethodParam, Class<?>> locator;

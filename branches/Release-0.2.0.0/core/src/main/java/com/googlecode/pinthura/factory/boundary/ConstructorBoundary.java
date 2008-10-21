@@ -15,15 +15,11 @@
  */
 package com.googlecode.pinthura.factory.boundary;
 
-import java.lang.reflect.Method;
+import java.lang.reflect.Constructor;
 
-public interface MethodBoundary {
+public interface ConstructorBoundary<T> {
 
-    ClassBoundary<?> getReturnType();
+    Object newInstance(Object[] arguments);
 
-    String getName();
-
-    Method getMethod();
-
-    ClassBoundary<?>[] getParameterTypes();
+    Constructor<T> getConstructor();
 }
