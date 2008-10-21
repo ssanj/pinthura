@@ -56,7 +56,7 @@ public final class APathEvaluatorWithExceptionsUnderTest {
 
     @SuppressWarnings({ "ThrowableInstanceNeverThrown", "unchecked" })
     @Test
-    public void shouldThrowAnExceptionIfAnyExceptionIsThrown() throws NoSuchMethodException {
+    public void shouldThrowAnExceptionIfAnyExceptionIsThrown() {
         EasyMock.expect(mockPropertyFinder.findMethodFor("boohoo", Authentication.class)).andThrow(new NullPointerException());
         mockControl.replay();
 

@@ -15,7 +15,7 @@
  */
 package com.googlecode.pinthura.factory.creator;
 
-public final class AnnotationInstantiator /*implements InstantiationStrategy */{
+public final class AnnotationInstantiator /*implements InstantiationStrategy */ {
 
 //    private static final String FILTER_NAME = "Annotation Instantiator";
 //

@@ -13,11 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.pinthura.factory.locator.deriver;
+package com.googlecode.pinthura.factory.creator;
 
 import com.googlecode.pinthura.factory.MethodParam;
+import com.googlecode.pinthura.factory.boundary.ConstructorBoundary;
 
-public interface ClassNameDeriver {
+public interface ConstructorLocator {
 
-    String derive(MethodParam methodParam);
+    ConstructorBoundary<?> locate(final MethodParam methodParam, final String className);
 }

@@ -24,33 +24,32 @@ public final class SimpleInstantiator implements InstantiationStrategy {
 
     private static final String FILTER_NAME = "Simple Instantiator";
 
+    private final ConstructorLocator constructorLocator;
+    private final ConstructorInstantiator constructorInstantiator;
+
     private final ClassNameDeriver classNameDeriver;
 
-    public SimpleInstantiator(final ClassNameDeriver classNameDeriver) {
+    public SimpleInstantiator(final ClassNameDeriver classNameDeriver, final ConstructorLocator locator,
+                              final ConstructorInstantiator instantiator) {
         this.classNameDeriver = classNameDeriver;
+        this.constructorLocator = locator;
+        this.constructorInstantiator = instantiator;
     }
 
     @SuppressWarnings({ "unchecked" })
     public Object filter(final MethodParam methodParam) {
-        return findAndInstantiate(methodParam);
+        String implClass = "[Unknown]";
+        try {
+            implClass = classNameDeriver.derive(methodParam);
+            ConstructorBoundary constructorBoundary = constructorLocator.locate(methodParam, implClass);
+            return constructorInstantiator.instantiate(constructorBoundary, methodParam);
+        } catch (Exception e) {
+            throw new MatchNotFoundException("Could not load implementation for class: " + implClass, e);
+        }
     }
 
     public String getFilterName() {
         return FILTER_NAME;
     }
 
-    @SuppressWarnings({ "unchecked" })
-    private Object findAndInstantiate(final MethodParam methodParam)  {
-        String implClass = classNameDeriver.derive(methodParam.getReturnType());
-
-        try {
-            return findConstructor(methodParam, implClass).newInstance(methodParam.getArguments());
-        } catch (Exception e) {
-            throw new MatchNotFoundException("Could not load implementation for class: " + implClass, e);
-        }
-    }
-
-    private ConstructorBoundary<?> findConstructor(final MethodParam methodParam, final String implClass) {
-        return methodParam.getReturnType().forName(implClass).getConstructor(methodParam.getParameterTypes());
-    }
 }

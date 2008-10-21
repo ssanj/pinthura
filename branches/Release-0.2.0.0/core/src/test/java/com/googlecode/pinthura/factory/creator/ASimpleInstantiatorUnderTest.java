@@ -16,12 +16,7 @@
 package com.googlecode.pinthura.factory.creator;
 
 import com.googlecode.pinthura.data.UrlBoundary;
-import com.googlecode.pinthura.data.UrlBoundaryImpl;
-import com.googlecode.pinthura.data.Square;
-import com.googlecode.pinthura.data.SquareImpl;
 import com.googlecode.pinthura.factory.MethodParam;
-import com.googlecode.pinthura.factory.boundary.ClassBoundary;
-import com.googlecode.pinthura.factory.boundary.ClassBoundaryImpl;
 import com.googlecode.pinthura.factory.boundary.ConstructorBoundary;
 import com.googlecode.pinthura.factory.locator.deriver.ClassNameDeriver;
 import com.googlecode.pinthura.filter.MatchNotFoundException;
@@ -29,71 +24,58 @@ import static junit.framework.Assert.fail;
 import org.easymock.EasyMock;
 import org.easymock.IMocksControl;
 import static org.hamcrest.core.IsEqual.equalTo;
-import org.hamcrest.core.IsSame;
+import static org.hamcrest.core.IsSame.sameInstance;
 import static org.junit.Assert.assertThat;
 import org.junit.Before;
 import org.junit.Test;
 
 public final class ASimpleInstantiatorUnderTest {
 
-    private static final String URL_BOUNDARY_IMPL       = "com.googlecode.pinthura.data.UrlBoundaryImpl";
-    private static final String SQUARE_BOUNDARY_IMPL    = "com.googlecode.pinthura.data.SqaureImpl";
-    private static final String COLLECTION_IMPL         = "java.util.CollectionImpl";
-    private static final int PARAMETER_1                = 20;
+    private static final String URL_BOUNDARY_IMPL = "com.googlecode.pinthura.data.UrlBoundaryImpl";
 
     private final IMocksControl mockControl = EasyMock.createControl();
     private MethodParam mockMethodParam;
     private ClassNameDeriver mockClassNameDeriver;
     private SimpleInstantiator instantiator;
+    private ConstructorLocator mockConstructorLocator;
+    private ConstructorInstantiator mockConstructorInstantiator;
 
     @Before
     public void setup() {
         mockMethodParam = mockControl.createMock(MethodParam.class);
         mockClassNameDeriver = mockControl.createMock(ClassNameDeriver.class);
+        mockConstructorLocator = mockControl.createMock(ConstructorLocator.class);
+        mockConstructorInstantiator = mockControl.createMock(ConstructorInstantiator.class);
 
-        instantiator = new SimpleInstantiator(mockClassNameDeriver);
+        instantiator = new SimpleInstantiator(mockClassNameDeriver, mockConstructorLocator, mockConstructorInstantiator);
     }
 
-    @SuppressWarnings({ "unchecked" })
     @Test
     public void shouldCreateAnInstance() {
-        ClassBoundary mockLoadedClass = loadClass(URL_BOUNDARY_IMPL);
-        ConstructorBoundary mockConstructorBoundary = findConstructor(mockLoadedClass, new ClassBoundary[] {});
-
-        UrlBoundary urlBoundary = new UrlBoundaryImpl();
-        instantiateConstructor(mockConstructorBoundary, urlBoundary, new Object[] {});
+        UrlBoundary mockUrlBoundary = mockControl.createMock(UrlBoundary.class);
+        expectInstantiation(URL_BOUNDARY_IMPL, mockUrlBoundary);
         mockControl.replay();
 
         UrlBoundary result = (UrlBoundary) instantiator.filter(mockMethodParam);
-        assertThat(result, IsSame.sameInstance(urlBoundary));
+        assertThat(result, sameInstance(mockUrlBoundary));
 
         mockControl.verify();
     }
 
     @SuppressWarnings({ "unchecked" })
-    @Test
-    public void shouldCreateAnInstanceWithParameters() {
-        ClassBoundary mockLoadedClass = loadClass(SQUARE_BOUNDARY_IMPL);
-        ClassBoundary<?>[] parameterTypes = {new ClassBoundaryImpl(int.class)};
-        ConstructorBoundary mockConstructorBoundary = findConstructor(mockLoadedClass, parameterTypes);
+    private void expectInstantiation(final String className, final Object instance) {
+        EasyMock.expect(mockClassNameDeriver.derive(mockMethodParam)).andReturn(className);
 
-        Square square = new SquareImpl(PARAMETER_1);
-        instantiateConstructor(mockConstructorBoundary, square, new Object[] {PARAMETER_1});
-        mockControl.replay();
+        ConstructorBoundary mockConstructorBoundary = mockControl.createMock(ConstructorBoundary.class);
 
-        Square result = (Square) instantiator.filter(mockMethodParam);
-        assertThat(result, IsSame.sameInstance(square));
-
-        mockControl.verify();
+        EasyMock.expect(mockConstructorLocator.locate(mockMethodParam, className)).andReturn(mockConstructorBoundary);
+        EasyMock.expect(mockConstructorInstantiator.instantiate(mockConstructorBoundary,  mockMethodParam)).andReturn(instance);
     }
 
-    @SuppressWarnings({ "unchecked", "ThrowableInstanceNeverThrown" })
+    @SuppressWarnings({ "ThrowableInstanceNeverThrown" })
     @Test
-    public void shouldThrowAnExceptionIfTheInstanceCantBeCreated() {
-        ClassBoundary mockClassBoundary = mockControl.createMock(ClassBoundary.class);
-        EasyMock.expect(mockMethodParam.getReturnType()).andReturn(mockClassBoundary).times(2);
-        EasyMock.expect(mockClassNameDeriver.derive(EasyMock.isA(ClassBoundary.class))).andReturn(COLLECTION_IMPL);
-        EasyMock.expect(mockClassBoundary.forName(COLLECTION_IMPL)).andThrow(new IllegalStateException());
+    public void shouldThrowAnExceptionIfTheClassNameCantBeDerived() {
+        EasyMock.expect(mockClassNameDeriver.derive(mockMethodParam)).andThrow(new IllegalStateException());
         mockControl.replay();
 
         try {
@@ -101,33 +83,24 @@ public final class ASimpleInstantiatorUnderTest {
             fail();
         } catch (MatchNotFoundException e) {
             assertThat(e.getCause().getClass() == IllegalStateException.class, equalTo(true));
-            assertThat(e.getMessage(), equalTo("Could not load implementation for class: java.util.CollectionImpl"));
+            assertThat(e.getMessage(), equalTo("Could not load implementation for class: [Unknown]"));
         }
     }
 
-    private void instantiateConstructor(final ConstructorBoundary mockConstructorBoundary, final Object object, final Object[] args) {
-        EasyMock.expect(mockMethodParam.getArguments()).andReturn(args);
-        EasyMock.expect(mockConstructorBoundary.newInstance(args)).andReturn(object);
-    }
+    @SuppressWarnings({ "ThrowableInstanceNeverThrown" })
+    @Test
+    public void shouldThrowAnExceptionIfTheInstanceCantBeCreated() {
+        EasyMock.expect(mockClassNameDeriver.derive(mockMethodParam)).andReturn(URL_BOUNDARY_IMPL);
+        EasyMock.expect(mockConstructorLocator.locate(mockMethodParam, URL_BOUNDARY_IMPL)).andThrow(new IllegalArgumentException());
+        mockControl.replay();
 
-    @SuppressWarnings({ "unchecked" })
-    private ConstructorBoundary findConstructor(final ClassBoundary mockLoadedClass, final ClassBoundary<?>[] parameterTypes) {
-        EasyMock.expect(mockMethodParam.getParameterTypes()).andReturn(parameterTypes);
-
-        ConstructorBoundary<?> mockConstructorBoundary = mockControl.createMock(ConstructorBoundary.class);
-        EasyMock.expect(mockLoadedClass.getConstructor(parameterTypes)).andReturn(mockConstructorBoundary);
-        return mockConstructorBoundary;
-    }
-
-    @SuppressWarnings({ "unchecked" })
-    private ClassBoundary loadClass(final String className) {
-        ClassBoundary mockClassBoundary = mockControl.createMock(ClassBoundary.class);
-        EasyMock.expect(mockMethodParam.getReturnType()).andReturn(mockClassBoundary).times(2);
-        EasyMock.expect(mockClassNameDeriver.derive(mockClassBoundary)).andReturn(className);
-
-        ClassBoundary mockLoadedClass = mockControl.createMock(ClassBoundary.class);
-        EasyMock.expect(mockClassBoundary.forName(className)).andReturn(mockLoadedClass);
-        return mockLoadedClass;
+        try {
+            instantiator.filter(mockMethodParam);
+            fail();
+        } catch (MatchNotFoundException e) {
+            assertThat(e.getCause().getClass() == IllegalArgumentException.class, equalTo(true));
+            assertThat(e.getMessage(), equalTo("Could not load implementation for class: com.googlecode.pinthura.data.UrlBoundaryImpl"));
+        }
     }
 
     @Test
