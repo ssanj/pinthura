@@ -18,7 +18,9 @@ package com.googlecode.pinthura.factory.creator;
 import com.googlecode.pinthura.factory.boundary.ConstructorBoundary;
 import com.googlecode.pinthura.factory.MethodParam;
 
-public interface ConstructorInstantiator {
+public final class ConstructorInstantiatorImpl implements ConstructorInstantiator {
 
-    <T> Object instantiate(ConstructorBoundary<T> constructorBoundary, MethodParam methodParam);
+    public <T> Object instantiate(final ConstructorBoundary<T> constructorBoundary, final MethodParam methodParam) {
+        return constructorBoundary.newInstance(methodParam.getArguments());
+    }
 }
