@@ -15,12 +15,12 @@
  */
 package com.googlecode.pinthura.data;
 
-import com.googlecode.pinthura.filter.annotation.InterfaceImpl;
+import com.googlecode.pinthura.factory.Implementation;
 
 public interface WidgetFactory {
 
     Widget createWidget();
 
-    @InterfaceImpl(CrazyWidget.class)
+    @Implementation(CrazyWidget.class)
     Widget createWidget(Integer id);
 }

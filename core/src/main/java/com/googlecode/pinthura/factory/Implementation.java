@@ -13,15 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.pinthura.factory.creator;
+package com.googlecode.pinthura.factory;
 
-import com.googlecode.pinthura.factory.boundary.ConstructorBoundary;
-import com.googlecode.pinthura.factory.MethodParam;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-public final class ConstructorLocatorImpl implements ConstructorLocator {
+@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface Implementation {
 
-    @SuppressWarnings({ "unchecked" })
-    public <T> ConstructorBoundary<T> locate(final MethodParam methodParam, final String className) {
-        return (ConstructorBoundary<T>) methodParam.getReturnType().forName(className).getConstructor(methodParam.getParameterTypes());
-    }
+    Class<?> value();
 }

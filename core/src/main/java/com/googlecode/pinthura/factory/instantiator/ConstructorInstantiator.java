@@ -13,22 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.pinthura.annotation;
+package com.googlecode.pinthura.factory.instantiator;
 
-import com.googlecode.pinthura.factory.boundary.ClassBoundary;
-import com.googlecode.pinthura.factory.boundary.MethodBoundary;
+import com.googlecode.pinthura.factory.boundary.ConstructorBoundary;
+import com.googlecode.pinthura.factory.MethodParam;
 
-import java.lang.annotation.Annotation;
+public interface ConstructorInstantiator {
 
-public final class AnnotationFinderImpl implements AnnotationFinder {
-
-    public <T extends Annotation> T find(final MethodBoundary method, final ClassBoundary<T> annotationClass) {
-        T annotation = method.getAnnotation(annotationClass);
-
-        if (annotation == null) {
-            throw new AnnotationNotFoundException();
-        }
-
-        return annotation;
-    }
+    <T> Object instantiate(ConstructorBoundary<T> constructorBoundary, MethodParam methodParam);
 }

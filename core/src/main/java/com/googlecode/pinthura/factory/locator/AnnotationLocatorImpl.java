@@ -28,7 +28,7 @@ public final class AnnotationLocatorImpl {
 //    @SuppressWarnings({ "unchecked" })
 //    public Class<?> filter(final MethodParam methodParam) {
 //        try {
-//            return annotationFinder.find(methodParam.getMethod(), InterfaceImpl.class).value();
+//            return annotationFinder.find(methodParam.getMethod(), Implementation.class).value();
 //        } catch (AnnotationNotFoundException e) {
 //           throw new MatchNotFoundException();
 //        }

@@ -13,12 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.pinthura.factory.creator;
+package com.googlecode.pinthura.factory.instantiator;
 
 import com.googlecode.pinthura.factory.boundary.ConstructorBoundary;
+import com.googlecode.pinthura.factory.boundary.ClassBoundary;
 import com.googlecode.pinthura.factory.MethodParam;
 
-public interface ConstructorInstantiator {
+public final class ConstructorLocatorImpl implements ConstructorLocator {
 
-    <T> Object instantiate(ConstructorBoundary<T> constructorBoundary, MethodParam methodParam);
+    @SuppressWarnings({ "unchecked" })
+    public <T> ConstructorBoundary<T> locate(final MethodParam methodParam, final String className) {
+        return (ConstructorBoundary<T>) methodParam.getReturnType().forName(className).getConstructor(methodParam.getParameterTypes());
+    }
+
+    public <T> ConstructorBoundary<T> locate(final MethodParam methodParam, final ClassBoundary<T> clazz) {
+        return clazz.getConstructor(methodParam.getParameterTypes());
+    }
 }

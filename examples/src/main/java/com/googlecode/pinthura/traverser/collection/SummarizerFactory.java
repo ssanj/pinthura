@@ -15,7 +15,7 @@
  */
 package com.googlecode.pinthura.traverser.collection;
 
-import com.googlecode.pinthura.filter.annotation.InterfaceImpl;
+import com.googlecode.pinthura.factory.Implementation;
 import com.googlecode.pinthura.traverser.collection.old.LineFileReader;
 import com.googlecode.pinthura.traverser.collection.old.Summary;
 
@@ -23,12 +23,12 @@ import java.util.Map;
 
 public interface SummarizerFactory {
 
-    @InterfaceImpl(FileTraversalHandler.class)
+    @Implementation(FileTraversalHandler.class)
     CollectionElementHandler<String, ProcessingResult> createFileTraverser(final LineFileReader lineFileReader);
 
-    @InterfaceImpl(ConfigSummaryHandler.class)
+    @Implementation(ConfigSummaryHandler.class)
     CollectionElementHandler<String, Summary> createSummary(String banner);
 
-    @InterfaceImpl(DocumentationSummaryHandler.class)
+    @Implementation(DocumentationSummaryHandler.class)
     CollectionElementHandler<String, Summary> createSummary(final String banner, final Map<String, String> docMap);
 }
