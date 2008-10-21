@@ -19,7 +19,7 @@ public final class MethodParamBuilder<A, I> {
         return this;
     }
 
-    public MethodParamBuilder havingMethod(final String methodName, final Class... paramTypes) {
+    public MethodParamBuilder havingMethod(final String methodName, final Class<?>... paramTypes) {
         try {
             this.method = factoryInterface.getMethod(methodName, paramTypes);
         } catch (NoSuchMethodException e) {
