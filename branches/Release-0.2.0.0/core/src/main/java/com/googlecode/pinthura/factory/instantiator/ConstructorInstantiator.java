@@ -20,5 +20,5 @@ import com.googlecode.pinthura.factory.MethodParam;
 
 public interface ConstructorInstantiator {
 
-    <T> Object instantiate(ConstructorBoundary<T> constructorBoundary, MethodParam methodParam);
+    <T> Object instantiate(MethodParam methodParam, ConstructorBoundary<T> constructorBoundary);
 }

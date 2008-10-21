@@ -15,29 +15,31 @@
  */
 package com.googlecode.pinthura.factory.instantiator;
 
-import com.googlecode.pinthura.annotation.AnnotationFinder;
 import com.googlecode.pinthura.annotation.AnnotationNotFoundException;
 import com.googlecode.pinthura.factory.MethodParam;
-import com.googlecode.pinthura.factory.Implementation;
-import com.googlecode.pinthura.factory.boundary.ClassBoundary;
-import com.googlecode.pinthura.factory.boundary.ClassBoundaryImpl;
+import com.googlecode.pinthura.factory.boundary.ConstructorBoundary;
 import com.googlecode.pinthura.filter.MatchNotFoundException;
 
 public final class AnnotationInstantiator implements InstantiationStrategy {
 
     private static final String FILTER_NAME = "Annotation Instantiator";
 
-    private final AnnotationFinder annotationFinder;
-    private final ClassBoundary<Implementation> annotationClazz;
+    private final AnnotatedClassExtractor annotationExtractor;
+    private final ConstructorLocator constructorLocator;
+    private final ConstructorInstantiator instantiator;
 
-    public AnnotationInstantiator(final AnnotationFinder annotationFinder) {
-        this.annotationFinder = annotationFinder;
-        annotationClazz = new ClassBoundaryImpl<Implementation>(Implementation.class);
+    public AnnotationInstantiator(final AnnotatedClassExtractor annotationExtractor, final ConstructorLocator constructorLocator,
+                                  final ConstructorInstantiator instantiator) {
+        this.annotationExtractor = annotationExtractor;
+        this.constructorLocator = constructorLocator;
+        this.instantiator = instantiator;
     }
 
+    @SuppressWarnings({ "unchecked" })
     public Object filter(final MethodParam methodParam) {
         try {
-            return annotationFinder.find(methodParam.getMethod(), annotationClazz).value();
+            ConstructorBoundary constructor = constructorLocator.locate(methodParam, annotationExtractor.extract(methodParam));
+            return instantiator.instantiate(methodParam, constructor);
         } catch (AnnotationNotFoundException e) {
            throw new MatchNotFoundException();
         }

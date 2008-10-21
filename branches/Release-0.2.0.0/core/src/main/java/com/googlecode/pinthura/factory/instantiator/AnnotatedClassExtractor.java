@@ -15,12 +15,10 @@
  */
 package com.googlecode.pinthura.factory.instantiator;
 
-import com.googlecode.pinthura.factory.boundary.ConstructorBoundary;
 import com.googlecode.pinthura.factory.MethodParam;
+import com.googlecode.pinthura.factory.boundary.ClassBoundary;
 
-public final class ConstructorInstantiatorImpl implements ConstructorInstantiator {
+public interface AnnotatedClassExtractor {
 
-    public <T> Object instantiate(final MethodParam methodParam, final ConstructorBoundary<T> constructorBoundary) {
-        return constructorBoundary.newInstance(methodParam.getArguments());
-    }
+    <T> ClassBoundary<T> extract(MethodParam param);
 }

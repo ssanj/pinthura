@@ -42,7 +42,7 @@ public final class SimpleInstantiator implements InstantiationStrategy {
         try {
             implClass = classNameDeriver.derive(methodParam);
             ConstructorBoundary constructorBoundary = constructorLocator.locate(methodParam, implClass);
-            return constructorInstantiator.instantiate(constructorBoundary, methodParam);
+            return constructorInstantiator.instantiate(methodParam, constructorBoundary);
         } catch (Exception e) {
             throw new MatchNotFoundException("Could not load implementation for class: " + implClass, e);
         }

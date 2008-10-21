@@ -57,7 +57,7 @@ public final class AConstructorInstantiatorUnderTest {
         EasyMock.expect(mockConstructorBoundary.newInstance(args)).andReturn(mockTypeInstance);
         mockControl.replay();
 
-        Object result = instantiator.instantiate(mockConstructorBoundary, mockMethodParam);
+        Object result = instantiator.instantiate(mockMethodParam, mockConstructorBoundary);
         assertThat(result, sameInstance(mockTypeInstance));
 
         mockControl.verify();
