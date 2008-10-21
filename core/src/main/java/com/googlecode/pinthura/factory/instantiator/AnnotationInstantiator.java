@@ -15,7 +15,6 @@
  */
 package com.googlecode.pinthura.factory.instantiator;
 
-import com.googlecode.pinthura.annotation.AnnotationNotFoundException;
 import com.googlecode.pinthura.factory.MethodParam;
 import com.googlecode.pinthura.factory.boundary.ConstructorBoundary;
 import com.googlecode.pinthura.filter.MatchNotFoundException;
@@ -35,13 +34,12 @@ public final class AnnotationInstantiator implements InstantiationStrategy {
         this.instantiator = instantiator;
     }
 
-    @SuppressWarnings({ "unchecked" })
     public Object filter(final MethodParam methodParam) {
         try {
-            ConstructorBoundary constructor = constructorLocator.locate(methodParam, annotationExtractor.extract(methodParam));
+            ConstructorBoundary<?> constructor = constructorLocator.locate(methodParam, annotationExtractor.extract(methodParam));
             return instantiator.instantiate(methodParam, constructor);
-        } catch (AnnotationNotFoundException e) {
-           throw new MatchNotFoundException();
+        } catch (Exception e) {
+           throw new MatchNotFoundException(e);
         }
     }
 
