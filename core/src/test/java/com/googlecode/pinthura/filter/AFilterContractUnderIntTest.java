@@ -27,15 +27,15 @@ public final class AFilterContractUnderIntTest {
 
 //    private static final int WIDGET_ID = 100;
 //
+    //TODO: Fix
     @SuppressWarnings({ "unchecked" })
     @Test
     public void shouldBeHonouredBySimpleImplementationLocator() throws NoSuchMethodException {
-        FilterLinkContractChecker.checkContract(
-                new SimpleInstantiator(new ImplSuffixingDeriver()),
+    FilterLinkContractChecker.checkContract(
+                new SimpleInstantiator(new ImplSuffixingDeriver(), null, null),
                 buildValidSimpleMethodParam(),
                 buildInvalidSimpleMethodParam());
-    }
-//TODO: Fix
+}
 //    @Test
 //    public void shouldBeHonouredByAnnotationLocator() {
 //        FilterLinkContractChecker.checkContract(
