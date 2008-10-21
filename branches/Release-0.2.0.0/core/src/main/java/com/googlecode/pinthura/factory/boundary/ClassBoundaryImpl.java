@@ -35,7 +35,7 @@ public final class ClassBoundaryImpl<T> implements ClassBoundary<T> {
     }
 
     @SuppressWarnings({ "unchecked" })
-    public ClassBoundary<?> forName(final String className) {
+    public ClassBoundary<T> forName(final String className) {
         try {
             return new ClassBoundaryImpl(Class.forName(className));
         } catch (ClassNotFoundException e) {
@@ -43,7 +43,7 @@ public final class ClassBoundaryImpl<T> implements ClassBoundary<T> {
         }
     }
 
-    public ConstructorBoundary<?> getConstructor(final ClassBoundary<?>[] parameterTypes) {
+    public ConstructorBoundary<T> getConstructor(final ClassBoundary<?>[] parameterTypes) {
         List<Class<?>> classList = new ArrayList<Class<?>>();
         for (ClassBoundary<?> parameterType : parameterTypes) {
             classList.add(parameterType.getClazz());

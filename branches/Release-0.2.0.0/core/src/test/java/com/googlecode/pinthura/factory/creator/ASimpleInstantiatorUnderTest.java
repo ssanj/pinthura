@@ -62,16 +62,6 @@ public final class ASimpleInstantiatorUnderTest {
         mockControl.verify();
     }
 
-    @SuppressWarnings({ "unchecked" })
-    private void expectInstantiation(final String className, final Object instance) {
-        EasyMock.expect(mockClassNameDeriver.derive(mockMethodParam)).andReturn(className);
-
-        ConstructorBoundary mockConstructorBoundary = mockControl.createMock(ConstructorBoundary.class);
-
-        EasyMock.expect(mockConstructorLocator.locate(mockMethodParam, className)).andReturn(mockConstructorBoundary);
-        EasyMock.expect(mockConstructorInstantiator.instantiate(mockConstructorBoundary,  mockMethodParam)).andReturn(instance);
-    }
-
     @SuppressWarnings({ "ThrowableInstanceNeverThrown" })
     @Test
     public void shouldThrowAnExceptionIfTheClassNameCantBeDerived() {
@@ -106,5 +96,15 @@ public final class ASimpleInstantiatorUnderTest {
     @Test
     public void shouldReturnItsName() {
         assertThat(instantiator.getFilterName(), equalTo("Simple Instantiator"));
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    private void expectInstantiation(final String className, final Object instance) {
+        EasyMock.expect(mockClassNameDeriver.derive(mockMethodParam)).andReturn(className);
+
+        ConstructorBoundary mockConstructorBoundary = mockControl.createMock(ConstructorBoundary.class);
+
+        EasyMock.expect(mockConstructorLocator.locate(mockMethodParam, className)).andReturn(mockConstructorBoundary);
+        EasyMock.expect(mockConstructorInstantiator.instantiate(mockConstructorBoundary,  mockMethodParam)).andReturn(instance);
     }
 }
