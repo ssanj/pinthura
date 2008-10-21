@@ -15,9 +15,9 @@
  */
 package com.googlecode.pinthura.factory;
 
+import com.googlecode.pinthura.factory.boundary.ClassBoundary;
 import com.googlecode.pinthura.factory.boundary.MethodBoundary;
 import com.googlecode.pinthura.factory.boundary.MethodBoundaryImpl;
-import com.googlecode.pinthura.factory.boundary.ClassBoundary;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
@@ -28,8 +28,8 @@ public final class MethodParamImpl implements MethodParam {
     private final Object[] arguments;
 
     public MethodParamImpl(final Method method, final Object[] arguments) {
-        this.method = new MethodBoundaryImpl(method);
         this.arguments = arguments;
+        this.method = new MethodBoundaryImpl(method);
     }
 
     public ClassBoundary<?> getReturnType() {
@@ -42,6 +42,10 @@ public final class MethodParamImpl implements MethodParam {
 
     public MethodBoundary getMethod() {
         return method;
+    }
+
+    public ClassBoundary<?>[] getParameterTypes() {
+        return method.getParameterTypes();
     }
 
     @Override

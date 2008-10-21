@@ -15,15 +15,25 @@
  */
 package com.googlecode.pinthura.factory.boundary;
 
-import java.lang.reflect.Method;
+import java.lang.reflect.Constructor;
 
-public interface MethodBoundary {
+public final class ConstructorBoundaryImpl<T> implements ConstructorBoundary<T> {
 
-    ClassBoundary<?> getReturnType();
+    private final Constructor<T> constructor;
 
-    String getName();
+    public ConstructorBoundaryImpl(final Constructor<T> constructor) {
+        this.constructor = constructor;
+    }
 
-    Method getMethod();
+    public Object newInstance(final Object[] arguments) {
+        try {
+            return constructor.newInstance(arguments);
+        } catch (Exception e) {
+            throw new ConstructorBoundaryException(e);
+        }
+    }
 
-    ClassBoundary<?>[] getParameterTypes();
+    public Constructor<T> getConstructor() {
+        return constructor;
+    }
 }

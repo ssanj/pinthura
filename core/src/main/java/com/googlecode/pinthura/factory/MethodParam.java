@@ -25,4 +25,6 @@ public interface MethodParam {
     Object[] getArguments();
 
     MethodBoundary getMethod();
+
+    ClassBoundary<?>[] getParameterTypes();
 }

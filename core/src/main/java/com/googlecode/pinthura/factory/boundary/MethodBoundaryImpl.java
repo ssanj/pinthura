@@ -16,6 +16,8 @@
 package com.googlecode.pinthura.factory.boundary;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 
 public final class MethodBoundaryImpl implements MethodBoundary {
 
@@ -36,6 +38,16 @@ public final class MethodBoundaryImpl implements MethodBoundary {
 
     public Method getMethod() {
         return method;
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    public ClassBoundary<?>[] getParameterTypes() {
+        List<ClassBoundary<?>> classList = new ArrayList<ClassBoundary<?>>();
+        for (Class<?> clazz : method.getParameterTypes()) {
+            classList.add(new ClassBoundaryImpl(clazz));
+        }
+
+        return classList.toArray(new ClassBoundary[classList.size()]);
     }
 
     @Override

@@ -21,7 +21,7 @@ public interface ClassBoundary<T> {
 
     Class<T> getClazz();
 
-    ClassBoundary forName(String className);
+    ClassBoundary<?> forName(String className);
 
-    Object newInstance();
+    ConstructorBoundary<?> getConstructor(ClassBoundary<?>[] parameterTypes);
 }

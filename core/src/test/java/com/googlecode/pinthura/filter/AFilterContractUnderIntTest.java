@@ -35,7 +35,7 @@ public final class AFilterContractUnderIntTest {
                 buildValidSimpleMethodParam(),
                 buildInvalidSimpleMethodParam());
     }
-
+//TODO: Fix
 //    @Test
 //    public void shouldBeHonouredByAnnotationLocator() {
 //        FilterLinkContractChecker.checkContract(

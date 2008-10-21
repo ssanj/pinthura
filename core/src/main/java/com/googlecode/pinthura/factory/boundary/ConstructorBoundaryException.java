@@ -15,15 +15,11 @@
  */
 package com.googlecode.pinthura.factory.boundary;
 
-import java.lang.reflect.Method;
+public final class ConstructorBoundaryException extends RuntimeException {
 
-public interface MethodBoundary {
+    private static final long serialVersionUID = 8425091519261312335L;
 
-    ClassBoundary<?> getReturnType();
-
-    String getName();
-
-    Method getMethod();
-
-    ClassBoundary<?>[] getParameterTypes();
+    public ConstructorBoundaryException(final Throwable cause) {
+        super(cause);
+    }
 }
