@@ -16,6 +16,7 @@
 package com.googlecode.pinthura.factory.boundary;
 
 import java.lang.reflect.Method;
+import java.lang.annotation.Annotation;
 
 public interface MethodBoundary {
 
@@ -26,4 +27,6 @@ public interface MethodBoundary {
     Method getMethod();
 
     ClassBoundary<?>[] getParameterTypes();
+
+    <T extends Annotation> T getAnnotation(final ClassBoundary<T> annotationClass);
 }

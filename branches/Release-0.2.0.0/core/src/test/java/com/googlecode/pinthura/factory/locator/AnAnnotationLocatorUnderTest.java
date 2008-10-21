@@ -23,19 +23,19 @@ public final class AnAnnotationLocatorUnderTest {
 //    private final IMocksControl mockControl = EasyMock.createControl();
 //
 //    private AnnotationFinder mockAnnotationFinder;
-//    private InterfaceImpl mockInterfaceImpl;
+//    private Implementation mockInterfaceImpl;
 //
 //    @Before
 //    public void setup() {
 //        mockAnnotationFinder = mockControl.createMock(AnnotationFinder.class);
-//        mockInterfaceImpl = mockControl.createMock(InterfaceImpl.class);
+//        mockInterfaceImpl = mockControl.createMock(Implementation.class);
 //
 //        locator = new AnnotationLocatorImpl(mockAnnotationFinder);
 //    }
 //
 //    @Test
 //    public void shouldLocateAnImplementationByAnnotations() {
-//        EasyMock.expect(mockAnnotationFinder.find(EasyMock.isA(Method.class), EasyMock.eq(InterfaceImpl.class))).
+//        EasyMock.expect(mockAnnotationFinder.find(EasyMock.isA(Method.class), EasyMock.eq(Implementation.class))).
 //                andReturn(mockInterfaceImpl);
 //        EasyMock.expect(mockInterfaceImpl.value());
 //        EasyMock.expectLastCall().andReturn(UrlBoundaryImpl.class);
@@ -50,7 +50,7 @@ public final class AnAnnotationLocatorUnderTest {
 //    @SuppressWarnings({ "ThrowableInstanceNeverThrown" })
 //    @Test (expected = MatchNotFoundException.class)
 //    public void shouldThrowAnExceptionIfTheAnnotationIsNotFound() {
-//        EasyMock.expect(mockAnnotationFinder.find(EasyMock.isA(Method.class), EasyMock.eq(InterfaceImpl.class))).
+//        EasyMock.expect(mockAnnotationFinder.find(EasyMock.isA(Method.class), EasyMock.eq(Implementation.class))).
 //                andThrow(new MatchNotFoundException());
 //        mockControl.replay();
 //

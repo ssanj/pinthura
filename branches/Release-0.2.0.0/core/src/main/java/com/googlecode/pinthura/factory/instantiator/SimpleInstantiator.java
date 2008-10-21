@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.pinthura.factory.creator;
+package com.googlecode.pinthura.factory.instantiator;
 
 import com.googlecode.pinthura.factory.MethodParam;
 import com.googlecode.pinthura.factory.boundary.ConstructorBoundary;

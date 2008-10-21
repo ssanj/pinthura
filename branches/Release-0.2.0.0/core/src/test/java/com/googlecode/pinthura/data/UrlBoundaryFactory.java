@@ -15,11 +15,11 @@
  */
 package com.googlecode.pinthura.data;
 
-import com.googlecode.pinthura.filter.annotation.InterfaceImpl;
+import com.googlecode.pinthura.factory.Implementation;
 
 public interface UrlBoundaryFactory {
 
-    @InterfaceImpl(UrlBoundaryImpl.class)
+    @Implementation(UrlBoundaryImpl.class)
     UrlBoundary createUrlBoundary();
     UrlBoundary createUrlBoundary(String url);
 }

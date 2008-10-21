@@ -16,6 +16,7 @@
 package com.googlecode.pinthura.factory.boundary;
 
 import java.lang.reflect.Method;
+import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,6 +49,10 @@ public final class MethodBoundaryImpl implements MethodBoundary {
         }
 
         return classList.toArray(new ClassBoundary[classList.size()]);
+    }
+
+    public <T extends Annotation> T getAnnotation(final ClassBoundary<T> annotationClass) {
+        return method.getAnnotation(annotationClass.getClazz());
     }
 
     @Override

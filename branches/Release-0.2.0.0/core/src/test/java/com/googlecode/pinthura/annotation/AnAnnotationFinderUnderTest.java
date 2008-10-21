@@ -15,37 +15,61 @@
  */
 package com.googlecode.pinthura.annotation;
 
-import com.googlecode.pinthura.data.UrlBoundaryFactory;
-import com.googlecode.pinthura.data.UrlBoundaryImpl;
-import com.googlecode.pinthura.filter.annotation.InterfaceImpl;
-import static org.hamcrest.core.IsEqual.equalTo;
+import com.googlecode.pinthura.factory.boundary.ClassBoundary;
+import com.googlecode.pinthura.factory.boundary.ClassBoundaryImpl;
+import com.googlecode.pinthura.factory.boundary.MethodBoundary;
+import com.googlecode.pinthura.factory.Implementation;
+import static junit.framework.Assert.assertTrue;
+import static junit.framework.Assert.fail;
+import org.easymock.EasyMock;
+import org.easymock.IMocksControl;
+import static org.hamcrest.core.IsSame.sameInstance;
 import static org.junit.Assert.assertThat;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.lang.reflect.Method;
-
 public final class AnAnnotationFinderUnderTest {
 
-    private com.googlecode.pinthura.annotation.AnnotationFinder finder;
+    private final IMocksControl mockControl = EasyMock.createControl();
+    private AnnotationFinder finder;
+    private MethodBoundary mockMethodBoundary;
+    private Implementation mockImplementation;
+
 
     @Before
     public void setup() {
-        finder = new com.googlecode.pinthura.annotation.AnnotationFinderImpl();
+        mockImplementation = mockControl.createMock(Implementation.class);
+        mockMethodBoundary = mockControl.createMock(MethodBoundary.class);
+
+        finder = new AnnotationFinderImpl();
     }
 
     @Test
     public void shouldFindAnnotationsOnASpecifiedMethod() throws NoSuchMethodException {
-        Method method = UrlBoundaryFactory.class.getMethod("createUrlBoundary");
-        InterfaceImpl annotation = finder.find(method, InterfaceImpl.class);
+        EasyMock.expect(mockMethodBoundary.getAnnotation(createAnnotationClass())).andReturn(mockImplementation);
+        mockControl.replay();
 
-        Class<?> implementationClass = annotation.value();
-        assertThat(UrlBoundaryImpl.class == implementationClass, equalTo(true));
+        Implementation result = finder.find(mockMethodBoundary, createAnnotationClass());
+        assertThat(result, sameInstance(mockImplementation));
+
+        mockControl.verify();
     }
 
-    @Test(expected = com.googlecode.pinthura.annotation.AnnotationNotFoundException.class)
+    @SuppressWarnings({ "ThrowableInstanceNeverThrown" })
+    @Test
     public void shouldThrowAnExceptionIfTheAnnotationIsNotFound() throws NoSuchMethodException {
-        Method method = UrlBoundaryFactory.class.getMethod("createUrlBoundary", String.class);
-        finder.find(method, InterfaceImpl.class);
+        EasyMock.expect(mockMethodBoundary.getAnnotation(createAnnotationClass())).andReturn(null);
+        mockControl.replay();
+
+        try {
+            finder.find(mockMethodBoundary, createAnnotationClass());
+            fail();
+        } catch (AnnotationNotFoundException e) {
+              assertTrue(true);
+        }
+    }
+
+    private ClassBoundary<Implementation> createAnnotationClass() {
+        return new ClassBoundaryImpl<Implementation>(Implementation.class);
     }
 }

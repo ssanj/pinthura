@@ -13,11 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.pinthura.factory.creator;
+package com.googlecode.pinthura.factory.instantiator;
 
 import com.googlecode.pinthura.factory.MethodParam;
-import com.googlecode.pinthura.filter.FilterLink;
+import com.googlecode.pinthura.factory.boundary.ConstructorBoundary;
+import com.googlecode.pinthura.factory.boundary.ClassBoundary;
 
-public interface InstantiationStrategy extends FilterLink<MethodParam, Object> {
-    //This interface has been introduced to make the generics easier to use.
+public interface ConstructorLocator {
+
+    <T> ConstructorBoundary<T> locate(MethodParam methodParam, String className);
+
+    <T> ConstructorBoundary<T> locate(MethodParam methodParam, ClassBoundary<T> clazz);
 }

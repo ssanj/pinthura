@@ -18,7 +18,7 @@ package com.googlecode.pinthura.filter;
 import com.googlecode.pinthura.data.UrlBoundaryFactory;
 import com.googlecode.pinthura.factory.MethodParam;
 import com.googlecode.pinthura.factory.MethodParamImpl;
-import com.googlecode.pinthura.factory.creator.SimpleInstantiator;
+import com.googlecode.pinthura.factory.instantiator.SimpleInstantiator;
 import com.googlecode.pinthura.factory.locator.MethodParamBuilder;
 import com.googlecode.pinthura.factory.locator.deriver.ImplSuffixingDeriver;
 import org.junit.Test;

@@ -15,10 +15,12 @@
  */
 package com.googlecode.pinthura.annotation;
 
+import com.googlecode.pinthura.factory.boundary.ClassBoundary;
+import com.googlecode.pinthura.factory.boundary.MethodBoundary;
+
 import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
 
 public interface AnnotationFinder {
 
-    <T extends Annotation> T find(final Method method, final Class<T> annotationClass) throws AnnotationNotFoundException;
+    <T extends Annotation> T find(final MethodBoundary method, final ClassBoundary<T> annotationClass) throws AnnotationNotFoundException;
 }

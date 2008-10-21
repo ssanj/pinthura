@@ -15,12 +15,12 @@
  */
 package com.googlecode.pinthura.data;
 
-import com.googlecode.pinthura.filter.annotation.InterfaceImpl;
+import com.googlecode.pinthura.factory.Implementation;
 
 public interface ShapeFactory {
 
     Square createSquare(int length);
 
-    @InterfaceImpl(WobblyCircle.class)
+    @Implementation(WobblyCircle.class)
     Circle createCircle(int radius);
 }
