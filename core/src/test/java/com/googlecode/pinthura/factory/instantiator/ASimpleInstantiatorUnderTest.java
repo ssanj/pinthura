@@ -105,6 +105,6 @@ public final class ASimpleInstantiatorUnderTest {
         ConstructorBoundary mockConstructorBoundary = mockControl.createMock(ConstructorBoundary.class);
 
         EasyMock.expect(mockConstructorLocator.locate(mockMethodParam, className)).andReturn(mockConstructorBoundary);
-        EasyMock.expect(mockConstructorInstantiator.instantiate(mockConstructorBoundary,  mockMethodParam)).andReturn(instance);
+        EasyMock.expect(mockConstructorInstantiator.instantiate(mockMethodParam, mockConstructorBoundary)).andReturn(instance);
     }
 }
