@@ -13,16 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.pinthura.factory.boundary;
+package com.googlecode.pinthura.factory.creator;
 
-//TODO: Clean up the generics in here.
-public interface ClassBoundary<T> {
+import com.googlecode.pinthura.factory.boundary.ConstructorBoundary;
+import com.googlecode.pinthura.factory.MethodParam;
 
-    String getName();
+public final class ConstructorLocatorImpl implements ConstructorLocator {
 
-    Class<T> getClazz();
-
-    ClassBoundary<T> forName(String className);
-
-    ConstructorBoundary<T> getConstructor(ClassBoundary<?>[] parameterTypes);
+    @SuppressWarnings({ "unchecked" })
+    public <T> ConstructorBoundary<T> locate(final MethodParam methodParam, final String className) {
+        return (ConstructorBoundary<T>) methodParam.getReturnType().forName(className).getConstructor(methodParam.getParameterTypes());
+    }
 }

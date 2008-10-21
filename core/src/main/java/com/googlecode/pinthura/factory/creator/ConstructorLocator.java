@@ -20,5 +20,5 @@ import com.googlecode.pinthura.factory.boundary.ConstructorBoundary;
 
 public interface ConstructorLocator {
 
-    ConstructorBoundary<?> locate(final MethodParam methodParam, final String className);
+    <T> ConstructorBoundary<T> locate(final MethodParam methodParam, final String className);
 }
