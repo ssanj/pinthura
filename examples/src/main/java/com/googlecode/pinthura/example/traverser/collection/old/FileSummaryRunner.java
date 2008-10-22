@@ -13,11 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.pinthura.traverser.collection.old;
+package com.googlecode.pinthura.example.traverser.collection.old;
 
-public interface Summary {
+public final class FileSummaryRunner {
 
-    Summary addSummaryLine(String summaryLine);
+    private FileSummaryRunner() {
+        //Main class.
+    }
 
-    void close();
+    public static void main(final String[] args) {
+        FileSummarizer fileSummarizer = new FileSummarizer(new LineFileReaderImpl(), new DirectoryListerImpl());
+        fileSummarizer.summarizeDictory("blah");
+    }
 }

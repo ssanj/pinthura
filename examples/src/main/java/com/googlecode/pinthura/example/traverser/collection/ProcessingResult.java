@@ -13,10 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.pinthura.traverser.collection.old;
+package com.googlecode.pinthura.example.traverser.collection;
 
 import java.util.List;
+import java.util.Map;
 
-public interface DirectoryLister {
-    List<String> list(final String directory);
+public interface ProcessingResult {
+
+    Map<String, String> getDocumentation();
+
+    List<String> getConfigFiles();
 }
