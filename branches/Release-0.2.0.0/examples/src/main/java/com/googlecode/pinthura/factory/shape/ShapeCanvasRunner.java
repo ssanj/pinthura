@@ -16,21 +16,21 @@
 package com.googlecode.pinthura.factory.shape;
 
 import com.googlecode.pinthura.factory.FactoryCreator;
-import com.googlecode.pinthura.factory.FactoryCreatorImpl;
+import com.googlecode.pinthura.factory.builder.FactoryCreatorBuilder;
 
 public final class ShapeCanvasRunner {
 
-//    private static final int CANVAS_AREA = 40;
-//
-//    private ShapeCanvasRunner() {
-//        //Main class.
-//    }
-//
-//    public static void main(final String[] args) {
-//        FactoryCreator factoryCreator = new FactoryCreatorImpl(new InvocationFactoryImpl());
-//        SquareFactory squareFactory = factoryCreator.create(SquareFactory.class);
-//
-//        ShapeCanvas canvas = new ShapeCanvas(CANVAS_AREA, squareFactory);
-//        System.out.println("Number of squares: " + canvas.calcSquaresOnCanvas(2));
-//    }
+    private static final int CANVAS_AREA = 40;
+
+    private ShapeCanvasRunner() {
+        //Main class.
+    }
+
+    public static void main(final String[] args) {
+        FactoryCreator factoryCreator = new FactoryCreatorBuilder().build();
+        SquareFactory squareFactory = factoryCreator.create(SquareFactory.class);
+
+        ShapeCanvas canvas = new ShapeCanvas(CANVAS_AREA, squareFactory);
+        System.out.println("Number of squares: " + canvas.calcSquaresOnCanvas(2));
+    }
 }
