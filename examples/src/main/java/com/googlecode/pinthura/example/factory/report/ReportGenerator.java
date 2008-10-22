@@ -13,11 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.pinthura.factory.report;
+package com.googlecode.pinthura.example.factory.report;
 
-public final class ReportFactoryImpl implements ReportFactory {
+public interface ReportGenerator {
 
-    public Report create(final Information info) {
-        return new ReportImpl(info);
-    }
+    void generate(Information info);
 }

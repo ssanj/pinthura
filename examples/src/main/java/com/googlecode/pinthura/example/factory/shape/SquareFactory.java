@@ -13,23 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.pinthura.factory.report;
+package com.googlecode.pinthura.example.factory.shape;
 
-public final class InformationImpl implements Information {
+public interface SquareFactory {
 
-    private final String groupName;
-    private final int memberCount;
-
-    public InformationImpl(final String groupName, final int memberCount) {
-        this.groupName = groupName;
-        this.memberCount = memberCount;
-    }
-
-    public String getGroupName() {
-        return groupName;
-    }
-
-    public int getMemberCount() {
-        return memberCount;
-    }
+    Square create(int length);
 }
