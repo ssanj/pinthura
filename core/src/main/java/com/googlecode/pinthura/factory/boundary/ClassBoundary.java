@@ -15,7 +15,6 @@
  */
 package com.googlecode.pinthura.factory.boundary;
 
-//TODO: Clean up the generics in here.
 public interface ClassBoundary<T> {
 
     String getName();
