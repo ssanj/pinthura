@@ -13,8 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.pinthura.traverser.collection.old;
+package com.googlecode.pinthura.example.traverser.collection.old;
 
-public interface LineFileReader {
-    String readLine(final String file);
+import java.util.List;
+import java.util.Arrays;
+
+public final class DirectoryListerImpl implements DirectoryLister {
+
+    public List<String> list(final String directory) {
+        return Arrays.asList("pinthura-core.properties", "readme.txt", "Log4j.xml", "build.txt");
+    }
 }

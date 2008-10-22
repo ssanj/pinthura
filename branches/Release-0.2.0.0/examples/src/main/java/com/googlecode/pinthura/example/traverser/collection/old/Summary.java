@@ -13,22 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.pinthura.traverser.collection.old;
+package com.googlecode.pinthura.example.traverser.collection.old;
 
-public final class SummaryImpl implements Summary {
+public interface Summary {
 
-    private int lineCount = 0;
+    Summary addSummaryLine(String summaryLine);
 
-    public SummaryImpl(final String banner) {
-        System.out.println("-------------" + banner + "-------------");
-    }
-
-    public Summary addSummaryLine(final String summaryLine) {
-        System.out.println(++lineCount + ". " + summaryLine);
-        return this;
-    }
-
-    public void close() {
-        System.out.println("");
-    }
+    void close();
 }
