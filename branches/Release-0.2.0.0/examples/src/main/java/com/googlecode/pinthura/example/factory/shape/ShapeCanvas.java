@@ -13,17 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.pinthura.factory.report;
+package com.googlecode.pinthura.example.factory.shape;
 
-public final class ReportGeneratorImpl implements ReportGenerator {
+public final class ShapeCanvas {
 
-    private final ReportFactory reportFactory;
+    private final SquareFactory squareFactory;
+    private int canvasArea;
 
-    public ReportGeneratorImpl(final ReportFactory reportFactory) {
-        this.reportFactory = reportFactory;
+    public ShapeCanvas(final int canvasArea, final SquareFactory squareFactory) {
+        this.canvasArea = canvasArea;
+        this.squareFactory = squareFactory;
     }
 
-    public void generate(final Information info) {
-        reportFactory.create(info).generate();
+    public int calcSquaresOnCanvas(final int size) {
+        Square square = squareFactory.create(size);
+        return canvasArea / square.getArea();
     }
 }

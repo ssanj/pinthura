@@ -13,21 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.pinthura.factory.report;
+package com.googlecode.pinthura.example.factory.report;
 
-public final class ReportImpl implements Report {
+public final class ReportFactoryImpl implements ReportFactory {
 
-    private final Information info;
-
-    public ReportImpl(final Information info) {
-        this.info = info;
-    }
-
-    public void generate() {
-        String groupName = info.getGroupName();
-        int memberCount = info.getMemberCount();
-        System.out.println("-----------------------------");
-        System.out.println("Group " + groupName + " has " + memberCount + " members");
-        System.out.println("-----------------------------");
+    public Report create(final Information info) {
+        return new ReportImpl(info);
     }
 }

@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.pinthura.factory.report;
+package com.googlecode.pinthura.example.factory.report;
 
-public interface Report {
+public interface ReportFactory {
 
-    void generate();
+    Report create(Information info);
 }
