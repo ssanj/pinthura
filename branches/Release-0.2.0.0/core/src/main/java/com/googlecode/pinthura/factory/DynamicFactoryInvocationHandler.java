@@ -18,7 +18,7 @@ package com.googlecode.pinthura.factory;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
-final class DynamicFactoryInvocationHandler implements InvocationHandler {
+public final class DynamicFactoryInvocationHandler implements InvocationHandler {
 
     private final InstanceCreator instanceCreators;
     private final MethodParamFactory methodParamFactory;

@@ -13,9 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.pinthura.factory;
+package com.googlecode.pinthura.factory.builder;
 
 import com.googlecode.pinthura.factory.instantiator.InstantiationStrategy;
+import com.googlecode.pinthura.factory.instantiator.builder.AnnotationInstantiatorBuilder;
+import com.googlecode.pinthura.factory.instantiator.builder.SimpleInstantiatorBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
