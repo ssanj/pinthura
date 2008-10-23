@@ -29,4 +29,9 @@ public final class ConstructorLocatorImpl implements ConstructorLocator {
     public <T> ConstructorBoundary<T> locate(final MethodParam methodParam, final ClassBoundary<T> clazz) {
         return clazz.getConstructor(methodParam.getParameterTypes());
     }
+
+    public <T> ConstructorBoundary<T> locate(final InjectedFactoryValues factoryParamValues, final ClassBoundary<T> implClass) {
+        return null;
+    }
+
 }

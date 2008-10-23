@@ -23,4 +23,9 @@ public final class ConstructorInstantiatorImpl implements ConstructorInstantiato
     public <T> Object instantiate(final MethodParam methodParam, final ConstructorBoundary<T> constructorBoundary) {
         return constructorBoundary.newInstance(methodParam.getArguments());
     }
+
+    public <T> Object instantiate(final InjectedFactoryValues factoryParamValues, final ConstructorBoundary<T> constructor) {
+        return null;
+    }
+
 }

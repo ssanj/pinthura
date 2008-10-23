@@ -13,14 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.pinthura.factory.instantiator;
+package com.googlecode.pinthura.factory;
 
-import com.googlecode.pinthura.factory.boundary.ConstructorBoundary;
-import com.googlecode.pinthura.factory.MethodParam;
+import java.lang.annotation.Target;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
-public interface ConstructorInstantiator {
+@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface Factory {
 
-    <T> Object instantiate(MethodParam methodParam, ConstructorBoundary<T> constructorBoundary);
-
-    <T> Object instantiate(InjectedFactoryValues factoryParamValues, ConstructorBoundary<T> constructor);
+    Class<?> factoryClass();
+    int index();
 }
