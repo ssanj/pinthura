@@ -18,6 +18,7 @@ package com.googlecode.pinthura.factory.boundary;
 import java.util.ArrayList;
 import java.util.List;
 
+//TODO: sort the generics in here!
 public final class ClassBoundaryImpl<T> implements ClassBoundary<T> {
 
     private final Class<T> clazz;

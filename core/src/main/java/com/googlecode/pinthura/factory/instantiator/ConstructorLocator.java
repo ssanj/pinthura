@@ -24,4 +24,6 @@ public interface ConstructorLocator {
     <T> ConstructorBoundary<T> locate(MethodParam methodParam, String className);
 
     <T> ConstructorBoundary<T> locate(MethodParam methodParam, ClassBoundary<T> clazz);
+
+    <T> ConstructorBoundary<T> locate(InjectedFactoryValues factoryParamValues, ClassBoundary<T> implClass);
 }

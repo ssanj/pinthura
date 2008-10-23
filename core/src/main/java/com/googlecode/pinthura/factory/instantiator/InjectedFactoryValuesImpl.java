@@ -15,12 +15,24 @@
  */
 package com.googlecode.pinthura.factory.instantiator;
 
-import com.googlecode.pinthura.factory.boundary.ConstructorBoundary;
-import com.googlecode.pinthura.factory.MethodParam;
+import com.googlecode.pinthura.factory.boundary.ClassBoundary;
 
-public interface ConstructorInstantiator {
+import java.util.Arrays;
 
-    <T> Object instantiate(MethodParam methodParam, ConstructorBoundary<T> constructorBoundary);
+//TODO: Make this a pojo
+public final class InjectedFactoryValuesImpl implements InjectedFactoryValues {
 
-    <T> Object instantiate(InjectedFactoryValues factoryParamValues, ConstructorBoundary<T> constructor);
+    private final ClassBoundary[] arguments;
+
+    public InjectedFactoryValuesImpl(final ClassBoundary[] arguments) {
+        this.arguments = arguments;
+    }
+
+    public ClassBoundary<?>[] getConstructorTypes() {
+        return Arrays.asList(arguments).toArray(new ClassBoundary[arguments.length]);
+    }
+
+    public Object[] getConstructorArguments() {
+        return new Object[0];
+    }
 }
