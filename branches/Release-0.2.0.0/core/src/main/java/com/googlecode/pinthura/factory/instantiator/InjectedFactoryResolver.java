@@ -17,7 +17,7 @@ package com.googlecode.pinthura.factory.instantiator;
 
 import com.googlecode.pinthura.factory.MethodParam;
 
-public interface InjectedFactoryResolver {
+public interface InjectedFactoryResolver extends FactoryCreationListener {
 
     InjectedFactoryValues resolve(final MethodParam methodParam);
 }

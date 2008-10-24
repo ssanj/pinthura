@@ -15,23 +15,30 @@
  */
 package com.googlecode.pinthura.factory.instantiator;
 
+import com.googlecode.pinthura.factory.boundary.ClassBoundaryImpl;
 import com.googlecode.pinthura.factory.boundary.ClassBoundary;
 
-//TODO: Make this a pojo
-public final class InjectedFactoryValuesImpl implements InjectedFactoryValues {
+public final class ClassInstanceImpl implements ClassInstance {
 
-    private final ClassInstance[] classInstances;
+    private ClassBoundary<?> clazz;
+    private final Object instance;
 
-    public InjectedFactoryValuesImpl(final ClassInstance[] classInstances) {
-        this.classInstances = classInstances;
+    public <T> ClassInstanceImpl(final Class<T> clazz, final Object instance) {
+        this(new ClassBoundaryImpl<T>(clazz), instance);
     }
 
-    public ClassBoundary<?>[] getConstructorTypes() {
-        //return Arrays.asList(arguments).toArray(new ClassBoundary[arguments.length]);
-        return null;
+    public <T> ClassInstanceImpl(final ClassBoundary<T> clazz, final Object instance) {
+        this.instance = instance;
+        this.clazz = clazz;
     }
 
-    public Object[] getConstructorArguments() {
-        return new Object[0];
+    @SuppressWarnings({ "unchecked" })
+    public <T> ClassBoundary<T> getClazz() {
+        return  (ClassBoundary<T>) clazz;
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    public <T> T getInstance() {
+        return (T) instance;
     }
 }

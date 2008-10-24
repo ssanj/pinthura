@@ -57,7 +57,8 @@ public final class AnInstanceCreatorWithErrorsUnderTest {
             fail();
         } catch (InstanceCreationException e) {
             assertThat(e.getCause().getClass() == MatchNotFoundException.class, equalTo(true));
-            assertThat(e.getMessage(), equalTo("Could not create instance of class com.googlecode.pinthura.data.UrlBoundaryImpl"));
+            assertThat(e.getMessage(),
+                    equalTo("Could not create instance of ClassBoundaryImpl[class com.googlecode.pinthura.data.UrlBoundaryImpl]"));
         }
     }
 

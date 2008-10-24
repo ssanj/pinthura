@@ -17,21 +17,13 @@ package com.googlecode.pinthura.factory.instantiator;
 
 import com.googlecode.pinthura.factory.boundary.ClassBoundary;
 
-//TODO: Make this a pojo
-public final class InjectedFactoryValuesImpl implements InjectedFactoryValues {
+public interface ResolverObjectFactory {
 
-    private final ClassInstance[] classInstances;
+    InjectedFactoryValues createInjectedFactoryValues(final ClassInstance[] classInstances);
 
-    public InjectedFactoryValuesImpl(final ClassInstance[] classInstances) {
-        this.classInstances = classInstances;
-    }
+    <T> ClassInstance createClassInstance(final Class<T> clazz, final Object instance);
 
-    public ClassBoundary<?>[] getConstructorTypes() {
-        //return Arrays.asList(arguments).toArray(new ClassBoundary[arguments.length]);
-        return null;
-    }
+    <T> ClassInstance createClassInstance(final ClassBoundary<T> clazz, final Object instance);
 
-    public Object[] getConstructorArguments() {
-        return new Object[0];
-    }
+    ClassInstance[] createClassInstanceArray(final int size);
 }
