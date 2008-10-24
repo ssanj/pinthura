@@ -16,6 +16,7 @@
 package com.googlecode.pinthura.factory.instantiator;
 
 import com.googlecode.pinthura.factory.MethodParam;
+import com.googlecode.pinthura.factory.instantiator.injected.InjectedFactoryValues;
 import com.googlecode.pinthura.factory.boundary.ConstructorBoundary;
 import com.googlecode.pinthura.factory.boundary.ClassBoundary;
 

@@ -15,11 +15,24 @@
  */
 package com.googlecode.pinthura.factory.instantiator.injected;
 
-import com.googlecode.pinthura.factory.Factory;
+import com.googlecode.pinthura.factory.boundary.ClassBoundary;
 import com.googlecode.pinthura.factory.instantiator.ClassInstance;
-import com.googlecode.pinthura.factory.instantiator.FactoryCreationListener;
 
-public interface ResolvedFactorySorter extends FactoryCreationListener {
+//TODO: Make this a pojo
+public final class InjectedFactoryValuesImpl implements InjectedFactoryValues {
 
-    void sort(Factory[] factories, ClassInstance[] classInstances);
+    private final ClassInstance[] classInstances;
+
+    public InjectedFactoryValuesImpl(final ClassInstance[] classInstances) {
+        this.classInstances = classInstances;
+    }
+
+    public ClassBoundary<?>[] getConstructorTypes() {
+        //return Arrays.asList(arguments).toArray(new ClassBoundary[arguments.length]);
+        return null;
+    }
+
+    public Object[] getConstructorArguments() {
+        return new Object[0];
+    }
 }
