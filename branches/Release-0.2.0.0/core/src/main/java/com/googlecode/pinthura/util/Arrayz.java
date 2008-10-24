@@ -24,5 +24,4 @@ public final class Arrayz {
     public static <T> T[] createArray(final T... objects) {
         return objects;
     }
-
 }

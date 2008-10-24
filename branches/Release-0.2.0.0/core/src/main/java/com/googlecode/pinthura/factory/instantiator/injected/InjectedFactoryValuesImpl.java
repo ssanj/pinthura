@@ -18,7 +18,10 @@ package com.googlecode.pinthura.factory.instantiator.injected;
 import com.googlecode.pinthura.factory.boundary.ClassBoundary;
 import com.googlecode.pinthura.factory.instantiator.ClassInstance;
 
-//TODO: Make this a pojo
+import java.util.ArrayList;
+import java.util.List;
+
+//TODO: Test
 public final class InjectedFactoryValuesImpl implements InjectedFactoryValues {
 
     private final ClassInstance[] classInstances;
@@ -28,11 +31,22 @@ public final class InjectedFactoryValuesImpl implements InjectedFactoryValues {
     }
 
     public ClassBoundary<?>[] getConstructorTypes() {
-        //return Arrays.asList(arguments).toArray(new ClassBoundary[arguments.length]);
-        return null;
+        List<ClassBoundary<?>> typeList = new ArrayList<ClassBoundary<?>>();
+
+        for (ClassInstance classInstance : classInstances) {
+            typeList.add(classInstance.getClazz());
+        }
+
+        return typeList.toArray(new ClassBoundary[typeList.size()]);
     }
 
     public Object[] getConstructorArguments() {
-        return new Object[0];
+        List<Object> instanceList = new ArrayList<Object>();
+
+        for (ClassInstance classInstance : classInstances) {
+            instanceList.add(classInstance.getInstance());
+        }
+
+        return instanceList.toArray(new Object[instanceList.size()]);
     }
 }
