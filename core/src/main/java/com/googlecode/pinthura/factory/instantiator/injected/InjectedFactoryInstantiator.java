@@ -21,6 +21,7 @@ import com.googlecode.pinthura.factory.instantiator.AnnotatedClassExtractor;
 import com.googlecode.pinthura.factory.instantiator.InstantiationStrategy;
 import com.googlecode.pinthura.filter.MatchNotFoundException;
 
+//TODO: test
 public final class InjectedFactoryInstantiator implements InstantiationStrategy {
 
     private static final String FILTER_NAME = "Dynamic Parameter Instantiator";
