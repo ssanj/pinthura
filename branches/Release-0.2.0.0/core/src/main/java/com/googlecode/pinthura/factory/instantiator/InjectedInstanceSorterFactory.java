@@ -16,6 +16,7 @@
 package com.googlecode.pinthura.factory.instantiator;
 
 import com.googlecode.pinthura.factory.instantiator.injected.ResolvedFactorySorter;
+import com.googlecode.pinthura.factory.instantiator.injected.SuppliedFactorySorter;
 
 public interface InjectedInstanceSorterFactory {
 
