@@ -20,6 +20,9 @@ import com.googlecode.pinthura.factory.boundary.ClassBoundary;
 import com.googlecode.pinthura.factory.instantiator.ClassInstance;
 import com.googlecode.pinthura.factory.instantiator.ClassInstanceFactory;
 import com.googlecode.pinthura.util.Arrayz;
+import com.googlecode.pinthura.data.Person;
+import com.googlecode.pinthura.data.Shape;
+import com.googlecode.pinthura.data.Square;
 import org.easymock.EasyMock;
 import org.easymock.IMocksControl;
 import static org.hamcrest.core.IsSame.sameInstance;
@@ -45,8 +48,10 @@ public final class ASuppliedFactorySorterUnderTest {
 
     @SuppressWarnings({ "unchecked" })
     @Test
-    public void shouldSortInstancesIntoEmptyLocations() {
+    public void shouldSortInstancesIntoASingleGap() {
+        //CHECKSTYLE_OFF
         ClassInstance[] classInstances = new ClassInstance[3];
+        //CHECKSTYLE_ON
         ClassInstance mockInstance1 = mockControl.createMock(ClassInstance.class);
         ClassInstance mockInstance2 = mockControl.createMock(ClassInstance.class);
         classInstances[0] = mockInstance1;
@@ -62,6 +67,45 @@ public final class ASuppliedFactorySorterUnderTest {
         assertThat(classInstances[0], sameInstance(mockInstance1));
         assertThat(classInstances[1], sameInstance(mockClassInstance));
         assertThat(classInstances[2], sameInstance(mockInstance2));
+
+        mockControl.verify();
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    @Test
+    public void shouldSortInstancesAroundUsedSpaces() {
+        //CHECKSTYLE_OFF
+        ClassInstance[] classInstances = new ClassInstance[4];
+        //CHECKSTYLE_ON
+        ClassInstance mockUsedInstance = mockControl.createMock(ClassInstance.class);
+        classInstances[2] = mockUsedInstance;
+
+        ClassBoundary mockClassBoundary1 = mockControl.createMock(ClassBoundary.class);
+        ClassBoundary mockClassBoundary2 = mockControl.createMock(ClassBoundary.class);
+        ClassBoundary mockClassBoundary3 = mockControl.createMock(ClassBoundary.class);
+        EasyMock.expect(mockMethodParam.getParameterTypes()).
+                andReturn(Arrayz.createArray(mockClassBoundary1, mockClassBoundary2, mockClassBoundary3));
+
+        Person mockPerson = mockControl.createMock(Person.class);
+        Shape mockShape = mockControl.createMock(Shape.class);
+        Square mockSquare = mockControl.createMock(Square.class);
+        EasyMock.expect(mockMethodParam.getArguments()).andReturn(Arrayz.createArray(mockPerson, mockShape, mockSquare));
+
+        ClassInstance mockClassInstance1 = mockControl.createMock(ClassInstance.class);
+        ClassInstance mockClassInstance2 = mockControl.createMock(ClassInstance.class);
+        ClassInstance mockClassInstance3 = mockControl.createMock(ClassInstance.class);
+        EasyMock.expect(mockClassInstanceFactory.createClassInstance(mockClassBoundary1, mockPerson)).andReturn(mockClassInstance1);
+        EasyMock.expect(mockClassInstanceFactory.createClassInstance(mockClassBoundary2, mockShape)).andReturn(mockClassInstance2);
+        EasyMock.expect(mockClassInstanceFactory.createClassInstance(mockClassBoundary3, mockSquare)).andReturn(mockClassInstance3);
+        mockControl.replay();
+
+        sorter.sort(mockMethodParam, classInstances);
+        assertThat(classInstances[0], sameInstance(mockClassInstance1));
+        assertThat(classInstances[1], sameInstance(mockClassInstance2));
+        assertThat(classInstances[2], sameInstance(mockUsedInstance));
+        //CHECKSTYLE_OFF
+        assertThat(classInstances[3], sameInstance(mockClassInstance3));
+        //CHECKSTYLE_ON
 
         mockControl.verify();
     }
