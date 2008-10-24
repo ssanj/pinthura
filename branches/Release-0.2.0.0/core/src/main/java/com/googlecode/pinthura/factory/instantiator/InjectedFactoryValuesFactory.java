@@ -15,9 +15,7 @@
  */
 package com.googlecode.pinthura.factory.instantiator;
 
-import com.googlecode.pinthura.factory.MethodParam;
+public interface InjectedFactoryValuesFactory {
 
-public interface InjectedFactoryResolver {
-
-    InjectedFactoryValues resolve(final MethodParam methodParam);
+    InjectedFactoryValues createInjectedFactoryValues(ClassInstance[] classInstances);
 }

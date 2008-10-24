@@ -17,9 +17,7 @@ package com.googlecode.pinthura.factory.instantiator;
 
 import com.googlecode.pinthura.factory.boundary.ClassBoundary;
 
-public interface ResolverObjectFactory {
-
-    InjectedFactoryValues createInjectedFactoryValues(final ClassInstance[] classInstances);
+public interface ClassInstanceFactory {
 
     <T> ClassInstance createClassInstance(final Class<T> clazz, final Object instance);
 

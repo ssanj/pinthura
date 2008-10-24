@@ -13,11 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.pinthura.factory.instantiator;
+package com.googlecode.pinthura.util;
 
-import com.googlecode.pinthura.factory.MethodParam;
+public final class Arrayz {
 
-public interface InjectedFactoryResolver {
+    private Arrayz() {
+        //Utility class.
+    }
 
-    InjectedFactoryValues resolve(final MethodParam methodParam);
+    public static <T> T[] createArray(final T... objects) {
+        return objects;
+    }
+
 }

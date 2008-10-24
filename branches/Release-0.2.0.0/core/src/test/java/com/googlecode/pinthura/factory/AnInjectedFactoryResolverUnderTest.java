@@ -15,135 +15,90 @@
  */
 package com.googlecode.pinthura.factory;
 
-import com.googlecode.pinthura.data.UrlBoundaryFactory;
 import com.googlecode.pinthura.factory.boundary.ClassBoundary;
 import com.googlecode.pinthura.factory.instantiator.AnnotatedFactoryExtractor;
 import com.googlecode.pinthura.factory.instantiator.ClassInstance;
-import com.googlecode.pinthura.factory.instantiator.FactoryCreationEvent;
-import com.googlecode.pinthura.factory.instantiator.FactoryCreationMonitor;
 import com.googlecode.pinthura.factory.instantiator.InjectedFactoryResolver;
 import com.googlecode.pinthura.factory.instantiator.InjectedFactoryResolverImpl;
 import com.googlecode.pinthura.factory.instantiator.InjectedFactoryValues;
-import com.googlecode.pinthura.factory.instantiator.ResolverObjectFactory;
+import com.googlecode.pinthura.factory.instantiator.ClassInstanceFactory;
+import com.googlecode.pinthura.factory.instantiator.InjectedInstanceSorterFactory;
+import com.googlecode.pinthura.factory.instantiator.ResolvedFactorySorter;
+import com.googlecode.pinthura.factory.instantiator.SuppliedFactorySorter;
+import com.googlecode.pinthura.factory.instantiator.InjectedFactoryValuesFactory;
+import static com.googlecode.pinthura.util.Arrayz.createArray;
 import org.easymock.EasyMock;
 import org.easymock.IMocksControl;
-import static org.hamcrest.core.IsSame.sameInstance;
 import static org.junit.Assert.assertThat;
 import org.junit.Before;
 import org.junit.Test;
+import static org.hamcrest.core.IsSame.sameInstance;
 
 public final class AnInjectedFactoryResolverUnderTest {
 
-    private static final String STRING_PARAM = "testing";
-    private static final int INTEGER_PARAM = 50;
+    private static final int NUMBER_OF_PARAMETERS_1 = 2;
+    private static final int NUMBER_OF_PARAMETERS_2 = 5;
 
     private final IMocksControl mockControl = EasyMock.createControl();
-    private MethodParam mockMethodParam;
     private AnnotatedFactoryExtractor mockAnnotatedFactoryExtractor;
-    private ResolverObjectFactory mockResolverObjectFactory;
-    private FactoryCreationMonitor mockFactoryCreationMonitor;
-    private Factory mockFactory;
-    private UrlBoundaryFactory mockUrlBoundaryFactory;
-    private ClassInstance mockResolvedClassInstance;
-    private FactoryCreator mockFactoryCreator;
-    private ClassBoundary mockStringBoundary;
-    private ClassBoundary mockIntegerBoundary;
-    private ClassInstance mockSuppliedStringInstance;
-    private ClassInstance mockSuppliedIntegerInstance;
-    private InjectedFactoryValues mockInjectedFactoryValues;
-    private FactoryCreationEvent mockFactoryCreationEvent;
+    private ClassInstanceFactory mockClassInstanceFactory;
+    private InjectedInstanceSorterFactory mockInjectedInstanceSorterFactory;
+    private InjectedFactoryResolver resolver;
+    private MethodParam mockMethodParam;
+    private InjectedFactoryValuesFactory mockInjectedFactoryValuesFactory;
 
     @Before
     public void setup() {
-        mockMethodParam = mockControl.createMock(MethodParam.class);
         mockAnnotatedFactoryExtractor = mockControl.createMock(AnnotatedFactoryExtractor.class);
-        mockResolverObjectFactory = mockControl.createMock(ResolverObjectFactory.class);
-        mockFactoryCreationMonitor = mockControl.createMock(FactoryCreationMonitor.class);
+        mockClassInstanceFactory = mockControl.createMock(ClassInstanceFactory.class);
+        mockInjectedInstanceSorterFactory = mockControl.createMock(InjectedInstanceSorterFactory.class);
+        mockInjectedFactoryValuesFactory = mockControl.createMock(InjectedFactoryValuesFactory.class);
+        mockMethodParam = mockControl.createMock(MethodParam.class);
 
-        mockFactory = mockControl.createMock(Factory.class);
-        mockUrlBoundaryFactory = mockControl.createMock(UrlBoundaryFactory.class);
-        mockResolvedClassInstance = mockControl.createMock(ClassInstance.class);
-        mockFactoryCreator = mockControl.createMock(FactoryCreator.class);
-        mockStringBoundary = mockControl.createMock(ClassBoundary.class);
-        mockIntegerBoundary = mockControl.createMock(ClassBoundary.class);
-        mockSuppliedStringInstance = mockControl.createMock(ClassInstance.class);
-        mockSuppliedIntegerInstance = mockControl.createMock(ClassInstance.class);
-        mockInjectedFactoryValues = mockControl.createMock(InjectedFactoryValues.class);
-        mockFactoryCreationEvent = mockControl.createMock(FactoryCreationEvent.class);
+        resolver = new InjectedFactoryResolverImpl(mockAnnotatedFactoryExtractor, mockClassInstanceFactory,
+                mockInjectedInstanceSorterFactory, mockInjectedFactoryValuesFactory);
     }
 
     @SuppressWarnings({ "unchecked" })
     @Test
-    public void shouldResolveAGivenFactory() {
-        ClassInstance[] classInstanceArray = new ClassInstance[3];
+    public void shouldResolveAGivenMethodParam() {
+        Factory mockFactory = mockControl.createMock(Factory.class);
+        ClassBoundary[] supplied = createArray(mockControl.createMock(ClassBoundary.class));
+        resolveMethodParam(createArray(mockFactory), supplied, NUMBER_OF_PARAMETERS_1);
+    }
 
-        expectFactoryCreator(mockFactoryCreator, mockFactoryCreationEvent);
-        expectFactory(mockFactory);
-        expectSuppliedClass();
-        expectClassInstanceArray(classInstanceArray);
-        expectResolvedClassInstance();
-        expectSuppliedClassInstance(classInstanceArray);
+    @Test
+    public void shouldResolvedAnotherMethodParam() {
+        Factory mockFactory1 = mockControl.createMock(Factory.class);
+        Factory mockFactory2 = mockControl.createMock(Factory.class);
+        Factory mockFactory3 = mockControl.createMock(Factory.class);
+        ClassBoundary mockClassBoundary1 = mockControl.createMock(ClassBoundary.class);
+        ClassBoundary mockClassBoundary2 = mockControl.createMock(ClassBoundary.class);
+        ClassBoundary[] supplied = createArray(mockClassBoundary1, mockClassBoundary2);
+        resolveMethodParam(createArray(mockFactory1,  mockFactory2, mockFactory3), supplied, NUMBER_OF_PARAMETERS_2);
+    }
+
+    private void resolveMethodParam(final Factory[] factories, final ClassBoundary[] supplied, final int numberOfParameters) {
+        EasyMock.expect(mockAnnotatedFactoryExtractor.extractFactories(mockMethodParam)).andReturn(factories);
+        EasyMock.expect(mockMethodParam.getParameterTypes()).andReturn(supplied);
+        ClassInstance[] classInstanceArray = new ClassInstance[numberOfParameters];
+        EasyMock.expect(mockClassInstanceFactory.createClassInstanceArray(numberOfParameters)).andReturn(classInstanceArray);
+
+        ResolvedFactorySorter mockResolvedFactorySorter = mockControl.createMock(ResolvedFactorySorter.class);
+        SuppliedFactorySorter mockSuppliedFactorySorter = mockControl.createMock(SuppliedFactorySorter.class);
+        EasyMock.expect(mockInjectedInstanceSorterFactory.createResolvedSorter()).andReturn(mockResolvedFactorySorter);
+        EasyMock.expect(mockInjectedInstanceSorterFactory.createSuppliedSorter()).andReturn(mockSuppliedFactorySorter);
+        mockResolvedFactorySorter.sort(factories, classInstanceArray);
+        mockSuppliedFactorySorter.sort(mockMethodParam, classInstanceArray);
+
+        InjectedFactoryValues mockInjectedFactoryValues = mockControl.createMock(InjectedFactoryValues.class);
+        EasyMock.expect(mockInjectedFactoryValuesFactory.createInjectedFactoryValues(classInstanceArray)).
+                andReturn(mockInjectedFactoryValues);
         mockControl.replay();
 
-        InjectedFactoryValues injectedFactoryValues = resolve();
-
-        verifyExpectations(classInstanceArray, injectedFactoryValues);
-    }
-
-    private InjectedFactoryValues resolve() {
-        InjectedFactoryResolver resolver =
-                new InjectedFactoryResolverImpl(mockAnnotatedFactoryExtractor, mockResolverObjectFactory, mockFactoryCreationMonitor);
-        resolver.factoryCreated(mockFactoryCreationEvent);
-        return resolver.resolve(mockMethodParam);
-    }
-
-    private void expectSuppliedClass() {
-        EasyMock.expect(mockMethodParam.getParameterTypes()).andReturn(createArray(mockStringBoundary, mockIntegerBoundary));
-    }
-
-    private void expectClassInstanceArray(final ClassInstance[] classInstanceArray) {
-        EasyMock.expect(mockResolverObjectFactory.createClassInstanceArray(3)).andReturn(classInstanceArray);
-    }
-
-    @SuppressWarnings({ "unchecked" })
-    private void expectSuppliedClassInstance(final ClassInstance[] classInstanceArray) {
-        EasyMock.expect(mockMethodParam.getArguments()).andReturn(createArray(STRING_PARAM, INTEGER_PARAM));
-        EasyMock.expect(mockResolverObjectFactory.createClassInstance(mockStringBoundary, STRING_PARAM)).
-                andReturn(mockSuppliedStringInstance);
-        EasyMock.expect(mockResolverObjectFactory.createClassInstance(mockIntegerBoundary, INTEGER_PARAM)).
-                andReturn(mockSuppliedIntegerInstance);
-        EasyMock.expect(mockResolverObjectFactory.createInjectedFactoryValues(classInstanceArray)).andReturn(mockInjectedFactoryValues);
-    }
-
-    private void expectResolvedClassInstance() {
-        EasyMock.expect(mockFactoryCreator.create(UrlBoundaryFactory.class)).andReturn(mockUrlBoundaryFactory);
-        EasyMock.expect(mockResolverObjectFactory.createClassInstance(UrlBoundaryFactory.class, mockUrlBoundaryFactory)).
-                andReturn(mockResolvedClassInstance);
-    }
-
-    @SuppressWarnings({ "unchecked" })
-    private void verifyExpectations(final ClassInstance[] classInstanceArray, final InjectedFactoryValues injectedFactoryValues) {
-        assertThat(classInstanceArray[0], sameInstance(mockSuppliedStringInstance));
-        assertThat(classInstanceArray[1], sameInstance(mockResolvedClassInstance));
-        assertThat(classInstanceArray[2], sameInstance(mockSuppliedIntegerInstance));
+        InjectedFactoryValues injectedFactoryValues = resolver.resolve(mockMethodParam);
         assertThat(injectedFactoryValues, sameInstance(mockInjectedFactoryValues));
 
         mockControl.verify();
-    }
-
-    private void expectFactoryCreator(final FactoryCreator mockFactoryCreator, final FactoryCreationEvent mockFactoryCreationEvent) {
-        mockFactoryCreationMonitor.registerInterest(EasyMock.isA(InjectedFactoryResolver.class));
-        EasyMock.expect(mockFactoryCreationEvent.getInstance()).andReturn(mockFactoryCreator);
-    }
-
-    private void expectFactory(final Factory mockFactory) {
-        EasyMock.expect(mockFactory.factoryClass());
-        EasyMock.expectLastCall().andReturn(UrlBoundaryFactory.class).times(2);
-        EasyMock.expect(mockFactory.index()).andReturn(1);
-        EasyMock.expect(mockAnnotatedFactoryExtractor.extractFactories(mockMethodParam)).andReturn(createArray(mockFactory));
-    }
-
-    private <T> T[] createArray(T... objects) {
-        return objects;
     }
 }
