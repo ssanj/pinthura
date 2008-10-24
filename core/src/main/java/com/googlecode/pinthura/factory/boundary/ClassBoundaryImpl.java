@@ -68,6 +68,6 @@ public final class ClassBoundaryImpl<T> implements ClassBoundary<T> {
     }
 
     public String toString() {
-        return clazz.toString();
+        return "ClassBoundaryImpl[" + clazz.toString() + "]";
     }
 }

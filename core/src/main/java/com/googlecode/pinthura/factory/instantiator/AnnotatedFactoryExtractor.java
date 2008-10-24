@@ -17,8 +17,10 @@ package com.googlecode.pinthura.factory.instantiator;
 
 import com.googlecode.pinthura.factory.MethodParam;
 import com.googlecode.pinthura.factory.InjectedFactory;
+import com.googlecode.pinthura.factory.Factory;
 
 public interface AnnotatedFactoryExtractor {
 
     InjectedFactory extract(final MethodParam methodParam);
+    Factory[] extractFactories(final MethodParam methodParam);
 }

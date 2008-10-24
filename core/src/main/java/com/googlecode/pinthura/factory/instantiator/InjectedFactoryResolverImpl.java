@@ -15,39 +15,55 @@
  */
 package com.googlecode.pinthura.factory.instantiator;
 
-import com.googlecode.pinthura.factory.MethodParam;
-import com.googlecode.pinthura.factory.InjectedFactory;
 import com.googlecode.pinthura.factory.Factory;
+import com.googlecode.pinthura.factory.FactoryCreator;
+import com.googlecode.pinthura.factory.MethodParam;
 import com.googlecode.pinthura.factory.boundary.ClassBoundary;
-import com.googlecode.pinthura.factory.boundary.ClassBoundaryImpl;
 
 public final class InjectedFactoryResolverImpl implements InjectedFactoryResolver {
 
     private final AnnotatedFactoryExtractor extractor;
+    private final ResolverObjectFactory objectFactory;
+    private FactoryCreator factoryCreator;
 
-    public InjectedFactoryResolverImpl(final AnnotatedFactoryExtractor extractor) {
+    public InjectedFactoryResolverImpl(final AnnotatedFactoryExtractor extractor, final ResolverObjectFactory objectFactory,
+                                       final FactoryCreationMonitor factoryCreationMonitor) {
         this.extractor = extractor;
+        this.objectFactory = objectFactory;
+        factoryCreationMonitor.registerInterest(this);
     }
 
     @SuppressWarnings({ "unchecked" })
     public InjectedFactoryValues resolve(final MethodParam methodParam) {
-        InjectedFactory injectedFactory = extractor.extract(methodParam);
-        Factory[] factories = injectedFactory.value();
-
+        Factory[] factories = extractor.extractFactories(methodParam);
         ClassBoundary<?>[] methodParamTypes = methodParam.getParameterTypes();
-        ClassBoundary[] arguments = new ClassBoundary<?>[methodParamTypes.length + factories.length];
+        ClassInstance[] classInstances = objectFactory.createClassInstanceArray(methodParamTypes.length + factories.length);
 
+        addResolvedFactories(factories, classInstances);
+        fillInTheBlanks(methodParam, methodParamTypes, classInstances);
+
+        return objectFactory.createInjectedFactoryValues(classInstances);
+    }
+
+    //Probably not the best way of doing this, but certainly "a way".
+    public void factoryCreated(final FactoryCreationEvent e) {
+        factoryCreator = e.getInstance();
+    }
+
+    private void addResolvedFactories(final Factory[] factories, final ClassInstance[] classInstances) {
         for (Factory factory : factories) {
-            arguments[factory.index()] = new ClassBoundaryImpl(factory.factoryClass());
+            classInstances[factory.index()] = objectFactory.createClassInstance(factory.factoryClass(),
+                    factoryCreator.create(factory.factoryClass()));
         }
+    }
 
-        int count = 0;
-        for (int x=0; x < arguments.length && count < methodParamTypes.length; x++) {
-            if (arguments[x] == null) {
-                arguments[x] = methodParamTypes[count++];
+    private void fillInTheBlanks(final MethodParam methodParam, final ClassBoundary<?>[] methodParamTypes,
+                                 final ClassInstance[] classInstances) {
+        Object[] methodParamArgs = methodParam.getArguments();
+        for (int x = 0, count = 0; x < classInstances.length && count < methodParamTypes.length; x++) {
+            if (classInstances[x] == null) {
+                classInstances[x] = objectFactory.createClassInstance(methodParamTypes[count], methodParamArgs[count++]);
             }
         }
-
-        return new InjectedFactoryValuesImpl(arguments);
     }
 }

@@ -15,23 +15,7 @@
  */
 package com.googlecode.pinthura.factory.instantiator;
 
-import com.googlecode.pinthura.factory.boundary.ClassBoundary;
+public interface FactoryCreationListener {
 
-//TODO: Make this a pojo
-public final class InjectedFactoryValuesImpl implements InjectedFactoryValues {
-
-    private final ClassInstance[] classInstances;
-
-    public InjectedFactoryValuesImpl(final ClassInstance[] classInstances) {
-        this.classInstances = classInstances;
-    }
-
-    public ClassBoundary<?>[] getConstructorTypes() {
-        //return Arrays.asList(arguments).toArray(new ClassBoundary[arguments.length]);
-        return null;
-    }
-
-    public Object[] getConstructorArguments() {
-        return new Object[0];
-    }
+    void factoryCreated(FactoryCreationEvent e);
 }

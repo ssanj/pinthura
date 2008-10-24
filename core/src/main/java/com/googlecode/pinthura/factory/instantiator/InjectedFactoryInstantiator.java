@@ -32,6 +32,7 @@ public final class InjectedFactoryInstantiator implements InstantiationStrategy 
     }
 
     public Object filter(final MethodParam methodParam) throws MatchNotFoundException {
+        //TODO: Handle exceptions and throw a MatchNotFoundException.
         ClassBoundary<?> implClass = classExtractor.extract(methodParam);
         InjectedFactoryValues injectedFactoryValues = factoryResolver.resolve(methodParam);
 
