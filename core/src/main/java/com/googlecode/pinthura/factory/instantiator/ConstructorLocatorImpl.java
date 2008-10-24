@@ -18,6 +18,7 @@ package com.googlecode.pinthura.factory.instantiator;
 import com.googlecode.pinthura.factory.boundary.ConstructorBoundary;
 import com.googlecode.pinthura.factory.boundary.ClassBoundary;
 import com.googlecode.pinthura.factory.MethodParam;
+import com.googlecode.pinthura.factory.instantiator.injected.InjectedFactoryValues;
 
 public final class ConstructorLocatorImpl implements ConstructorLocator {
 

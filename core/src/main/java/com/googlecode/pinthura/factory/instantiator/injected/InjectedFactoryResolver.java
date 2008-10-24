@@ -15,11 +15,9 @@
  */
 package com.googlecode.pinthura.factory.instantiator.injected;
 
-import com.googlecode.pinthura.factory.Factory;
-import com.googlecode.pinthura.factory.instantiator.ClassInstance;
-import com.googlecode.pinthura.factory.instantiator.FactoryCreationListener;
+import com.googlecode.pinthura.factory.MethodParam;
 
-public interface ResolvedFactorySorter extends FactoryCreationListener {
+public interface InjectedFactoryResolver {
 
-    void sort(Factory[] factories, ClassInstance[] classInstances);
+    InjectedFactoryValues resolve(final MethodParam methodParam);
 }
