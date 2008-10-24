@@ -46,12 +46,16 @@ public final class AResolvedFactorySorterUnderTest {
 
     @Test
     public void shouldSortFactoriesInTheMiddle() {
+        //CHECKSTYLE_OFF
         expectSortedInstances(1, 3, 5);
+        //CHECKSTYLE_ON
     }
 
     @Test
     public void shouldSortFactoriesAtTheEdges() {
+        //CHECKSTYLE_OFF
         expectSortedInstances(0, 4, 5);
+        //CHECKSTYLE_ON
     }
 
     @Test
@@ -61,7 +65,9 @@ public final class AResolvedFactorySorterUnderTest {
 
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public void shouldThrowExceptionIfTheIndecesAreOutOfBounds() {
-        expectSortedInstances(1, 11, 2);        
+        //CHECKSTYLE_OFF
+        expectSortedInstances(1, 11, 2);
+        //CHECKSTYLE_ON
     }
 
     private void expectSortedInstances(final int firstIndex, final int secondIndex, final int size) {
