@@ -17,7 +17,7 @@ package com.googlecode.pinthura.factory.instantiator;
 
 import com.googlecode.pinthura.factory.MethodParam;
 
-public interface InjectedFactoryResolver {
+public interface SuppliedFactorySorter {
 
-    InjectedFactoryValues resolve(final MethodParam methodParam);
+    void sort(MethodParam param, ClassInstance[] classInstances);
 }
