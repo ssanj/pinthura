@@ -23,7 +23,7 @@ import com.googlecode.pinthura.factory.instantiator.InjectedFactoryResolverImpl;
 import com.googlecode.pinthura.factory.instantiator.InjectedFactoryValues;
 import com.googlecode.pinthura.factory.instantiator.ClassInstanceFactory;
 import com.googlecode.pinthura.factory.instantiator.InjectedInstanceSorterFactory;
-import com.googlecode.pinthura.factory.instantiator.ResolvedFactorySorter;
+import com.googlecode.pinthura.factory.instantiator.injected.ResolvedFactorySorter;
 import com.googlecode.pinthura.factory.instantiator.SuppliedFactorySorter;
 import com.googlecode.pinthura.factory.instantiator.InjectedFactoryValuesFactory;
 import static com.googlecode.pinthura.util.Arrayz.createArray;
