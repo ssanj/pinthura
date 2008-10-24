@@ -13,11 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.pinthura.factory.instantiator;
+package com.googlecode.pinthura.factory.instantiator.injected;
 
-import com.googlecode.pinthura.factory.Factory;
+import com.googlecode.pinthura.factory.MethodParam;
+import com.googlecode.pinthura.factory.instantiator.ClassInstance;
 
-public interface ResolvedFactorySorter extends FactoryCreationListener {
+public interface SuppliedFactorySorter {
 
-    void sort(Factory[] factories, ClassInstance[] classInstances);
+    void sort(MethodParam param, ClassInstance[] classInstances);
 }
