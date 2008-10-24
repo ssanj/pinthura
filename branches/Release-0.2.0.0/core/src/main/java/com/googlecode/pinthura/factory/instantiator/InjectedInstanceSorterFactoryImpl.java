@@ -15,6 +15,9 @@
  */
 package com.googlecode.pinthura.factory.instantiator;
 
+import com.googlecode.pinthura.factory.instantiator.injected.ResolvedFactorySorter;
+import com.googlecode.pinthura.factory.instantiator.injected.ResolvedFactorySorterImpl;
+
 public final class InjectedInstanceSorterFactoryImpl implements InjectedInstanceSorterFactory {
 
     private final ClassInstanceFactory classInstanceFactory;
