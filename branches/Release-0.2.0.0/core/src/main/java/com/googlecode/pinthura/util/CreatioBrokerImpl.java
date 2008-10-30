@@ -28,13 +28,13 @@ public final class CreatioBrokerImpl implements CreationBroker {
 
     @SuppressWarnings({ "unchecked" })
     public <T> void notifyInstanceCreated(final T instance) {
-        for (Class<?> clazz : listeners.keySet()) {
+        Map<Class<?>, CreationListener> listenerCopy = new HashMap<Class<?>, CreationListener>(listeners);
+
+        for (Class<?> clazz : listenerCopy.keySet()) {
             if (clazz.isAssignableFrom(instance.getClass())) {
-                //TODO: Just return the 1st one.
-                listeners.get(clazz).instanceCreated(instance);
+                CreationListener<T> listener = listenerCopy.get(clazz);
+                listener.instanceCreated(instance);
             }
         }
     }
-
-    //TODO: make this thread safe.
 }
