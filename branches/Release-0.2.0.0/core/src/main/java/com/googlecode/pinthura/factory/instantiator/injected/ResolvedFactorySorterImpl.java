@@ -19,17 +19,16 @@ import com.googlecode.pinthura.factory.Factory;
 import com.googlecode.pinthura.factory.FactoryCreator;
 import com.googlecode.pinthura.factory.instantiator.ClassInstance;
 import com.googlecode.pinthura.factory.instantiator.ClassInstanceFactory;
-import com.googlecode.pinthura.factory.instantiator.FactoryCreationEvent;
-import com.googlecode.pinthura.factory.instantiator.FactoryCreationMonitor;
+import com.googlecode.pinthura.util.CreationBroker;
 
 public final class ResolvedFactorySorterImpl implements ResolvedFactorySorter {
 
     private final ClassInstanceFactory classInstanceFactory;
     private FactoryCreator factoryCreator;
 
-    public ResolvedFactorySorterImpl(final ClassInstanceFactory classInstanceFactory, final FactoryCreationMonitor factoryCreationMonitor) {
+    public ResolvedFactorySorterImpl(final ClassInstanceFactory classInstanceFactory, final CreationBroker creationBroker) {
         this.classInstanceFactory = classInstanceFactory;
-        factoryCreationMonitor.registerInterest(this);
+        creationBroker.addCreationListener(FactoryCreator.class, this);
     }
 
     public void sort(final Factory[] factories, final ClassInstance[] classInstances) {
@@ -39,7 +38,7 @@ public final class ResolvedFactorySorterImpl implements ResolvedFactorySorter {
         }
     }
 
-    public void factoryCreated(final FactoryCreationEvent e) {
-        factoryCreator = e.getInstance();
+    public void instanceCreated(final FactoryCreator factoryCreator) {
+        this.factoryCreator = factoryCreator;
     }
 }

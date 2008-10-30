@@ -16,22 +16,24 @@
 package com.googlecode.pinthura.factory.instantiator.injected;
 
 import com.googlecode.pinthura.factory.instantiator.ClassInstanceFactory;
-import com.googlecode.pinthura.factory.instantiator.FactoryCreationMonitor;
+import com.googlecode.pinthura.util.CreationBroker;
 
 public final class InjectedInstanceSorterFactoryImpl implements InjectedInstanceSorterFactory {
 
     private final ClassInstanceFactory classInstanceFactory;
-    private final FactoryCreationMonitor monitor;
+    private final CreationBroker broker;
 
-    public InjectedInstanceSorterFactoryImpl(final ClassInstanceFactory classInstanceFactory, final FactoryCreationMonitor monitor) {
+    public InjectedInstanceSorterFactoryImpl(final ClassInstanceFactory classInstanceFactory, final CreationBroker broker) {
         this.classInstanceFactory = classInstanceFactory;
-        this.monitor = monitor;
+        this.broker = broker;
     }
 
+    //TODO: Why aren't these passed in?
     public ResolvedFactorySorter createResolvedSorter() {
-        return new ResolvedFactorySorterImpl(classInstanceFactory, monitor);
+        return new ResolvedFactorySorterImpl(classInstanceFactory, broker);
     }
 
+    //TODO: Why aren't these passed in?
     public SuppliedFactorySorter createSuppliedSorter() {
         return new SuppliedFactorySorterImpl(classInstanceFactory);
     }
