@@ -26,6 +26,8 @@ import org.junit.Test;
 
 public final class ACreationBrokerUnderTest {
 
+    private static final String STRING_INSTANCE = "String Instance";
+
     private final IMocksControl mockControl = EasyMock.createControl();
     private CreationBroker creationBroker;
 
@@ -45,6 +47,22 @@ public final class ACreationBrokerUnderTest {
     }
 
     @SuppressWarnings({ "unchecked" })
+    @Test
+    public void shouldNotifyMultipleListenersRegisteredForAssignableTypes() {
+        CreationListener mockCreationListener1 = mockControl.createMock(CreationListener.class);
+        CreationListener mockCreationListener2 = mockControl.createMock(CreationListener.class);
+        mockCreationListener1.instanceCreated(STRING_INSTANCE);
+        mockCreationListener2.instanceCreated(STRING_INSTANCE);
+        mockControl.replay();
+
+        creationBroker.addCreationListener(String.class, mockCreationListener1);
+        creationBroker.addCreationListener(Object.class, mockCreationListener2);
+        creationBroker.notifyInstanceCreated(STRING_INSTANCE);
+
+        mockControl.verify();
+    }
+
+    @SuppressWarnings({ "unchecked" })
     private void expectNotification(final Class<?> clazz, final Object instance) {
         CreationListener mockCreationListener = mockControl.createMock(CreationListener.class);
         mockCreationListener.instanceCreated(instance);
@@ -55,8 +73,4 @@ public final class ACreationBrokerUnderTest {
 
         mockControl.verify();
     }
-
-    //TODO: Add test for when a key is not found.
-    //TODO: Add test for multiple instances of different assignable types.
-
 }
