@@ -16,10 +16,11 @@
 package com.googlecode.pinthura.factory.instantiator.injected;
 
 import com.googlecode.pinthura.factory.Factory;
+import com.googlecode.pinthura.factory.FactoryCreator;
 import com.googlecode.pinthura.factory.instantiator.ClassInstance;
-import com.googlecode.pinthura.factory.instantiator.FactoryCreationListener;
+import com.googlecode.pinthura.util.CreationListener;
 
-public interface ResolvedFactorySorter extends FactoryCreationListener {
+public interface ResolvedFactorySorter extends CreationListener<FactoryCreator> {
 
     void sort(Factory[] factories, ClassInstance[] classInstances);
 }
