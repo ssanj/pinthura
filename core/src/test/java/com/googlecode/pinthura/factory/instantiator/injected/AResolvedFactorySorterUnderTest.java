@@ -31,6 +31,7 @@ import static org.junit.Assert.assertThat;
 import org.junit.Before;
 import org.junit.Test;
 
+//TODO: Clean this up!
 public final class AResolvedFactorySorterUnderTest {
 
     private final IMocksControl mockControl = EasyMock.createControl();
@@ -74,8 +75,8 @@ public final class AResolvedFactorySorterUnderTest {
         Factory[] factories = expectFactories(firstIndex, secondIndex);
         FactoryCreator mockFactoryCreator = mockControl.createMock(FactoryCreator.class);
         ClassInstance[] classInstances = new ClassInstance[size];
-        ClassInstance mockClassInstance1 = expectInstance1(mockFactoryCreator);
-        ClassInstance mockClassInstance2 = expectInstance2(mockFactoryCreator);
+        ClassInstance mockClassInstance1 = expectInstance(mockFactoryCreator, ShapeFactory.class);
+        ClassInstance mockClassInstance2 = expectInstance(mockFactoryCreator, UrlBoundaryFactory.class);
         mockCreationBroker.addCreationListener(EasyMock.eq(FactoryCreator.class), EasyMock.isA(CreationListener.class));
         mockControl.replay();
 
@@ -88,22 +89,13 @@ public final class AResolvedFactorySorterUnderTest {
         mockControl.verify();
     }
 
-    private ClassInstance expectInstance2(final FactoryCreator mockFactoryCreator) {
-        UrlBoundaryFactory mockUrlBoundaryFactory = mockControl.createMock(UrlBoundaryFactory.class);
-        EasyMock.expect(mockFactoryCreator.create(UrlBoundaryFactory.class)).andReturn(mockUrlBoundaryFactory);
-        ClassInstance mockClassInstance2 = mockControl.createMock(ClassInstance.class);
-        EasyMock.expect(mockClassInstanceFactory.createClassInstance(UrlBoundaryFactory.class, mockUrlBoundaryFactory)).
-                andReturn(mockClassInstance2);
-        return mockClassInstance2;
-    }
-
-    private ClassInstance expectInstance1(final FactoryCreator mockFactoryCreator) {
-        ShapeFactory mockShapeFactory = mockControl.createMock(ShapeFactory.class);
-        EasyMock.expect(mockFactoryCreator.create(ShapeFactory.class)).andReturn(mockShapeFactory);
-        ClassInstance mockClassInstance1 = mockControl.createMock(ClassInstance.class);
-        EasyMock.expect(mockClassInstanceFactory.createClassInstance(ShapeFactory.class, mockShapeFactory)).
-                andReturn(mockClassInstance1);
-        return mockClassInstance1;
+    private <F> ClassInstance expectInstance(final FactoryCreator mockFactoryCreator, final Class<F> factoryClass) {
+        F mockFactoryInstance = mockControl.createMock(factoryClass);
+        EasyMock.expect(mockFactoryCreator.create(factoryClass)).andReturn(mockFactoryInstance);
+        ClassInstance mockClassInstance = mockControl.createMock(ClassInstance.class);
+        EasyMock.expect(mockClassInstanceFactory.createClassInstance(factoryClass, mockFactoryInstance)).
+                andReturn(mockClassInstance);
+        return mockClassInstance;
     }
 
     private Factory[] expectFactories(final int firstIndex, final int secondIndex) {
