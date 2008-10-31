@@ -31,7 +31,6 @@ import static org.junit.Assert.assertThat;
 import org.junit.Before;
 import org.junit.Test;
 
-//TODO: Clean this up!
 public final class AResolvedFactorySorterUnderTest {
 
     private final IMocksControl mockControl = EasyMock.createControl();
@@ -74,7 +73,6 @@ public final class AResolvedFactorySorterUnderTest {
     private void expectSortedInstances(final int firstIndex, final int secondIndex, final int size) {
         Factory[] factories = expectFactories(firstIndex, secondIndex);
         FactoryCreator mockFactoryCreator = mockControl.createMock(FactoryCreator.class);
-        ClassInstance[] classInstances = new ClassInstance[size];
         ClassInstance mockClassInstance1 = expectInstance(mockFactoryCreator, ShapeFactory.class);
         ClassInstance mockClassInstance2 = expectInstance(mockFactoryCreator, UrlBoundaryFactory.class);
         mockCreationBroker.addCreationListener(EasyMock.eq(FactoryCreator.class), EasyMock.isA(CreationListener.class));
@@ -82,6 +80,8 @@ public final class AResolvedFactorySorterUnderTest {
 
         ResolvedFactorySorter sorter = new ResolvedFactorySorterImpl(mockClassInstanceFactory, mockCreationBroker);
         sorter.instanceCreated(mockFactoryCreator);
+
+        ClassInstance[] classInstances = new ClassInstance[size];
         sorter.sort(factories, classInstances);
         assertThat(classInstances[firstIndex], equalTo(mockClassInstance1));
         assertThat(classInstances[secondIndex], equalTo(mockClassInstance2));
