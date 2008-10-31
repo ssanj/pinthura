@@ -17,30 +17,17 @@ package com.googlecode.pinthura.factory.instantiator.injected;
 
 import com.googlecode.pinthura.data.ShapeFactory;
 import com.googlecode.pinthura.data.UrlBoundaryFactory;
-import com.googlecode.pinthura.factory.Factory;
-import com.googlecode.pinthura.factory.FactoryCreator;
 import com.googlecode.pinthura.factory.instantiator.ClassInstance;
-import com.googlecode.pinthura.factory.instantiator.ClassInstanceFactory;
-import com.googlecode.pinthura.util.Arrayz;
-import com.googlecode.pinthura.util.CreationBroker;
-import com.googlecode.pinthura.util.CreationListener;
-import org.easymock.EasyMock;
-import org.easymock.IMocksControl;
-import static org.hamcrest.core.IsEqual.equalTo;
-import static org.junit.Assert.assertThat;
 import org.junit.Before;
 import org.junit.Test;
 
 public final class AResolvedFactorySorterUnderTest {
 
-    private final IMocksControl mockControl = EasyMock.createControl();
-    private ClassInstanceFactory mockClassInstanceFactory;
-    private CreationBroker mockCreationBroker;
+    private ResolvedFactorySorterTestBehaviourHandler behaviourHandler;
 
     @Before
     public void setup() {
-        mockClassInstanceFactory = mockControl.createMock(ClassInstanceFactory.class);
-        mockCreationBroker = mockControl.createMock(CreationBroker.class);
+        behaviourHandler = new ResolvedFactorySorterTestBehaviourHandler();
     }
 
     @Test
@@ -70,45 +57,17 @@ public final class AResolvedFactorySorterUnderTest {
     }
 
     @SuppressWarnings({ "unchecked" })
-    private void expectSortedInstances(final int firstIndex, final int secondIndex, final int size) {
-        Factory[] factories = expectFactories(firstIndex, secondIndex);
-        FactoryCreator mockFactoryCreator = mockControl.createMock(FactoryCreator.class);
-        ClassInstance mockClassInstance1 = expectInstance(mockFactoryCreator, ShapeFactory.class);
-        ClassInstance mockClassInstance2 = expectInstance(mockFactoryCreator, UrlBoundaryFactory.class);
-        mockCreationBroker.addCreationListener(EasyMock.eq(FactoryCreator.class), EasyMock.isA(CreationListener.class));
-        mockControl.replay();
+    private void expectSortedInstances(final int firstIndex, final int secondIndex, final int noOfParameters) {
+        ClassInstance[] classInstances = new ClassInstance[noOfParameters];
 
-        ResolvedFactorySorter sorter = new ResolvedFactorySorterImpl(mockClassInstanceFactory, mockCreationBroker);
-        sorter.instanceCreated(mockFactoryCreator);
+        behaviourHandler.addFactory(ShapeFactory.class, firstIndex);
+        behaviourHandler.addFactory(UrlBoundaryFactory.class, secondIndex);
+        behaviourHandler.replay();
 
-        ClassInstance[] classInstances = new ClassInstance[size];
-        sorter.sort(factories, classInstances);
-        assertThat(classInstances[firstIndex], equalTo(mockClassInstance1));
-        assertThat(classInstances[secondIndex], equalTo(mockClassInstance2));
+        behaviourHandler.sort(classInstances);
+        behaviourHandler.expectFirstClassInstanceIsEqual(classInstances[firstIndex]);
+        behaviourHandler.expectSecondClassInstanceIsEqual(classInstances[secondIndex]);
 
-        mockControl.verify();
-    }
-
-    private <F> ClassInstance expectInstance(final FactoryCreator mockFactoryCreator, final Class<F> factoryClass) {
-        F mockFactoryInstance = mockControl.createMock(factoryClass);
-        EasyMock.expect(mockFactoryCreator.create(factoryClass)).andReturn(mockFactoryInstance);
-        ClassInstance mockClassInstance = mockControl.createMock(ClassInstance.class);
-        EasyMock.expect(mockClassInstanceFactory.createClassInstance(factoryClass, mockFactoryInstance)).
-                andReturn(mockClassInstance);
-        return mockClassInstance;
-    }
-
-    private Factory[] expectFactories(final int firstIndex, final int secondIndex) {
-        Factory mockFactory1 = mockControl.createMock(Factory.class);
-        Factory mockFactory2 = mockControl.createMock(Factory.class);
-        expectFactoryClass(mockFactory1, ShapeFactory.class, firstIndex);
-        expectFactoryClass(mockFactory2, UrlBoundaryFactory.class, secondIndex);
-        return Arrayz.createArray(mockFactory1, mockFactory2);
-    }
-
-    private void expectFactoryClass(final Factory mockFactory, final Class<?> factoryClass, final int index) {
-        EasyMock.expect(mockFactory.factoryClass());
-        EasyMock.expectLastCall().andReturn(factoryClass).times(2);
-        EasyMock.expect(mockFactory.index()).andReturn(index);
+        behaviourHandler.verify();
     }
 }
