@@ -21,7 +21,7 @@ import static org.hamcrest.core.IsEqual.equalTo;
 import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.assertThat;
 
-final class FilterLinkContractChecker {
+public final class FilterLinkContractChecker {
 
     private FilterLinkContractChecker() {
         //Utility.

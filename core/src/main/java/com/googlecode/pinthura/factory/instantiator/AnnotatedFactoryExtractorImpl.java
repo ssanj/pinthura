@@ -15,10 +15,18 @@
  */
 package com.googlecode.pinthura.factory.instantiator;
 
+import com.googlecode.pinthura.factory.Factory;
+import com.googlecode.pinthura.factory.InjectedFactory;
 import com.googlecode.pinthura.factory.MethodParam;
-import com.googlecode.pinthura.factory.boundary.ConstructorBoundary;
 
-public interface ConstructorInstantiator {
+//TODO: Implement/Test
+public final class AnnotatedFactoryExtractorImpl implements AnnotatedFactoryExtractor {
 
-    <T> Object instantiate(MethodParam methodParam, ConstructorBoundary<T> constructorBoundary);
+    public InjectedFactory extract(final MethodParam methodParam) {
+        return null;
+    }
+
+    public Factory[] extractFactories(final MethodParam methodParam) {
+        return new Factory[0];
+    }
 }

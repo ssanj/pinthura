@@ -22,6 +22,7 @@ import com.googlecode.pinthura.factory.boundary.ClassBoundary;
 import com.googlecode.pinthura.factory.boundary.ConstructorBoundary;
 import com.googlecode.pinthura.factory.instantiator.AnnotatedClassExtractor;
 import com.googlecode.pinthura.factory.instantiator.InstantiationStrategy;
+import com.googlecode.pinthura.filter.MatchNotFoundException;
 import com.googlecode.pinthura.util.Arrayz;
 import org.easymock.EasyMock;
 import org.easymock.IMocksControl;
@@ -47,7 +48,6 @@ public final class ADynamicFactoryInstantiatorUnderTest {
 
         instantiator = new DynamicFactoryInstantiator(mockAnnotatedClassExtractor, mockInjectedFactoryResolver);
     }
-
 
     @SuppressWarnings({ "unchecked" })
     @Test
@@ -78,5 +78,19 @@ public final class ADynamicFactoryInstantiatorUnderTest {
     @Test
     public void shouldReturnItsName() {
         assertThat("Dynamic Parameter Instantiator", equalTo(instantiator.getFilterName()));
+    }
+
+    @SuppressWarnings({ "unchecked", "ThrowableInstanceNeverThrown" })
+    @Test
+    public void shouldThrowAMatchNotFoundExceptionIfAnExceptionIsThrown() {
+        EasyMock.expect(mockAnnotatedClassExtractor.extract(mockMethodParam)).andThrow(new IllegalArgumentException());
+        mockControl.replay();
+
+        try {
+            instantiator.filter(mockMethodParam);
+        } catch (MatchNotFoundException e) {
+            mockControl.verify();
+            assertThat((Class<IllegalArgumentException>) e.getCause().getClass(), equalTo(IllegalArgumentException.class));
+        }
     }
 }

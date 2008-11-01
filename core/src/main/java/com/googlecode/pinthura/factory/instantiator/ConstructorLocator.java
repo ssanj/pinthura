@@ -16,15 +16,12 @@
 package com.googlecode.pinthura.factory.instantiator;
 
 import com.googlecode.pinthura.factory.MethodParam;
-import com.googlecode.pinthura.factory.instantiator.injected.InjectedFactoryValues;
-import com.googlecode.pinthura.factory.boundary.ConstructorBoundary;
 import com.googlecode.pinthura.factory.boundary.ClassBoundary;
+import com.googlecode.pinthura.factory.boundary.ConstructorBoundary;
 
 public interface ConstructorLocator {
 
     <T> ConstructorBoundary<T> locate(MethodParam methodParam, String className);
 
     <T> ConstructorBoundary<T> locate(MethodParam methodParam, ClassBoundary<T> clazz);
-
-    <T> ConstructorBoundary<T> locate(InjectedFactoryValues factoryParamValues, ClassBoundary<T> implClass);
 }

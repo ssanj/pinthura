@@ -17,17 +17,10 @@ package com.googlecode.pinthura.factory.instantiator;
 
 import com.googlecode.pinthura.factory.MethodParam;
 import com.googlecode.pinthura.factory.boundary.ConstructorBoundary;
-import com.googlecode.pinthura.factory.instantiator.injected.InjectedFactoryValues;
 
 public final class ConstructorInstantiatorImpl implements ConstructorInstantiator {
 
     public <T> Object instantiate(final MethodParam methodParam, final ConstructorBoundary<T> constructorBoundary) {
         return constructorBoundary.newInstance(methodParam.getArguments());
     }
-
-    //TODO: Test/Implement
-    public <T> Object instantiate(final InjectedFactoryValues factoryParamValues, final ConstructorBoundary<T> constructor) {
-        return null;
-    }
-
 }
