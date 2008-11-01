@@ -21,6 +21,15 @@ import com.googlecode.pinthura.factory.instantiator.ClassInstance;
 import com.googlecode.pinthura.factory.instantiator.ClassInstanceFactory;
 import com.googlecode.pinthura.util.CreationBroker;
 
+/**
+ * Creates proxy instances for each supplied <code>Factory</code> annotation at the index specified with the <code>ClassInstance[]</code>
+ * supplied.
+ * Eg.
+ * Assume [*] is a slot with a proxy.
+ * If <code>@Factory factoryClass=UrlBoundaryFactory.class index=2</code>, and <code>classInstance[]</code> -> [][][][]
+ *
+ * Then creates a proxy of <code>UrlBoundaryFactory</code> and adds it to the 2nd index of <code>classInstance[]</code> -> [][][*][]
+ */
 public final class ResolvedFactorySorterImpl implements ResolvedFactorySorter {
 
     private final ClassInstanceFactory classInstanceFactory;

@@ -28,12 +28,10 @@ public final class InjectedInstanceSorterFactoryImpl implements InjectedInstance
         this.broker = broker;
     }
 
-    //TODO: Why aren't these passed in?
     public ResolvedFactorySorter createResolvedSorter() {
         return new ResolvedFactorySorterImpl(classInstanceFactory, broker);
     }
 
-    //TODO: Why aren't these passed in?
     public SuppliedFactorySorter createSuppliedSorter() {
         return new SuppliedFactorySorterImpl(classInstanceFactory);
     }
