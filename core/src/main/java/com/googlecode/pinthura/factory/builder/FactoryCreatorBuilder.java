@@ -15,17 +15,12 @@
  */
 package com.googlecode.pinthura.factory.builder;
 
-import com.googlecode.pinthura.factory.FactoryCreatorImpl;
 import com.googlecode.pinthura.factory.FactoryCreator;
-import com.googlecode.pinthura.factory.MethodParamFactoryImpl;
-import com.googlecode.pinthura.factory.DynamicFactoryInvocationHandler;
+import com.googlecode.pinthura.factory.FactoryCreatorImpl;
 
 public final class FactoryCreatorBuilder {
 
     public FactoryCreator build() {
-        return new FactoryCreatorImpl(
-                new DynamicFactoryInvocationHandler(
-                        new InstanceCreatorBuilder().build(),
-                        new MethodParamFactoryImpl()));
+        return new FactoryCreatorImpl();
     }
 }

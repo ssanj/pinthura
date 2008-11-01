@@ -13,11 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.pinthura.factory.instantiator;
+package com.googlecode.pinthura.factory.builder;
 
-import com.googlecode.pinthura.factory.FactoryCreator;
+import com.googlecode.pinthura.factory.DynamicFactoryInvocationHandler;
+import com.googlecode.pinthura.factory.MethodParamFactoryImpl;
 
-public interface FactoryCreationEvent {
+public final class DynamicFactoryInvocationHandlerBuilder {
 
-    FactoryCreator getInstance();
+    public DynamicFactoryInvocationHandler build() {
+        return new DynamicFactoryInvocationHandler(new InstanceCreatorBuilder().build(), new MethodParamFactoryImpl());
+    }
 }
