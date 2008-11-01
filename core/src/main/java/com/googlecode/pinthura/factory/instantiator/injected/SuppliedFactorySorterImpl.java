@@ -20,6 +20,13 @@ import com.googlecode.pinthura.factory.boundary.ClassBoundary;
 import com.googlecode.pinthura.factory.instantiator.ClassInstance;
 import com.googlecode.pinthura.factory.instantiator.ClassInstanceFactory;
 
+/**
+ * This class adds the supplied parameters into each of the unused slots in the <code>ClassInstance[]</code> supplied.
+ * Eg.
+ * Assume [*] is a used slot and px is the paramater followed by its number.
+ * If classInstance[] was -> [*][][*][] and 2 parameters p1 and p2 were supplied,
+ * adds the parameters to -> [*][p1][*][p2]
+ */
 public final class SuppliedFactorySorterImpl implements SuppliedFactorySorter {
 
     private final ClassInstanceFactory classInstanceFactory;

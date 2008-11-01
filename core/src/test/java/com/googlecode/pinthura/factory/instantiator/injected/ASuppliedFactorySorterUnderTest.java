@@ -15,14 +15,14 @@
  */
 package com.googlecode.pinthura.factory.instantiator.injected;
 
+import com.googlecode.pinthura.data.Person;
+import com.googlecode.pinthura.data.Shape;
+import com.googlecode.pinthura.data.Square;
 import com.googlecode.pinthura.factory.MethodParam;
 import com.googlecode.pinthura.factory.boundary.ClassBoundary;
 import com.googlecode.pinthura.factory.instantiator.ClassInstance;
 import com.googlecode.pinthura.factory.instantiator.ClassInstanceFactory;
 import com.googlecode.pinthura.util.Arrayz;
-import com.googlecode.pinthura.data.Person;
-import com.googlecode.pinthura.data.Shape;
-import com.googlecode.pinthura.data.Square;
 import org.easymock.EasyMock;
 import org.easymock.IMocksControl;
 import static org.hamcrest.core.IsSame.sameInstance;
@@ -30,6 +30,7 @@ import static org.junit.Assert.assertThat;
 import org.junit.Before;
 import org.junit.Test;
 
+//TODO: Move to TestBehaviourHandler
 public final class ASuppliedFactorySorterUnderTest {
 
     private static final String STRING_INSTANCE = "testing";
