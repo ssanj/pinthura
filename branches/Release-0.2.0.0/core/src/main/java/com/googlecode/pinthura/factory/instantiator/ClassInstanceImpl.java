@@ -15,9 +15,10 @@
  */
 package com.googlecode.pinthura.factory.instantiator;
 
-import com.googlecode.pinthura.factory.boundary.ClassBoundaryImpl;
 import com.googlecode.pinthura.factory.boundary.ClassBoundary;
+import com.googlecode.pinthura.factory.boundary.ClassBoundaryImpl;
 
+//TODO: Test
 public final class ClassInstanceImpl implements ClassInstance {
 
     private ClassBoundary<?> clazz;

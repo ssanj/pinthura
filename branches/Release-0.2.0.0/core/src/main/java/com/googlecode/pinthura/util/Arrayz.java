@@ -15,6 +15,9 @@
  */
 package com.googlecode.pinthura.util;
 
+import java.lang.reflect.Array;
+import java.util.Collection;
+
 public final class Arrayz {
 
     private Arrayz() {
@@ -24,4 +27,10 @@ public final class Arrayz {
     public static <T> T[] createArray(final T... objects) {
         return objects;
     }
+
+    @SuppressWarnings({ "unchecked" })
+    public static <T> T[] createArray(final Collection<T> collection, final Class<T> clazz) {
+        return collection.toArray((T[]) Array.newInstance(clazz, collection.size()));
+    }
+
 }

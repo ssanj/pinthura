@@ -15,6 +15,7 @@
  */
 package com.googlecode.pinthura.factory.locator;
 
+//TODO: Do we need this class?
 public final class DerivedImplementationNameLocator {
 
 //    private static final String FILTER_NAME = "Simple Implementation Locator";

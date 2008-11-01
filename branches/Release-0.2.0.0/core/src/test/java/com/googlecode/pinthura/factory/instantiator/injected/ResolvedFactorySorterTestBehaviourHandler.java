@@ -19,6 +19,7 @@ import com.googlecode.pinthura.factory.Factory;
 import com.googlecode.pinthura.factory.FactoryCreator;
 import com.googlecode.pinthura.factory.instantiator.ClassInstance;
 import com.googlecode.pinthura.factory.instantiator.ClassInstanceFactory;
+import com.googlecode.pinthura.util.Arrayz;
 import com.googlecode.pinthura.util.CreationBroker;
 import com.googlecode.pinthura.util.CreationListener;
 import org.easymock.EasyMock;
@@ -26,9 +27,7 @@ import org.easymock.IMocksControl;
 import static org.hamcrest.core.IsEqual.equalTo;
 import org.junit.Assert;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 public final class ResolvedFactorySorterTestBehaviourHandler {
@@ -50,7 +49,7 @@ public final class ResolvedFactorySorterTestBehaviourHandler {
         factories = new ArrayList<Factory>();
     }
 
-    public ResolvedFactorySorterTestBehaviourHandler addFactory(Class<?> factoryClass, int index) {
+    public ResolvedFactorySorterTestBehaviourHandler addFactory(final Class<?> factoryClass, final int index) {
         Factory mockFactory = mockControl.createMock(Factory.class);
         factories.add(mockFactory);
         EasyMock.expect(mockFactory.factoryClass());
@@ -76,10 +75,10 @@ public final class ResolvedFactorySorterTestBehaviourHandler {
         mockControl.replay();
     }
 
-    public void sort(ClassInstance[] classInstances) {
+    public void sort(final ClassInstance[] classInstances) {
         ResolvedFactorySorter sorter = new ResolvedFactorySorterImpl(mockClassInstanceFactory, mockCreationBroker);
         sorter.instanceCreated(mockFactoryCreator);
-        sorter.sort(createArray(factories, Factory.class), classInstances);
+        sorter.sort(Arrayz.createArray(factories, Factory.class), classInstances);
     }
 
     public void expectFirstClassInstanceIsEqual(final ClassInstance classInstance) {
@@ -92,10 +91,5 @@ public final class ResolvedFactorySorterTestBehaviourHandler {
 
     public void verify() {
         mockControl.verify();
-    }
-
-    @SuppressWarnings({ "unchecked" })
-    private static <T> T[] createArray(Collection<T> collection, Class<T> clazz) {
-        return collection.toArray((T[]) Array.newInstance(clazz, collection.size()));
     }
 }

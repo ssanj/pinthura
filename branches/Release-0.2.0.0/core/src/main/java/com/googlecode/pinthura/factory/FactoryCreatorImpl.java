@@ -15,6 +15,8 @@
  */
 package com.googlecode.pinthura.factory;
 
+import com.googlecode.pinthura.factory.builder.DynamicFactoryInvocationHandlerBuilder;
+
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
 
@@ -24,6 +26,10 @@ public final class FactoryCreatorImpl implements FactoryCreator {
 
     public FactoryCreatorImpl(final InvocationHandler invocationHandler) {
         this.invocationHandler = invocationHandler;
+    }
+
+    public FactoryCreatorImpl() {
+        this.invocationHandler = new DynamicFactoryInvocationHandlerBuilder().build();
     }
 
     public <T> T create(final Class<T> factoryInterface) {
