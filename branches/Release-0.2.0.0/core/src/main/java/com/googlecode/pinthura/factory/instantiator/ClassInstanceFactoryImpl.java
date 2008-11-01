@@ -15,10 +15,19 @@
  */
 package com.googlecode.pinthura.factory.instantiator;
 
-import com.googlecode.pinthura.factory.MethodParam;
-import com.googlecode.pinthura.factory.boundary.ConstructorBoundary;
+import com.googlecode.pinthura.factory.boundary.ClassBoundary;
 
-public interface ConstructorInstantiator {
+public final class ClassInstanceFactoryImpl implements ClassInstanceFactory {
 
-    <T> Object instantiate(MethodParam methodParam, ConstructorBoundary<T> constructorBoundary);
+    public <T> ClassInstance createClassInstance(final Class<T> clazz, final Object instance) {
+        return new ClassInstanceImpl(clazz, instance);
+    }
+
+    public <T> ClassInstance createClassInstance(final ClassBoundary<T> clazz, final Object instance) {
+        return new ClassInstanceImpl(clazz, instance);
+    }
+
+    public ClassInstance[] createClassInstanceArray(final int size) {
+        return new ClassInstance[size];
+    }
 }

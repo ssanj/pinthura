@@ -29,7 +29,7 @@ public final class FactoryCreatorImpl implements FactoryCreator {
     }
 
     public FactoryCreatorImpl() {
-        this.invocationHandler = new DynamicFactoryInvocationHandlerBuilder().build();
+        this(new DynamicFactoryInvocationHandlerBuilder().build());
     }
 
     public <T> T create(final Class<T> factoryInterface) {

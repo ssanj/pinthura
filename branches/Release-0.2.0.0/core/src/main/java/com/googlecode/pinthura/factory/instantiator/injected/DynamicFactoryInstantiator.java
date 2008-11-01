@@ -21,7 +21,6 @@ import com.googlecode.pinthura.factory.instantiator.AnnotatedClassExtractor;
 import com.googlecode.pinthura.factory.instantiator.InstantiationStrategy;
 import com.googlecode.pinthura.filter.MatchNotFoundException;
 
-//TODO: test
 public final class DynamicFactoryInstantiator implements InstantiationStrategy {
 
     private static final String FILTER_NAME = "Dynamic Parameter Instantiator";
@@ -35,12 +34,15 @@ public final class DynamicFactoryInstantiator implements InstantiationStrategy {
     }
 
     public Object filter(final MethodParam methodParam) throws MatchNotFoundException {
-        //TODO: Handle exceptions and throw a MatchNotFoundException.
-        ClassBoundary<?> implClass = classExtractor.extract(methodParam);
-        InjectedFactoryValues injectedFactoryValues = factoryResolver.resolve(methodParam);
+        try {
+            ClassBoundary<?> implClass = classExtractor.extract(methodParam);
+            InjectedFactoryValues injectedFactoryValues = factoryResolver.resolve(methodParam);
 
-        return implClass.getConstructor(injectedFactoryValues.getConstructorTypes()).
-                newInstance(injectedFactoryValues.getConstructorArguments());
+            return implClass.getConstructor(injectedFactoryValues.getConstructorTypes()).
+                    newInstance(injectedFactoryValues.getConstructorArguments());
+        } catch (Exception e) {
+            throw new MatchNotFoundException(e);
+        }
     }
 
     public String getFilterName() {
