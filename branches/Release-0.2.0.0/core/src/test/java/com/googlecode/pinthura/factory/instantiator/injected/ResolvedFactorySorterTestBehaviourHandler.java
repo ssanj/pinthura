@@ -59,7 +59,7 @@ public final class ResolvedFactorySorterTestBehaviourHandler {
         return this;
     }
 
-    private ResolvedFactorySorterTestBehaviourHandler addClassInstance(Class<?> factoryClass) {
+    private ResolvedFactorySorterTestBehaviourHandler addClassInstance(final Class<?> factoryClass) {
         Object mockFactoryInstance = mockControl.createMock(factoryClass);
         EasyMock.expect(mockFactoryCreator.create(factoryClass)).andReturn(mockFactoryInstance);
         ClassInstance mockClassInstance = mockControl.createMock(ClassInstance.class);
