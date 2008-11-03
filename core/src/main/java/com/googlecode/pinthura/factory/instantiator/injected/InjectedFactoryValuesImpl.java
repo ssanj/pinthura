@@ -22,7 +22,6 @@ import static com.googlecode.pinthura.util.Arrayz.createArray;
 import java.util.ArrayList;
 import java.util.List;
 
-//TODO: Test
 public final class InjectedFactoryValuesImpl implements InjectedFactoryValues {
 
     private final ClassInstance[] classInstances;
@@ -32,13 +31,13 @@ public final class InjectedFactoryValuesImpl implements InjectedFactoryValues {
     }
 
     public ClassBoundary<?>[] getConstructorTypes() {
-        List<ClassBoundary<?>> typeList = new ArrayList<ClassBoundary<?>>();
+        List<ClassBoundary> typeList = new ArrayList<ClassBoundary>();
 
         for (ClassInstance classInstance : classInstances) {
             typeList.add(classInstance.getClazz());
         }
 
-        return (ClassBoundary<?>[]) createArray(typeList, ClassBoundary.class);
+        return createArray(typeList, ClassBoundary.class);
     }
 
     public Object[] getConstructorArguments() {
