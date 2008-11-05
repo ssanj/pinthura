@@ -13,9 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.pinthura.util;
+package com.googlecode.pinthura.example.traverser.collection;
 
-public interface CreationListener<T> {
+import com.googlecode.pinthura.example.traverser.collection.old.Summary;
+import com.googlecode.pinthura.example.traverser.collection.old.SummaryImpl;
+import com.googlecode.pinthura.factory.Implementation;
 
-    void instanceCreated(T instance);
+public interface SummaryFactory {
+
+    @Implementation(SummaryImpl.class)
+    Summary create(final String banner);
 }

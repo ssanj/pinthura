@@ -13,12 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.pinthura.factory.instantiator.injected;
+package com.googlecode.pinthura.util;
 
-import com.googlecode.pinthura.factory.Factory;
-import com.googlecode.pinthura.factory.instantiator.ClassInstance;
+public final class CreationBrokerException extends RuntimeException {
 
-public interface ResolvedFactorySorter {
+    private static final long serialVersionUID = 3349805618759215763L;
 
-    void sort(Factory[] factories, ClassInstance[] classInstances);
+    public CreationBrokerException(final String message) {
+        super(message);
+    }
 }

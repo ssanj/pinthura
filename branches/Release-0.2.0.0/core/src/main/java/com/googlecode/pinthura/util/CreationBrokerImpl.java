@@ -20,21 +20,19 @@ import java.util.Map;
 
 public final class CreationBrokerImpl implements CreationBroker {
 
-    private final Map<Class<?>, CreationListener> listeners = new HashMap<Class<?>, CreationListener>();
+    private final Map<Class<?>, Object> registry = new HashMap<Class<?>, Object>();
 
-    public  <T> void addCreationListener(final Class<T> clazzOfInterest, final CreationListener<T> creationListener) {
-        listeners.put(clazzOfInterest, creationListener);
+    @SuppressWarnings({ "unchecked" })
+    public <T> void setInstance(final Class<T> clazz, final T instance) {
+        registry.put(clazz, instance);
     }
 
     @SuppressWarnings({ "unchecked" })
-    public <T> void notifyInstanceCreated(final T instance) {
-        Map<Class<?>, CreationListener> listenerCopy = new HashMap<Class<?>, CreationListener>(listeners);
-
-        for (Class<?> clazz : listenerCopy.keySet()) {
-            if (clazz.isAssignableFrom(instance.getClass())) {
-                CreationListener<T> listener = listenerCopy.get(clazz);
-                listener.instanceCreated(instance);
-            }
+    public <T> T getInstanceFor(final Class<T> clazz) {
+        if (registry.containsKey(clazz)) {
+            return (T) registry.get(clazz);
         }
+
+        throw new CreationBrokerException("Could not find instance for " +  clazz);
     }
 }

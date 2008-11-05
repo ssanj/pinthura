@@ -17,7 +17,7 @@ package com.googlecode.pinthura.util;
 
 public interface CreationBroker {
 
-    <T> void addCreationListener(Class<T> clazzOfInterest, CreationListener<T> creationListener);
+    <T> void setInstance(Class<T> clazz, T instance);
 
-    <T> void notifyInstanceCreated(T instance);
+    <T> T getInstanceFor(Class<T> clazz) throws CreationBrokerException;
 }

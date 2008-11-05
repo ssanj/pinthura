@@ -21,13 +21,14 @@ import com.googlecode.pinthura.util.CreationBroker;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
 
+//TODO: Cache factory instances.
 public final class FactoryCreatorImpl implements FactoryCreator {
 
     private final InvocationHandler invocationHandler;
 
     public FactoryCreatorImpl(final InvocationHandler invocationHandler, final CreationBroker creationBroker) {
         this.invocationHandler = invocationHandler;
-        creationBroker.notifyInstanceCreated(this);
+        creationBroker.setInstance(FactoryCreator.class, this);
     }
 
     public FactoryCreatorImpl(final CreationBroker creationBroker) {

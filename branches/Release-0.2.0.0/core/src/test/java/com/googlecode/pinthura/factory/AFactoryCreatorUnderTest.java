@@ -52,7 +52,7 @@ public final class AFactoryCreatorUnderTest {
     }
 
     private <T> void expectCreateFactory(final Class<T> factoryClass) {
-        mockCreationBroker.notifyInstanceCreated(EasyMock.isA(FactoryCreatorImpl.class));
+        mockCreationBroker.setInstance(EasyMock.eq(FactoryCreator.class), EasyMock.isA(FactoryCreatorImpl.class));
         mockControl.replay();
 
         FactoryCreator fc = new FactoryCreatorImpl(mockInvocationHandler, mockCreationBroker);

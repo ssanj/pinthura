@@ -19,16 +19,14 @@ import com.googlecode.pinthura.data.Shape;
 import com.googlecode.pinthura.data.SquareImpl;
 import com.googlecode.pinthura.data.UrlBoundary;
 import com.googlecode.pinthura.data.UrlBoundaryImpl;
-import org.easymock.EasyMock;
-import org.easymock.IMocksControl;
+import static junit.framework.Assert.fail;
+import static org.hamcrest.core.IsEqual.equalTo;
+import static org.junit.Assert.assertThat;
 import org.junit.Before;
 import org.junit.Test;
 
 public final class ACreationBrokerUnderTest {
 
-    private static final String STRING_INSTANCE = "String Instance";
-
-    private final IMocksControl mockControl = EasyMock.createControl();
     private CreationBroker creationBroker;
 
     @Before
@@ -37,40 +35,28 @@ public final class ACreationBrokerUnderTest {
     }
 
     @Test
-    public void shouldNotifyForACreationType() {
-        expectNotification(Shape.class, new SquareImpl(1));
+    public void shouldStoreAndRetrieveAType() {
+        expectInstance(Shape.class, new SquareImpl(1));
     }
 
     @Test
-    public void shouldNotifyForAnotherCreationType() {
-        expectNotification(UrlBoundary.class, new UrlBoundaryImpl());
+    public void shouldStoreAndRetrieveAnotherType() {
+        expectInstance(UrlBoundary.class, new UrlBoundaryImpl());
     }
 
-    @SuppressWarnings({ "unchecked" })
     @Test
-    public void shouldNotifyMultipleListenersRegisteredForAssignableTypes() {
-        CreationListener mockCreationListener1 = mockControl.createMock(CreationListener.class);
-        CreationListener mockCreationListener2 = mockControl.createMock(CreationListener.class);
-        mockCreationListener1.instanceCreated(STRING_INSTANCE);
-        mockCreationListener2.instanceCreated(STRING_INSTANCE);
-        mockControl.replay();
-
-        creationBroker.addCreationListener(String.class, mockCreationListener1);
-        creationBroker.addCreationListener(Object.class, mockCreationListener2);
-        creationBroker.notifyInstanceCreated(STRING_INSTANCE);
-
-        mockControl.verify();
+    public void shouldThrowAnExceptionForWhenRetrievingAnUnstoredType() {
+        try {
+            creationBroker.getInstanceFor(String.class);
+            fail();
+        } catch (CreationBrokerException e) {
+             assertThat(e.getMessage(), equalTo("Could not find instance for class java.lang.String"));
+        }
     }
 
     @SuppressWarnings({ "unchecked" })
-    private void expectNotification(final Class<?> clazz, final Object instance) {
-        CreationListener mockCreationListener = mockControl.createMock(CreationListener.class);
-        mockCreationListener.instanceCreated(instance);
-        mockControl.replay();
-
-        creationBroker.addCreationListener(clazz, mockCreationListener);
-        creationBroker.notifyInstanceCreated(instance);
-
-        mockControl.verify();
+    private <T> void expectInstance(final Class<T> clazz, final T instance) {
+        creationBroker.setInstance(clazz, instance);
+        assertThat(creationBroker.getInstanceFor(clazz), equalTo(instance));
     }
 }

@@ -37,7 +37,7 @@ public final class ResolvedFactorySorterImpl implements ResolvedFactorySorter {
 
     public ResolvedFactorySorterImpl(final ClassInstanceFactory classInstanceFactory, final CreationBroker creationBroker) {
         this.classInstanceFactory = classInstanceFactory;
-        creationBroker.addCreationListener(FactoryCreator.class, this);
+        factoryCreator = creationBroker.getInstanceFor(FactoryCreator.class);
     }
 
     public void sort(final Factory[] factories, final ClassInstance[] classInstances) {
@@ -45,9 +45,5 @@ public final class ResolvedFactorySorterImpl implements ResolvedFactorySorter {
             classInstances[factory.index()] = classInstanceFactory.createClassInstance(factory.factoryClass(),
                     factoryCreator.create(factory.factoryClass()));
         }
-    }
-
-    public void instanceCreated(final FactoryCreator factoryCreator) {
-        this.factoryCreator = factoryCreator;
     }
 }
