@@ -17,8 +17,8 @@ package com.googlecode.pinthura.example.traverser.collection;
 
 public final class ConfigSummaryHandler extends SummaryHandler {
 
-    public ConfigSummaryHandler(final String banner) {
-        super(banner);
+    public ConfigSummaryHandler(final String banner, final SummaryFactory summaryFactory) {
+        super(banner, summaryFactory);
     }
 
     public void handle(final String file) {

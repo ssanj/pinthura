@@ -16,16 +16,14 @@
 package com.googlecode.pinthura.example.traverser.collection;
 
 import com.googlecode.pinthura.example.traverser.collection.old.Summary;
-import com.googlecode.pinthura.example.traverser.collection.old.SummaryImpl;
 import com.googlecode.pinthura.traverser.collection.CollectionElementHandler;
 
 public abstract class SummaryHandler implements CollectionElementHandler<String, Summary> {
 
     private final Summary summary;
 
-    public SummaryHandler(final String banner) {
-        //TODO: Pass in a SummaryFactory.
-        summary = new SummaryImpl(banner);
+    public SummaryHandler(final String banner, final SummaryFactory summaryFactory) {
+        summary = summaryFactory.create(banner);
     }
 
     public final Summary getResult() {

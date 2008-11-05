@@ -21,7 +21,6 @@ import com.googlecode.pinthura.factory.instantiator.ClassInstance;
 import com.googlecode.pinthura.factory.instantiator.ClassInstanceFactory;
 import com.googlecode.pinthura.util.Arrayz;
 import com.googlecode.pinthura.util.CreationBroker;
-import com.googlecode.pinthura.util.CreationListener;
 import org.easymock.EasyMock;
 import org.easymock.IMocksControl;
 import static org.hamcrest.core.IsEqual.equalTo;
@@ -71,13 +70,12 @@ public final class ResolvedFactorySorterTestBehaviourHandler {
 
     @SuppressWarnings({ "unchecked" })
     public void replay() {
-        mockCreationBroker.addCreationListener(EasyMock.eq(FactoryCreator.class), EasyMock.isA(CreationListener.class));
+        EasyMock.expect(mockCreationBroker.getInstanceFor(FactoryCreator.class)).andReturn(mockFactoryCreator);
         mockControl.replay();
     }
 
     public void sort(final ClassInstance[] classInstances) {
         ResolvedFactorySorter sorter = new ResolvedFactorySorterImpl(mockClassInstanceFactory, mockCreationBroker);
-        sorter.instanceCreated(mockFactoryCreator);
         sorter.sort(Arrayz.createArray(factories, Factory.class), classInstances);
     }
 

@@ -53,12 +53,12 @@ public final class InstanceCreatorFilterBuilder {
             strategyList.add(new AnnotationInstantiatorBuilder().build());
         }
 
-        if (simpleInstantiator) {
-            strategyList.add(new SimpleInstantiatorBuilder().build());
-        }
-
         if (dynamicFactoryInstantiator) {
             strategyList.add(new DynamicFactoryInstantiatorBuilder(creationBroker).build());
+        }
+
+        if (simpleInstantiator) {
+            strategyList.add(new SimpleInstantiatorBuilder().build());
         }
 
         return strategyList;

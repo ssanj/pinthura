@@ -21,8 +21,8 @@ public final class DocumentationSummaryHandler extends SummaryHandler {
 
     private final Map<String, String> docMap;
 
-    public DocumentationSummaryHandler(final String banner, final Map<String, String> docMap) {
-        super(banner);
+    public DocumentationSummaryHandler(final String banner, final Map<String, String> docMap, final SummaryFactory summaryFactory) {
+        super(banner, summaryFactory);
         this.docMap = docMap;
     }
 
