@@ -24,7 +24,13 @@ import com.googlecode.pinthura.util.CreationBroker;
 
 public final class InstanceCreatorBuilder {
 
-    public InstanceCreator build(final CreationBroker creationBroker) {
+    private final CreationBroker creationBroker;
+
+    public InstanceCreatorBuilder(final CreationBroker creationBroker) {
+        this.creationBroker = creationBroker;
+    }
+
+    public InstanceCreator build() {
         FilterLink<MethodParam, Object> filterChain =
                 new FilterChainImpl<MethodParam, Object>(
                     new InstanceCreatorFilterBuilder().

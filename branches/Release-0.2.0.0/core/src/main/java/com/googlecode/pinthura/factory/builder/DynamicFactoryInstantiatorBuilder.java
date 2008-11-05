@@ -22,7 +22,13 @@ import com.googlecode.pinthura.util.CreationBroker;
 
 public final class DynamicFactoryInstantiatorBuilder {
 
-    public DynamicFactoryInstantiator build(final CreationBroker creationBroker) {
+    private final CreationBroker creationBroker;
+
+    public DynamicFactoryInstantiatorBuilder(final CreationBroker creationBroker) {
+        this.creationBroker = creationBroker;
+    }
+
+    public DynamicFactoryInstantiator build() {
         AnnotationFinderImpl finder = new AnnotationFinderImpl();
 
         return new DynamicFactoryInstantiator(new AnnotatedClassExtractorImpl(finder),

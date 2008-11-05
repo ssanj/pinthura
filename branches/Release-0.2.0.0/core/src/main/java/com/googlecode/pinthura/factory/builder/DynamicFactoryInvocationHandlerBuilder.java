@@ -28,6 +28,6 @@ public final class DynamicFactoryInvocationHandlerBuilder {
     }
 
     public DynamicFactoryInvocationHandler build() {
-        return new DynamicFactoryInvocationHandler(new InstanceCreatorBuilder().build(creationBroker), new MethodParamFactoryImpl());
+        return new DynamicFactoryInvocationHandler(new InstanceCreatorBuilder(creationBroker).build(), new MethodParamFactoryImpl());
     }
 }
