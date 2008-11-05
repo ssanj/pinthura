@@ -17,12 +17,13 @@ package com.googlecode.pinthura.example.traverser.collection;
 
 import com.googlecode.pinthura.bean.PathEvaluatorImpl;
 import com.googlecode.pinthura.bean.PropertyFinderImpl;
-import com.googlecode.pinthura.factory.FactoryCreator;
-import com.googlecode.pinthura.factory.builder.FactoryCreatorBuilder;
 import com.googlecode.pinthura.example.traverser.collection.old.DirectoryListerImpl;
 import com.googlecode.pinthura.example.traverser.collection.old.LineFileReaderImpl;
+import com.googlecode.pinthura.factory.FactoryCreator;
+import com.googlecode.pinthura.factory.builder.FactoryCreatorBuilder;
 import com.googlecode.pinthura.traverser.collection.CollectionTraverserImpl;
 import com.googlecode.pinthura.traverser.collection.PathResolverImpl;
+import com.googlecode.pinthura.util.CreationBrokerImpl;
 
 public final class FileSummarizerRunner {
 
@@ -33,7 +34,7 @@ public final class FileSummarizerRunner {
     public static void main(final String[] args) {
         CollectionTraverserImpl traverser = new CollectionTraverserImpl(new PathResolverImpl(new PathEvaluatorImpl(
                 new PropertyFinderImpl())));
-        FactoryCreator factoryCreator = new FactoryCreatorBuilder().build();
+        FactoryCreator factoryCreator = new FactoryCreatorBuilder(new CreationBrokerImpl()).build();
         FileSummarizer fileSummarizer = new FileSummarizer(new DirectoryListerImpl(), traverser,
                 factoryCreator.create(SummarizerFactory.class));
         fileSummarizer.summarizeDictory("blue", new LineFileReaderImpl());

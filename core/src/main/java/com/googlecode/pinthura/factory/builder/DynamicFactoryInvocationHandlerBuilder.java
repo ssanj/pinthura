@@ -17,10 +17,17 @@ package com.googlecode.pinthura.factory.builder;
 
 import com.googlecode.pinthura.factory.DynamicFactoryInvocationHandler;
 import com.googlecode.pinthura.factory.MethodParamFactoryImpl;
+import com.googlecode.pinthura.util.CreationBroker;
 
 public final class DynamicFactoryInvocationHandlerBuilder {
 
+    private final CreationBroker creationBroker;
+
+    public DynamicFactoryInvocationHandlerBuilder(final CreationBroker creationBroker) {
+        this.creationBroker = creationBroker;
+    }
+
     public DynamicFactoryInvocationHandler build() {
-        return new DynamicFactoryInvocationHandler(new InstanceCreatorBuilder().build(), new MethodParamFactoryImpl());
+        return new DynamicFactoryInvocationHandler(new InstanceCreatorBuilder().build(creationBroker), new MethodParamFactoryImpl());
     }
 }
