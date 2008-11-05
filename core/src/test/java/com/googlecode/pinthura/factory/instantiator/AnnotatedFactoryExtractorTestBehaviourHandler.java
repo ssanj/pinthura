@@ -84,6 +84,6 @@ public final class AnnotatedFactoryExtractorTestBehaviourHandler {
     }
 
     private Factory[] asArray() {
-        return Arrayz.createArray(factories, Factory.class);
+        return Arrayz.fromCollection(factories, Factory.class);
     }
 }

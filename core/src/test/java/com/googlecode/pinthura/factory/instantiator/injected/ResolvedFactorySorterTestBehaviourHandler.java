@@ -76,7 +76,7 @@ public final class ResolvedFactorySorterTestBehaviourHandler {
 
     public void sort(final ClassInstance[] classInstances) {
         ResolvedFactorySorter sorter = new ResolvedFactorySorterImpl(mockClassInstanceFactory, mockCreationBroker);
-        sorter.sort(Arrayz.createArray(factories, Factory.class), classInstances);
+        sorter.sort(Arrayz.fromCollection(factories, Factory.class), classInstances);
     }
 
     public void expectFirstClassInstanceIsEqual(final ClassInstance classInstance) {
