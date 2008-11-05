@@ -58,7 +58,7 @@ public final class InstanceCreatorFilterBuilder {
         }
 
         if (dynamicFactoryInstantiator) {
-            strategyList.add(new DynamicFactoryInstantiatorBuilder().build(creationBroker));
+            strategyList.add(new DynamicFactoryInstantiatorBuilder(creationBroker).build());
         }
 
         return strategyList;
