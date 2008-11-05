@@ -18,6 +18,7 @@ package com.googlecode.pinthura.factory.builder;
 import com.googlecode.pinthura.factory.instantiator.InstantiationStrategy;
 import com.googlecode.pinthura.factory.instantiator.builder.AnnotationInstantiatorBuilder;
 import com.googlecode.pinthura.factory.instantiator.builder.SimpleInstantiatorBuilder;
+import com.googlecode.pinthura.util.CreationBroker;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +27,8 @@ public final class InstanceCreatorFilterBuilder {
 
     private boolean annotationInstantiator;
     private boolean simpleInstantiator;
+    private boolean dynamicFactoryInstantiator;
+    private CreationBroker creationBroker;
 
     public InstanceCreatorFilterBuilder havingAnnotationInstantiator() {
         annotationInstantiator = true;
@@ -34,6 +37,12 @@ public final class InstanceCreatorFilterBuilder {
 
     public InstanceCreatorFilterBuilder havingSimpleInstantiator() {
         simpleInstantiator = true;
+        return this;
+    }
+
+    public InstanceCreatorFilterBuilder havingDynamicaFactoryInstantiator(final CreationBroker creationBroker) {
+        this.creationBroker = creationBroker;
+        dynamicFactoryInstantiator = true;
         return this;
     }
 
@@ -46,6 +55,10 @@ public final class InstanceCreatorFilterBuilder {
 
         if (simpleInstantiator) {
             strategyList.add(new SimpleInstantiatorBuilder().build());
+        }
+
+        if (dynamicFactoryInstantiator) {
+            strategyList.add(new DynamicFactoryInstantiatorBuilder().build(creationBroker));
         }
 
         return strategyList;

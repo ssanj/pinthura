@@ -15,18 +15,17 @@
  */
 package com.googlecode.pinthura.factory.builder;
 
-import com.googlecode.pinthura.factory.FactoryCreator;
-import com.googlecode.pinthura.factory.FactoryCreatorImpl;
+import com.googlecode.pinthura.annotation.AnnotationFinderImpl;
+import com.googlecode.pinthura.factory.instantiator.AnnotatedClassExtractorImpl;
+import com.googlecode.pinthura.factory.instantiator.injected.DynamicFactoryInstantiator;
 import com.googlecode.pinthura.util.CreationBroker;
 
-public final class FactoryCreatorBuilder {
-    private final CreationBroker creationBroker;
+public final class DynamicFactoryInstantiatorBuilder {
 
-    public FactoryCreatorBuilder(final CreationBroker creationBroker) {
-        this.creationBroker = creationBroker;
-    }
+    public DynamicFactoryInstantiator build(final CreationBroker creationBroker) {
+        AnnotationFinderImpl finder = new AnnotationFinderImpl();
 
-    public FactoryCreator build() {
-        return new FactoryCreatorImpl(creationBroker);
+        return new DynamicFactoryInstantiator(new AnnotatedClassExtractorImpl(finder),
+                new InjectedFactoryResolverBuilder(creationBroker).build());
     }
 }

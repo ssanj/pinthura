@@ -20,15 +20,17 @@ import com.googlecode.pinthura.factory.InstanceCreatorImpl;
 import com.googlecode.pinthura.factory.MethodParam;
 import com.googlecode.pinthura.filter.FilterChainImpl;
 import com.googlecode.pinthura.filter.FilterLink;
+import com.googlecode.pinthura.util.CreationBroker;
 
 public final class InstanceCreatorBuilder {
 
-    public InstanceCreator build() {
+    public InstanceCreator build(final CreationBroker creationBroker) {
         FilterLink<MethodParam, Object> filterChain =
                 new FilterChainImpl<MethodParam, Object>(
                     new InstanceCreatorFilterBuilder().
                         havingAnnotationInstantiator().
                         havingSimpleInstantiator().
+                        havingDynamicaFactoryInstantiator(creationBroker).
                         build());
         return new InstanceCreatorImpl(filterChain);
     }

@@ -17,6 +17,8 @@ package com.googlecode.pinthura.example.factory.report;
 
 import com.googlecode.pinthura.factory.FactoryCreator;
 import com.googlecode.pinthura.factory.builder.FactoryCreatorBuilder;
+import com.googlecode.pinthura.util.CreationBroker;
+import com.googlecode.pinthura.util.CreationBrokerImpl;
 
 public final class ReportGeneratorRunner {
 
@@ -25,7 +27,8 @@ public final class ReportGeneratorRunner {
     private ReportGeneratorRunner() { }
 
     public static void main(final String[] args) {
-        FactoryCreator factoryCreator = new FactoryCreatorBuilder().build();
+        CreationBroker creationBroker = new CreationBrokerImpl();
+        FactoryCreator factoryCreator = new FactoryCreatorBuilder(creationBroker).build();
         ReportFactory reportFactory = factoryCreator.create(ReportFactory.class);
         ReportGenerator generator = new ReportGeneratorImpl(reportFactory);
         generator.generate(new InformationImpl("Tok'ra", POPULATION));

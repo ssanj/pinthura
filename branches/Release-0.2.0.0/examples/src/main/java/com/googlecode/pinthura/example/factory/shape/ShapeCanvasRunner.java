@@ -17,6 +17,7 @@ package com.googlecode.pinthura.example.factory.shape;
 
 import com.googlecode.pinthura.factory.FactoryCreator;
 import com.googlecode.pinthura.factory.builder.FactoryCreatorBuilder;
+import com.googlecode.pinthura.util.CreationBrokerImpl;
 
 public final class ShapeCanvasRunner {
 
@@ -27,7 +28,7 @@ public final class ShapeCanvasRunner {
     }
 
     public static void main(final String[] args) {
-        FactoryCreator factoryCreator = new FactoryCreatorBuilder().build();
+        FactoryCreator factoryCreator = new FactoryCreatorBuilder(new CreationBrokerImpl()).build();
         SquareFactory squareFactory = factoryCreator.create(SquareFactory.class);
 
         ShapeCanvas canvas = new ShapeCanvas(CANVAS_AREA, squareFactory);

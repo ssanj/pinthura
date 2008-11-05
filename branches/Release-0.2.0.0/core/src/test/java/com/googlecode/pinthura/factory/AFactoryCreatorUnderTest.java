@@ -15,28 +15,30 @@
  */
 package com.googlecode.pinthura.factory;
 
-import org.junit.Test;
-import org.junit.Before;
-import static org.junit.Assert.assertThat;
+import com.googlecode.pinthura.data.UrlBoundaryFactory;
+import com.googlecode.pinthura.util.CreationBroker;
+import org.easymock.EasyMock;
+import org.easymock.IMocksControl;
+import static org.hamcrest.core.IsEqual.equalTo;
 import org.hamcrest.core.IsNull;
 import org.hamcrest.core.IsSame;
-import static org.hamcrest.core.IsEqual.equalTo;
-import org.easymock.IMocksControl;
-import org.easymock.EasyMock;
+import static org.junit.Assert.assertThat;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
-
-import com.googlecode.pinthura.data.UrlBoundaryFactory;
 
 public final class AFactoryCreatorUnderTest {
 
     private final IMocksControl mockControl = EasyMock.createControl();
     private InvocationHandler mockInvocationHandler;
+    private CreationBroker mockCreationBroker;
 
     @Before
     public void setup() {
         mockInvocationHandler = mockControl.createMock(InvocationHandler.class);
+        mockCreationBroker = mockControl.createMock(CreationBroker.class);
     }
 
     @Test
@@ -50,9 +52,10 @@ public final class AFactoryCreatorUnderTest {
     }
 
     private <T> void expectCreateFactory(final Class<T> factoryClass) {
+        mockCreationBroker.notifyInstanceCreated(EasyMock.isA(FactoryCreatorImpl.class));
         mockControl.replay();
 
-        FactoryCreator fc = new FactoryCreatorImpl(mockInvocationHandler);
+        FactoryCreator fc = new FactoryCreatorImpl(mockInvocationHandler, mockCreationBroker);
         T proxy = fc.create(factoryClass);
 
         assertThat(proxy, IsNull.notNullValue());

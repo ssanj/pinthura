@@ -33,7 +33,7 @@ public final class ACreationBrokerUnderTest {
 
     @Before
     public void setup() {
-        creationBroker = new CreatioBrokerImpl();
+        creationBroker = new CreationBrokerImpl();
     }
 
     @Test
