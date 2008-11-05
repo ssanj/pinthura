@@ -60,8 +60,8 @@ public final class ADynamicFactoryInstantiatorUnderTest {
         EasyMock.expect(mockAnnotatedClassExtractor.extract(mockMethodParam)).andReturn(mockImplementation);
         EasyMock.expect(mockInjectedFactoryResolver.resolve(mockMethodParam)).andReturn(mockInjectedFactoryValues);
 
-        ClassBoundary[] constructorTypes = Arrayz.createArray(mockConstructorArg);
-        Object[] arguments = Arrayz.createArray(mockUrlBoundary);
+        ClassBoundary[] constructorTypes = Arrayz.fromObjects(mockConstructorArg);
+        Object[] arguments = Arrayz.fromObjects(mockUrlBoundary);
         EasyMock.expect(mockInjectedFactoryValues.getConstructorTypes()).andReturn(constructorTypes);
         EasyMock.expect(mockInjectedFactoryValues.getConstructorArguments()).andReturn(arguments);
         ConstructorBoundary mockConstructorBoundary = mockControl.createMock(ConstructorBoundary.class);

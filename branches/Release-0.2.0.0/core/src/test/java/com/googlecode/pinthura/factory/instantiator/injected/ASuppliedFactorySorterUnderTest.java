@@ -58,8 +58,8 @@ public final class ASuppliedFactorySorterUnderTest {
         classInstances[0] = mockInstance1;
         classInstances[2] = mockInstance2;
         ClassBoundary mockClassBoundary = mockControl.createMock(ClassBoundary.class);
-        EasyMock.expect(mockMethodParam.getParameterTypes()).andReturn(Arrayz.createArray(mockClassBoundary));
-        EasyMock.expect(mockMethodParam.getArguments()).andReturn(Arrayz.createArray(STRING_INSTANCE));
+        EasyMock.expect(mockMethodParam.getParameterTypes()).andReturn(Arrayz.fromObjects(mockClassBoundary));
+        EasyMock.expect(mockMethodParam.getArguments()).andReturn(Arrayz.fromObjects(STRING_INSTANCE));
         ClassInstance mockClassInstance = mockControl.createMock(ClassInstance.class);
         EasyMock.expect(mockClassInstanceFactory.createClassInstance(mockClassBoundary, STRING_INSTANCE)).andReturn(mockClassInstance);
         mockControl.replay();
@@ -85,12 +85,12 @@ public final class ASuppliedFactorySorterUnderTest {
         ClassBoundary mockClassBoundary2 = mockControl.createMock(ClassBoundary.class);
         ClassBoundary mockClassBoundary3 = mockControl.createMock(ClassBoundary.class);
         EasyMock.expect(mockMethodParam.getParameterTypes()).
-                andReturn(Arrayz.createArray(mockClassBoundary1, mockClassBoundary2, mockClassBoundary3));
+                andReturn(Arrayz.fromObjects(mockClassBoundary1, mockClassBoundary2, mockClassBoundary3));
 
         Person mockPerson = mockControl.createMock(Person.class);
         Shape mockShape = mockControl.createMock(Shape.class);
         Square mockSquare = mockControl.createMock(Square.class);
-        EasyMock.expect(mockMethodParam.getArguments()).andReturn(Arrayz.createArray(mockPerson, mockShape, mockSquare));
+        EasyMock.expect(mockMethodParam.getArguments()).andReturn(Arrayz.fromObjects(mockPerson, mockShape, mockSquare));
 
         ClassInstance mockClassInstance1 = mockControl.createMock(ClassInstance.class);
         ClassInstance mockClassInstance2 = mockControl.createMock(ClassInstance.class);

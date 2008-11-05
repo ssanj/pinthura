@@ -18,21 +18,18 @@ package com.googlecode.pinthura.util;
 import java.lang.reflect.Array;
 import java.util.Collection;
 
-//TODO: rename
 public final class Arrayz {
 
     private Arrayz() {
         //Utility class.
     }
 
-    //fromObjects
-    public static <T> T[] createArray(final T... objects) {
+    public static <T> T[] fromObjects(final T... objects) {
         return objects;
     }
 
-    //fromCollection
     @SuppressWarnings({ "unchecked" })
-    public static <T> T[] createArray(final Collection<T> collection, final Class<T> clazz) {
+    public static <T> T[] fromCollection(final Collection<T> collection, final Class<T> clazz) {
         return collection.toArray((T[]) Array.newInstance(clazz, collection.size()));
     }
 }

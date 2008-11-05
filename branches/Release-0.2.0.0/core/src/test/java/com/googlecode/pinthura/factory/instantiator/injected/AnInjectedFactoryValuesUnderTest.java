@@ -39,7 +39,7 @@ public final class AnInjectedFactoryValuesUnderTest {
         mockClassInstance1 = mockControl.createMock(ClassInstance.class);
         mockClassInstance2 = mockControl.createMock(ClassInstance.class);
 
-        classInstances = Arrayz.createArray(mockClassInstance1,  mockClassInstance2);
+        classInstances = Arrayz.fromObjects(mockClassInstance1,  mockClassInstance2);
     }
 
     @SuppressWarnings({ "unchecked" })
@@ -53,7 +53,7 @@ public final class AnInjectedFactoryValuesUnderTest {
 
         InjectedFactoryValues values = new InjectedFactoryValuesImpl(classInstances);
         ClassBoundary<?>[] result = values.getConstructorTypes();
-        assertThat(result, equalTo(Arrayz.createArray(mockClassBoundary1, mockClassBoundary2)));
+        assertThat(result, equalTo(Arrayz.fromObjects(mockClassBoundary1, mockClassBoundary2)));
 
         mockControl.verify();
     }
@@ -68,7 +68,7 @@ public final class AnInjectedFactoryValuesUnderTest {
 
         InjectedFactoryValues values = new InjectedFactoryValuesImpl(classInstances);
         Object[] result = values.getConstructorArguments();
-        assertThat(result, equalTo(Arrayz.createArray(mockUrlBoundary, mockShape)));
+        assertThat(result, equalTo(Arrayz.fromObjects(mockUrlBoundary, mockShape)));
 
         mockControl.verify();
     }

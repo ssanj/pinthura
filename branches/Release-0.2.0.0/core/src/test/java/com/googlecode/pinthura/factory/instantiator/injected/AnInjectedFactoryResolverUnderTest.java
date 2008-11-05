@@ -21,7 +21,7 @@ import com.googlecode.pinthura.factory.boundary.ClassBoundary;
 import com.googlecode.pinthura.factory.instantiator.AnnotatedFactoryExtractor;
 import com.googlecode.pinthura.factory.instantiator.ClassInstance;
 import com.googlecode.pinthura.factory.instantiator.ClassInstanceFactory;
-import static com.googlecode.pinthura.util.Arrayz.createArray;
+import com.googlecode.pinthura.util.Arrayz;
 import org.easymock.EasyMock;
 import org.easymock.IMocksControl;
 import static org.hamcrest.core.IsSame.sameInstance;
@@ -59,8 +59,8 @@ public final class AnInjectedFactoryResolverUnderTest {
     @Test
     public void shouldResolveAGivenMethodParam() {
         Factory mockFactory = mockControl.createMock(Factory.class);
-        ClassBoundary[] supplied = createArray(mockControl.createMock(ClassBoundary.class));
-        resolveMethodParam(createArray(mockFactory), supplied, NUMBER_OF_PARAMETERS_1);
+        ClassBoundary[] supplied = Arrayz.fromObjects(mockControl.createMock(ClassBoundary.class));
+        resolveMethodParam(Arrayz.fromObjects(mockFactory), supplied, NUMBER_OF_PARAMETERS_1);
     }
 
     @Test
@@ -70,8 +70,8 @@ public final class AnInjectedFactoryResolverUnderTest {
         Factory mockFactory3 = mockControl.createMock(Factory.class);
         ClassBoundary mockClassBoundary1 = mockControl.createMock(ClassBoundary.class);
         ClassBoundary mockClassBoundary2 = mockControl.createMock(ClassBoundary.class);
-        ClassBoundary[] supplied = createArray(mockClassBoundary1, mockClassBoundary2);
-        resolveMethodParam(createArray(mockFactory1,  mockFactory2, mockFactory3), supplied, NUMBER_OF_PARAMETERS_2);
+        ClassBoundary[] supplied = Arrayz.fromObjects(mockClassBoundary1, mockClassBoundary2);
+        resolveMethodParam(Arrayz.fromObjects(mockFactory1,  mockFactory2, mockFactory3), supplied, NUMBER_OF_PARAMETERS_2);
     }
 
     private void resolveMethodParam(final Factory[] factories, final ClassBoundary[] supplied, final int numberOfParameters) {
