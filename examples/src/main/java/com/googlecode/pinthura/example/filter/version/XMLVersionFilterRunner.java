@@ -51,7 +51,7 @@ public final class XMLVersionFilterRunner {
         try {
             chainOfResp.filter(new XMLInformationImpl(new UnknownVersion()));
         } catch (MatchNotFoundException e) {
-            throw new UnknownXMLVersionException(e);
+            System.out.println("Match not found for UnknownVersion");
         }
     }
 }
