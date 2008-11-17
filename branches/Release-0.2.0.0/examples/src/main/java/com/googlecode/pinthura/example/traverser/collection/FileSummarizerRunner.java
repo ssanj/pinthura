@@ -37,6 +37,6 @@ public final class FileSummarizerRunner {
         FactoryCreator factoryCreator = new FactoryCreatorBuilder(new CreationBrokerImpl()).build();
         FileSummarizer fileSummarizer = new FileSummarizer(new DirectoryListerImpl(), traverser,
                 factoryCreator.create(SummarizerFactory.class));
-        fileSummarizer.summarizeDictory("blue", new LineFileReaderImpl());
+        fileSummarizer.summarizeDirectory("blue", new LineFileReaderImpl());
     }
 }

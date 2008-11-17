@@ -35,7 +35,7 @@ public final class FileSummarizer {
         this.lister = lister;
     }
 
-    public List<Summary> summarizeDictory(final String directory) {
+    public List<Summary> summarizeDirectory(final String directory) {
         List<String> files = lister.list(directory);
         processFiles(files);
 
@@ -51,7 +51,6 @@ public final class FileSummarizer {
         }
         summary.close();
         return summary;
-
     }
 
     private void processFiles(final List<String> files) {

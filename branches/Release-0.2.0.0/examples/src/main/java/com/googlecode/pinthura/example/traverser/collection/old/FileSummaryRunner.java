@@ -23,6 +23,6 @@ public final class FileSummaryRunner {
 
     public static void main(final String[] args) {
         FileSummarizer fileSummarizer = new FileSummarizer(new LineFileReaderImpl(), new DirectoryListerImpl());
-        fileSummarizer.summarizeDictory("blah");
+        fileSummarizer.summarizeDirectory("blah");
     }
 }
