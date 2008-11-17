@@ -24,4 +24,7 @@ public interface ObjectCacheFactory {
     @Implementation(SingleInstanceCache.class)
     @InjectedFactory(@Factory(factoryClass = ObjectCacheEventFactory.class, index=0))
     ObjectCache create();
+
+    @Implementation(SingleInstanceCache.class)
+    ObjectCache create(ObjectCacheEventFactory objectCacheEventFactory);
 }
