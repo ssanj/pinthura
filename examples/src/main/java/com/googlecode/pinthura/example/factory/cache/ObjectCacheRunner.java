@@ -24,10 +24,27 @@ import java.util.Arrays;
 public final class ObjectCacheRunner {
 
     public static void main(String[] args) {
+        System.out.println("Without Dynamic Factories");
+        exerciseCache(withDynamicFactories());
+        System.out.println();
+        System.out.println("With Dynamic Factories");
+        exerciseCache(withoutDynamicFactories());
+    }
+
+    private static ObjectCache withoutDynamicFactories() {
         FactoryCreator factoryCreator = new FactoryCreatorBuilder(new CreationBrokerImpl()).build();
         ObjectCacheFactory cacheFactory = factoryCreator.create(ObjectCacheFactory.class);
+        ObjectCacheEventFactory eventFactory = factoryCreator.create(ObjectCacheEventFactory.class);
+        return cacheFactory.create(eventFactory);
+    }
 
-        ObjectCache cache = cacheFactory.create();
+    private static ObjectCache withDynamicFactories() {
+        FactoryCreator factoryCreator = new FactoryCreatorBuilder(new CreationBrokerImpl()).build();
+        ObjectCacheFactory cacheFactory = factoryCreator.create(ObjectCacheFactory.class);
+        return cacheFactory.create();
+    }
+
+    private static void exerciseCache(final ObjectCache cache) {
         cache.addListener(new ObjectCacheListener() {
             public void instanceCreated(final ObjectCacheEvent event) {
                 System.out.println("The following instance was cached: " + event.getInstance());
