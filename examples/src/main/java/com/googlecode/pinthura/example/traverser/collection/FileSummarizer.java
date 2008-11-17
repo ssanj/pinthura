@@ -38,7 +38,7 @@ public final class FileSummarizer {
         this.summarizerFactory = summarizerFactory;
     }
 
-    public List<Summary> summarizeDictory(final String directory, final LineFileReader lineFileReader) {
+    public List<Summary> summarizeDirectory(final String directory, final LineFileReader lineFileReader) {
         List<String> files = lister.list(directory);
         ProcessingResult result = traverser.forEach(files, summarizerFactory.createFileTraverser(lineFileReader));
 
