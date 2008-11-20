@@ -27,6 +27,7 @@ import java.util.Map;
 public interface SummarizerFactory {
 
     @Implementation(FileTraversalHandler.class)
+    @InjectedFactory({ @Factory(factoryClass = ProcessingResultFactory.class, index = 1) })
     CollectionElementHandler<String, ProcessingResult> createFileTraverser(final LineFileReader lineFileReader);
 
     @Implementation(ConfigSummaryHandler.class)
