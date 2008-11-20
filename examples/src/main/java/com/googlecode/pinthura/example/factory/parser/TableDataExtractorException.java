@@ -13,18 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.pinthura.example.factory.cache;
+package com.googlecode.pinthura.example.factory.parser;
 
-import com.googlecode.pinthura.factory.Implementation;
-import com.googlecode.pinthura.factory.InjectedFactory;
-import com.googlecode.pinthura.factory.Factory;
+public final class TableDataExtractorException extends RuntimeException {
 
-public interface ObjectCacheFactory {
+    private static final long serialVersionUID = 7365458838488023692L;
 
-    @Implementation(SingleInstanceCache.class)
-    @InjectedFactory(@Factory(factoryClass = ObjectCacheEventFactory.class, index = 0))
-    ObjectCache create();
-
-    @Implementation(SingleInstanceCache.class)
-    ObjectCache create(ObjectCacheEventFactory objectCacheEventFactory);
+    public TableDataExtractorException(final String message, final Throwable cause) {
+        super(message, cause);
+    }
 }

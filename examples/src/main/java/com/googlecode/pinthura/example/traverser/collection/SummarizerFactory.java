@@ -30,10 +30,10 @@ public interface SummarizerFactory {
     CollectionElementHandler<String, ProcessingResult> createFileTraverser(final LineFileReader lineFileReader);
 
     @Implementation(ConfigSummaryHandler.class)
-    @InjectedFactory( {@Factory(factoryClass = SummaryFactory.class, index = 1)} )
+    @InjectedFactory({ @Factory(factoryClass = SummaryFactory.class, index = 1) })
     CollectionElementHandler<String, Summary> createSummary(String banner);
 
     @Implementation(DocumentationSummaryHandler.class)
-    @InjectedFactory( {@Factory(factoryClass = SummaryFactory.class, index = 2)} )
+    @InjectedFactory({ @Factory(factoryClass = SummaryFactory.class, index = 2) })
     CollectionElementHandler<String, Summary> createSummary(final String banner, final Map<String, String> docMap);
 }

@@ -13,18 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.pinthura.example.factory.cache;
+package com.googlecode.pinthura.example.factory.parser.factory;
 
-import com.googlecode.pinthura.factory.Implementation;
-import com.googlecode.pinthura.factory.InjectedFactory;
-import com.googlecode.pinthura.factory.Factory;
+import com.googlecode.pinthura.example.factory.parser.StringTrimmer;
 
-public interface ObjectCacheFactory {
+public interface StringTrimmerFactory {
 
-    @Implementation(SingleInstanceCache.class)
-    @InjectedFactory(@Factory(factoryClass = ObjectCacheEventFactory.class, index = 0))
-    ObjectCache create();
-
-    @Implementation(SingleInstanceCache.class)
-    ObjectCache create(ObjectCacheEventFactory objectCacheEventFactory);
+    StringTrimmer createTrimmer();
 }

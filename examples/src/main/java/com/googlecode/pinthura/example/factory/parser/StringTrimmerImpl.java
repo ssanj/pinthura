@@ -13,18 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.pinthura.example.factory.cache;
+package com.googlecode.pinthura.example.factory.parser;
 
-import com.googlecode.pinthura.factory.Implementation;
-import com.googlecode.pinthura.factory.InjectedFactory;
-import com.googlecode.pinthura.factory.Factory;
+import java.util.ArrayList;
+import java.util.List;
 
-public interface ObjectCacheFactory {
+public final class StringTrimmerImpl implements StringTrimmer {
 
-    @Implementation(SingleInstanceCache.class)
-    @InjectedFactory(@Factory(factoryClass = ObjectCacheEventFactory.class, index = 0))
-    ObjectCache create();
+    public String[] trim(final String[] array) {
+        List<String> cleanedValues = new ArrayList<String>();
 
-    @Implementation(SingleInstanceCache.class)
-    ObjectCache create(ObjectCacheEventFactory objectCacheEventFactory);
+        for (String value : array) {
+            if (value.trim().length() != 0) {
+                cleanedValues.add(value.trim());
+            }
+        }
+
+        return cleanedValues.toArray(new String[cleanedValues.size()]);
+
+    }
 }

@@ -21,7 +21,6 @@ import com.googlecode.pinthura.data.Square;
 import com.googlecode.pinthura.data.SquareImpl;
 import com.googlecode.pinthura.data.WobblyCircle;
 import com.googlecode.pinthura.factory.builder.FactoryCreatorBuilder;
-import com.googlecode.pinthura.util.CreationBrokerImpl;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertThat;
 import org.junit.Before;
@@ -38,7 +37,7 @@ public final class AFactoryCreatorUnderIntTest {
 
     @Before
     public void setup() {
-        creator = new FactoryCreatorBuilder(new CreationBrokerImpl()).build();
+        creator = new FactoryCreatorBuilder().build();
     }
 
     @Test

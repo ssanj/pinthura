@@ -30,6 +30,7 @@ public final class InstanceCreatorBuilder {
         this.creationBroker = creationBroker;
     }
 
+    //TODO: The order of these method calls should be important. Currently the end-result is the same no matter the order.
     public InstanceCreator build() {
         FilterLink<MethodParam, Object> filterChain =
                 new FilterChainImpl<MethodParam, Object>(
