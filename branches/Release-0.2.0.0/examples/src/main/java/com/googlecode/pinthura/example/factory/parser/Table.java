@@ -13,18 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.pinthura.example.factory.cache;
+package com.googlecode.pinthura.example.factory.parser;
 
-import com.googlecode.pinthura.factory.Implementation;
-import com.googlecode.pinthura.factory.InjectedFactory;
-import com.googlecode.pinthura.factory.Factory;
+import java.util.List;
 
-public interface ObjectCacheFactory {
+public interface Table {
+    void addColumn(String columnName, String type);
 
-    @Implementation(SingleInstanceCache.class)
-    @InjectedFactory(@Factory(factoryClass = ObjectCacheEventFactory.class, index = 0))
-    ObjectCache create();
+    String getName();
 
-    @Implementation(SingleInstanceCache.class)
-    ObjectCache create(ObjectCacheEventFactory objectCacheEventFactory);
+    List<TableColumnImpl> getColumns();
 }

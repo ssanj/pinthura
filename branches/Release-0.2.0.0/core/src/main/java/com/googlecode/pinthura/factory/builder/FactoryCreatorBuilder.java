@@ -18,15 +18,18 @@ package com.googlecode.pinthura.factory.builder;
 import com.googlecode.pinthura.factory.FactoryCreator;
 import com.googlecode.pinthura.factory.FactoryCreatorImpl;
 import com.googlecode.pinthura.util.CreationBroker;
+import com.googlecode.pinthura.util.CreationBrokerImpl;
 
 public final class FactoryCreatorBuilder {
-    private final CreationBroker creationBroker;
+    private CreationBroker creationBroker;
 
-    public FactoryCreatorBuilder(final CreationBroker creationBroker) {
+
+    public FactoryCreatorBuilder withCreationBroker(final CreationBroker creationBroker) {
         this.creationBroker = creationBroker;
+        return this;
     }
 
     public FactoryCreator build() {
-        return new FactoryCreatorImpl(creationBroker);
+        return new FactoryCreatorImpl(creationBroker == null ? new CreationBrokerImpl() : creationBroker);
     }
 }

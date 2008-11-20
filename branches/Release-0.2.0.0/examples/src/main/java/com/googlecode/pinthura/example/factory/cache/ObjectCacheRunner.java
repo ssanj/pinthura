@@ -15,15 +15,16 @@
  */
 package com.googlecode.pinthura.example.factory.cache;
 
-import com.googlecode.pinthura.factory.builder.FactoryCreatorBuilder;
 import com.googlecode.pinthura.factory.FactoryCreator;
-import com.googlecode.pinthura.util.CreationBrokerImpl;
+import com.googlecode.pinthura.factory.builder.FactoryCreatorBuilder;
 
 import java.util.Arrays;
 
 public final class ObjectCacheRunner {
 
-    public static void main(String[] args) {
+    private ObjectCacheRunner() { }
+
+    public static void main(final String[] args) {
         System.out.println("Without Dynamic Factories");
         exerciseCache(withDynamicFactories());
         System.out.println();
@@ -32,14 +33,14 @@ public final class ObjectCacheRunner {
     }
 
     private static ObjectCache withoutDynamicFactories() {
-        FactoryCreator factoryCreator = new FactoryCreatorBuilder(new CreationBrokerImpl()).build();
+        FactoryCreator factoryCreator = new FactoryCreatorBuilder().build();
         ObjectCacheFactory cacheFactory = factoryCreator.create(ObjectCacheFactory.class);
         ObjectCacheEventFactory eventFactory = factoryCreator.create(ObjectCacheEventFactory.class);
         return cacheFactory.create(eventFactory);
     }
 
     private static ObjectCache withDynamicFactories() {
-        FactoryCreator factoryCreator = new FactoryCreatorBuilder(new CreationBrokerImpl()).build();
+        FactoryCreator factoryCreator = new FactoryCreatorBuilder().build();
         ObjectCacheFactory cacheFactory = factoryCreator.create(ObjectCacheFactory.class);
         return cacheFactory.create();
     }
