@@ -28,9 +28,11 @@ public final class FileTraversalHandler implements CollectionElementHandler<Stri
     private final Map<String, String> documentationMap = new HashMap<String, String>();
     private final List<String> configFilesList = new ArrayList<String>();
     private final LineFileReader reader;
+    private final ProcessingResultFactory resultFactory;
 
-    public FileTraversalHandler(final LineFileReader reader) {
+    public FileTraversalHandler(final LineFileReader reader, final ProcessingResultFactory resultFactory) {
         this.reader = reader;
+        this.resultFactory = resultFactory;
     }
 
     public void handle(final String file) {
@@ -45,7 +47,6 @@ public final class FileTraversalHandler implements CollectionElementHandler<Stri
     }
 
     public ProcessingResult getResult() {
-        //todo: inject this in via a factory.
-        return new ProcessingResultImpl(documentationMap, configFilesList);
+        return resultFactory.create(documentationMap, configFilesList);
     }
 }
