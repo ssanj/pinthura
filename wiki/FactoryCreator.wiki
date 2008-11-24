@@ -233,10 +233,10 @@ public interface ObjectCacheFactory {
 
  ...
 
- ObjectCacheEventFactory  factory = factoryCreator.create(ObjectCacheEventFactory.class);
+ ObjectCacheFactory  factory = factoryCreator.create(ObjectCacheFactory.class);
 }}}
 
-When the `ObjectCacheEventFactory` interface is passed to the `FactoryCreator` it uses the `DynamicFactoryInstantiator` to find an instance of a class implementing the `ObjectCacheEvent` interface. The above example uses the `@Implementation` annotation to define its implementation class: `ObjectCacheEventImpl`. The `ObjectCacheEventImpl` constructor takes in the `ObjectCacheEventFactory` factory interface as it's first parameter. This is defined through the `@InjectedFactory` and list of `@Factory` which specify each factory class and its position within the constructor call to the implementation. See the `ObjectCache` example for more details.
+When the `ObjectCacheFactory` interface is passed to the `FactoryCreator` it uses the `DynamicFactoryInstantiator` to find an instance of a class implementing the `ObjectCache` interface. The above example uses the `@Implementation` annotation to define its implementation class: `SingleInstanceCache`. The `SingleInstanceCache` constructor takes in the `ObjectCacheEventFactory` factory interface as it's first parameter. This is defined through the `@InjectedFactory` and the `@Factory` which specify the factory class and its position within the constructor call to the implementation. Dependent factories can be injected in this manner without passing them to the implementation classes' constructor through the `create` method. See the `ObjectCache` example for more details.
 
 = How do I use the `SimpleInstantiator` strategy? =
 
