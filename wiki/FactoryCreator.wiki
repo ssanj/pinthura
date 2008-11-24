@@ -199,24 +199,24 @@ At the moment, the `FactoryCreator` finds implementations using two locator stra
  # By annotation. (`AnnotationLocatorImpl`)
  # By deriving the implementation class name. (`DerivedImplementationNameLocator`).
 
-= How do I use the `AnnotationLocator` strategy? =
+= How do I use the `AnnotationInstantiator` strategy? =
 
-Taking a `WidgetFactory` as an example:
+Taking a `ObjectCacheEventFactory` as an example:
 
 {{{
-public interface WidgetFactory {
+public interface ObjectCacheEventFactory {
 
-    @InterfaceImpl(CrazyWidget.class)
-    Widget createWidget(Integer id);
+    @Implementation(ObjectCacheEventImpl.class)
+    ObjectCacheEvent create(Object obj);
 }
 
  ...
 
- WidgetFactory  widgetFactory = factoryCreator.create(WidgetFactory .class);
+ ObjectCacheEventFactory  factory = factoryCreator.create(ObjectCacheEventFactory.class);
 
 }}}
 
-When the `WidgetFactory` interface is passed to the `FactoryCreator` it uses the `AnnotationLocator` to find an instance of a class implementing the `Widget` interface. The implementation used in the above example uses the `InterfaceImpl` annotation to define its implementation class: `CrazyWidget`.
+When the `ObjectCacheEventFactory` interface is passed to the `FactoryCreator` it uses the `AnnotationInstantiator` to find an instance of a class implementing the `ObjectCacheEvent` interface. The implementation used in the above example uses the `@Implementation` annotation to define its implementation class: `ObjectCacheEventImpl`.
 
 = How do I use the `DerivedImplementationNameLocator` strategy? =
 
