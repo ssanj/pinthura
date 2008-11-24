@@ -41,8 +41,7 @@ public final class ObjectCacheRunner {
 
     private static ObjectCache withDynamicFactories() {
         FactoryCreator factoryCreator = new FactoryCreatorBuilder().build();
-        ObjectCacheFactory cacheFactory = factoryCreator.create(ObjectCacheFactory.class);
-        return cacheFactory.create();
+        return factoryCreator.create(ObjectCacheFactory.class).create();
     }
 
     private static void exerciseCache(final ObjectCache cache) {
