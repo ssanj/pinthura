@@ -20,16 +20,13 @@ import com.googlecode.pinthura.factory.FactoryCreatorImpl;
 import com.googlecode.pinthura.util.CreationBroker;
 import com.googlecode.pinthura.util.CreationBrokerImpl;
 
+import java.lang.reflect.InvocationHandler;
+
 public final class FactoryCreatorBuilder {
-    private CreationBroker creationBroker;
-
-
-    public FactoryCreatorBuilder withCreationBroker(final CreationBroker creationBroker) {
-        this.creationBroker = creationBroker;
-        return this;
-    }
 
     public FactoryCreator build() {
-        return new FactoryCreatorImpl(creationBroker == null ? new CreationBrokerImpl() : creationBroker);
+        CreationBroker creationBroker = new CreationBrokerImpl();
+        InvocationHandler invocationHandler = new DynamicFactoryInvocationHandlerBuilder(creationBroker).build();
+        return new FactoryCreatorImpl(invocationHandler, creationBroker);
     }
 }
