@@ -192,7 +192,7 @@ Method_Name -> createSquare
 Constructor_Arguments -> length
 }}}
 
-An implementation of `Square` will be located using a locator strategy. The constructor of the located class will then be called with `length`.
+An implementation of `Square` will be located using an instantiation strategy. In general, the constructor of the located class will then be called with `length`.
 
 At the moment, the `FactoryCreator` finds implementations using three instantiation strategies:
 
