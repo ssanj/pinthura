@@ -139,7 +139,9 @@ We can mock out the `SquareFactory` interface passed to the constructor very eas
 
 = What does the FactoryCreator give me? =
 
-At some point we need a concrete implementation of the factory interface. In many instances these factory implementations are not tested or have rudimentary tests that simply create a new instance of an object. The `FactoryCreator` automates the implementation of a factory interface.  
+At some point we need a concrete implementation of the factory interface. In many instances these factory implementations are not tested or have rudimentary tests that simply create a new instance of an object. 
+
+1. The `FactoryCreator` automates the implementation of a factory interface and saves you having to write an implementation class for each factory interface you use.
 
 In the above scenario the manual implementation of `SquareFactoryImpl` would be:
 {{{
