@@ -194,10 +194,11 @@ Constructor_Arguments -> length
 
 An implementation of `Square` will be located using a locator strategy. The constructor of the located class will then be called with `length`.
 
-At the moment, the `FactoryCreator` finds implementations using two locator strategies:
+At the moment, the `FactoryCreator` finds implementations using three instantiation strategies:
 
- # By annotation. (`AnnotationLocatorImpl`)
- # By deriving the implementation class name. (`DerivedImplementationNameLocator`).
+ # `AnnotationInstantiator` - Use the `@Implementation` to define the target class to instantiate.
+ # `DynamicFactoryInstantiator` - Uses the `@Implementation` and `@InjectedFactory` to find the target class and automatically inject any required factories.
+ # `SimpleInstantiator` - Uses a `ClassNameDeriver` instance to find the target class to instantiate.
 
 = How do I use the `AnnotationInstantiator` strategy? =
 
@@ -218,6 +219,9 @@ public interface ObjectCacheEventFactory {
 
 When the `ObjectCacheEventFactory` interface is passed to the `FactoryCreator` it uses the `AnnotationInstantiator` to find an instance of a class implementing the `ObjectCacheEvent` interface. The above example uses the `@Implementation` annotation to define its implementation class: `ObjectCacheEventImpl`.
 
+= How do I use the `DynamicFactoryInstantiator` strategy? =
+
+
 = How do I use the `SimpleInstantiator` strategy? =
 
 Taking the `SquareFactory` as an example:
@@ -234,7 +238,7 @@ public interface SquareFactory {
 
 }}}
 
-When the `SquareFactory` interface is passed to the `FactoryCreator` it uses the `SimpleInstantiator` to find an instance of a class implementing the `Square` interface. The default naming strategy for the `SimpleInstantiator` is the `ImplSuffixingDeriver`, which simply appends an *Impl* to the name of the interface (`Square` -> `SquareImpl`). In the above example the a new instance is created as -> `new SquareImpl(length)`.
+When the `SquareFactory` interface is passed to the `FactoryCreator` it uses the `SimpleInstantiator` to find an instance of a class implementing the `Square` interface. The default naming strategy for the `SimpleInstantiator` is the `ImplSuffixingDeriver`, which simply appends an *Impl* to the name of the interface (`Square` -> `SquareImpl`). In the above example a new instance is created as -> `new SquareImpl(length)`.
 
 = How do I extend the `SimpleInstantiator` to use another strategy instead of `ImplSuffixingDeriver`? =
 
