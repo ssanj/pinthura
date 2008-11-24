@@ -175,6 +175,8 @@ Each method defined in a factory interface has the following form:
 
 Each implementation of the `Returned_Interface` is located as follows:
 
+//TODO: Update this pic.
+
 http://pinthura.googlecode.com/svn/wiki/images/FactoryCreator.png
 
 If we take the `SquareFactory` as an example:
@@ -283,7 +285,7 @@ public interface ClassNameDeriver {
 }
 }}}
 
-= Where can I update the default locator strategies? =
+= Where can I update the default instantiation strategies? =
 
 The above default strategies are initialized in the the `InstanceCreatorImpl`
 class:
@@ -306,7 +308,7 @@ public final class InstanceCreatorImpl implements InstanceCreator {
 }
 }}}
 
-The any list of instantiators can be passed in as an `InstantiationStrategy`:
+Any list of instantiators can be passed in as an `InstantiationStrategy`:
 
 {{{
 public interface InstantiationStrategy extends FilterLink<MethodParam, Object> {
@@ -314,6 +316,10 @@ public interface InstantiationStrategy extends FilterLink<MethodParam, Object> {
 }
 }}}
 
+See the `InstanceCreatorBuilder` class to see how the defaults are built.
+
 = Examples =
 
  * [FactoryCreatorImplReportGenerator Report Generator]
+ * [FactoryCreatorImplObjectCache Object Cache]
+ * [FactoryCreatorImplSchemaParser Schema Parser]
