@@ -234,7 +234,7 @@ public interface SquareFactory {
 
 }}}
 
-When the `SquareFactory` interface is passed to the `FactoryCreator` it uses the `SimpleInstantiator` to find an instance of a class implementing the `Square` interface. The default naming strategy for the `SimpleInstantiator` is the `ImplSuffixingDeriver`, which simply appends an *Impl* to the name of the interface (`Square` -> `SquareImpl`). So in the above example the a new instance is created as -> `new SquareImpl(lenth)`.
+When the `SquareFactory` interface is passed to the `FactoryCreator` it uses the `SimpleInstantiator` to find an instance of a class implementing the `Square` interface. The default naming strategy for the `SimpleInstantiator` is the `ImplSuffixingDeriver`, which simply appends an *Impl* to the name of the interface (`Square` -> `SquareImpl`). In the above example the a new instance is created as -> `new SquareImpl(length)`.
 
 = How do I extend the `SimpleInstantiator` to use another strategy instead of `ImplSuffixingDeriver`? =
 
