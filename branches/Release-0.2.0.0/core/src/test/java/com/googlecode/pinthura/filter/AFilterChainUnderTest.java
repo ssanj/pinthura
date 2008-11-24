@@ -26,6 +26,7 @@ import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 public final class AFilterChainUnderTest {
 
@@ -77,6 +78,15 @@ public final class AFilterChainUnderTest {
     public void shouldReturnItsName() {
         FilterLink<String, ?> filterChain = createFilterChain();
         assertThat(filterChain.getFilterName(), equalTo("FilterChain"));
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void shouldNotAllowModificationOfSetFilters() {
+        mockControl.replay();
+
+        List<FilterLink<String, Collection<?>>> filterLinkList = Arrays.asList(mockLink1, mockLink2);
+        new FilterChainImpl<String, Collection<?>>(filterLinkList);
+        filterLinkList.clear();
     }
 
     private void expectMatchNotFound() {

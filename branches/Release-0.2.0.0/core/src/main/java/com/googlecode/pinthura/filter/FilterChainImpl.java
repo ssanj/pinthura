@@ -15,6 +15,7 @@
  */
 package com.googlecode.pinthura.filter;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -31,7 +32,7 @@ public final class FilterChainImpl<Input, Output> implements FilterLink<Input, O
     private final List<? extends FilterLink<Input, Output>> filterLinks;
 
     public FilterChainImpl(final List<? extends FilterLink<Input, Output>> filterLinks) {
-        this.filterLinks = filterLinks;
+        this.filterLinks = Collections.unmodifiableList(filterLinks);
     }
 
     @SuppressWarnings({ "unchecked" })
@@ -41,7 +42,9 @@ public final class FilterChainImpl<Input, Output> implements FilterLink<Input, O
             try {
                 return (Output) link.filter(input);
                 //CHECKSTYLE_OFF
-            } catch (MatchNotFoundException e) { /*do nothing*/ }
+            } catch (MatchNotFoundException e) {
+                //do nothing.
+            }
             //CHECKSTYLE_ON
         }
 
