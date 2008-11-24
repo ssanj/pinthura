@@ -236,7 +236,21 @@ public interface ObjectCacheFactory {
  ObjectCacheFactory  factory = factoryCreator.create(ObjectCacheFactory.class);
 }}}
 
-When the `ObjectCacheFactory` interface is passed to the `FactoryCreator` it uses the `DynamicFactoryInstantiator` to find an instance of a class implementing the `ObjectCache` interface. The above example uses the `@Implementation` annotation to define its implementation class: `SingleInstanceCache`. The `SingleInstanceCache` constructor takes in the `ObjectCacheEventFactory` factory interface as it's first parameter. This is defined through the `@InjectedFactory` and the `@Factory` which specify the factory class and its position within the constructor call to the implementation. Dependent factories can be injected in this manner without passing them to the implementation classes' constructor through the `create` method. See the `ObjectCache` example for more details.
+When the `ObjectCacheFactory` interface is passed to the `FactoryCreator` it uses the `DynamicFactoryInstantiator` to find an instance of a class implementing the `ObjectCache` interface. The above example uses the `@Implementation` annotation to define its implementation class: `SingleInstanceCache`. The `SingleInstanceCache` constructor takes in the `ObjectCacheEventFactory` factory interface as it's first parameter. This is defined through the `@InjectedFactory` and the `@Factory` which specifies the factory class and its position within the constructor call to the implementation. Dependent factories can be injected in this manner without passing them to the implementation classes' constructor through the `create` method. 
+
+You could use the `AnnotationInstantiator` to create the above factory but it would look like:
+
+{{{
+public interface ObjectCacheFactory {
+
+    @Implementation(SingleInstanceCache.class)
+    ObjectCache create(ObjectCacheEventFactory objectCacheEventFactory);
+}
+}}}
+
+When the create method is call, you now have to manually pass in an instance of `ObjectCacheEventFactory` which was dynamically created for you when the `@Factory` was used.
+
+See the `ObjectCache` example for more details.
 
 = How do I use the `SimpleInstantiator` strategy? =
 
@@ -271,41 +285,33 @@ public interface ClassNameDeriver {
 
 = Where can I update the default locator strategies? =
 
-The above default strategies are initialized in the the `InvocationFactoryImpl`
+The above default strategies are initialized in the the `InstanceCreatorImpl`
 class:
 {{{
-public final class InvocationFactoryImpl implements InvocationFactory {
+public final class InstanceCreatorImpl implements InstanceCreator {
 
-    private final List<ClassLocator> locators;
-    private final MethodParamFactory factory;
+    private final FilterLink<MethodParam, Object> filterChain;
 
-    public InvocationFactoryImpl() {
-        factory = new MethodParamFactoryImpl();
-        locators = createDefaultLocators();
+    public InstanceCreatorImpl(final FilterLink<MethodParam, Object> filterChain) {
+        this.filterChain = filterChain;
     }
 
-    public InvocationFactoryImpl(final List<ClassLocator> locators) {
-        factory = new MethodParamFactoryImpl();
-        this.locators = locators;
-    }
-
-    ...
-
-    private List<ClassLocator> createDefaultLocators() {
-        List<ClassLocator> filters = new ArrayList<ClassLocator>();
-        filters.add(new AnnotationLocatorImpl(new AnnotationFinderImpl()));
-        filters.add(new DerivedImplementationNameLocator(new ImplSuffixingDeriver()));
-        return filters;
+    public Object createInstance(final MethodParam param) {
+        try {
+            return filterChain.filter(param);
+        } catch (MatchNotFoundException e) {
+            throw new InstanceCreationException("Could not create instance of " + param.getReturnType(), e);
+        }
     }
 }
 }}}
 
-Calling the default constructor gives us the two default class locator strategies. If we want to customize these strategies we can pass in a list of our own `ClassLocator` implementations, through the second constructor.
-
-The `ClassLocator` interface:
+The any list of instantiators can be passed in as an `InstantiationStrategy`:
 
 {{{
-public interface ClassLocator extends FilterLink<MethodParam, Class<?>> {
+public interface InstantiationStrategy extends FilterLink<MethodParam, Object> {
+    //This interface has been introduced to make the generics easier to use.
+}
 }}}
 
 = Examples =
