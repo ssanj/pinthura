@@ -42,9 +42,7 @@ public final class FilterChainImpl<Input, Output> implements FilterLink<Input, O
             try {
                 return (Output) link.filter(input);
                 //CHECKSTYLE_OFF
-            } catch (MatchNotFoundException e) {
-                //do nothing.
-            }
+            } catch (MatchNotFoundException e) {/*do nothing.*/}
             //CHECKSTYLE_ON
         }
 
