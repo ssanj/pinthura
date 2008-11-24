@@ -216,9 +216,9 @@ public interface ObjectCacheEventFactory {
 
 }}}
 
-When the `ObjectCacheEventFactory` interface is passed to the `FactoryCreator` it uses the `AnnotationInstantiator` to find an instance of a class implementing the `ObjectCacheEvent` interface. The implementation used in the above example uses the `@Implementation` annotation to define its implementation class: `ObjectCacheEventImpl`.
+When the `ObjectCacheEventFactory` interface is passed to the `FactoryCreator` it uses the `AnnotationInstantiator` to find an instance of a class implementing the `ObjectCacheEvent` interface. The above example uses the `@Implementation` annotation to define its implementation class: `ObjectCacheEventImpl`.
 
-= How do I use the `DerivedImplementationNameLocator` strategy? =
+= How do I use the `SimpleInstantiator` strategy? =
 
 Taking the `SquareFactory` as an example:
 
@@ -234,11 +234,20 @@ public interface SquareFactory {
 
 }}}
 
-When the `SquareFactory` interface is passed to the `FactoryCreator` it uses the `DerivedImplementationNameLocator` to find an instance of a class implementing the `Sqaure` interface. The default strategy for the `DerivedImplementationNameLocator` is the `ImplSuffixingDeriver`, which simply appends an *Impl* to the name of the interface (`Sqaure` -> `SquareImpl`).
+When the `SquareFactory` interface is passed to the `FactoryCreator` it uses the `SimpleInstantiator` to find an instance of a class implementing the `Square` interface. The default naming strategy for the `SimpleInstantiator` is the `ImplSuffixingDeriver`, which simply appends an *Impl* to the name of the interface (`Square` -> `SquareImpl`). So in the above example the a new instance is created as -> `new SquareImpl(lenth)`.
 
-= How do I extend the `DerivedImplementationNameLocator` to use another strategy instead of `ImplSuffixingDeriver`? =
+= How do I extend the `SimpleInstantiator` to use another strategy instead of `ImplSuffixingDeriver`? =
 
-Pass in your implementation of the `ClassNameDeriver` interface into the constructor of `DerivedImplementationNameLocator`.
+Create a custom implementation of the `ClassNameDeriver` interface and pass that into the constructor of a `SimpleInstantiator` instance.
+
+`ClassNameDeriver` takes the form:
+
+{{{
+public interface ClassNameDeriver {
+
+    String derive(MethodParam methodParam);
+}
+}}}
 
 = Where can I update the default locator strategies? =
 
