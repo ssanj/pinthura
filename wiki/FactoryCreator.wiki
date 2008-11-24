@@ -58,10 +58,9 @@ public final class ShapeCanvas {
         this.squareFactory = squareFactory;
     }
 
-    public int calcSquaresOnCanvas(int size) {
+    public int calcSquaresOnCanvas(final int size) {
         Square square = squareFactory.create(size);
-        int area = square.getArea();
-        return canvasArea / area;
+        return canvasArea / square.getArea();
     }
 }
 }}}
@@ -71,11 +70,17 @@ The `ShapeCanvas` is run through the `ShapeCanvasRunner`:
 {{{
 public final class ShapeCanvasRunner {
 
+    private static final int CANVAS_AREA = 40;
+
+    private ShapeCanvasRunner() {
+        //Main class.
+    }
+
     public static void main(final String[] args) {
-        FactoryCreator factoryCreator = new FactoryCreatorImpl(new InvocationFactoryImpl());
+        FactoryCreator factoryCreator = new FactoryCreatorBuilder().build();
         SquareFactory squareFactory = factoryCreator.create(SquareFactory.class);
 
-        ShapeCanvas canvas = new ShapeCanvas(40, squareFactory);
+        ShapeCanvas canvas = new ShapeCanvas(CANVAS_AREA, squareFactory);
         System.out.println("Number of squares: " + canvas.calcSquaresOnCanvas(2));
     }
 }
