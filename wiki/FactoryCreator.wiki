@@ -308,7 +308,7 @@ public final class InstanceCreatorImpl implements InstanceCreator {
 }
 }}}
 
-Any list of instantiators can be passed in as an `InstantiationStrategy`:
+Any required instantiators can be passed in as `FilterChain` of `InstantiationStrategy`:
 
 {{{
 public interface InstantiationStrategy extends FilterLink<MethodParam, Object> {
