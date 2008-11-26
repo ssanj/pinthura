@@ -3,12 +3,9 @@
 
 = Introduction =
 
-Fill thi sin.
-
+This examples demonstrates dynamic factory injection. In `ObjectCacheFactory` listed below, one `create` method takes a `ObjectCacheEventFactory` as a parameter. The other `create` method does not an automatically injects the `ObjectCacheEventFactory` into the constructor of the `SingleInstanceCache` class by using information in the @InjectedFactory annotation.
 
 = Details =
-
-The `ObjectCacheFactory` interface:
 
 {{{
 public interface ObjectCacheFactory {
@@ -22,7 +19,50 @@ public interface ObjectCacheFactory {
 }
 }}}
 
-The `SingleInstanceCache`  created by the `ObjectCacheFactory`:
+{{{
+public interface ObjectCacheEventFactory {
+
+    @Implementation(ObjectCacheEventImpl.class)
+    ObjectCacheEvent create(Object obj);
+}
+}}}
+
+{{{
+public interface ObjectCacheEvent {
+
+    Object getInstance();
+}
+}}}
+
+{{{
+public interface ObjectCache {
+
+    void addListener(ObjectCacheListener listener);
+    void setInstance(Object obj);
+}
+}}}
+
+{{{
+public final class ObjectCacheEventImpl implements ObjectCacheEvent {
+
+    private final Object instance;
+
+    public ObjectCacheEventImpl(final Object instance) {
+        this.instance = instance;
+    }
+
+    public Object getInstance() {
+        return instance;
+    }
+}
+}}}
+
+{{{
+public interface ObjectCacheListener {
+
+    void instanceCreated(ObjectCacheEvent event);
+}
+}}}
 
 {{{
 public final class SingleInstanceCache implements ObjectCache {
@@ -47,15 +87,6 @@ public final class SingleInstanceCache implements ObjectCache {
 }
 }}}
 
-The `ObjectCacheEventFactory` interface:
-
-{{{
-public interface ObjectCacheEventFactory {
-
-    @Implementation(ObjectCacheEventImpl.class)
-    ObjectCacheEvent create(Object obj);
-}
-}}}
 
 The runner:
 
