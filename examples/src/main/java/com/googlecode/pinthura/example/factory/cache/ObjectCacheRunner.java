@@ -55,5 +55,4 @@ public final class ObjectCacheRunner {
         cache.setInstance(1);
         cache.setInstance(Arrays.asList("3", "2", "1"));
     }
-
 }
