@@ -3,7 +3,7 @@
 
 = Introduction =
 
-This examples demonstrates dynamic factory injection. In `ObjectCacheFactory` listed below, one `create` method takes a `ObjectCacheEventFactory` as a parameter. The other `create` method does not an automatically injects the `ObjectCacheEventFactory` into the constructor of the `SingleInstanceCache` class by using information in the @InjectedFactory annotation.
+This examples demonstrates dynamic factory injection. In `ObjectCacheFactory` listed below, one `create` method takes a `ObjectCacheEventFactory` as a parameter. The other `create` method does not an automatically injects the `ObjectCacheEventFactory` into the constructor of the `SingleInstanceCache` class by using information in the `@InjectedFactory` annotation.
 
 = Details =
 
