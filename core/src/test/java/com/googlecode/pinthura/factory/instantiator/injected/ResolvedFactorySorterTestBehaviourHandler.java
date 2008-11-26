@@ -58,7 +58,8 @@ public final class ResolvedFactorySorterTestBehaviourHandler {
         return this;
     }
 
-    private ResolvedFactorySorterTestBehaviourHandler addClassInstance(final Class<?> factoryClass) {
+    @SuppressWarnings({ "unchecked" })
+    private ResolvedFactorySorterTestBehaviourHandler addClassInstance(final Class factoryClass) {
         Object mockFactoryInstance = mockControl.createMock(factoryClass);
         EasyMock.expect(mockFactoryCreator.create(factoryClass)).andReturn(mockFactoryInstance);
         ClassInstance mockClassInstance = mockControl.createMock(ClassInstance.class);

@@ -19,11 +19,11 @@ import com.googlecode.pinthura.factory.boundary.ClassBoundary;
 
 public final class ClassInstanceFactoryImpl implements ClassInstanceFactory {
 
-    public <T> ClassInstance createClassInstance(final Class<T> clazz, final Object instance) {
+    public <T> ClassInstance createClassInstance(final Class<T> clazz, final T instance) {
         return new ClassInstanceImpl(clazz, instance);
     }
 
-    public <T> ClassInstance createClassInstance(final ClassBoundary<T> clazz, final Object instance) {
+    public <T> ClassInstance createClassInstance(final ClassBoundary<T> clazz, final T instance) {
         return new ClassInstanceImpl(clazz, instance);
     }
 

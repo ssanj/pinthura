@@ -40,6 +40,7 @@ public final class ResolvedFactorySorterImpl implements ResolvedFactorySorter {
         factoryCreator = creationBroker.getInstanceFor(FactoryCreator.class);
     }
 
+    @SuppressWarnings({ "unchecked" })
     public void sort(final Factory[] factories, final ClassInstance[] classInstances) {
         for (Factory factory : factories) {
             classInstances[factory.index()] = classInstanceFactory.createClassInstance(factory.factoryClass(),
