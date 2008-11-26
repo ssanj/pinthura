@@ -19,19 +19,26 @@ import com.googlecode.pinthura.util.CreationBroker;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
+import java.util.HashMap;
+import java.util.Map;
 
-//TODO: Cache factory instances.
 public final class FactoryCreatorImpl implements FactoryCreator {
 
     private final InvocationHandler invocationHandler;
+    private final Map<Class<?>, Object> factoryCache;
 
     public FactoryCreatorImpl(final InvocationHandler invocationHandler, final CreationBroker creationBroker) {
         this.invocationHandler = invocationHandler;
+        factoryCache = new HashMap<Class<?>, Object>();
         creationBroker.setInstance(FactoryCreator.class, this);
     }
 
-    public <T> T create(final Class<T> factoryInterface) {
-        return createProxy(factoryInterface);
+    public synchronized <T> T create(final Class<T> factoryInterface) {
+        if (!factoryCache.containsKey(factoryInterface)) {
+            factoryCache.put(factoryInterface, createProxy(factoryInterface));
+        }
+
+        return factoryInterface.cast(factoryCache.get(factoryInterface));
     }
 
     @SuppressWarnings({ "unchecked" })

@@ -80,6 +80,7 @@ public final class AFilterChainUnderTest {
         assertThat(filterChain.getFilterName(), equalTo("FilterChain"));
     }
 
+    @SuppressWarnings({ "unchecked" })
     @Test(expected = UnsupportedOperationException.class)
     public void shouldNotAllowModificationOfSetFilters() {
         mockControl.replay();
