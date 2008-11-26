@@ -15,6 +15,7 @@
  */
 package com.googlecode.pinthura.factory;
 
+import com.googlecode.pinthura.data.ShapeFactory;
 import com.googlecode.pinthura.data.UrlBoundaryFactory;
 import com.googlecode.pinthura.util.CreationBroker;
 import org.easymock.EasyMock;
@@ -49,6 +50,17 @@ public final class AFactoryCreatorUnderTest {
     @Test
     public void shouldCreateAnInstanceForAnotherFactoryInterface() {
         expectCreateFactory(InvocationFactory.class);
+    }
+
+    @Test
+    public void shouldCacheCreatedInstances() {
+        mockCreationBroker.setInstance(EasyMock.eq(FactoryCreator.class), EasyMock.isA(FactoryCreatorImpl.class));
+        mockControl.replay();
+
+        FactoryCreator fc = new FactoryCreatorImpl(mockInvocationHandler, mockCreationBroker);
+        assertThat(fc.create(ShapeFactory.class) == fc.create(ShapeFactory.class), equalTo(true));
+
+        mockControl.verify();
     }
 
     private <T> void expectCreateFactory(final Class<T> factoryClass) {
