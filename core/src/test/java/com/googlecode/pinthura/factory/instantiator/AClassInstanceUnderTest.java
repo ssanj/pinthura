@@ -24,24 +24,36 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 public final class AClassInstanceUnderTest {
 
-    @SuppressWarnings({ "unchecked" })
     @Test
-    public void shouldReturnAClassAndAnInstance() {
+    public void shouldWrapAClassAndAnInstance() {
         expectClassAndInstance(UrlBoundary.class, new UrlBoundaryImpl());
     }
 
-    @SuppressWarnings({ "unchecked" })
     @Test
-    public void shouldReturnAnotherClassAndAnInstance() {
+    public void shouldWrapAnotherClassAndAnotherInstance() {
         expectClassAndInstance(Collection.class, new ArrayList());
     }
 
     @SuppressWarnings({ "unchecked" })
+    @Test
+    public void shouldWrapAClassBoundaryAndAnInstance() {
+        Set instance = new HashSet();
+        ClassInstance classInstance = new ClassInstanceImpl(new ClassBoundaryImpl(Set.class), instance);
+        expectClassInstance(classInstance, Set.class, instance);
+    }
+
     private <T> void expectClassAndInstance(final Class<T> clazz, final T instance) {
         ClassInstance classInstance = new ClassInstanceImpl(clazz, instance);
+        expectClassInstance(classInstance, clazz, instance);
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    private <T> void expectClassInstance(final ClassInstance classInstance, final Class<T> clazz, final T instance) {
         assertThat((ClassBoundaryImpl<T>) classInstance.getClazz(), equalTo(new ClassBoundaryImpl<T>(clazz)));
         assertThat(clazz.cast(classInstance.getInstance()), equalTo(instance));
     }
