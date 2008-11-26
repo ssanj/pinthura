@@ -18,17 +18,16 @@ package com.googlecode.pinthura.factory.instantiator;
 import com.googlecode.pinthura.factory.boundary.ClassBoundary;
 import com.googlecode.pinthura.factory.boundary.ClassBoundaryImpl;
 
-//TODO: Test
 public final class ClassInstanceImpl implements ClassInstance {
 
     private ClassBoundary<?> clazz;
     private final Object instance;
 
-    public <T> ClassInstanceImpl(final Class<T> clazz, final Object instance) {
+    public <T> ClassInstanceImpl(final Class<T> clazz, final T instance) {
         this(new ClassBoundaryImpl<T>(clazz), instance);
     }
 
-    public <T> ClassInstanceImpl(final ClassBoundary<T> clazz, final Object instance) {
+    public <T> ClassInstanceImpl(final ClassBoundary<T> clazz, final T instance) {
         this.instance = instance;
         this.clazz = clazz;
     }

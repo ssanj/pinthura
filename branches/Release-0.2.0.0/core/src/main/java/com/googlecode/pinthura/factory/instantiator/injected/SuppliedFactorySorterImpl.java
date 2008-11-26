@@ -35,8 +35,9 @@ public final class SuppliedFactorySorterImpl implements SuppliedFactorySorter {
         this.classInstanceFactory = classInstanceFactory;
     }
 
+    @SuppressWarnings({ "unchecked" })
     public void sort(final MethodParam methodParam, final ClassInstance[] classInstances) {
-        ClassBoundary<?>[] methodParamTypes = methodParam.getParameterTypes();
+        ClassBoundary[] methodParamTypes = methodParam.getParameterTypes();
         Object[] methodParamArgs = methodParam.getArguments();
         for (int x = 0, count = 0; x < classInstances.length && count < methodParamTypes.length; x++) {
             if (classInstances[x] == null) {

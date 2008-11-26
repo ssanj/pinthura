@@ -19,9 +19,9 @@ import com.googlecode.pinthura.factory.boundary.ClassBoundary;
 
 public interface ClassInstanceFactory {
 
-    <T> ClassInstance createClassInstance(final Class<T> clazz, final Object instance);
+    <T> ClassInstance createClassInstance(final Class<T> clazz, final T instance);
 
-    <T> ClassInstance createClassInstance(final ClassBoundary<T> clazz, final Object instance);
+    <T> ClassInstance createClassInstance(final ClassBoundary<T> clazz, final T instance);
 
     ClassInstance[] createClassInstanceArray(final int size);
 }
