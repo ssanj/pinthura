@@ -1,0 +1,48 @@
+#summary Describes the Object Cache example.
+#labels Phase-Implementation,Tutorial,Example,FactoryCreator
+
+= Introduction =
+
+Fill thi sin.
+
+
+= Details =
+
+The `ObjectCacheFactory` interface:
+
+{{{
+public interface ObjectCacheFactory {
+
+    @Implementation(SingleInstanceCache.class)
+    @InjectedFactory(@Factory(factoryClass = ObjectCacheEventFactory.class, index = 0))
+    ObjectCache create();
+
+    @Implementation(SingleInstanceCache.class)
+    ObjectCache create(ObjectCacheEventFactory objectCacheEventFactory);
+}
+}}}
+
+The `SingleInstanceCache`  created by the `ObjectCacheFactory`:
+
+{{{
+public final class SingleInstanceCache implements ObjectCache {
+
+    private final List<ObjectCacheListener> listeners;
+    private final ObjectCacheEventFactory factory;
+
+    public SingleInstanceCache(final ObjectCacheEventFactory factory) {
+        this.factory = factory;
+        listeners = new ArrayList<ObjectCacheListener>();
+    }
+
+    public void addListener(final ObjectCacheListener listener) {
+        listeners.add(listener);
+    }
+
+    public void setInstance(final Object obj) {
+        for (ObjectCacheListener listener : listeners) {
+            listener.instanceCreated(factory.create(obj));
+        }
+    }
+}
+}}}
