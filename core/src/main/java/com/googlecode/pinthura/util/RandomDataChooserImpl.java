@@ -13,11 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.pinthura.io;
+package com.googlecode.pinthura.util;
 
-public interface FileWriterCoordinator {
+import com.googlecode.pinthura.boundary.java.lang.MathBoundary;
 
-    void write(String fileName, Iterable<String> sources);
+public final class RandomDataChooserImpl implements RandomDataChooser {
 
-    void append(String fileName, Iterable<String> sources);
+    private final MathBoundary mathBoundary;
+
+    public RandomDataChooserImpl(final MathBoundary mathBoundary) {
+        this.mathBoundary = mathBoundary;
+    }
+
+    public <T> T chooseOneOf(final T... values) {
+        return values[(int) (mathBoundary.random() * values.length)];
+    }
 }

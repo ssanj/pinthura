@@ -20,11 +20,11 @@ import com.googlecode.pinthura.io.boundary.WriterBoundary;
 import java.util.Arrays;
 
 //TODO: Drive this out. Test.
-public final class FileWriterCoordinatorImpl implements FileWriterCoordinator {
+public final class FileTextWriterImpl implements FileTextWriter {
 
     private final FileWriterFactory fileWriterFactory;
 
-    public FileWriterCoordinatorImpl(final FileWriterFactory fileWriterFactory) {
+    public FileTextWriterImpl(final FileWriterFactory fileWriterFactory) {
         this.fileWriterFactory = fileWriterFactory;
     }
 
@@ -49,11 +49,7 @@ public final class FileWriterCoordinatorImpl implements FileWriterCoordinator {
     }
 
     private WriterBoundary open(final String fileName, final boolean append) {
-        if (append) {
-            return fileWriterFactory.createForAppending(fileName);
-        }
-
-        return fileWriterFactory.createForWriting(fileName);
+        return fileWriterFactory.create(fileName, append);
     }
 
     private void close(final WriterBoundary out) {
@@ -64,7 +60,7 @@ public final class FileWriterCoordinatorImpl implements FileWriterCoordinator {
     }
 
     public static void main(final String[] args) {
-        FileWriterCoordinator writer = new FileWriterCoordinatorImpl(new FileWriterFactoryImpl());
+        FileTextWriter writer = new FileTextWriterImpl(new FileWriterFactoryImpl());
         writer.write("blah.txt", Arrays.asList("1, 2, 3, 4", "5, 6, 7, 8"));
         writer.append("blah.txt", Arrays.asList("8, 9, 10, 11"));
     }

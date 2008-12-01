@@ -15,9 +15,9 @@
  */
 package com.googlecode.pinthura.io;
 
-import com.googlecode.pinthura.io.boundary.WriterBoundary;
+public interface FileTextWriter {
 
-public interface FileWriterFactory {
+    void append(String fileName, Iterable<String> sources);
 
-    WriterBoundary create(String fileName, boolean append);
+    void write(String fileName, Iterable<String> sources);
 }

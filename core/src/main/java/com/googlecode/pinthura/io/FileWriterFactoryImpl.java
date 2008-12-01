@@ -25,15 +25,7 @@ import java.io.OutputStreamWriter;
 
 public final class FileWriterFactoryImpl implements FileWriterFactory {
 
-    public WriterBoundary createForWriting(final String fileName) {
-        return create(fileName, false);
-    }
-
-    public WriterBoundary createForAppending(final String fileName) {
-        return create(fileName, true);
-    }
-
-    private WriterBoundary create(final String fileName, final boolean append) {
+    public WriterBoundary create(final String fileName, final boolean append) {
         //TODO: create non-existant directories for both write and append.
         try {
             return new WriterBoundaryImpl(new OutputStreamWriter(new BufferedOutputStream(new FileOutputStream(fileName, append))));
