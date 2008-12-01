@@ -13,13 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.pinthura.io;
+package com.googlecode.pinthura.util;
 
-import com.googlecode.pinthura.io.boundary.WriterBoundary;
+public interface RandomDataChooser {
 
-public final class TextWriterImpl implements FileWriter {
-
-    public void write(final WriterBoundary out) {
-        out.write("");
-    }
+    <T> T chooseOneOf(T... values);
 }

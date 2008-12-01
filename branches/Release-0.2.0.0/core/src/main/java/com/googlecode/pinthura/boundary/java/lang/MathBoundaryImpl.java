@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.pinthura.io;
+package com.googlecode.pinthura.boundary.java.lang;
 
-import com.googlecode.pinthura.io.boundary.WriterBoundary;
+public final class MathBoundaryImpl implements MathBoundary {
 
-public interface FileWriterFactory {
-
-    WriterBoundary create(String fileName, boolean append);
+    public double random() {
+        return Math.random();
+    }
 }

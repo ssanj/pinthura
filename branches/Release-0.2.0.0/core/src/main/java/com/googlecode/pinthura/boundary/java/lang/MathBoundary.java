@@ -13,11 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.pinthura.io;
+package com.googlecode.pinthura.boundary.java.lang;
 
-import com.googlecode.pinthura.io.boundary.WriterBoundary;
+public interface MathBoundary {
 
-public interface FileWriter {
-
-    void write(WriterBoundary out);
+    double random();
 }
