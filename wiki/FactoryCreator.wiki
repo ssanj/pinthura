@@ -175,8 +175,6 @@ Each method defined in a factory interface has the following form:
 
 Each implementation of the `Returned_Interface` is located as follows:
 
-//TODO: Update this pic.
-
 http://pinthura.googlecode.com/svn/wiki/images/FactoryCreator2.png
 
 If we take the `SquareFactory` as an example:
