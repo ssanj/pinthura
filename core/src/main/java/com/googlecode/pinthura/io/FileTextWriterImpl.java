@@ -17,9 +17,6 @@ package com.googlecode.pinthura.io;
 
 import com.googlecode.pinthura.io.boundary.WriterBoundary;
 
-import java.util.Arrays;
-
-//TODO: Drive this out. Test.
 public final class FileTextWriterImpl implements FileTextWriter {
 
     private final FileWriterFactory fileWriterFactory;
@@ -39,12 +36,16 @@ public final class FileTextWriterImpl implements FileTextWriter {
     private void write(final String fileName, final Iterable<String> sources, final boolean append) {
         try {
             WriterBoundary writer = open(fileName, append);
-            for (String source : sources) {
-                writer.write(source);
-            }
+            writeSources(sources, writer);
             close(writer);
         } catch (Exception e) {
             throw new FileWriterCoordinatorException(e);
+        }
+    }
+
+    private void writeSources(final Iterable<String> sources, final WriterBoundary writer) {
+        for (String source : sources) {
+            writer.write(source);
         }
     }
 
@@ -57,11 +58,5 @@ public final class FileTextWriterImpl implements FileTextWriter {
             out.flush();
             out.close();
         }
-    }
-
-    public static void main(final String[] args) {
-        FileTextWriter writer = new FileTextWriterImpl(new FileWriterFactoryImpl());
-        writer.write("blah.txt", Arrays.asList("1, 2, 3, 4", "5, 6, 7, 8"));
-        writer.append("blah.txt", Arrays.asList("8, 9, 10, 11"));
     }
 }
