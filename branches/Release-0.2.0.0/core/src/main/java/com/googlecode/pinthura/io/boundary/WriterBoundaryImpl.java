@@ -66,8 +66,11 @@ public final class WriterBoundaryImpl implements WriterBoundary {
         return writer.hashCode();
     }
 
+    @Override
     public String toString() {
-        return "WriterBoundaryImpl[" + writer.toString() + "]";
+        return "WriterBoundaryImpl{"
+                + "writer="
+                + writer
+                + '}';
     }
-
 }
