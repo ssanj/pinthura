@@ -15,11 +15,11 @@
  */
 package com.googlecode.pinthura.io;
 
-public final class FileWriterCoordinatorException extends RuntimeException {
+public final class FileTextWriterException extends RuntimeException {
 
     private static final long serialVersionUID = 7478271299399927947L;
 
-    public FileWriterCoordinatorException(final Throwable cause) {
+    public FileTextWriterException(final Throwable cause) {
         super(cause);
     }
 }

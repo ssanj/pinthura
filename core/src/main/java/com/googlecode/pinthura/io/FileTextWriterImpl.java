@@ -39,7 +39,7 @@ public final class FileTextWriterImpl implements FileTextWriter {
             writeSources(sources, writer);
             close(writer);
         } catch (Exception e) {
-            throw new FileWriterCoordinatorException(e);
+            throw new FileTextWriterException(e);
         }
     }
 
@@ -54,9 +54,7 @@ public final class FileTextWriterImpl implements FileTextWriter {
     }
 
     private void close(final WriterBoundary out) {
-        if (out != null) {
-            out.flush();
-            out.close();
-        }
+        out.flush();
+        out.close();
     }
 }
