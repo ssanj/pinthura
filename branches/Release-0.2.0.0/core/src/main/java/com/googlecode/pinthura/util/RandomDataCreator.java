@@ -16,4 +16,13 @@
 package com.googlecode.pinthura.util;
 
 public interface RandomDataCreator {
+
+    /**
+     * Creates a simple alphabetic <code>String</code>.
+     * @param length The length of the <code>String</code>.
+     * @return A String of the specified length composed of only alphabetic characters.
+     */
+    String createString(int length);
+
+    String createFileName(int length);
 }
