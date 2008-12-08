@@ -41,7 +41,7 @@ public final class AFileTextWriterThrowingExceptionsWhenAppendingUnderTest {
 
     @SuppressWarnings("ThrowableInstanceNeverThrown")
     @Test(expected = FileTextWriterException.class)
-    public void shouldThrowAnExceptionIfFileWriterFactoryThrowsAnExceptionWhenAppending() {
+    public void shouldThrowAnExceptionIfFileWriterFactoryThrowsAnException() {
         String fileName = randomDataCreator.createFileName(5);
         EasyMock.expect(mockFileWriterFactory.create(fileName, true)).andThrow(new RuntimeException());
         mockControl.replay();
@@ -50,12 +50,11 @@ public final class AFileTextWriterThrowingExceptionsWhenAppendingUnderTest {
     }
 
     @Test(expected = FileTextWriterException.class)
-    public void shouldThrowAnExceptionIfFileWriterFactoryReturnsNullWhenAppending() {
+    public void shouldThrowAnExceptionIfFileWriterFactoryReturnsNull() {
         String fileName = randomDataCreator.createFileName(10);
         EasyMock.expect(mockFileWriterFactory.create(fileName, true)).andReturn(null);
         mockControl.replay();
 
         writer.append(fileName, Arrays.asList(randomDataCreator.createString(16)));
     }
-
 }

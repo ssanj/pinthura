@@ -39,42 +39,23 @@ public final class AFileTextWriterThrowingExceptionsWhenWritingUnderTest {
         writer = new FileTextWriterImpl(mockFileWriterFactory);
     }
 
+    @SuppressWarnings("ThrowableInstanceNeverThrown")
     @Test(expected = FileTextWriterException.class)
-    public void shouldThrowAnExceptionIfIfFileWriterFactoryThrowsAnExceptionWhenWriting() {
-        String fileName = expectFileFactoryThrowsException(false);
+    public void shouldThrowAnExceptionIfFileWriterFactoryThrowsAnException() {
+        String fileName = randomDataCreator.createFileName(6);
+        EasyMock.expect(mockFileWriterFactory.create(fileName, false)).andThrow(new RuntimeException());
+        mockControl.replay();
+
         writer.write(fileName, Arrays.asList(randomDataCreator.createString(8)));
     }
 
     @Test(expected = FileTextWriterException.class)
-    public void shouldThrowAnExceptionIfFileWriterFactoryReturnsNullWhenWriting() {
-        String fileName = expectFileFactoryReturnsNull(false);
+    public void shouldThrowAnExceptionIfFileWriterFactoryReturnsNull() {
+        String fileName = randomDataCreator.createFileName(10);
+        EasyMock.expect(mockFileWriterFactory.create(fileName, false)).andReturn(null);
+        mockControl.replay();
+
         writer.write(fileName, Arrays.asList(randomDataCreator.createString(20)));
     }
 
-    @Test(expected = FileTextWriterException.class)
-    public void shouldThrowAnExceptionIfFileWriterFactoryThrowsAnExceptionWhenAppending() {
-        String fileName = expectFileFactoryThrowsException(true);
-        writer.append(fileName, Arrays.asList(randomDataCreator.createString(4)));
-    }
-
-    @Test(expected = FileTextWriterException.class)
-    public void shouldThrowAnExceptionIfFileWriterFactoryReturnsNullWhenAppending() {
-        String fileName = expectFileFactoryReturnsNull(true);
-        writer.append(fileName, Arrays.asList(randomDataCreator.createString(16)));
-    }
-
-    private String expectFileFactoryReturnsNull(boolean append) {
-        String fileName = "foo.bar.fib";
-        EasyMock.expect(mockFileWriterFactory.create(fileName, append)).andReturn(null);
-        mockControl.replay();
-        return fileName;
-    }
-
-    @SuppressWarnings({ "ThrowableInstanceNeverThrown" })
-    private String expectFileFactoryThrowsException(boolean append) {
-        String fileName = "foo.bar.fib";
-        EasyMock.expect(mockFileWriterFactory.create(fileName, append)).andThrow(new RuntimeException());
-        mockControl.replay();
-        return fileName;
-    }
 }
