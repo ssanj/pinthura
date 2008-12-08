@@ -15,6 +15,9 @@
  */
 package com.googlecode.pinthura.io;
 
+import com.googlecode.pinthura.boundary.java.lang.MathBoundaryImpl;
+import com.googlecode.pinthura.util.RandomDataCreator;
+import com.googlecode.pinthura.util.RandomDataCreatorImpl;
 import org.easymock.EasyMock;
 import org.easymock.IMocksControl;
 import org.junit.Before;
@@ -22,34 +25,37 @@ import org.junit.Test;
 
 import java.util.Arrays;
 
-public final class FileTextWriterThrowingExceptionsUnderTest {
+public final class AFileTextWriterThrowingExceptionsWhenAppendingUnderTest {
 
     private final IMocksControl mockControl = EasyMock.createControl();
     private FileTextWriter writer;
     private FileWriterFactory mockFileWriterFactory;
+    private RandomDataCreator randomDataCreator;
 
     @Before
     public void setup() {
         mockFileWriterFactory = mockControl.createMock(FileWriterFactory.class);
+        randomDataCreator = new RandomDataCreatorImpl(new MathBoundaryImpl());
         writer = new FileTextWriterImpl(mockFileWriterFactory);
     }
 
-    @SuppressWarnings({ "ThrowableInstanceNeverThrown" })
+    @SuppressWarnings("ThrowableInstanceNeverThrown")
     @Test(expected = FileTextWriterException.class)
-    public void shouldThrowAnExceptionIfIfFileWriterFactoryThrowsAnException() {
-        String fileName = "foo.bar.fib";
-        EasyMock.expect(mockFileWriterFactory.create(fileName, false)).andThrow(new RuntimeException());
+    public void shouldThrowAnExceptionIfFileWriterFactoryThrowsAnExceptionWhenAppending() {
+        String fileName = randomDataCreator.createFileName(5);
+        EasyMock.expect(mockFileWriterFactory.create(fileName, true)).andThrow(new RuntimeException());
         mockControl.replay();
 
-        writer.write(fileName, Arrays.asList("testing987"));
+        writer.append(fileName, Arrays.asList(randomDataCreator.createString(4)));
     }
 
     @Test(expected = FileTextWriterException.class)
-    public void shouldThrownAnExceptionIfFileWriterFactoryReturnsNull() {
-        String fileName = "foo.bar.fib";
-        EasyMock.expect(mockFileWriterFactory.create(fileName, false)).andReturn(null);
+    public void shouldThrowAnExceptionIfFileWriterFactoryReturnsNullWhenAppending() {
+        String fileName = randomDataCreator.createFileName(10);
+        EasyMock.expect(mockFileWriterFactory.create(fileName, true)).andReturn(null);
         mockControl.replay();
 
-        writer.write(fileName, Arrays.asList("testing987"));
+        writer.append(fileName, Arrays.asList(randomDataCreator.createString(16)));
     }
+
 }
