@@ -17,7 +17,19 @@ package com.googlecode.pinthura.io;
 
 import com.googlecode.pinthura.io.boundary.WriterBoundary;
 
+/**
+ * This interface defines how a <code>WriteBoundary</code> is created for a specified file in either overwrite or append mode.
+ */
 public interface FileWriterFactory {
 
-    WriterBoundary create(String fileName, boolean append);
+    /**
+     * Creates a <code>WriterBoundary</code> for the file specified.
+     * @param fileName The name of the file to create a <code>WriterBoundary</code> for. If the path to this file does not exist the
+     * directory path will be created.
+     * @param append If true, creates a <code>WriterBoundary</code> for appending, if false for overwriting.
+     * @return A <code>WriterBoundary</code> to the specified file.
+     * @throws FileWriterFactoryException If the <code>WriterBoundary</code> could not be created.
+     *
+     */
+    WriterBoundary create(String fileName, boolean append) throws FileWriterFactoryException;
 }
