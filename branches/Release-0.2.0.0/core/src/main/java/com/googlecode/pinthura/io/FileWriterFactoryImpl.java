@@ -17,6 +17,8 @@ package com.googlecode.pinthura.io;
 
 import com.googlecode.pinthura.io.boundary.WriterBoundary;
 import com.googlecode.pinthura.io.boundary.WriterBoundaryImpl;
+import com.googlecode.pinthura.io.util.FileUtil;
+import com.googlecode.pinthura.io.util.FileUtilImpl;
 
 import java.io.BufferedOutputStream;
 import java.io.FileNotFoundException;
@@ -25,9 +27,15 @@ import java.io.OutputStreamWriter;
 
 public final class FileWriterFactoryImpl implements FileWriterFactory {
 
+    private final FileUtil fileUtil;
+
+    public FileWriterFactoryImpl() {
+        fileUtil = new FileUtilImpl();
+    }
+
     public WriterBoundary create(final String fileName, final boolean append) {
-        //TODO: create non-existant directories for both write and append.
         try {
+            fileUtil.createPathIfNeeded(fileName);
             return new WriterBoundaryImpl(new OutputStreamWriter(new BufferedOutputStream(new FileOutputStream(fileName, append))));
         } catch (FileNotFoundException e) {
             throw new FileWriterFactoryException(e);

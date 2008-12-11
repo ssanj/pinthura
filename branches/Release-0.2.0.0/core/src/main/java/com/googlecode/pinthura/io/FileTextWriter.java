@@ -15,9 +15,25 @@
  */
 package com.googlecode.pinthura.io;
 
+/**
+ * Defines an inteface that facilitates the writing of textual files when given a file name and the contents. The implementation should
+ * handle all opening and closing of the specified file.
+ */
 public interface FileTextWriter {
 
-    void append(String fileName, Iterable<String> sources);
+    /**
+     * Appends the supplied sources to an existing file (if exists or creates one if not).
+     * @param fileName The name of the file to append to.
+     * @param sources The data to append to the file.
+     * @throws FileTextWriterException If there is an error appending/creating the file.
+     */
+    void append(String fileName, Iterable<String> sources) throws FileTextWriterException;
 
-    void write(String fileName, Iterable<String> sources);
+    /**
+     * Writes the supplied sources to the named file (and creates it if it does not exist).
+     * @param fileName The name of the file to create.
+     * @param sources The contents of the file.
+     * @throws FileTextWriterException If there is an error creating the file.
+     */
+    void write(String fileName, Iterable<String> sources) throws FileTextWriterException;
 }

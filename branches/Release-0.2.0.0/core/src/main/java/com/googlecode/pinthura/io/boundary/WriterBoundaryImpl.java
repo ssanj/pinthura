@@ -56,9 +56,7 @@ public final class WriterBoundaryImpl implements WriterBoundary {
 
     @Override
     public boolean equals(final Object object) {
-        return  object != null
-                && object instanceof WriterBoundary
-                && writer.equals(((WriterBoundary) object).getWriter());
+        return this == object || object != null && object instanceof WriterBoundary && writer.equals(((WriterBoundary) object).getWriter());
     }
 
     @Override
