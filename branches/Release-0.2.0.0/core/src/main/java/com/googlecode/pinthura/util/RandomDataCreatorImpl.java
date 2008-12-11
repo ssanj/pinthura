@@ -27,7 +27,7 @@ public final class RandomDataCreatorImpl implements RandomDataCreator {
     private final MathBoundary mathBoundary;
     private final int[] letters;
 
-    public RandomDataCreatorImpl(MathBoundary mathBoundary) {
+    public RandomDataCreatorImpl(final MathBoundary mathBoundary) {
         this.mathBoundary = mathBoundary;
         letters = new int[TOTAL_LETTERS];
         initialiseLetters();
@@ -43,7 +43,7 @@ public final class RandomDataCreatorImpl implements RandomDataCreator {
         }
     }
 
-    public String createString(int length) {
+    public String createString(final int length) {
         StringBuilder builder = new StringBuilder();
 
         for (int index = 0; index  < length; index++) {
@@ -53,7 +53,7 @@ public final class RandomDataCreatorImpl implements RandomDataCreator {
         return builder.toString();
     }
 
-    public String createFileName(int length) {
+    public String createFileName(final int length) {
         return new StringBuilder().append(createString(length)).append(".").append(createString(3)).toString();
     }
 }

@@ -3,6 +3,10 @@
 <!DOCTYPE suppressions PUBLIC "-//Puppy Crawl//DTD Suppressions 1.0//EN" "http://www.puppycrawl.com/dtds/suppressions_1_0.dtd">
 
 <suppressions>
-    <suppress checks="MagicNumberCheck"
-              files="ARandomDataChooserUnderTest.java"/>
+    <suppress checks="MagicNumberCheck" files="AFileTextWriterThrowingExceptionsWhenAppendingUnderTest.java"/>
+    <suppress checks="MagicNumberCheck" files="ARandomDataChooserUnderTest.java"/>
+    <suppress checks="MagicNumberCheck" files="ARandomDataCreatorCreatingFileNamesUnderTest.java"/>
+    <suppress checks="MagicNumberCheck" files="AFileTextWriterThrowingExceptionsWhenWritingUnderTest.java"/>
+    <suppress checks="MagicNumberCheck" files="ARandomDataCreatorCreatingStringsUnderTest.java"/>
+    <suppress checks="MagicNumberCheck" files="RandomDataCreatorImpl.java"/>
 </suppressions>
