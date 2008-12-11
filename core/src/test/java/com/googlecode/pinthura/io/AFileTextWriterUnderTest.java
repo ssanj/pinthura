@@ -31,33 +31,42 @@ public final class AFileTextWriterUnderTest {
     private final IMocksControl mockControl = EasyMock.createControl();
     private FileTextWriter fileTextWriter;
     private FileWriterFactory mockFileWriterFactory;
-    private RandomDataChooser randomDataChooser;
+    private String fileName;
+    private String line1;
+    private String line2;
 
     @Before
     public void setup() {
         mockFileWriterFactory = mockControl.createMock(FileWriterFactory.class);
-        randomDataChooser = new RandomDataChooserImpl(new MathBoundaryImpl());
         fileTextWriter = new FileTextWriterImpl(mockFileWriterFactory);
+
+        RandomDataChooser randomDataChooser = new RandomDataChooserImpl(new MathBoundaryImpl());
+        fileName = randomDataChooser.chooseOneOf("one.txt", "two.xml", "ARandomFile");
+        line1    = randomDataChooser.chooseOneOf("Line1", "Line2", "Line3");
+        line2    = randomDataChooser.chooseOneOf("Line4", "Line5", "Line6");
     }
 
     @Test
     public void shouldWriteTheSuppliedText() {
-        String fileName = randomDataChooser.chooseOneOf("one.txt", "two.xml", "ARandomFile");
-        String line1    = randomDataChooser.chooseOneOf("Line1", "Line2", "Line3");
-        String line2    = randomDataChooser.chooseOneOf("Line4", "Line5", "Line6");
+        assertWriteOrAppend(false);
+        fileTextWriter.write(fileName, Arrays.asList(line1, line2));
+        mockControl.verify();
+    }
 
+    @Test
+    public void shouldAppendTheSuppliedText() {
+        assertWriteOrAppend(true);
+        fileTextWriter.append(fileName, Arrays.asList(line1, line2));
+        mockControl.verify();
+    }
+
+    private void assertWriteOrAppend(final boolean append) {
         WriterBoundary mockWriterBoundary = mockControl.createMock(WriterBoundary.class);
-        EasyMock.expect(mockFileWriterFactory.create(fileName, false)).andReturn(mockWriterBoundary);
+        EasyMock.expect(mockFileWriterFactory.create(fileName, append)).andReturn(mockWriterBoundary);
         mockWriterBoundary.write(line1);
         mockWriterBoundary.write(line2);
         mockWriterBoundary.flush();
         mockWriterBoundary.close();
         mockControl.replay();
-
-        fileTextWriter.write(fileName, Arrays.asList(line1, line2));
-
-        mockControl.verify();
     }
-
-    //TODO: Write a test for append.
 }

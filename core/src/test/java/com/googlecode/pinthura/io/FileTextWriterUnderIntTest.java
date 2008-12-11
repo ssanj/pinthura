@@ -28,6 +28,7 @@ import java.util.Arrays;
 public final class FileTextWriterUnderIntTest {
 
     private FileTextWriter writer;
+    @SuppressWarnings("InstanceVariableOfConcreteClass")
     private StringWriterFactory stringWriterFactory;
 
     @Before
