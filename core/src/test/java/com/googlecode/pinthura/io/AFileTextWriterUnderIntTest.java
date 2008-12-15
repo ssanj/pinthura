@@ -25,7 +25,7 @@ import org.junit.Test;
 import java.io.StringWriter;
 import java.util.Arrays;
 
-public final class FileTextWriterUnderIntTest {
+public final class AFileTextWriterUnderIntTest {
 
     private FileTextWriter writer;
     @SuppressWarnings("InstanceVariableOfConcreteClass")
