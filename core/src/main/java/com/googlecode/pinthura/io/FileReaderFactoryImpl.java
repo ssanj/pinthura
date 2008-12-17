@@ -16,25 +16,19 @@
 package com.googlecode.pinthura.io;
 
 import com.googlecode.pinthura.io.boundary.ReaderBoundary;
+import com.googlecode.pinthura.io.boundary.ReaderBoundaryImpl;
 
-public final class FileContentsReader implements TextFileReader {
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 
-    private final FileReaderFactory readerFactory;
+public final class FileReaderFactoryImpl implements FileReaderFactory {
 
-    public FileContentsReader(final FileReaderFactory readerFactory) {
-        this.readerFactory = readerFactory;
-    }
-
-    public String read(final String fileName) {
-        ReaderBoundary readerBoundary = readerFactory.create(fileName);
-        StringBuilder builder = new StringBuilder();
-
-        int readCharacter;
-        while ((readCharacter = readerBoundary.read()) != -1) {
-            builder.append((char) readCharacter);
+    public ReaderBoundary create(final String fileName) {
+        try {
+            return new ReaderBoundaryImpl(new BufferedReader(new FileReader(fileName)));
+        } catch (FileNotFoundException e) {
+            throw new FileReaderFactoryException(e); 
         }
-
-        readerBoundary.close();
-        return builder.toString();
     }
 }

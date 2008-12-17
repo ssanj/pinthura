@@ -19,5 +19,5 @@ import com.googlecode.pinthura.io.boundary.ReaderBoundary;
 
 public interface FileReaderFactory {
 
-    ReaderBoundary create(String fileName);
+    ReaderBoundary create(String fileName) throws FileReaderFactoryException;
 }

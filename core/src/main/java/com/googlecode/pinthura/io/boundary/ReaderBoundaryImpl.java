@@ -38,6 +38,14 @@ public final class ReaderBoundaryImpl implements ReaderBoundary {
         return reader;
     }
 
+    public void close() {
+        try {
+            reader.close();
+        } catch (IOException e) {
+            throw new ReaderBoundaryException(e);
+        }
+    }
+
     @Override
     public boolean equals(final Object object) {
         return this == object || object != null && object instanceof ReaderBoundary && reader.equals(((ReaderBoundary) object).getReader());

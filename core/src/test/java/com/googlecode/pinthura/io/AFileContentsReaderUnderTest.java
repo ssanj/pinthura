@@ -76,5 +76,6 @@ public final class AFileContentsReaderUnderTest {
 
         EasyMock.expect(mockReaderBoundary.read()).andReturn(-1);
         EasyMock.expect(mockFileReaderFactory.create(fileNameRandom)).andReturn(mockReaderBoundary);
+        mockReaderBoundary.close();
     }
 }
