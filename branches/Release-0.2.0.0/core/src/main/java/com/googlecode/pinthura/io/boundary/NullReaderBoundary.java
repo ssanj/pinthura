@@ -15,15 +15,19 @@
  */
 package com.googlecode.pinthura.io.boundary;
 
-public final class ReaderBoundaryException extends RuntimeException {
+import java.io.Reader;
 
-    private static final long serialVersionUID = -6005400594788327935L;
+public final class NullReaderBoundary implements ReaderBoundary {
 
-    public ReaderBoundaryException() {
-        //default
+    public int read() throws ReaderBoundaryException {
+        throw new ReaderBoundaryException();
     }
 
-    public ReaderBoundaryException(final Throwable cause) {
-        super(cause);
+    public Reader getReader() {
+        throw new ReaderBoundaryException();
+    }
+
+    public void close() throws ReaderBoundaryException {
+        //do nothing.
     }
 }

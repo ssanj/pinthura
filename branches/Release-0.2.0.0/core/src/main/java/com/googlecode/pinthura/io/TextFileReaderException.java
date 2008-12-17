@@ -13,17 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.pinthura.io.boundary;
+package com.googlecode.pinthura.io;
 
-public final class ReaderBoundaryException extends RuntimeException {
+public final class TextFileReaderException extends RuntimeException {
 
-    private static final long serialVersionUID = -6005400594788327935L;
+    private static final long serialVersionUID = -2745620223120875871L;
 
-    public ReaderBoundaryException() {
-        //default
-    }
-
-    public ReaderBoundaryException(final Throwable cause) {
+    public TextFileReaderException(final Throwable cause) {
         super(cause);
     }
 }

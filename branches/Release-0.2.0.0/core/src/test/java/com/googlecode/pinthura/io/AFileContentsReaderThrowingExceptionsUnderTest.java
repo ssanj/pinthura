@@ -21,60 +21,45 @@ import com.googlecode.pinthura.util.RandomDataCreator;
 import com.googlecode.pinthura.util.RandomDataCreatorImpl;
 import org.easymock.EasyMock;
 import org.easymock.IMocksControl;
-import static org.hamcrest.core.IsEqual.equalTo;
-import static org.junit.Assert.assertThat;
 import org.junit.Before;
 import org.junit.Test;
 
-public final class AFileContentsReaderUnderTest {
+public final class AFileContentsReaderThrowingExceptionsUnderTest {
 
     private final IMocksControl mockControl = EasyMock.createControl();
     private TextFileReader reader;
     private FileReaderFactory mockFileReaderFactory;
     private ReaderBoundary mockReaderBoundary;
     private String fileNameRandom;
-    private RandomDataCreator randomDataCreator;
 
     @Before
     public void setup() {
         mockFileReaderFactory = mockControl.createMock(FileReaderFactory.class);
-        randomDataCreator = new RandomDataCreatorImpl(new MathBoundaryImpl());
+        RandomDataCreator randomDataCreator = new RandomDataCreatorImpl(new MathBoundaryImpl());
         mockReaderBoundary = mockControl.createMock(ReaderBoundary.class);
         reader = new FileContentsReader(mockFileReaderFactory);
         fileNameRandom = randomDataCreator.createFileName(15);
     }
 
-    @Test
-    public void shouldReadAGivenFile() {
-        expectReadContent(randomDataCreator.createString(25));
-    }
-
-    @Test
-    public void shouldReaderAnotherFile() {
-        expectReadContent(randomDataCreator.createString(100));
-    }
-
-    private void expectReadContent(final String content) {
-        expectContent(content);
-        assertContent(content);
-    }
-
-
-    private void assertContent(final String content) {
+    @SuppressWarnings("ThrowableInstanceNeverThrown")
+    @Test(expected = TextFileReaderException.class)
+    public void shouldRethrowExceptionsIfReaderBoundaryCreationFails() {
+        EasyMock.expect(mockFileReaderFactory.create(fileNameRandom)).andThrow(new RuntimeException());
         mockControl.replay();
 
-        assertThat(reader.read(fileNameRandom), equalTo(content));
-
-        mockControl.verify();
+        reader.read(fileNameRandom);
     }
 
-    private void expectContent(final String content) {
-        for (char character : content.toCharArray()) {
-            EasyMock.expect(mockReaderBoundary.read()).andReturn((int) character);
-        }
-
-        EasyMock.expect(mockReaderBoundary.read()).andReturn(-1);
+    @SuppressWarnings("ThrowableInstanceNeverThrown")
+    @Test(expected = TextFileReaderException.class)
+    public void shouldCloseReaderBoundary() {
         EasyMock.expect(mockFileReaderFactory.create(fileNameRandom)).andReturn(mockReaderBoundary);
+        EasyMock.expect(mockReaderBoundary.read()).andThrow(new RuntimeException());
         mockReaderBoundary.close();
+        mockControl.replay();
+
+        reader.read(fileNameRandom);
+
+        mockControl.verify();
     }
 }

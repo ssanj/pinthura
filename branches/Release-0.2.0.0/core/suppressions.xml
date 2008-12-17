@@ -7,6 +7,8 @@
     <suppress checks="MagicNumberCheck" files="ARandomDataChooserUnderTest.java"/>
     <suppress checks="MagicNumberCheck" files="ARandomDataCreatorCreatingFileNamesUnderTest.java"/>
     <suppress checks="MagicNumberCheck" files="AFileTextWriterThrowingExceptionsWhenWritingUnderTest.java"/>
+    <suppress checks="MagicNumberCheck" files="AFileContentsReaderUnderTest.java"/>
+    <suppress checks="MagicNumberCheck" files="AFileContentsReaderThrowingExceptionsUnderTest.java"/>
     <suppress checks="MagicNumberCheck" files="ARandomDataCreatorCreatingStringsUnderTest.java"/>
     <suppress checks="MagicNumberCheck" files="RandomDataCreatorImpl.java"/>
 </suppressions>

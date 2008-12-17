@@ -21,7 +21,15 @@ public interface ReaderBoundary {
 
     int read() throws ReaderBoundaryException;
 
-    Reader getReader();
+    Reader getReader() throws ReaderBoundaryException;
 
     void close() throws ReaderBoundaryException;
+
+    final class NullObject {
+
+        private NullObject() { }
+
+        public static final ReaderBoundary NULL_OBJECT = new NullReaderBoundary();
+
+    }
 }
