@@ -33,7 +33,7 @@ public final class AFileContentsReaderUnderTest {
     private TextFileReader reader;
     private FileReaderFactory mockFileReaderFactory;
     private ReaderBoundary mockReaderBoundary;
-    private String fileName;
+    private String fileNameRandom;
     private RandomDataCreator randomDataCreator;
 
     @Before
@@ -42,7 +42,7 @@ public final class AFileContentsReaderUnderTest {
         randomDataCreator = new RandomDataCreatorImpl(new MathBoundaryImpl());
         mockReaderBoundary = mockControl.createMock(ReaderBoundary.class);
         reader = new FileContentsReader(mockFileReaderFactory);
-        fileName = randomDataCreator.createFileName(15);
+        fileNameRandom = randomDataCreator.createFileName(15);
     }
 
     @Test
@@ -62,10 +62,9 @@ public final class AFileContentsReaderUnderTest {
 
 
     private void assertContent(final String content) {
-        EasyMock.expect(mockFileReaderFactory.create(fileName)).andReturn(mockReaderBoundary);
         mockControl.replay();
 
-        assertThat(reader.read(fileName), equalTo(content));
+        assertThat(reader.read(fileNameRandom), equalTo(content));
 
         mockControl.verify();
     }
@@ -76,5 +75,6 @@ public final class AFileContentsReaderUnderTest {
         }
 
         EasyMock.expect(mockReaderBoundary.read()).andReturn(-1);
+        EasyMock.expect(mockFileReaderFactory.create(fileNameRandom)).andReturn(mockReaderBoundary);
     }
 }
