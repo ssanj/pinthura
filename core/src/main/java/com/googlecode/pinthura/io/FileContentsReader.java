@@ -16,6 +16,7 @@
 package com.googlecode.pinthura.io;
 
 import com.googlecode.pinthura.io.boundary.ReaderBoundary;
+import static com.googlecode.pinthura.io.boundary.ReaderBoundary.NullObject.NULL_OBJECT;
 
 public final class FileContentsReader implements TextFileReader {
 
@@ -26,15 +27,22 @@ public final class FileContentsReader implements TextFileReader {
     }
 
     public String read(final String fileName) {
-        ReaderBoundary readerBoundary = readerFactory.create(fileName);
-        StringBuilder builder = new StringBuilder();
+        ReaderBoundary readerBoundary = NULL_OBJECT; //Avoid using nulls with NullObject.
 
-        int readCharacter;
-        while ((readCharacter = readerBoundary.read()) != -1) {
-            builder.append((char) readCharacter);
+        try {
+            StringBuilder builder = new StringBuilder();
+            readerBoundary = readerFactory.create(fileName);
+
+            int readCharacter;
+            while ((readCharacter = readerBoundary.read()) != -1) {
+                builder.append((char) readCharacter);
+            }
+
+            return builder.toString();
+        } catch (Exception e) {
+            throw new TextFileReaderException(e);
+        } finally {
+            readerBoundary.close();
         }
-
-        readerBoundary.close();
-        return builder.toString();
     }
 }

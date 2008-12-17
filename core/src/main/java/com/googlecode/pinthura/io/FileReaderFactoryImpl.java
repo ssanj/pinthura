@@ -28,7 +28,7 @@ public final class FileReaderFactoryImpl implements FileReaderFactory {
         try {
             return new ReaderBoundaryImpl(new BufferedReader(new FileReader(fileName)));
         } catch (FileNotFoundException e) {
-            throw new FileReaderFactoryException(e); 
+            throw new FileReaderFactoryException(e);
         }
     }
 }

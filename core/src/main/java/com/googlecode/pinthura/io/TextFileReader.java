@@ -17,5 +17,5 @@ package com.googlecode.pinthura.io;
 
 public interface TextFileReader {
 
-    String read(String fileName);
+    String read(String fileName) throws TextFileReaderException;
 }
