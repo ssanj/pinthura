@@ -15,10 +15,9 @@
  */
 package com.googlecode.pinthura.io;
 
-import com.googlecode.pinthura.boundary.java.lang.MathBoundaryImpl;
 import com.googlecode.pinthura.io.boundary.WriterBoundary;
 import com.googlecode.pinthura.util.RandomDataChooser;
-import com.googlecode.pinthura.util.RandomDataChooserImpl;
+import com.googlecode.pinthura.util.builder.RandomDataChooserBuilder;
 import org.easymock.EasyMock;
 import org.easymock.IMocksControl;
 import org.junit.Before;
@@ -40,7 +39,7 @@ public final class AFileTextWriterUnderTest {
         mockFileWriterFactory = mockControl.createMock(FileWriterFactory.class);
         fileTextWriter = new FileTextWriterImpl(mockFileWriterFactory);
 
-        RandomDataChooser randomDataChooser = new RandomDataChooserImpl(new MathBoundaryImpl());
+        RandomDataChooser randomDataChooser = new RandomDataChooserBuilder().build();
         fileName = randomDataChooser.chooseOneOf("one.txt", "two.xml", "ARandomFile");
         line1    = randomDataChooser.chooseOneOf("Line1", "Line2", "Line3");
         line2    = randomDataChooser.chooseOneOf("Line4", "Line5", "Line6");

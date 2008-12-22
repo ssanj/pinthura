@@ -15,13 +15,29 @@
  */
 package com.googlecode.pinthura.util.builder;
 
+import com.googlecode.pinthura.annotation.SuppressionReason;
+import static com.googlecode.pinthura.annotation.SuppressionReason.Reason;
+import com.googlecode.pinthura.boundary.java.lang.MathBoundary;
 import com.googlecode.pinthura.boundary.java.lang.MathBoundaryImpl;
 import com.googlecode.pinthura.util.RandomDataChooser;
 import com.googlecode.pinthura.util.RandomDataChooserImpl;
 
+@SuppressWarnings({"MethodReturnOfConcreteClass"})
+@SuppressionReason(Reason.BUILDER_PATTERN)
 public final class RandomDataChooserBuilder {
 
+    private MathBoundary mathBoundary;
+
+    public RandomDataChooserBuilder() {
+        mathBoundary = new MathBoundaryImpl();
+    }
+
+    public RandomDataChooserBuilder withMathBoundary(final MathBoundary mathBoundary) {
+        this.mathBoundary = mathBoundary;
+        return this;
+    }
+
     public RandomDataChooser build() {
-        return new RandomDataChooserImpl(new MathBoundaryImpl());
+        return new RandomDataChooserImpl(mathBoundary);
     }
 }
