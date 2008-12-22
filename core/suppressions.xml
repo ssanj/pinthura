@@ -11,4 +11,5 @@
     <suppress checks="MagicNumberCheck" files="AFileContentsReaderThrowingExceptionsUnderTest.java"/>
     <suppress checks="MagicNumberCheck" files="ARandomDataCreatorCreatingStringsUnderTest.java"/>
     <suppress checks="MagicNumberCheck" files="RandomDataCreatorImpl.java"/>
+    <suppress checks="MagicNumberCheck" files="AFileContentsReaderUnderIntTestUnderTest.java"/>
 </suppressions>

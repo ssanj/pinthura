@@ -15,10 +15,9 @@
  */
 package com.googlecode.pinthura.io;
 
-import com.googlecode.pinthura.boundary.java.lang.MathBoundaryImpl;
 import com.googlecode.pinthura.io.boundary.ReaderBoundary;
 import com.googlecode.pinthura.util.RandomDataCreator;
-import com.googlecode.pinthura.util.RandomDataCreatorImpl;
+import com.googlecode.pinthura.util.builder.RandomDataCreatorBuilder;
 import org.easymock.EasyMock;
 import org.easymock.IMocksControl;
 import static org.hamcrest.core.IsEqual.equalTo;
@@ -38,7 +37,7 @@ public final class AFileContentsReaderUnderTest {
     @Before
     public void setup() {
         mockFileReaderFactory = mockControl.createMock(FileReaderFactory.class);
-        randomDataCreator = new RandomDataCreatorImpl(new MathBoundaryImpl());
+        randomDataCreator = new RandomDataCreatorBuilder().build();
         mockReaderBoundary = mockControl.createMock(ReaderBoundary.class);
         reader = new FileContentsReader(mockFileReaderFactory);
         fileNameRandom = randomDataCreator.createFileName(15);
