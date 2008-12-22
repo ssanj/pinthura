@@ -15,9 +15,8 @@
  */
 package com.googlecode.pinthura.io;
 
-import com.googlecode.pinthura.boundary.java.lang.MathBoundaryImpl;
 import com.googlecode.pinthura.util.RandomDataCreator;
-import com.googlecode.pinthura.util.RandomDataCreatorImpl;
+import com.googlecode.pinthura.util.builder.RandomDataCreatorBuilder;
 import org.easymock.EasyMock;
 import org.easymock.IMocksControl;
 import org.junit.Before;
@@ -35,7 +34,7 @@ public final class AFileTextWriterThrowingExceptionsWhenWritingUnderTest {
     @Before
     public void setup() {
         mockFileWriterFactory = mockControl.createMock(FileWriterFactory.class);
-        randomDataCreator = new RandomDataCreatorImpl(new MathBoundaryImpl());
+        randomDataCreator = new RandomDataCreatorBuilder().build();
         writer = new FileTextWriterImpl(mockFileWriterFactory);
     }
 

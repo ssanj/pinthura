@@ -15,13 +15,28 @@
  */
 package com.googlecode.pinthura.util.builder;
 
+import com.googlecode.pinthura.annotation.SuppressionReason;
+import com.googlecode.pinthura.boundary.java.lang.MathBoundary;
 import com.googlecode.pinthura.boundary.java.lang.MathBoundaryImpl;
 import com.googlecode.pinthura.util.RandomDataCreator;
 import com.googlecode.pinthura.util.RandomDataCreatorImpl;
 
-public final class RandomDataCreatorBuilder {    
+@SuppressWarnings("MethodReturnOfConcreteClass")
+@SuppressionReason(SuppressionReason.Reason.BUILDER_PATTERN)
+public final class RandomDataCreatorBuilder {
+
+    private MathBoundary mathBoundary;
+
+    public RandomDataCreatorBuilder() {
+        mathBoundary = new MathBoundaryImpl();
+    }
+
+    public RandomDataCreatorBuilder withMathBoundary(final MathBoundary mathBoundary) {
+        this.mathBoundary = mathBoundary;
+        return this;
+    }
 
     public RandomDataCreator build() {
-        return new RandomDataCreatorImpl(new MathBoundaryImpl());
+        return new RandomDataCreatorImpl(mathBoundary);
     }
 }

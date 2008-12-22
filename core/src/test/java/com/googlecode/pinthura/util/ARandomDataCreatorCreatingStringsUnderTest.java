@@ -16,6 +16,7 @@
 package com.googlecode.pinthura.util;
 
 import com.googlecode.pinthura.boundary.java.lang.MathBoundary;
+import com.googlecode.pinthura.util.builder.RandomDataCreatorBuilder;
 import org.easymock.EasyMock;
 import org.easymock.IMocksControl;
 import static org.hamcrest.core.IsEqual.equalTo;
@@ -32,7 +33,7 @@ public final class ARandomDataCreatorCreatingStringsUnderTest {
     @Before
     public void setup() {
         mockMathBoundary = mockControl.createMock(MathBoundary.class);
-        randomDataCreator = new RandomDataCreatorImpl(mockMathBoundary);
+        randomDataCreator = new RandomDataCreatorBuilder().withMathBoundary(mockMathBoundary).build();
     }
 
     @Test
