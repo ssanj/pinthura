@@ -21,8 +21,8 @@ import org.junit.Test;
 
 public final class ARandomDataCreatorCreatingBoundedNegativeNumbersUnderTest {
 
-    @SuppressWarnings({"InstanceVariableOfConcreteClass"})
-    @SuppressionReason(SuppressionReason.Reason.TEST_BUILDER_HANDLER)
+    @SuppressWarnings("InstanceVariableOfConcreteClass")
+    @SuppressionReason(SuppressionReason.Reason.TEST_BEHAVIOUR_HANDLER)
     private ARandomDataCreatorCreatingNumbersTBH handler;
 
     @Before
