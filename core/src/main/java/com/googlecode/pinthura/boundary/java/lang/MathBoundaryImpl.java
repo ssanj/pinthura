@@ -20,4 +20,8 @@ public final class MathBoundaryImpl implements MathBoundary {
     public double random() {
         return Math.random();
     }
+
+    public double floor(final double value) {
+        return Math.floor(value);
+    }
 }

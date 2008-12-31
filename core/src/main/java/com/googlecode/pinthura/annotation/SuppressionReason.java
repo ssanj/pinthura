@@ -37,5 +37,5 @@ public @interface SuppressionReason {
 
     String desc() default "";
 
-    enum Reason {BUILDER_PATTERN, TEST_VALUE, CANT_INFER_GENERICS, OTHER}
+    enum Reason {BUILDER_PATTERN, TEST_VALUE, CANT_INFER_GENERICS, TEST_BUILDER_HANDLER, OTHER}
 }

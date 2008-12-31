@@ -19,8 +19,7 @@ import com.googlecode.pinthura.annotation.SuppressionReason;
 import org.junit.Before;
 import org.junit.Test;
 
-
-public final class ARandomDataCreatorCreatingBoundedNumbersUnderTest {
+public final class ARandomDataCreatorCreatingBoundedNegativeNumbersUnderTest {
 
     @SuppressWarnings({"InstanceVariableOfConcreteClass"})
     @SuppressionReason(SuppressionReason.Reason.TEST_BUILDER_HANDLER)
@@ -32,22 +31,20 @@ public final class ARandomDataCreatorCreatingBoundedNumbersUnderTest {
     }
 
     @Test
-    public void shouldReturnABoundedNumber() {
-        expectBoundedNumber(0.5, 10, 20, 15);
-    }
-
-    @Test
     public void shouldReturnTheMinValue() {
-        expectBoundedNumber(0.0001, 300, 555, 300);
+        handler.expectRandomValue(0.001).expectFlooredValue(-9.995, -10).replay();
+        handler.createNumber(-10, -5).assertNumbersAreEqual(-10).verify();
     }
 
     @Test
     public void shouldNotReturnTheUpperBoundary() {
-        expectBoundedNumber(0.9999, 50, 100, 99);
+        handler.expectRandomValue(0.999999).expectFlooredValue(-100.0001, -101).replay();
+        handler.createNumber(-200, -100).assertNumbersAreEqual(-101).verify();
     }
 
-    private void expectBoundedNumber(final double randomVal, final int minVal, final int upperBoundary, final int expectedVal) {
-        handler.expectRandomValue(randomVal).replay();
-        handler.createNumber(minVal, upperBoundary).assertNumbersAreEqual(expectedVal).verify();
+    @Test
+    public void shouldReturnANumberBetweenNegativeAndPositveBounds() {
+        handler.expectRandomValue(0.4).expectFlooredValue(-1, -1).replay();
+        handler.createNumber(-5, 5).assertNumbersAreEqual(-1).verify();
     }
 }
