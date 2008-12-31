@@ -56,4 +56,8 @@ public final class RandomDataCreatorImpl implements RandomDataCreator {
     public String createFileName(final int length) {
         return new StringBuilder().append(createString(length)).append(".").append(createString(3)).toString();
     }
+
+    public int createNumber(final int value) {
+        return (int) (mathBoundary.random() * value);
+    }
 }

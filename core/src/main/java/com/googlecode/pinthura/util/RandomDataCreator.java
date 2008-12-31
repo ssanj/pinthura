@@ -25,4 +25,15 @@ public interface RandomDataCreator {
     String createString(int length);
 
     String createFileName(int length);
+
+
+    /**
+     * Creates a number between 0 and value (exclusive).
+     * @param value The value below which numbers should be generated. For positive numbers the value generated will have a maximum value of
+     * (value - 1) and for negative numbers it will have a maximum value of (value + 1).
+     * @return a number between 0 and value (exclusive).
+     *
+     * -value <---- 0 ----> value
+     */
+    int createNumber(int value);
 }
