@@ -60,4 +60,8 @@ public final class RandomDataCreatorImpl implements RandomDataCreator {
     public int createNumber(final int value) {
         return (int) (mathBoundary.random() * value);
     }
+
+    public int createNumber(final int min, final int upperBoundary) {
+        return (int) (min + (mathBoundary.random() * (upperBoundary - min)));
+    }
 }
