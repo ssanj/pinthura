@@ -36,4 +36,12 @@ public interface RandomDataCreator {
      * -value <---- 0 ----> value
      */
     int createNumber(int value);
+
+    /**
+     * Creates a number between the min (inclusive) and the upper boundary (exclusive).
+     * @param min The lowest number possible.
+     * @param upperBoundary The upper boundary for the created number. (exclusive).
+     * @return A number between the lower boundary (inclusive) and the upper boundary (exclusive).
+     */
+    int createNumber(int min, int upperBoundary);
 }
