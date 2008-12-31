@@ -18,4 +18,6 @@ package com.googlecode.pinthura.boundary.java.lang;
 public interface MathBoundary {
 
     double random();
+
+    double floor(double value);
 }
