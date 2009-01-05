@@ -15,29 +15,19 @@
  */
 package com.googlecode.pinthura.util;
 
-import com.googlecode.pinthura.boundary.java.lang.MathBoundary;
-import com.googlecode.pinthura.util.builder.RandomDataCreatorBuilder;
-import org.easymock.EasyMock;
-import org.easymock.IMocksControl;
-import static org.hamcrest.core.IsEqual.equalTo;
-import static org.junit.Assert.assertThat;
+import com.googlecode.pinthura.annotation.SuppressionReason;
 import org.junit.Before;
 import org.junit.Test;
 
 public final class ARandomDataCreatorCreatingNumbersUnderTest {
 
-    private final IMocksControl mockControl;
-    private MathBoundary mockMathBoundary;
-    private RandomDataCreator creator;
-
-    public ARandomDataCreatorCreatingNumbersUnderTest() {
-        mockControl = EasyMock.createControl();
-    }
+    @SuppressWarnings("InstanceVariableOfConcreteClass")
+    @SuppressionReason(SuppressionReason.Reason.TEST_BEHAVIOUR_HANDLER)
+    private ARandomDataCreatorCreatingNumbersTBH handler;
 
     @Before
     public void setup() {
-        mockMathBoundary = mockControl.createMock(MathBoundary.class);
-        creator = new RandomDataCreatorBuilder().withMathBoundary(mockMathBoundary).build();
+        handler = new ARandomDataCreatorCreatingNumbersTBH();
     }
 
     @Test
@@ -60,13 +50,13 @@ public final class ARandomDataCreatorCreatingNumbersUnderTest {
         expectNumber(0.9999, 50, 49);
     }
 
-    private void expectNumber(final double randomValue, final int maxVal, final int expectedVal) {
-        EasyMock.expect(mockMathBoundary.random()).andReturn(randomValue);
-        mockControl.replay();
+    private void expectNumber(final double randomValue, final int value, final int expectedVal) {
+        handler.expectRandomValue(randomValue);
+        handler.replay();
 
-        int number = creator.createNumber(maxVal);
-        assertThat(number, equalTo(expectedVal));
+        handler.createNumber(value);
+        handler.assertNumbersAreEqual(expectedVal);
 
-        mockControl.verify();
+        handler.verify();
     }
 }

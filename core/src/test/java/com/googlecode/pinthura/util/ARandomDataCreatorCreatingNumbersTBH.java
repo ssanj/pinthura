@@ -43,6 +43,11 @@ public final class ARandomDataCreatorCreatingNumbersTBH {
         return this;
     }
 
+    public ARandomDataCreatorCreatingNumbersTBH createNumber(int value) {
+        number = creator.createNumber(value);
+        return this;
+    }
+
     public ARandomDataCreatorCreatingNumbersTBH createNumber(int minVal, int upperBoundary) {
         number = creator.createNumber(minVal, upperBoundary);
         return this;
