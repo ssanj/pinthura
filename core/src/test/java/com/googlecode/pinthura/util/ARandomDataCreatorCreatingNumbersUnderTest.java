@@ -15,19 +15,29 @@
  */
 package com.googlecode.pinthura.util;
 
-import com.googlecode.pinthura.annotation.SuppressionReason;
+import com.googlecode.pinthura.boundary.java.lang.MathBoundary;
+import com.googlecode.pinthura.util.builder.RandomDataCreatorBuilder;
+import org.easymock.EasyMock;
+import org.easymock.IMocksControl;
+import static org.hamcrest.core.IsEqual.equalTo;
+import static org.junit.Assert.assertThat;
 import org.junit.Before;
 import org.junit.Test;
 
 public final class ARandomDataCreatorCreatingNumbersUnderTest {
 
-    @SuppressWarnings("InstanceVariableOfConcreteClass")
-    @SuppressionReason(SuppressionReason.Reason.INCUBATOR)
-    private ARandomDataCreatorCreatingNumbersIncubator incubator;
+    private final IMocksControl mockControl;
+    private MathBoundary mockMathBoundary;
+    private RandomDataCreator creator;
+
+    public ARandomDataCreatorCreatingNumbersUnderTest() {
+         mockControl = EasyMock.createControl();
+    }
 
     @Before
     public void setup() {
-        incubator = new ARandomDataCreatorCreatingNumbersIncubator();
+        mockMathBoundary = mockControl.createMock(MathBoundary.class);
+        creator = new RandomDataCreatorBuilder().withMathBoundary(mockMathBoundary).build();
     }
 
     @Test
@@ -51,10 +61,12 @@ public final class ARandomDataCreatorCreatingNumbersUnderTest {
     }
 
     private void expectNumber(final double randomValue, final int value, final int expectedVal) {
-        incubator.supplyRandomValue(randomValue)
-                 .supplyUpperLimit(value)
-                 .performCreateNumber()
-                 .observeNumber(expectedVal).isReturned()
-                 .execute();
+        EasyMock.expect(mockMathBoundary.random()).andReturn(randomValue);
+        mockControl.replay();
+
+        int number = creator.createNumber(value);
+        assertThat(number, equalTo(expectedVal));
+
+        mockControl.verify();
     }
 }

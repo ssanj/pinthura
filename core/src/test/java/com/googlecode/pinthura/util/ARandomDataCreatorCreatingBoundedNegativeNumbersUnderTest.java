@@ -23,11 +23,11 @@ public final class ARandomDataCreatorCreatingBoundedNegativeNumbersUnderTest {
 
     @SuppressWarnings("InstanceVariableOfConcreteClass")
     @SuppressionReason(SuppressionReason.Reason.INCUBATOR)
-    private ARandomDataCreatorCreatingNumbersIncubator incubator;
+    private ARandomDataCreatorCreatingBoundedNumbersIncubator incubator;
 
     @Before
     public void setup() {
-        incubator = new ARandomDataCreatorCreatingNumbersIncubator();
+        incubator = new ARandomDataCreatorCreatingBoundedNumbersIncubator();
     }
 
     @Test
@@ -35,8 +35,8 @@ public final class ARandomDataCreatorCreatingBoundedNegativeNumbersUnderTest {
         incubator.supplyRandomValue(0.001)
                  .supplyValueToBeFloored(-9.995)
                  .supplyFlooredValue(-10)
-                 .supplyMinimumValue(-10)
-                 .supplyUpperLimit(-5)
+                 .supplyParameterMinimumValue(-10)
+                 .supplyParameterUpperLimit(-5)
                  .performCreateBoundedNegativeNumber()
                  .observeNumber(-10).isReturned()
                  .execute();
@@ -47,8 +47,8 @@ public final class ARandomDataCreatorCreatingBoundedNegativeNumbersUnderTest {
         incubator.supplyRandomValue(0.999999)
                  .supplyValueToBeFloored(-100.0001)
                  .supplyFlooredValue(-101)
-                 .supplyMinimumValue(-200)
-                 .supplyUpperLimit(-100)
+                 .supplyParameterMinimumValue(-200)
+                 .supplyParameterUpperLimit(-100)
                  .performCreateBoundedNegativeNumber()
                  .observeNumber(-101).isReturned()
                  .execute();
@@ -59,8 +59,8 @@ public final class ARandomDataCreatorCreatingBoundedNegativeNumbersUnderTest {
         incubator.supplyRandomValue(0.4)
                  .supplyValueToBeFloored(-1)
                  .supplyFlooredValue(-1)
-                 .supplyMinimumValue(-5)
-                 .supplyUpperLimit(5)
+                 .supplyParameterMinimumValue(-5)
+                 .supplyParameterUpperLimit(5)
                  .performCreateBoundedNegativeNumber()
                  .observeNumber(-1).isReturned()
                  .execute();

@@ -24,11 +24,11 @@ public final class ARandomDataCreatorCreatingBoundedNumbersUnderTest {
 
     @SuppressWarnings("InstanceVariableOfConcreteClass")
     @SuppressionReason(SuppressionReason.Reason.INCUBATOR)
-    private ARandomDataCreatorCreatingNumbersIncubator incubator;
+    private ARandomDataCreatorCreatingBoundedNumbersIncubator incubator;
 
     @Before
     public void setup() {
-        incubator = new ARandomDataCreatorCreatingNumbersIncubator();
+        incubator = new ARandomDataCreatorCreatingBoundedNumbersIncubator();
     }
 
     @Test
@@ -48,8 +48,8 @@ public final class ARandomDataCreatorCreatingBoundedNumbersUnderTest {
 
     private void expectBoundedNumber(final double randomVal, final int minVal, final int upperBoundary, final int expectedVal) {
         incubator.supplyRandomValue(randomVal)
-                 .supplyMinimumValue(minVal)
-                 .supplyUpperLimit(upperBoundary)
+                 .supplyParameterMinimumValue(minVal)
+                 .supplyParameterUpperLimit(upperBoundary)
                  .performCreateBoundedNumber()
                  .observeNumber(expectedVal).isReturned()
                  .execute();
