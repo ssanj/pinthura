@@ -44,4 +44,13 @@ public interface RandomDataCreator {
      * @return A number between the lower boundary (inclusive) and the upper boundary (exclusive).
      */
     int createNumber(int min, int upperBoundary);
+
+
+    /**
+     * Returns a random element of an enumeration.
+     * @param typeClass The enumeration class of T.
+     * @param <T> The Type of enumeration.
+     * @return A random element of an enumeration of type T.
+     */
+    <T extends Enum> T createType(Class<T> typeClass);
 }

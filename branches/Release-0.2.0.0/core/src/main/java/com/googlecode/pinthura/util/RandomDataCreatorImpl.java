@@ -17,6 +17,7 @@ package com.googlecode.pinthura.util;
 
 import com.googlecode.pinthura.boundary.java.lang.MathBoundary;
 
+//TODO: Consider breaking this into 3 classes: RandomStrings, RandomNumbers and RandomTypes
 public final class RandomDataCreatorImpl implements RandomDataCreator {
 
     private static final int TOTAL_LETTERS          = 52;
@@ -70,5 +71,10 @@ public final class RandomDataCreatorImpl implements RandomDataCreator {
         }
 
         return (int) (min + randomValue);
+    }
+
+    public <T extends Enum> T createType(final Class<T> typeClass) {
+        T[] elements = typeClass.getEnumConstants();
+        return elements[((int) (mathBoundary.random() * elements.length))];
     }
 }
