@@ -22,29 +22,47 @@ import org.junit.Test;
 public final class ARandomDataCreatorCreatingBoundedNegativeNumbersUnderTest {
 
     @SuppressWarnings("InstanceVariableOfConcreteClass")
-    @SuppressionReason(SuppressionReason.Reason.TEST_BEHAVIOUR_HANDLER)
-    private ARandomDataCreatorCreatingNumbersTBH handler;
+    @SuppressionReason(SuppressionReason.Reason.INCUBATOR)
+    private ARandomDataCreatorCreatingNumbersIncubator incubator;
 
     @Before
     public void setup() {
-        handler = new ARandomDataCreatorCreatingNumbersTBH();
+        incubator = new ARandomDataCreatorCreatingNumbersIncubator();
     }
 
     @Test
     public void shouldReturnTheMinValue() {
-        handler.expectRandomValue(0.001).expectFlooredValue(-9.995, -10).replay();
-        handler.createNumber(-10, -5).assertNumbersAreEqual(-10).verify();
+        incubator.supplyRandomValue(0.001)
+                 .supplyValueToBeFloored(-9.995)
+                 .supplyFlooredValue(-10)
+                 .supplyMinimumValue(-10)
+                 .supplyUpperLimit(-5)
+                 .performCreateBoundedNegativeNumber()
+                 .observeNumber(-10).isReturned()
+                 .execute();
     }
 
     @Test
     public void shouldNotReturnTheUpperBoundary() {
-        handler.expectRandomValue(0.999999).expectFlooredValue(-100.0001, -101).replay();
-        handler.createNumber(-200, -100).assertNumbersAreEqual(-101).verify();
+        incubator.supplyRandomValue(0.999999)
+                 .supplyValueToBeFloored(-100.0001)
+                 .supplyFlooredValue(-101)
+                 .supplyMinimumValue(-200)
+                 .supplyUpperLimit(-100)
+                 .performCreateBoundedNegativeNumber()
+                 .observeNumber(-101).isReturned()
+                 .execute();
     }
 
     @Test
     public void shouldReturnANumberBetweenNegativeAndPositveBounds() {
-        handler.expectRandomValue(0.4).expectFlooredValue(-1, -1).replay();
-        handler.createNumber(-5, 5).assertNumbersAreEqual(-1).verify();
+        incubator.supplyRandomValue(0.4)
+                 .supplyValueToBeFloored(-1)
+                 .supplyFlooredValue(-1)
+                 .supplyMinimumValue(-5)
+                 .supplyUpperLimit(5)
+                 .performCreateBoundedNegativeNumber()
+                 .observeNumber(-1).isReturned()
+                 .execute();
     }
 }
