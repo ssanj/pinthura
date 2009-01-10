@@ -25,7 +25,7 @@ import static org.junit.Assert.assertThat;
 
 @SuppressWarnings({"MethodReturnOfConcreteClass"})
 @SuppressionReason(SuppressionReason.Reason.BUILDER_PATTERN)
-public final class ARandomDataCreatorCreatingNumbersIncubator {
+public final class ARandomDataCreatorCreatingBoundedNumbersIncubator {
 
     private final IMocksControl mockControl;
     private MathBoundary mockMathBoundary;
@@ -36,62 +36,56 @@ public final class ARandomDataCreatorCreatingNumbersIncubator {
     private double valueToBeFloored;
     private double flooredValue;
 
-    public ARandomDataCreatorCreatingNumbersIncubator() {
+    public ARandomDataCreatorCreatingBoundedNumbersIncubator() {
         mockControl = EasyMock.createControl();
         mockMathBoundary = mockControl.createMock(MathBoundary.class);
         creator = new RandomDataCreatorBuilder().withMathBoundary(mockMathBoundary).build();
     }
 
-    public ARandomDataCreatorCreatingNumbersIncubator performCreateNumber() {
-        mockControl.replay();
-        number = creator.createNumber(upperBoundary);
-        return this;
-    }
-
-    public ARandomDataCreatorCreatingNumbersIncubator performCreateBoundedNumber() {
+    public ARandomDataCreatorCreatingBoundedNumbersIncubator performCreateBoundedNumber() {
         mockControl.replay();
         number = creator.createBoundedNumber(minVal, upperBoundary);
         return this;
     }
 
-    public ARandomDataCreatorCreatingNumbersIncubator performCreateBoundedNegativeNumber() {                
+    public ARandomDataCreatorCreatingBoundedNumbersIncubator performCreateBoundedNegativeNumber() {
         EasyMock.expect(mockMathBoundary.floor(valueToBeFloored)).andReturn(flooredValue);
         mockControl.replay();
         number = creator.createBoundedNumber(minVal, upperBoundary);
         return this;
     }
 
-    public ARandomDataCreatorCreatingNumbersIncubator supplyRandomValue(double randomVal) {
+    public ARandomDataCreatorCreatingBoundedNumbersIncubator supplyRandomValue(double randomVal) {
         EasyMock.expect(mockMathBoundary.random()).andReturn(randomVal);
         return this;
     }
 
-    public ARandomDataCreatorCreatingNumbersIncubator observeNumber(int expectedVal) {
+    public ARandomDataCreatorCreatingBoundedNumbersIncubator observeNumber(int expectedVal) {
         assertThat(number, equalTo(expectedVal));
         return this;
     }
 
-    public ARandomDataCreatorCreatingNumbersIncubator supplyMinimumValue(final int minVal) {
+    public ARandomDataCreatorCreatingBoundedNumbersIncubator supplyParameterMinimumValue(final int minVal) {
         this.minVal = minVal;
         return this;
     }
 
-    public ARandomDataCreatorCreatingNumbersIncubator supplyUpperLimit(final int upperBoundary) {
+    public ARandomDataCreatorCreatingBoundedNumbersIncubator supplyParameterUpperLimit(final int upperBoundary) {
         this.upperBoundary = upperBoundary;
         return this;
     }
 
-    public ARandomDataCreatorCreatingNumbersIncubator supplyValueToBeFloored(final double valueToBeFloored) {
+    public ARandomDataCreatorCreatingBoundedNumbersIncubator supplyValueToBeFloored(final double valueToBeFloored) {
         this.valueToBeFloored = valueToBeFloored;
         return this;
     }
 
-    public ARandomDataCreatorCreatingNumbersIncubator supplyFlooredValue(final double flooredValue) {
+    public ARandomDataCreatorCreatingBoundedNumbersIncubator supplyFlooredValue(final double flooredValue) {
         this.flooredValue = flooredValue;
         return this;
     }
 
-    public ARandomDataCreatorCreatingNumbersIncubator isReturned() {
+    public ARandomDataCreatorCreatingBoundedNumbersIncubator isReturned() {
         return this;
     }
 
