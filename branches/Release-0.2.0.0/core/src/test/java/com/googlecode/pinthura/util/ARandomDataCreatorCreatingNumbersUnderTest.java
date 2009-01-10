@@ -22,12 +22,12 @@ import org.junit.Test;
 public final class ARandomDataCreatorCreatingNumbersUnderTest {
 
     @SuppressWarnings("InstanceVariableOfConcreteClass")
-    @SuppressionReason(SuppressionReason.Reason.TEST_BEHAVIOUR_HANDLER)
-    private ARandomDataCreatorCreatingNumbersTBH handler;
+    @SuppressionReason(SuppressionReason.Reason.INCUBATOR)
+    private ARandomDataCreatorCreatingNumbersIncubator incubator;
 
     @Before
     public void setup() {
-        handler = new ARandomDataCreatorCreatingNumbersTBH();
+        incubator = new ARandomDataCreatorCreatingNumbersIncubator();
     }
 
     @Test
@@ -51,7 +51,10 @@ public final class ARandomDataCreatorCreatingNumbersUnderTest {
     }
 
     private void expectNumber(final double randomValue, final int value, final int expectedVal) {
-        handler.expectRandomValue(randomValue).replay();
-        handler.createNumber(value).assertNumbersAreEqual(expectedVal).verify();
+        incubator.supplyRandomValue(randomValue)
+                 .supplyUpperLimit(value)
+                 .performCreateNumber()
+                 .observeNumber(expectedVal).isReturned()
+                 .execute();
     }
 }

@@ -43,7 +43,7 @@ public interface RandomDataCreator {
      * @param upperBoundary The upper boundary for the created number. (exclusive).
      * @return A number between the lower boundary (inclusive) and the upper boundary (exclusive).
      */
-    int createNumber(int min, int upperBoundary);
+    int createBoundedNumber(int min, int upperBoundary);
 
 
     /**
