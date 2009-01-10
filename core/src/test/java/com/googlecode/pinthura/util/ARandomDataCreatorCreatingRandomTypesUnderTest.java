@@ -26,13 +26,13 @@ import org.junit.Test;
 
 import java.lang.annotation.ElementType;
 
-public final class ARadnomDataCreatorCreatingRandomTypesUnderTest {
+public final class ARandomDataCreatorCreatingRandomTypesUnderTest {
 
     private final IMocksControl mockControl;
     private MathBoundary mockMathBoundary;
     private RandomDataCreator creator;
 
-    public ARadnomDataCreatorCreatingRandomTypesUnderTest() {
+    public ARandomDataCreatorCreatingRandomTypesUnderTest() {
         mockControl = EasyMock.createControl();
     }
 
