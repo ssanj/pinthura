@@ -51,12 +51,7 @@ public final class ARandomDataCreatorCreatingNumbersUnderTest {
     }
 
     private void expectNumber(final double randomValue, final int value, final int expectedVal) {
-        handler.expectRandomValue(randomValue);
-        handler.replay();
-
-        handler.createNumber(value);
-        handler.assertNumbersAreEqual(expectedVal);
-
-        handler.verify();
+        handler.expectRandomValue(randomValue).replay();
+        handler.createNumber(value).assertNumbersAreEqual(expectedVal).verify();
     }
 }
