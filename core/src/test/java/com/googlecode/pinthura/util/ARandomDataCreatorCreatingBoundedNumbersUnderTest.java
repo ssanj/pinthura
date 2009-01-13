@@ -52,6 +52,6 @@ public final class ARandomDataCreatorCreatingBoundedNumbersUnderTest {
                  .supplyParameterUpperLimit(upperBoundary)
                  .performCreateBoundedNumber()
                  .observeNumber(expectedVal).isReturned()
-                 .execute();
+                 .done();
     }
 }

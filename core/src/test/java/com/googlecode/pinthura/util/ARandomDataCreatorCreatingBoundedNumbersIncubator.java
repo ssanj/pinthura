@@ -24,7 +24,7 @@ import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertThat;
 
 @SuppressWarnings({"MethodReturnOfConcreteClass"})
-@SuppressionReason(SuppressionReason.Reason.BUILDER_PATTERN)
+@SuppressionReason(SuppressionReason.Reason.METHOD_CHAIN)
 public final class ARandomDataCreatorCreatingBoundedNumbersIncubator {
 
     private final IMocksControl mockControl;
@@ -33,8 +33,8 @@ public final class ARandomDataCreatorCreatingBoundedNumbersIncubator {
     private int number;
     private int minVal;
     private int upperBoundary;
-    private double valueToBeFloored;
-    private double flooredValue;
+    private Double valueToBeFloored;
+    private Double flooredValue;
 
     public ARandomDataCreatorCreatingBoundedNumbersIncubator() {
         mockControl = EasyMock.createControl();
@@ -43,13 +43,10 @@ public final class ARandomDataCreatorCreatingBoundedNumbersIncubator {
     }
 
     public ARandomDataCreatorCreatingBoundedNumbersIncubator performCreateBoundedNumber() {
-        mockControl.replay();
-        number = creator.createBoundedNumber(minVal, upperBoundary);
-        return this;
-    }
+        if (isNegativeValue()) {
+            EasyMock.expect(mockMathBoundary.floor(valueToBeFloored)).andReturn(flooredValue);
+        }
 
-    public ARandomDataCreatorCreatingBoundedNumbersIncubator performCreateBoundedNegativeNumber() {
-        EasyMock.expect(mockMathBoundary.floor(valueToBeFloored)).andReturn(flooredValue);
         mockControl.replay();
         number = creator.createBoundedNumber(minVal, upperBoundary);
         return this;
@@ -65,22 +62,22 @@ public final class ARandomDataCreatorCreatingBoundedNumbersIncubator {
         return this;
     }
 
-    public ARandomDataCreatorCreatingBoundedNumbersIncubator supplyParameterMinimumValue(final int minVal) {
+    public ARandomDataCreatorCreatingBoundedNumbersIncubator supplyParameterMinimumValue(int minVal) {
         this.minVal = minVal;
         return this;
     }
 
-    public ARandomDataCreatorCreatingBoundedNumbersIncubator supplyParameterUpperLimit(final int upperBoundary) {
+    public ARandomDataCreatorCreatingBoundedNumbersIncubator supplyParameterUpperLimit(int upperBoundary) {
         this.upperBoundary = upperBoundary;
         return this;
     }
 
-    public ARandomDataCreatorCreatingBoundedNumbersIncubator supplyValueToBeFloored(final double valueToBeFloored) {
+    public ARandomDataCreatorCreatingBoundedNumbersIncubator supplyValueToBeFloored(double valueToBeFloored) {
         this.valueToBeFloored = valueToBeFloored;
         return this;
     }
 
-    public ARandomDataCreatorCreatingBoundedNumbersIncubator supplyFlooredValue(final double flooredValue) {
+    public ARandomDataCreatorCreatingBoundedNumbersIncubator supplyFlooredValue(double flooredValue) {
         this.flooredValue = flooredValue;
         return this;
     }
@@ -89,8 +86,12 @@ public final class ARandomDataCreatorCreatingBoundedNumbersIncubator {
         return this;
     }
 
-    public void execute() {
+    public void done() {
         mockControl.verify();
+    }
+
+    private boolean isNegativeValue() {
+        return valueToBeFloored != null && flooredValue != null;
     }
 }
 
