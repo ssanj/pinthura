@@ -37,9 +37,9 @@ public final class ARandomDataCreatorCreatingBoundedNegativeNumbersUnderTest {
                  .supplyFlooredValue(-10)
                  .supplyParameterMinimumValue(-10)
                  .supplyParameterUpperLimit(-5)
-                 .performCreateBoundedNegativeNumber()
+                 .performCreateBoundedNumber()
                  .observeNumber(-10).isReturned()
-                 .execute();
+                 .done();
     }
 
     @Test
@@ -49,9 +49,9 @@ public final class ARandomDataCreatorCreatingBoundedNegativeNumbersUnderTest {
                  .supplyFlooredValue(-101)
                  .supplyParameterMinimumValue(-200)
                  .supplyParameterUpperLimit(-100)
-                 .performCreateBoundedNegativeNumber()
+                 .performCreateBoundedNumber()
                  .observeNumber(-101).isReturned()
-                 .execute();
+                 .done();
     }
 
     @Test
@@ -61,8 +61,8 @@ public final class ARandomDataCreatorCreatingBoundedNegativeNumbersUnderTest {
                  .supplyFlooredValue(-1)
                  .supplyParameterMinimumValue(-5)
                  .supplyParameterUpperLimit(5)
-                 .performCreateBoundedNegativeNumber()
+                 .performCreateBoundedNumber()
                  .observeNumber(-1).isReturned()
-                 .execute();
+                 .done();
     }
 }
