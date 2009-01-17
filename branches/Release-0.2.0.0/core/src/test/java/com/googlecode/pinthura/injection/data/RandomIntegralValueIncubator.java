@@ -29,13 +29,16 @@ public final class RandomIntegralValueIncubator {
     @SuppressWarnings({"InstanceVariableOfConcreteClass"})
     @SuppressionReason(SuppressionReason.Reason.TEST_VALUE)
     private RandomIntegralValue cut;
+
     private MathBoundary mockMathBoundary;
     private IMocksControl mockControl;
+    private Counter mockCounter;
+
     private int returnedRandomValue;
 
 
     public RandomIntegralValueIncubator createRandomIntegralValue() {
-        cut = new RandomIntegralValue(mockMathBoundary);
+        cut = new RandomIntegralValue(mockMathBoundary, mockCounter);
         return this;
     }
 
@@ -46,6 +49,7 @@ public final class RandomIntegralValueIncubator {
 
 
     public RandomIntegralValueIncubator performGetRandomValue() {
+        mockCounter.inc();
         mockControl.replay();
 
         returnedRandomValue = cut.getRandomValue();
@@ -65,18 +69,27 @@ public final class RandomIntegralValueIncubator {
         mockControl.verify();
     }
 
-    private static final class RandomIntegralValue {
+    public static final class RandomIntegralValue {
 
         private MathBoundary mathBoundary;
+        private final Counter counter;
 
-        private RandomIntegralValue(final MathBoundary mathBoundary) {
+        private RandomIntegralValue(final MathBoundary mathBoundary, final Counter counter) {
             this.mathBoundary = mathBoundary;
+            this.counter = counter;
         }
 
 
         public int getRandomValue() {
-            return (int) (mathBoundary.random() * 200);
+            double rand = mathBoundary.random();
+            counter.inc();
+            return (int) (rand* 200);
         }
+    }
+
+    private interface Counter {
+
+        void inc();
     }
 
 }
