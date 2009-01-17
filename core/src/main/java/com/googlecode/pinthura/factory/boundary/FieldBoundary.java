@@ -15,15 +15,7 @@
  */
 package com.googlecode.pinthura.factory.boundary;
 
-public interface ClassBoundary<T> {
+public interface FieldBoundary {
 
     String getName();
-
-    Class<T> getClazz();
-
-    ClassBoundary<T> forName(String className);
-
-    ConstructorBoundary<T> getConstructor(ClassBoundary<?>[] parameterTypes);
-
-    FieldBoundary[] getDeclaredFields();
 }

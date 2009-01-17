@@ -28,8 +28,7 @@ public final class AMockInjectorUnderTest {
 
     @Before
     public void setup() {
-        incubator = new RandomIntegralValueIncubator();
-        new MockInjectorImpl().inject(incubator);
+        incubator = new MockInjectorImpl().inject(new RandomIntegralValueIncubator());
     }
 
     @Test

@@ -13,17 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.pinthura.factory.boundary;
+package com.googlecode.pinthura.reflection;
 
-public interface ClassBoundary<T> {
+import com.googlecode.pinthura.factory.boundary.FieldBoundary;
+import com.googlecode.pinthura.factory.instantiator.ClassInstance;
 
-    String getName();
+public interface ReflectionUtilz {
 
-    Class<T> getClazz();
-
-    ClassBoundary<T> forName(String className);
-
-    ConstructorBoundary<T> getConstructor(ClassBoundary<?>[] parameterTypes);
-
-    FieldBoundary[] getDeclaredFields();
+    <T> FieldBoundary[] findFields(ClassInstance classInstance, String prefix);
 }
