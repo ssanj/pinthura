@@ -16,7 +16,9 @@
 package com.googlecode.pinthura.util;
 
 import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 public final class Arrayz {
 
@@ -31,5 +33,17 @@ public final class Arrayz {
     @SuppressWarnings({ "unchecked" })
     public static <T> T[] fromCollection(final Collection<T> collection, final Class<T> clazz) {
         return collection.toArray((T[]) Array.newInstance(clazz, collection.size()));
+    }
+
+    public static <T> List<T> filter(final List<T> items, final ItemFilter<T> itemFilter) {
+        List<T> filteredList = new ArrayList<T>();
+
+        for (T item : items) {
+            if (itemFilter.include(item)) {
+                filteredList.add(item);
+            }
+        }
+
+        return filteredList;
     }
 }
