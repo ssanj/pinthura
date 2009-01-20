@@ -19,6 +19,7 @@ import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertThat;
 import org.junit.Test;
 
+import java.awt.Color;
 import java.util.Arrays;
 import java.util.List;
 
@@ -38,6 +39,12 @@ public final class ArrayzUnderTest {
         assertThat(filteredNumbers, equalTo(Arrays.asList(5, 10)));
     }
 
+    @Test
+    public void shouldReturnAllElementsIfTheFilterIsEmpty() {
+        List<Color> colours = Arrays.asList(Color.BLUE, Color.YELLOW, Color.BLACK);
+        assertThat(colours, equalTo(Arrayz.filter(colours, new AllColoursFilter())));
+    }
+
     private static final class StartsWithSFilter implements ItemFilter<String> {
 
         public boolean include(final String item) {
@@ -49,6 +56,13 @@ public final class ArrayzUnderTest {
 
         public boolean include(final Integer item) {
             return item <= 10;
+        }
+    }
+
+    private static final class AllColoursFilter implements ItemFilter<Color> {
+
+        public boolean include(final Color item) {
+            return true;
         }
     }
 }
