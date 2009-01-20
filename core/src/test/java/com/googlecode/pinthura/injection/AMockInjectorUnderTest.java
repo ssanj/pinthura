@@ -39,6 +39,5 @@ public final class AMockInjectorUnderTest {
                  .observeValue(100)
                  .isReturned()
                  .done();
-
     }
 }
