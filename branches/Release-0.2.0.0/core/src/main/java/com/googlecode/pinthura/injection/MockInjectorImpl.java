@@ -16,11 +16,12 @@
 package com.googlecode.pinthura.injection;
 
 import com.googlecode.pinthura.util.Arrayz;
+import com.googlecode.pinthura.util.ItemFilter;
 import org.easymock.EasyMock;
 import org.easymock.IMocksControl;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 //TODO: Refactor
@@ -32,7 +33,7 @@ public final class MockInjectorImpl implements MockInjector {
             mockControl.setAccessible(true);
             mockControl.set(instance, EasyMock.createControl());
 
-            Field[] fields = getFieldsByPrefix(instance, "mock", "mockControl");
+            List<Field> fields = filterMockControl(getFieldsByPrefix(instance, "mock"), "mockControl");
             for (Field field : fields) {
                 Field mock = instance.getClass().getDeclaredField(field.getName());
                 mock.setAccessible(true);
@@ -45,16 +46,38 @@ public final class MockInjectorImpl implements MockInjector {
         return instance;
     }
 
-    private <T> Field[] getFieldsByPrefix(final T instance, final String prefix, final String exclude) {
-        Field[] fields = instance.getClass().getDeclaredFields();
+    private List<Field> filterMockControl(final List<Field> fieldsByPrefix, final String mockControlName) {
+        return Arrayz.filter(fieldsByPrefix, new RemoveMockControlFromPrefixListFilter(mockControlName));
+    }
 
-        List<Field> filteredFields = new ArrayList<Field>();
-        for (Field field : fields) {
-            if (field.getName().startsWith(prefix) && !field.getName().equals(exclude)) {
-                filteredFields.add(field);
-            }
+    private <T> List<Field> getFieldsByPrefix(final T instance, final String prefix) {
+        Field[] fields = instance.getClass().getDeclaredFields();
+        return Arrayz.filter(Arrays.asList(fields), new MockPrefixFilter(prefix));
+    }
+
+    private static final class MockPrefixFilter implements ItemFilter<Field> {
+
+        private final String prefix;
+
+        public MockPrefixFilter(final String prefix) {
+            this.prefix = prefix;
         }
 
-        return Arrayz.fromCollection(filteredFields, Field.class);
+        public boolean include(final Field item) {
+            return item.getName().startsWith(prefix);
+        }
+    }
+
+    private class RemoveMockControlFromPrefixListFilter implements ItemFilter<Field> {
+
+        private final String mockControlName;
+
+        public RemoveMockControlFromPrefixListFilter(final String mockControlName) {
+            this.mockControlName = mockControlName;
+        }
+
+        public boolean include(final Field item) {
+            return !item.getName().equals(mockControlName);
+        }
     }
 }
