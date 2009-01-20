@@ -23,7 +23,7 @@ import java.awt.Color;
 import java.util.Arrays;
 import java.util.List;
 
-public final class ArrayzUnderTest {
+public final class ArrayzWithFiltersUnderTest {
 
     @Test
     public void shouldFilterAListOfNamesByStartingLetter() {
