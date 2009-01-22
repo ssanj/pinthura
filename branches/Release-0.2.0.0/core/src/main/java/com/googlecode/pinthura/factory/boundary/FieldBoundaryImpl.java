@@ -19,7 +19,7 @@ import com.googlecode.pinthura.annotation.SuppressionReason;
 
 import java.lang.reflect.Field;
 
-public final class FieldBoundaryImpl implements FieldBoundary {
+public final class FieldBoundaryImpl<T> implements FieldBoundary<T> {
 
     private final Field field;
 
@@ -29,6 +29,22 @@ public final class FieldBoundaryImpl implements FieldBoundary {
 
     public String getName() {
         return field.getName();
+    }
+
+    @SuppressWarnings({"unchecked"})
+    @SuppressionReason(SuppressionReason.Reason.CANT_INFER_GENERICS)
+    public <I> T get(I instance) {
+        try {
+            return (T) field.get(instance);
+        } catch (IllegalAccessException e) {
+            throw new BoundaryException(e);
+        }
+    }
+
+    @SuppressWarnings({"unchecked"})
+    @SuppressionReason(SuppressionReason.Reason.CANT_INFER_GENERICS)
+    public ClassBoundary<T> getType() {
+        return new ClassBoundaryImpl(field.getType());
     }
 
     @SuppressWarnings({"CastToConcreteClass"})

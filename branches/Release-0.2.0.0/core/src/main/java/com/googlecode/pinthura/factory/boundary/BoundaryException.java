@@ -15,17 +15,11 @@
  */
 package com.googlecode.pinthura.factory.boundary;
 
-import java.util.List;
+public final class BoundaryException extends RuntimeException {
 
-public interface ClassBoundary<T> {
+    private static final long serialVersionUID = 2636515493731219869L;
 
-    String getName();
-
-    Class<T> getClazz();
-
-    ClassBoundary<T> forName(String className);
-
-    ConstructorBoundary<T> getConstructor(ClassBoundary<?>[] parameterTypes);
-
-    List<FieldBoundary> getDeclaredFields();
+    public BoundaryException(final Throwable cause) {
+        super(cause);
+    }
 }

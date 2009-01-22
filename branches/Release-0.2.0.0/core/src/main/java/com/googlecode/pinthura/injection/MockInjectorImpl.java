@@ -15,29 +15,35 @@
  */
 package com.googlecode.pinthura.injection;
 
+import com.googlecode.pinthura.factory.boundary.FieldBoundary;
+import com.googlecode.pinthura.reflection.FieldFinder;
+import com.googlecode.pinthura.reflection.FieldSetter;
 import com.googlecode.pinthura.util.Arrayz;
 import com.googlecode.pinthura.util.ItemFilter;
 import org.easymock.EasyMock;
 import org.easymock.IMocksControl;
 
-import java.lang.reflect.Field;
-import java.util.Arrays;
 import java.util.List;
 
-//TODO: Refactor
 public final class MockInjectorImpl implements MockInjector {
 
-    public <T> T inject(final T instance) {
-        try {
-            Field mockControl = instance.getClass().getDeclaredField("mockControl");
-            mockControl.setAccessible(true);
-            mockControl.set(instance, EasyMock.createControl());
+    private final FieldFinder fieldFinder;
+    private final FieldSetter fieldSetter;
 
-            List<Field> fields = filterMockControl(getFieldsByPrefix(instance, "mock"), "mockControl");
-            for (Field field : fields) {
-                Field mock = instance.getClass().getDeclaredField(field.getName());
-                mock.setAccessible(true);
-                mock.set(instance, ((IMocksControl) mockControl.get(instance)).createMock(mock.getType()));
+    public MockInjectorImpl(final FieldFinder fieldFinder, final FieldSetter fieldSetter) {
+        this.fieldFinder = fieldFinder;
+        this.fieldSetter = fieldSetter;
+    }
+
+    public <I> I inject(final I instance) {
+        try {
+            FieldBoundary<IMocksControl> mockControl = fieldFinder.findByName("mockControl", instance);
+            fieldSetter.setValue(mockControl, instance, EasyMock.createControl());
+            List<FieldBoundary<?>> fields = filterMockControl(fieldFinder.findByPrefix("mock", instance), "mockControl");
+
+            for (FieldBoundary<?> field : fields) {
+                //TODO: Create a boundary around MocksControl
+                fieldSetter.setValue(field, instance, mockControl.get(instance).createMock(field.getType().getClazz()));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -46,29 +52,11 @@ public final class MockInjectorImpl implements MockInjector {
         return instance;
     }
 
-    private List<Field> filterMockControl(final List<Field> fieldsByPrefix, final String mockControlName) {
+    private List<FieldBoundary<?>> filterMockControl(final List<FieldBoundary<?>> fieldsByPrefix, final String mockControlName) {
         return Arrayz.filter(fieldsByPrefix, new RemoveMockControlFromPrefixListFilter(mockControlName));
     }
 
-    private <T> List<Field> getFieldsByPrefix(final T instance, final String prefix) {
-        Field[] fields = instance.getClass().getDeclaredFields();
-        return Arrayz.filter(Arrays.asList(fields), new MockPrefixFilter(prefix));
-    }
-
-    private static final class MockPrefixFilter implements ItemFilter<Field> {
-
-        private final String prefix;
-
-        public MockPrefixFilter(final String prefix) {
-            this.prefix = prefix;
-        }
-
-        public boolean include(final Field item) {
-            return item.getName().startsWith(prefix);
-        }
-    }
-
-    private class RemoveMockControlFromPrefixListFilter implements ItemFilter<Field> {
+    private class RemoveMockControlFromPrefixListFilter implements ItemFilter<FieldBoundary<?>> {
 
         private final String mockControlName;
 
@@ -76,7 +64,7 @@ public final class MockInjectorImpl implements MockInjector {
             this.mockControlName = mockControlName;
         }
 
-        public boolean include(final Field item) {
+        public boolean include(final FieldBoundary<?> item) {
             return !item.getName().equals(mockControlName);
         }
     }
