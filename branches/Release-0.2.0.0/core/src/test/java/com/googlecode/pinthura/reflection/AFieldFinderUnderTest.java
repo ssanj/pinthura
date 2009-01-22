@@ -38,13 +38,26 @@ public final class AFieldFinderUnderTest {
     }
 
     @Test
-    public void shouldFindAFieldByPrefix() {
+    public void shouldFindFieldsByPrefix() {
         List<FieldBoundary<?>> fields = fieldFinder.findByPrefix("mock", new RandomIntegralValueIncubator());
 
         assertThat(fields.size(), equalTo(3));
         assertContainsField("mockControl", IMocksControl.class, fields);
         assertContainsField("mockCounter", RandomIntegralValueIncubator.Counter.class, fields);
         assertContainsField("mockMathBoundary", MathBoundary.class, fields);
+    }
+
+    @Test
+    public void shouldFindOtherFieldsByPrefix() {
+        List<FieldBoundary<?>> fields = fieldFinder.findByPrefix("retur", new RandomIntegralValueIncubator());
+
+        assertThat(fields.size(), equalTo(1));
+        assertContainsField("returnedRandomValue", int.class, fields);
+    }
+
+    @Test
+    public void shouldReturnAnEmptyListIfThePrefixIsNotFound() {
+        assertThat(fieldFinder.findByPrefix("blah", new RandomIntegralValueIncubator()).isEmpty(), equalTo(true));        
     }
 
     private <T> void assertContainsField(final String varName, Class<T> clazz, final List<FieldBoundary<?>> fields) {
