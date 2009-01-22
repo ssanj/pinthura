@@ -13,19 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.pinthura.factory.boundary;
+package com.googlecode.pinthura.reflection;
+
+import com.googlecode.pinthura.factory.boundary.FieldBoundary;
 
 import java.util.List;
 
-public interface ClassBoundary<T> {
+public interface FieldFinder {
 
-    String getName();
+    <T> FieldBoundary<T> findByName(String varName, Object instance);
 
-    Class<T> getClazz();
-
-    ClassBoundary<T> forName(String className);
-
-    ConstructorBoundary<T> getConstructor(ClassBoundary<?>[] parameterTypes);
-
-    List<FieldBoundary> getDeclaredFields();
+    List<FieldBoundary<?>> findByPrefix(String prefix, Object instance);
 }

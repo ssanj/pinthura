@@ -17,23 +17,21 @@ package com.googlecode.pinthura.reflection;
 
 import com.googlecode.pinthura.factory.boundary.FieldBoundary;
 import com.googlecode.pinthura.factory.instantiator.ClassInstance;
-import com.googlecode.pinthura.util.Arrayz;
 
-import java.util.ArrayList;
-import java.util.List;
-
+//TODO: Delete.
 public final class ReflectionUtilzImpl implements ReflectionUtilz {
 
     public <T> FieldBoundary[] findFields(ClassInstance classInstance, final String prefix) {
-        FieldBoundary[] fields = classInstance.getClazz().getDeclaredFields();
-
-        List<FieldBoundary> filteredFields = new ArrayList<FieldBoundary>();
-        for (FieldBoundary field : fields) {
-            if (field.getName().startsWith(prefix)) {
-                filteredFields.add(field);
-            }
-        }
-
-        return Arrayz.fromCollection(filteredFields, FieldBoundary.class);
+//        FieldBoundary[] fields = classInstance.getClazz().getDeclaredFields();
+//
+//        List<FieldBoundary> filteredFields = new ArrayList<FieldBoundary>();
+//        for (FieldBoundary field : fields) {
+//            if (field.getName().startsWith(prefix)) {
+//                filteredFields.add(field);
+//            }
+//        }
+//
+//        return Arrayz.fromCollection(filteredFields, FieldBoundary.class);
+        return null;
     }
 }

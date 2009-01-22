@@ -87,7 +87,7 @@ public final class RandomIntegralValueIncubator {
         }
     }
 
-    private interface Counter {
+    public interface Counter {
 
         void inc();
     }

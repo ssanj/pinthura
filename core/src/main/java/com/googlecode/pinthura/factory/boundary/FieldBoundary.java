@@ -15,7 +15,11 @@
  */
 package com.googlecode.pinthura.factory.boundary;
 
-public interface FieldBoundary {
+public interface FieldBoundary<T> {
 
     String getName();
+
+    <I> T get(I instance);
+
+    ClassBoundary<T> getType();
 }

@@ -15,8 +15,6 @@
  */
 package com.googlecode.pinthura.factory.boundary;
 
-import com.googlecode.pinthura.util.Arrayz;
-
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
@@ -60,15 +58,15 @@ public final class ClassBoundaryImpl<T> implements ClassBoundary<T> {
         }
     }
 
-    public FieldBoundary[] getDeclaredFields() {
-        Field[] fields = clazz.getFields();
+    public List<FieldBoundary> getDeclaredFields() {
+        Field[] fields = clazz.getDeclaredFields();
         List<FieldBoundary> fieldBoundaries = new ArrayList<FieldBoundary>();
 
         for (Field field : fields) {
             fieldBoundaries.add(new FieldBoundaryImpl(field));
         }
 
-        return Arrayz.fromCollection(fieldBoundaries, FieldBoundary.class);
+        return fieldBoundaries;
     }
 
     @Override
