@@ -20,7 +20,6 @@ import com.googlecode.pinthura.reflection.FieldFinder;
 import com.googlecode.pinthura.reflection.FieldSetter;
 import com.googlecode.pinthura.util.Arrayz;
 import com.googlecode.pinthura.util.ItemFilter;
-import org.easymock.EasyMock;
 import org.easymock.IMocksControl;
 
 import java.util.List;
@@ -29,21 +28,22 @@ public final class MockInjectorImpl implements MockInjector {
 
     private final FieldFinder fieldFinder;
     private final FieldSetter fieldSetter;
+    private final EasyMockWrapper easyMockWrapper;
 
-    public MockInjectorImpl(final FieldFinder fieldFinder, final FieldSetter fieldSetter) {
+    public MockInjectorImpl(final FieldFinder fieldFinder, final FieldSetter fieldSetter, final EasyMockWrapper easyMockWrapper) {
         this.fieldFinder = fieldFinder;
         this.fieldSetter = fieldSetter;
+        this.easyMockWrapper = easyMockWrapper;
     }
 
     public <I> I inject(final I instance) {
         try {
-            FieldBoundary<IMocksControl> mockControl = fieldFinder.findByName("mockControl", instance);
-            fieldSetter.setValue(mockControl, instance, EasyMock.createControl());
+            FieldBoundary<IMocksControl> mockControlField = fieldFinder.findByName("mockControl", instance);
+            fieldSetter.setValue(mockControlField, instance, easyMockWrapper.createControl());
             List<FieldBoundary<?>> fields = filterMockControl(fieldFinder.findByPrefix("mock", instance), "mockControl");
 
             for (FieldBoundary<?> field : fields) {
-                //TODO: Create a boundary around MocksControl
-                fieldSetter.setValue(field, instance, mockControl.get(instance).createMock(field.getType().getClazz()));
+                fieldSetter.setValue(field, instance, easyMockWrapper.createMock(mockControlField.get(instance), field.getType()));
             }
         } catch (Exception e) {
             e.printStackTrace();

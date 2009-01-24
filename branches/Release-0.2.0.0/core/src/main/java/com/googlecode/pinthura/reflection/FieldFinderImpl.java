@@ -16,8 +16,10 @@
 package com.googlecode.pinthura.reflection;
 
 import com.googlecode.pinthura.annotation.SuppressionReason;
+import com.googlecode.pinthura.exception.PinthuraException;
 import com.googlecode.pinthura.factory.boundary.ClassBoundaryImpl;
 import com.googlecode.pinthura.factory.boundary.FieldBoundary;
+import com.googlecode.pinthura.factory.boundary.FieldBoundaryImpl;
 import com.googlecode.pinthura.util.Arrayz;
 import com.googlecode.pinthura.util.ItemFilter;
 
@@ -25,14 +27,33 @@ import java.util.List;
 
 public final class FieldFinderImpl implements FieldFinder {
 
+    @SuppressWarnings({"unchecked"})
+    @SuppressionReason(SuppressionReason.Reason.CANT_INFER_GENERICS)
     public <T> FieldBoundary<T> findByName(final String varName, final Object instance) {
-        return null;
+        try {
+            return new FieldBoundaryImpl(instance.getClass().getDeclaredField(varName));
+        } catch (NoSuchFieldException e) {
+            throw new PinthuraException("Could not find field [" +
+                                        varName +
+                                        "] on class [" +
+                                        instance.getClass().getName() + "]", e);
+        }
     }
 
     @SuppressWarnings({"unchecked"})
     @SuppressionReason(SuppressionReason.Reason.CANT_INFER_GENERICS)
     public List<FieldBoundary<?>> findByPrefix(final String prefix, final Object instance) {
-        return Arrayz.filter(new ClassBoundaryImpl(instance.getClass()).getDeclaredFields(), new PrefixedFields(prefix));
+        List<FieldBoundary<?>> fields = Arrayz.filter(new ClassBoundaryImpl(instance.getClass()).getDeclaredFields(),
+                new PrefixedFields(prefix));
+
+        if (!fields.isEmpty()) {
+            return fields;
+        }
+
+        throw new PinthuraException("Could not find any fields prefixed with [" +
+                                    prefix +
+                                    "] on class [" +
+                                    instance.getClass().getName() + "]");
     }
 
     private static class PrefixedFields implements ItemFilter<FieldBoundary<?>> {

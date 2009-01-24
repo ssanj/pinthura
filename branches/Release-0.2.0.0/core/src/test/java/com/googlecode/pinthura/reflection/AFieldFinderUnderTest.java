@@ -16,11 +16,14 @@
 package com.googlecode.pinthura.reflection;
 
 import com.googlecode.pinthura.boundary.java.lang.MathBoundary;
+import com.googlecode.pinthura.data.SquareImpl;
+import com.googlecode.pinthura.exception.PinthuraException;
 import com.googlecode.pinthura.factory.boundary.ClassBoundaryImpl;
 import com.googlecode.pinthura.factory.boundary.FieldBoundary;
 import com.googlecode.pinthura.injection.data.RandomIntegralValueIncubator;
 import org.easymock.IMocksControl;
 import static org.hamcrest.core.IsEqual.equalTo;
+import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 import org.junit.Before;
@@ -49,15 +52,47 @@ public final class AFieldFinderUnderTest {
 
     @Test
     public void shouldFindOtherFieldsByPrefix() {
-        List<FieldBoundary<?>> fields = fieldFinder.findByPrefix("retur", new RandomIntegralValueIncubator());
+        List<FieldBoundary<?>> fields = fieldFinder.findByPrefix("len", new SquareImpl(5));
 
         assertThat(fields.size(), equalTo(1));
-        assertContainsField("returnedRandomValue", int.class, fields);
+        assertContainsField("length", int.class, fields);
     }
 
     @Test
-    public void shouldReturnAnEmptyListIfThePrefixIsNotFound() {
-        assertThat(fieldFinder.findByPrefix("blah", new RandomIntegralValueIncubator()).isEmpty(), equalTo(true));        
+    public void shouldThrowAnExceptionIfThePrefixIsNotFound() {
+        try {
+            fieldFinder.findByPrefix("blah", new RandomIntegralValueIncubator());
+            fail();
+        } catch (PinthuraException e) {
+            assertThat(e.getMessage(), equalTo("Could not find any fields prefixed with [blah] " +
+                                               "on class [com.googlecode.pinthura.injection.data.RandomIntegralValueIncubator]"));
+        }
+    }
+
+    @Test
+    public void shouldFindANamedField() {
+        assertFindByName("mockControl");
+    }
+
+    @Test
+    public void shouldFindAnotherNamedField() {
+        assertFindByName("cut");
+    }
+
+    @Test
+    public void shouldThrowAnExceptionIfTheNamedFieldIsNotFound() {
+        try {
+            fieldFinder.findByName("bluu", new SquareImpl(2));
+            fail();
+        } catch (PinthuraException e) {
+            assertThat(e.getMessage(), equalTo("Could not find field [bluu] on class [com.googlecode.pinthura.data.SquareImpl]"));
+        }
+    }
+
+    private void assertFindByName(final String varName) {
+        FieldBoundary field = fieldFinder.findByName(varName, new RandomIntegralValueIncubator());
+        assertThat(field, notNullValue());
+        assertThat(field.getName(), equalTo(varName));
     }
 
     private <T> void assertContainsField(final String varName, Class<T> clazz, final List<FieldBoundary<?>> fields) {
