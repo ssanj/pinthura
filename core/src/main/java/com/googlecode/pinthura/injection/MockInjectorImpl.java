@@ -37,16 +37,12 @@ public final class MockInjectorImpl implements MockInjector {
     }
 
     public <I> I inject(final I instance) {
-        try {
-            FieldBoundary<IMocksControl> mockControlField = fieldFinder.findByName("mockControl", instance);
-            fieldSetter.setValue(mockControlField, instance, easyMockWrapper.createControl());
-            List<FieldBoundary<?>> fields = filterMockControl(fieldFinder.findByPrefix("mock", instance), "mockControl");
+        FieldBoundary<IMocksControl> mockControlField = fieldFinder.findByName("mockControl", instance);
+        fieldSetter.setValue(mockControlField, instance, easyMockWrapper.createControl());
+        List<FieldBoundary<?>> fields = filterMockControl(fieldFinder.findByPrefix("mock", instance), "mockControl");
 
-            for (FieldBoundary<?> field : fields) {
-                fieldSetter.setValue(field, instance, easyMockWrapper.createMock(mockControlField.get(instance), field.getType()));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        for (FieldBoundary<?> field : fields) {
+            fieldSetter.setValue(field, instance, easyMockWrapper.createMock(mockControlField.get(instance), field.getType()));
         }
 
         return instance;
