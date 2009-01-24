@@ -28,7 +28,7 @@ public final class AMockInjectorUnderTest {
 
     @Before
     public void setup() {
-        incubator = new MockInjectorImpl(null, null).inject(new RandomIntegralValueIncubator());
+        incubator = new MockInjectorImpl(null, null, null).inject(new RandomIntegralValueIncubator());
     }
 
     //TODO: Run this test once we have finished refactoring MockInjector.
