@@ -33,7 +33,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.SOURCE)
 public @interface SuppressionReason {
 
-    Reason value();
+    Reason[] value();
 
     String desc() default "";
 
@@ -41,7 +41,7 @@ public @interface SuppressionReason {
                     BUILDER_PATTERN,
                     TEST_VALUE,
                     CANT_INFER_GENERICS,
-                    CANT_INFER_GENERICS_ON_MOCKS, 
+                    CANT_INFER_GENERICS_ON_MOCKS,
                     INCUBATOR,
                     METHOD_CHAIN,
                     INJECTED,

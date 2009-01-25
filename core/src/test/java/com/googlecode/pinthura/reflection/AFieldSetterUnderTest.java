@@ -17,12 +17,16 @@ package com.googlecode.pinthura.reflection;
 
 import com.googlecode.pinthura.annotation.SuppressionReason;
 import com.googlecode.pinthura.data.SquareImpl;
+import com.googlecode.pinthura.factory.boundary.BoundaryException;
 import com.googlecode.pinthura.factory.boundary.FieldBoundary;
 import com.googlecode.pinthura.util.Arrayz;
 import com.googlecode.pinthura.util.RandomDataChooser;
 import com.googlecode.pinthura.util.builder.RandomDataChooserBuilder;
 import org.easymock.EasyMock;
 import org.easymock.IMocksControl;
+import static org.hamcrest.core.IsEqual.equalTo;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -31,13 +35,19 @@ public final class AFieldSetterUnderTest {
     private IMocksControl mockControl;
     private FieldSetter fieldSetter;
     private FieldBoundary mockFieldBoundary;
-    private RandomDataChooser random;
+    private Object instance;
+    private Object value;
 
     @Before
     public void setup() {
         mockControl = EasyMock.createControl();
-        random = new RandomDataChooserBuilder().build();
         mockFieldBoundary = mockControl.createMock(FieldBoundary.class);
+
+        RandomDataChooser random = new RandomDataChooserBuilder().build();
+        Object[] objects = Arrayz.fromObjects("blah", 500, new SquareImpl(6));
+        instance = random.chooseOneOf(objects);
+        value = random.chooseOneOf(objects);
+
         fieldSetter = new FieldSetterImpl();
     }
 
@@ -45,9 +55,6 @@ public final class AFieldSetterUnderTest {
     @SuppressionReason(SuppressionReason.Reason.CANT_INFER_GENERICS_ON_MOCKS)
     @Test
     public void shouldSetAGivenFieldOnAnGivenInstance() {
-        Object[] objects = Arrayz.fromObjects("blah", 500, new SquareImpl(6));
-        Object instance = random.chooseOneOf(objects);
-        Object value = random.chooseOneOf(objects);
         mockFieldBoundary.setAccessible(true);
         mockFieldBoundary.set(instance, value);
         mockControl.replay();
@@ -55,5 +62,22 @@ public final class AFieldSetterUnderTest {
         fieldSetter.setValue(mockFieldBoundary, instance, value);
 
         mockControl.verify();
+    }
+
+    @SuppressWarnings({"unchecked", "ThrowableInstanceNeverThrown"})
+    @SuppressionReason({SuppressionReason.Reason.CANT_INFER_GENERICS_ON_MOCKS, SuppressionReason.Reason.TEST_VALUE})
+    @Test
+    public void shouldThrowABoundaryExceptionWhenAFieldCantBeSet() {
+        mockFieldBoundary.setAccessible(true);
+        mockFieldBoundary.set(instance, value);
+        EasyMock.expectLastCall().andThrow(new BoundaryException(new IllegalAccessException()));
+        mockControl.replay();
+
+        try {
+            fieldSetter.setValue(mockFieldBoundary, instance, value);
+            fail();
+        } catch (BoundaryException e) {
+            assertThat((Class<IllegalAccessException>) e.getCause().getClass(), equalTo(IllegalAccessException.class));
+        }
     }
 }
