@@ -24,7 +24,7 @@ import com.googlecode.pinthura.reflection.FieldSetterImpl;
 import org.junit.Before;
 import org.junit.Test;
 
-public final class AMockInjectorUnderTest {
+public final class AMockInjectorUnderIntTest {
 
     @SuppressWarnings({"InstanceVariableOfConcreteClass"})
     @SuppressionReason(SuppressionReason.Reason.INCUBATOR)
