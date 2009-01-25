@@ -13,17 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.pinthura.factory.boundary;
+package com.googlecode.pinthura.reflection;
 
-public interface FieldBoundary<T> {
+import com.googlecode.pinthura.factory.boundary.FieldBoundary;
 
-    String getName();
+public final class FieldSetterImpl implements FieldSetter {
 
-    <I> T get(I instance);
-
-    ClassBoundary<T> getType();
-
-    void setAccessible(boolean accessible);
-
-    <I> void set(I instance, T value);
+    public <I, V> void setValue(final FieldBoundary<V> field, final I instance, final V value) {
+        field.setAccessible(true);
+        field.set(instance, value);
+    }
 }

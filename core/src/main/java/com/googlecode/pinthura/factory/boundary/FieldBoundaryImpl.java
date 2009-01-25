@@ -47,6 +47,18 @@ public final class FieldBoundaryImpl<T> implements FieldBoundary<T> {
         return new ClassBoundaryImpl(field.getType());
     }
 
+    public void setAccessible(final boolean accessible) {
+        field.setAccessible(accessible);
+    }
+
+    public <I> void set(final I instance, final T value) {
+        try {
+            field.set(instance, value);
+        } catch (IllegalAccessException e) {
+            throw new BoundaryException(e);
+        }
+    }
+
     @SuppressWarnings({"CastToConcreteClass"})
     @SuppressionReason(SuppressionReason.Reason.GENERATED_CODE)
     @Override
