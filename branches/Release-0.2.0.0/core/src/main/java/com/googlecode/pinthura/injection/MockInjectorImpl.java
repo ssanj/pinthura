@@ -15,6 +15,7 @@
  */
 package com.googlecode.pinthura.injection;
 
+import com.googlecode.pinthura.annotation.SuppressionReason;
 import com.googlecode.pinthura.factory.boundary.FieldBoundary;
 import com.googlecode.pinthura.reflection.FieldFinder;
 import com.googlecode.pinthura.reflection.FieldSetter;
@@ -36,12 +37,14 @@ public final class MockInjectorImpl implements MockInjector {
         this.easyMockWrapper = easyMockWrapper;
     }
 
+    @SuppressWarnings({"unchecked"})
+    @SuppressionReason(SuppressionReason.Reason.CANT_INFER_GENERICS)
     public <I> I inject(final I instance) {
         FieldBoundary<IMocksControl> mockControlField = fieldFinder.findByName("mockControl", instance);
         fieldSetter.setValue(mockControlField, instance, easyMockWrapper.createControl());
         List<FieldBoundary<?>> fields = filterMockControl(fieldFinder.findByPrefix("mock", instance), "mockControl");
 
-        for (FieldBoundary<?> field : fields) {
+        for (FieldBoundary field : fields) {
             fieldSetter.setValue(field, instance, easyMockWrapper.createMock(mockControlField.get(instance), field.getType()));
         }
 

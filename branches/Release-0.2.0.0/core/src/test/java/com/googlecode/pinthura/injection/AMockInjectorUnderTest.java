@@ -17,8 +17,12 @@ package com.googlecode.pinthura.injection;
 
 import com.googlecode.pinthura.annotation.SuppressionReason;
 import com.googlecode.pinthura.injection.data.RandomIntegralValueIncubator;
+import com.googlecode.pinthura.reflection.FieldFinder;
+import com.googlecode.pinthura.reflection.FieldFinderImpl;
+import com.googlecode.pinthura.reflection.FieldSetter;
+import com.googlecode.pinthura.reflection.FieldSetterImpl;
 import org.junit.Before;
-import org.junit.Ignore;
+import org.junit.Test;
 
 public final class AMockInjectorUnderTest {
 
@@ -28,17 +32,19 @@ public final class AMockInjectorUnderTest {
 
     @Before
     public void setup() {
-        incubator = new MockInjectorImpl(null, null, null).inject(new RandomIntegralValueIncubator());
+        FieldFinder fieldFinder = new FieldFinderImpl();
+        FieldSetter setter = new FieldSetterImpl();
+        EasyMockWrapper wrapper = new EasyMockWrapperImpl();
+
+        incubator = new MockInjectorImpl(fieldFinder, setter, wrapper).inject(new RandomIntegralValueIncubator());
     }
 
-    //TODO: Run this test once we have finished refactoring MockInjector.
-    @Ignore
+    @Test
     public void shouldInjectMocksIntoSuppliedInstance() {
         incubator.createRandomIntegralValue()
                  .supplyRandomSeed(0.5)
                  .performGetRandomValue()
-                 .observeValue(100)
-                 .isReturned()
+                 .observeValue(100).isReturned()
                  .done();
     }
 }
