@@ -19,5 +19,5 @@ import com.googlecode.pinthura.factory.boundary.FieldBoundary;
 
 public interface FieldSetter {
 
-    <I, V> void setValue(FieldBoundary field, I instance, V value);
+    <I, V> void setValue(FieldBoundary<V> field, I instance, V value);
 }
