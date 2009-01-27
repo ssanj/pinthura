@@ -40,6 +40,7 @@ public final class MockInjectorImpl implements MockInjector {
     @SuppressWarnings({"unchecked"})
     @SuppressionReason(SuppressionReason.Reason.CANT_INFER_GENERICS)
     public <I> I inject(final I instance) {
+        //TODO: Move out prefix and control name.
         FieldBoundary<IMocksControl> mockControlField = fieldFinder.findByName("mockControl", instance);
         fieldSetter.setValue(mockControlField, instance, easyMockWrapper.createControl());
         List<FieldBoundary<?>> fields = filterMockControl(fieldFinder.findByPrefix("mock", instance), "mockControl");

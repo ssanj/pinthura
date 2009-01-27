@@ -79,7 +79,6 @@ public final class RandomIntegralValueIncubator {
             this.counter = counter;
         }
 
-
         public int getRandomValue() {
             double rand = mathBoundary.random();
             counter.inc();
