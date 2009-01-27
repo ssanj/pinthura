@@ -15,10 +15,10 @@
  */
 package com.googlecode.pinthura.injection;
 
+import com.googlecode.pinthura.annotation.SuppressionReason;
 import com.googlecode.pinthura.data.UrlBoundaryImpl;
 import com.googlecode.pinthura.factory.boundary.ClassBoundary;
 import com.googlecode.pinthura.factory.boundary.FieldBoundary;
-import com.googlecode.pinthura.injection.data.RandomIntegralValueIncubator;
 import com.googlecode.pinthura.reflection.FieldFinder;
 import com.googlecode.pinthura.reflection.FieldSetter;
 import com.googlecode.pinthura.util.RandomDataChooser;
@@ -38,18 +38,16 @@ public final class AMockInjectorUnderTest {
     private FieldFinder mockFieldFinder;
     private FieldSetter mockFieldSetter;
     private EasyMockWrapper mockEasyMockWrapper;
-    private RandomIntegralValueIncubator instance;
+    private String instance;
     private RandomDataChooser randomDataChooser;
     private Deux<FieldBoundary,ClassBoundary> fieldClassBoundary1;
     private Deux<FieldBoundary,ClassBoundary> fieldClassBoundary2;
     private Deux<FieldBoundary,IMocksControl> fieldMockControl;
     private List<FieldBoundary<?>> fieldsPrefixedWithMock;
-    private Object randomValue;
 
     @Before
     public void setup() {
         mockControl = EasyMock.createControl();
-
         mockFieldFinder = mockControl.createMock(FieldFinder.class);
         mockFieldSetter = mockControl.createMock(FieldSetter.class);
         mockEasyMockWrapper = mockControl.createMock(EasyMockWrapper.class);
@@ -61,7 +59,6 @@ public final class AMockInjectorUnderTest {
         randomDataChooser = new RandomDataChooserBuilder().build();
         fieldsPrefixedWithMock = Arrays.<FieldBoundary<?>>asList(fieldClassBoundary1.getOne(), fieldMockControl.getOne(),
                 fieldClassBoundary2.getOne());
-        randomValue = randomDataChooser.chooseOneOf(5, "test", 2.6f, new UrlBoundaryImpl());
 
         mockInjector = new MockInjectorBuilder().
                             withFieldFinder(mockFieldFinder).
@@ -69,15 +66,15 @@ public final class AMockInjectorUnderTest {
                             withEasyMockWrapper(mockEasyMockWrapper).
                             build();
 
-        instance = new RandomIntegralValueIncubator();
+        instance = "this could be any instance";
     }
 
     @Test
     public void shouldInjectMocksIntoTheInstanceSupplied() {
-        expectMockControl(fieldMockControl);
+        expectMockControl();
         expectPrefixedFields();
-        expectInjectedField(fieldClassBoundary1, randomValue);
-        expectInjectedField(fieldClassBoundary2, randomValue);
+        expectInjectedField(fieldClassBoundary1, getRandomValue());
+        expectInjectedField(fieldClassBoundary2, getRandomValue());
         mockControl.replay();
 
         mockInjector.inject(instance);
@@ -85,13 +82,17 @@ public final class AMockInjectorUnderTest {
         mockControl.verify();
     }
 
+    private Object getRandomValue() {
+        return randomDataChooser.chooseOneOf(5, "test", 2.6f, new UrlBoundaryImpl());
+    }
+
     private Deux<FieldBoundary, IMocksControl> createFieldMockControlDeux() {
-        return new Deux<FieldBoundary, IMocksControl>(mockControl.createMock(FieldBoundary.class),
+        return new DeuxImpl<FieldBoundary, IMocksControl>(mockControl.createMock(FieldBoundary.class),
                 mockControl.createMock(IMocksControl.class));
     }
 
     private Deux<FieldBoundary, ClassBoundary> createFieldClassBoundaryDeux() {
-        return new Deux<FieldBoundary, ClassBoundary>(mockControl.createMock(FieldBoundary.class),
+        return new DeuxImpl<FieldBoundary, ClassBoundary>(mockControl.createMock(FieldBoundary.class),
                 mockControl.createMock(ClassBoundary.class));
     }
 
@@ -102,6 +103,8 @@ public final class AMockInjectorUnderTest {
         EasyMock.expect(fieldClassBoundary2.getOne().getName()).andReturn("mockToodaloo");
     }
 
+    @SuppressWarnings({"unchecked"})
+    @SuppressionReason(SuppressionReason.Reason.CANT_INFER_GENERICS_ON_MOCKS)
     private <T> void expectInjectedField(final Deux<FieldBoundary, ClassBoundary> fieldAndClassBoundary, T value) {
         EasyMock.expect(fieldMockControl.getOne().get(instance)).andReturn(fieldMockControl.getTwo());
         EasyMock.expect(fieldAndClassBoundary.getOne().getType()).andReturn(fieldAndClassBoundary.getTwo());
@@ -109,17 +112,25 @@ public final class AMockInjectorUnderTest {
         mockFieldSetter.setValue(fieldAndClassBoundary.getOne(),  instance, value);
     }
 
-    private void expectMockControl(final Deux<FieldBoundary, IMocksControl> fieldMockControl) {
+    @SuppressWarnings({"unchecked"})
+    @SuppressionReason(SuppressionReason.Reason.CANT_INFER_GENERICS_ON_MOCKS)
+    private void expectMockControl() {
         EasyMock.expect(mockFieldFinder.findByName("mockControl", instance)).andReturn(fieldMockControl.getOne());
         EasyMock.expect(mockEasyMockWrapper.createControl()).andReturn(fieldMockControl.getTwo());
         mockFieldSetter.setValue(fieldMockControl.getOne(), instance, fieldMockControl.getTwo());
     }
 
-    private static class Deux<O,T> {
+    private interface Deux<O,T> {
+
+        O getOne();
+        T getTwo();
+    }
+
+    private static class DeuxImpl<O,T> implements Deux<O,T> {
         private final O one;
         private final T two;
 
-        private Deux(final O one, final T two) {
+        private DeuxImpl(final O one, final T two) {
             this.one = one;
             this.two = two;
         }
