@@ -17,10 +17,6 @@ package com.googlecode.pinthura.injection;
 
 import com.googlecode.pinthura.annotation.SuppressionReason;
 import com.googlecode.pinthura.injection.data.RandomIntegralValueIncubator;
-import com.googlecode.pinthura.reflection.FieldFinder;
-import com.googlecode.pinthura.reflection.FieldFinderImpl;
-import com.googlecode.pinthura.reflection.FieldSetter;
-import com.googlecode.pinthura.reflection.FieldSetterImpl;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -32,11 +28,7 @@ public final class AMockInjectorUnderIntTest {
 
     @Before
     public void setup() {
-        FieldFinder fieldFinder = new FieldFinderImpl();
-        FieldSetter setter = new FieldSetterImpl();
-        EasyMockWrapper wrapper = new EasyMockWrapperImpl();
-
-        incubator = new MockInjectorImpl(fieldFinder, setter, wrapper).inject(new RandomIntegralValueIncubator());
+        incubator = new MockInjectorBuilder().build().inject(new RandomIntegralValueIncubator());
     }
 
     @Test
