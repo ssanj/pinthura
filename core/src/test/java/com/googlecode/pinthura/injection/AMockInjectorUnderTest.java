@@ -35,7 +35,7 @@ public final class AMockInjectorUnderTest {
     }
 
     @Test
-    public void shouldInjectMocksIntoTheInstanceSupplied() {
+    public void shouldInjectMocksEvenWhenTheMockControlMatchesTheMockPrefix() {
         incubator.supplyPrefix("mock")
                     .supplyInstance(instance)
                     .supplyMockControl("mockControl")
@@ -49,7 +49,31 @@ public final class AMockInjectorUnderTest {
                     .done();
     }
 
+    @Test
+    public void shouldThrowAnExceptionIfMocksCantBeInjected() {
+        incubator.supplyInstance(instance)
+                    .supplyExceptionalCondition()
+                    .performInject()
+                    .observe().exception().isThrown()
+                    .done();
+
+    }
+
+    @Test
+    public void shouldInjectMocks() {
+        incubator.supplyPrefix("mock")
+                    .supplyInstance(instance)
+                    .supplyMockControl("mockControl")
+                    .supplyField("mockMoo")
+                    .supplyField("mockPlay")
+                    .supplyMockField("mockMoo", getRandomValue())
+                    .supplyMockField("mockPlay", getRandomValue())
+                    .performInject()
+                    .observe().noErrors().areReturned()
+                    .done();
+    }
+
     private Object getRandomValue() {
-        return randomDataChooser.chooseOneOf("this could be any instance", 5, "test", 2.6f, new UrlBoundaryImpl());
+        return randomDataChooser.chooseOneOf("this could be any instance", 111, "magic", 0.07f, new UrlBoundaryImpl());
     }
 }

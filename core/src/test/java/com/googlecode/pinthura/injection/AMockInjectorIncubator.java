@@ -8,24 +8,31 @@ import com.googlecode.pinthura.reflection.FieldSetter;
 import com.googlecode.pinthura.util.Deux;
 import org.easymock.EasyMock;
 import org.easymock.IMocksControl;
+import static org.junit.Assert.assertThat;
+import static org.hamcrest.core.IsEqual.equalTo;
+import static org.hamcrest.core.IsNull.notNullValue;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.HashMap;
 
 public final class AMockInjectorIncubator {
 
-    private IMocksControl mockControl;
-    private MockInjector mockInjector;
-    private FieldFinder mockFieldFinder;
-    private FieldSetter mockFieldSetter;
-    private EasyMockWrapper mockEasyMockWrapper;
+    private static final String EXCEPTION_MESSAGE = "Test exception";
+    
+    private final IMocksControl mockControl;
+    private final MockInjector mockInjector;
+    private final FieldFinder mockFieldFinder;
+    private final FieldSetter mockFieldSetter;
+    private final EasyMockWrapper mockEasyMockWrapper;
     private Object instance;
     private Deux<FieldBoundary,IMocksControl> fieldMockControlDeux;
-    private List<Deux<FieldBoundary,ClassBoundary>> fieldsDeux;
-    private Map<String, Deux<FieldBoundary,ClassBoundary>> fieldsDeuxByName;
+    private final List<Deux<FieldBoundary,ClassBoundary>> fieldsDeux;
+    private final Map<String, Deux<FieldBoundary,ClassBoundary>> fieldsDeuxByName;
     private String prefix;
+    private MockInjectionException exception;
+    private boolean exceptionSet;
 
     public AMockInjectorIncubator() {
         mockControl = EasyMock.createControl();
@@ -48,7 +55,7 @@ public final class AMockInjectorIncubator {
         return this;
     }
 
-    public <T> AMockInjectorIncubator supplyField(final String fieldName) {
+    public AMockInjectorIncubator supplyField(final String fieldName) {
         Deux<FieldBoundary, ClassBoundary> fieldDeux = createFieldClassBoundaryDeux();
         fieldsDeux.add(fieldDeux);
         fieldsDeuxByName.put(fieldName, fieldDeux);
@@ -77,15 +84,28 @@ public final class AMockInjectorIncubator {
     }
 
     public AMockInjectorIncubator performInject() {
+        if (!exceptionSet) {
+            expectPrefixedFields();
+        }
+
+        mockControl.replay();
+
+        try {
+            mockInjector.inject(instance);
+        } catch(MockInjectionException e) {
+            exception = e;
+        }
+
+        return this;
+    }
+
+    private void expectPrefixedFields() {
         List<FieldBoundary<?>> fieldsPrefixedWithMock = new ArrayList<FieldBoundary<?>>();
         for (Deux<FieldBoundary, ClassBoundary> fieldBoundaryClassBoundaryDeux : fieldsDeux) {
             fieldsPrefixedWithMock.add(fieldBoundaryClassBoundaryDeux.getOne());
         }
 
         EasyMock.expect(mockFieldFinder.findByPrefix(prefix, instance)).andReturn(fieldsPrefixedWithMock);
-        mockControl.replay();
-        mockInjector.inject(instance);
-        return this;
     }
 
     public AMockInjectorIncubator observe() {
@@ -93,6 +113,7 @@ public final class AMockInjectorIncubator {
     }
 
     public AMockInjectorIncubator noErrors() {
+        mockControl.verify();
         return this;
     }
 
@@ -101,7 +122,7 @@ public final class AMockInjectorIncubator {
     }
 
     public void done() {
-        mockControl.verify();
+        //do nothing.        
     }
 
     private Deux<FieldBoundary, ClassBoundary> createFieldClassBoundaryDeux() {
@@ -121,5 +142,24 @@ public final class AMockInjectorIncubator {
         EasyMock.expect(fieldAndClassBoundary.getOne().getType()).andReturn(fieldAndClassBoundary.getTwo());
         EasyMock.expect(mockEasyMockWrapper.createMock(fieldMockControlDeux.getTwo(), fieldAndClassBoundary.getTwo())).andReturn(value);
         mockFieldSetter.setValue(fieldAndClassBoundary.getOne(),  instance, value);
+    }
+
+    @SuppressWarnings({"ThrowableInstanceNeverThrown"})
+    @SuppressionReason(SuppressionReason.Reason.TEST_VALUE)
+    public AMockInjectorIncubator supplyExceptionalCondition() {
+        exceptionSet = true;
+        EasyMock.expect(mockFieldFinder.findByName(EasyMock.isA(String.class), EasyMock.eq(instance))).
+                andThrow(new MockInjectionException(EXCEPTION_MESSAGE));
+        return this;
+    }
+
+    public AMockInjectorIncubator isThrown() {
+        return this;
+    }
+
+    public AMockInjectorIncubator exception() {
+        assertThat(exception, notNullValue());
+        assertThat(exception.getMessage(), equalTo(EXCEPTION_MESSAGE));
+        return this;
     }
 }
