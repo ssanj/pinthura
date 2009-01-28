@@ -49,7 +49,7 @@ public final class ARandomDataCreatorCreatingNumbersTBH {
     }
 
     public ARandomDataCreatorCreatingNumbersTBH createNumber(int minVal, int upperBoundary) {
-        number = creator.createNumber(minVal, upperBoundary);
+        number = creator.createBoundedNumber(minVal, upperBoundary);
         return this;
     }
 
