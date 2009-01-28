@@ -8,7 +8,7 @@
     <name>Pinthura Core</name>
     <url />
     <properties>
-        <JAVA_1_6_HOME>/home/sanj/opt/jdk6</JAVA_1_6_HOME>
+        <JAVA_1_6_HOME>/home/sanjiv/opt/jdk6</JAVA_1_6_HOME>
     </properties>
     <build>
         <plugins>
