@@ -18,6 +18,8 @@ package com.googlecode.pinthura.injection;
 import com.googlecode.pinthura.annotation.SuppressionReason;
 import com.googlecode.pinthura.reflection.FieldFinder;
 import com.googlecode.pinthura.reflection.FieldSetter;
+import com.googlecode.pinthura.reflection.FieldFinderImpl;
+import com.googlecode.pinthura.reflection.FieldSetterImpl;
 
 @SuppressWarnings({"MethodReturnOfConcreteClass"})
 @SuppressionReason(SuppressionReason.Reason.BUILDER_PATTERN)
@@ -26,6 +28,12 @@ public final class MockInjectorBuilder {
     private FieldFinder fieldFinder;
     private FieldSetter fieldSetter;
     private EasyMockWrapper easyMockWrapper;
+
+    public MockInjectorBuilder() {
+        fieldFinder = new FieldFinderImpl();
+        fieldSetter = new FieldSetterImpl();
+        easyMockWrapper = new EasyMockWrapperImpl();
+    }
 
     public MockInjectorBuilder withFieldFinder(final FieldFinder fieldFinder) {
         this.fieldFinder = fieldFinder;
