@@ -17,27 +17,33 @@ package com.googlecode.pinthura.injection;
 
 import com.googlecode.pinthura.data.UrlBoundaryImpl;
 import com.googlecode.pinthura.util.RandomDataChooser;
+import com.googlecode.pinthura.util.RandomDataCreator;
 import com.googlecode.pinthura.util.builder.RandomDataChooserBuilder;
+import com.googlecode.pinthura.util.builder.RandomDataCreatorBuilder;
 import org.junit.Before;
 import org.junit.Test;
 
 public final class AMockInjectorUnderTest {
 
-    private Object instance;
+    private Object randomInstance;
     private RandomDataChooser randomDataChooser;
     private AMockInjectorIncubator incubator;
+    private RandomDataCreator randomDataCreator;
+    private String randomPrefix;
 
     @Before
     public void setup() {
         randomDataChooser = new RandomDataChooserBuilder().build();
+        randomDataCreator = new RandomDataCreatorBuilder().build();
         incubator = new AMockInjectorIncubator();
-        instance = getRandomValue();
+        randomPrefix = randomDataCreator.createString(4);
+        randomInstance = getRandomValue();
     }
 
     @Test
     public void shouldInjectMocksEvenWhenTheMockControlMatchesTheMockPrefix() {
         incubator.supplyPrefix("mock")
-                    .supplyInstance(instance)
+                    .supplyInstance(randomInstance)
                     .supplyMockControl("mockControl")
                     .supplyField("mockBlah")
                     .supplyField("mockControl")
@@ -51,8 +57,7 @@ public final class AMockInjectorUnderTest {
 
     @Test
     public void shouldThrowAnExceptionIfMocksCantBeInjected() {
-        incubator.supplyInstance(instance)
-                    .supplyExceptionalCondition()
+        incubator.supplyExceptionalCondition()
                     .performInject()
                     .observe().exception().isThrown()
                     .done();
@@ -61,13 +66,17 @@ public final class AMockInjectorUnderTest {
 
     @Test
     public void shouldInjectMocks() {
-        incubator.supplyPrefix("mock")
-                    .supplyInstance(instance)
-                    .supplyMockControl("mockControl")
-                    .supplyField("mockMoo")
-                    .supplyField("mockPlay")
-                    .supplyMockField("mockMoo", getRandomValue())
-                    .supplyMockField("mockPlay", getRandomValue())
+        String randomFieldName1 = randomPrefix + randomDataCreator.createString(10);
+        String randomFieldName2 = randomPrefix + randomDataCreator.createString(5);
+        String randomControlName = randomDataCreator.createString(7);
+
+        incubator.supplyPrefix(randomPrefix)
+                    .supplyInstance(randomInstance)
+                    .supplyMockControl(randomControlName)
+                    .supplyField(randomFieldName1)
+                    .supplyField(randomFieldName2)
+                    .supplyMockField(randomFieldName1, getRandomValue())
+                    .supplyMockField(randomFieldName2, getRandomValue())
                     .performInject()
                     .observe().noErrors().areReturned()
                     .done();

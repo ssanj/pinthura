@@ -27,11 +27,14 @@ import java.util.List;
 
 public final class MockInjectorImpl implements MockInjector {
 
+    private final MockConfigurer mockConfigurer;
     private final FieldFinder fieldFinder;
     private final FieldSetter fieldSetter;
     private final EasyMockWrapper easyMockWrapper;
 
-    public MockInjectorImpl(final FieldFinder fieldFinder, final FieldSetter fieldSetter, final EasyMockWrapper easyMockWrapper) {
+    public MockInjectorImpl(final MockConfigurer mockConfigurer, final FieldFinder fieldFinder,
+                            final FieldSetter fieldSetter, final EasyMockWrapper easyMockWrapper) {
+        this.mockConfigurer = mockConfigurer;
         this.fieldFinder = fieldFinder;
         this.fieldSetter = fieldSetter;
         this.easyMockWrapper = easyMockWrapper;
@@ -40,10 +43,10 @@ public final class MockInjectorImpl implements MockInjector {
     @SuppressWarnings({"unchecked"})
     @SuppressionReason(SuppressionReason.Reason.CANT_INFER_GENERICS)
     public <I> I inject(final I instance) {
-        //TODO: Move out prefix and control name.
-        FieldBoundary<IMocksControl> mockControlField = fieldFinder.findByName("mockControl", instance);
+        FieldBoundary<IMocksControl> mockControlField = fieldFinder.findByName(mockConfigurer.getMockControlName(), instance);
         fieldSetter.setValue(mockControlField, instance, easyMockWrapper.createControl());
-        List<FieldBoundary<?>> fields = filterMockControl(fieldFinder.findByPrefix("mock", instance), "mockControl");
+        List<FieldBoundary<?>> fields = filterMockControl(fieldFinder.findByPrefix(mockConfigurer.getMockPrefix(), instance),
+                mockConfigurer.getMockControlName());
 
         for (FieldBoundary field : fields) {
             fieldSetter.setValue(field, instance, easyMockWrapper.createMock(mockControlField.get(instance), field.getType()));
