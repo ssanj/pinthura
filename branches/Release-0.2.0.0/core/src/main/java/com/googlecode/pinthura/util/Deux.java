@@ -1,8 +1,8 @@
 package com.googlecode.pinthura.util;
 
 public interface Deux<O,T> {
-    O getOne();
-    T getTwo();
+    O one();
+    T two();
 
     class DeuxImpl<O,T> implements Deux<O,T> {
         private final O one;
@@ -13,11 +13,11 @@ public interface Deux<O,T> {
             this.two = two;
         }
 
-        public O getOne() {
+        public O one() {
             return one;
         }
 
-        public T getTwo() {
+        public T two() {
             return two;
         }
     }

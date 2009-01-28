@@ -62,7 +62,7 @@ public final class AMockInjectorIncubator {
         Deux<FieldBoundary, ClassBoundary> fieldDeux = createFieldClassBoundaryDeux();
         fieldsDeux.add(fieldDeux);
         fieldsDeuxByName.put(fieldName, fieldDeux);
-        EasyMock.expect(fieldDeux.getOne().getName()).andReturn(fieldName);
+        EasyMock.expect(fieldDeux.one().getName()).andReturn(fieldName);
         return this;
     }
 
@@ -76,9 +76,9 @@ public final class AMockInjectorIncubator {
     public AMockInjectorIncubator supplyMockControl(final String mockControlName) {
         fieldMockControlDeux = createFieldMockControlDeux();
         EasyMock.expect(mockMockConfigurer.getMockControlName()).andReturn(mockControlName).times(2);
-        EasyMock.expect(mockFieldFinder.findByName(mockControlName, instance)).andReturn(fieldMockControlDeux.getOne());
-        EasyMock.expect(mockEasyMockWrapper.createControl()).andReturn(fieldMockControlDeux.getTwo());
-        mockFieldSetter.setValue(fieldMockControlDeux.getOne(), instance, fieldMockControlDeux.getTwo());
+        EasyMock.expect(mockFieldFinder.findByName(mockControlName, instance)).andReturn(fieldMockControlDeux.one());
+        EasyMock.expect(mockEasyMockWrapper.createControl()).andReturn(fieldMockControlDeux.two());
+        mockFieldSetter.setValue(fieldMockControlDeux.one(), instance, fieldMockControlDeux.two());
         return this;
     }
 
@@ -112,7 +112,7 @@ public final class AMockInjectorIncubator {
     private void expectPrefixedFields() {
         List<FieldBoundary<?>> fieldsPrefixedWithMock = new ArrayList<FieldBoundary<?>>();
         for (Deux<FieldBoundary, ClassBoundary> fieldBoundaryClassBoundaryDeux : fieldsDeux) {
-            fieldsPrefixedWithMock.add(fieldBoundaryClassBoundaryDeux.getOne());
+            fieldsPrefixedWithMock.add(fieldBoundaryClassBoundaryDeux.one());
         }
 
         EasyMock.expect(mockFieldFinder.findByPrefix(prefix, instance)).andReturn(fieldsPrefixedWithMock);
@@ -131,10 +131,10 @@ public final class AMockInjectorIncubator {
     @SuppressWarnings({"unchecked"})
     @SuppressionReason(SuppressionReason.Reason.CANT_INFER_GENERICS_ON_MOCKS)
     private <T> void expectInjectedField(final Deux<FieldBoundary, ClassBoundary> fieldAndClassBoundary, final T value) {
-        EasyMock.expect(fieldMockControlDeux.getOne().get(instance)).andReturn(fieldMockControlDeux.getTwo());
-        EasyMock.expect(fieldAndClassBoundary.getOne().getType()).andReturn(fieldAndClassBoundary.getTwo());
-        EasyMock.expect(mockEasyMockWrapper.createMock(fieldMockControlDeux.getTwo(), fieldAndClassBoundary.getTwo())).andReturn(value);
-        mockFieldSetter.setValue(fieldAndClassBoundary.getOne(),  instance, value);
+        EasyMock.expect(fieldMockControlDeux.one().get(instance)).andReturn(fieldMockControlDeux.two());
+        EasyMock.expect(fieldAndClassBoundary.one().getType()).andReturn(fieldAndClassBoundary.two());
+        EasyMock.expect(mockEasyMockWrapper.createMock(fieldMockControlDeux.two(), fieldAndClassBoundary.two())).andReturn(value);
+        mockFieldSetter.setValue(fieldAndClassBoundary.one(),  instance, value);
     }
 
     @SuppressWarnings({"ThrowableInstanceNeverThrown"})
