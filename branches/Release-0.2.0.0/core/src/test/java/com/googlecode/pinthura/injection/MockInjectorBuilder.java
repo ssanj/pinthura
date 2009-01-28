@@ -28,11 +28,13 @@ public final class MockInjectorBuilder {
     private FieldFinder fieldFinder;
     private FieldSetter fieldSetter;
     private EasyMockWrapper easyMockWrapper;
+    private MockConfigurer mockConfigurer;
 
     public MockInjectorBuilder() {
         fieldFinder = new FieldFinderImpl();
         fieldSetter = new FieldSetterImpl();
         easyMockWrapper = new EasyMockWrapperImpl();
+        mockConfigurer = new MockPrefixMockConfigurer();
     }
 
     public MockInjectorBuilder withFieldFinder(final FieldFinder fieldFinder) {
@@ -50,7 +52,12 @@ public final class MockInjectorBuilder {
         return this;
     }
 
+    public MockInjectorBuilder withMockConfigurer(final MockConfigurer mockConfigurer) {
+        this.mockConfigurer = mockConfigurer;
+        return this;
+    }
+
     public MockInjector build() {
-        return new MockInjectorImpl(fieldFinder, fieldSetter, easyMockWrapper);
+        return new MockInjectorImpl(mockConfigurer, fieldFinder, fieldSetter, easyMockWrapper);
     }
 }
