@@ -17,38 +17,27 @@ package com.googlecode.pinthura.util;
 
 import com.googlecode.pinthura.boundary.java.lang.MathBoundary;
 
+import java.util.List;
+
 //TODO: Consider breaking this into 3 classes: RandomStrings, RandomNumbers and RandomTypes
 public final class RandomDataCreatorImpl implements RandomDataCreator {
 
-    private static final int TOTAL_LETTERS          = 52;
-    private static final int CASED_LETTERS          = 26;
-    private static final int UPPERCASE_BOUNDARY     = 65;
-    private static final int LOWER_CASE_BOUNDARY    = 97;
-
     private final MathBoundary mathBoundary;
-    private final int[] letters;
+    private final List<Character> characterList;
+    private int numberLettersInTotal;
 
-    public RandomDataCreatorImpl(final MathBoundary mathBoundary) {
+    public RandomDataCreatorImpl(final MathBoundary mathBoundary, final LetterWrangler letterWrangler) {
         this.mathBoundary = mathBoundary;
-        letters = new int[TOTAL_LETTERS];
-        initialiseLetters();
-    }
+        characterList = letterWrangler.getAllLetters();
+        numberLettersInTotal = letterWrangler.getNumberLettersInTotal();
 
-    private void initialiseLetters() {
-        for (int index = 0; index  < CASED_LETTERS; index++) {
-            letters[index] = UPPERCASE_BOUNDARY + index;
-        }
-
-        for (int index = 0; index  < CASED_LETTERS; index++) {
-            letters[CASED_LETTERS + index] = LOWER_CASE_BOUNDARY + index;
-        }
     }
 
     public String createString(final int length) {
         StringBuilder builder = new StringBuilder();
 
         for (int index = 0; index  < length; index++) {
-            builder.append((char) letters[((int) (mathBoundary.random() * TOTAL_LETTERS))]);
+            builder.append(characterList.get(((int) (mathBoundary.random() * numberLettersInTotal))));
         }
 
         return builder.toString();

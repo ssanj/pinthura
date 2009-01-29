@@ -18,6 +18,8 @@ package com.googlecode.pinthura.util.builder;
 import com.googlecode.pinthura.annotation.SuppressionReason;
 import com.googlecode.pinthura.boundary.java.lang.MathBoundary;
 import com.googlecode.pinthura.boundary.java.lang.MathBoundaryImpl;
+import com.googlecode.pinthura.util.LetterWrangler;
+import com.googlecode.pinthura.util.LetterWranglerImpl;
 import com.googlecode.pinthura.util.RandomDataCreator;
 import com.googlecode.pinthura.util.RandomDataCreatorImpl;
 
@@ -26,9 +28,11 @@ import com.googlecode.pinthura.util.RandomDataCreatorImpl;
 public final class RandomDataCreatorBuilder {
 
     private MathBoundary mathBoundary;
+    private LetterWrangler letterWrangler;
 
     public RandomDataCreatorBuilder() {
         mathBoundary = new MathBoundaryImpl();
+        letterWrangler = new LetterWranglerImpl();
     }
 
     public RandomDataCreatorBuilder withMathBoundary(final MathBoundary mathBoundary) {
@@ -36,7 +40,12 @@ public final class RandomDataCreatorBuilder {
         return this;
     }
 
+    public RandomDataCreatorBuilder withLetterWrangler(final LetterWrangler letterWrangler) {
+        this.letterWrangler = letterWrangler;
+        return this;
+    }
+
     public RandomDataCreator build() {
-        return new RandomDataCreatorImpl(mathBoundary);
+        return new RandomDataCreatorImpl(mathBoundary, letterWrangler);
     }
 }
