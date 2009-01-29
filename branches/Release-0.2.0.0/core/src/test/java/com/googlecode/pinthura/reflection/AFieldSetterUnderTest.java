@@ -17,7 +17,6 @@ package com.googlecode.pinthura.reflection;
 
 import com.googlecode.pinthura.annotation.SuppressionReason;
 import com.googlecode.pinthura.data.SquareImpl;
-import com.googlecode.pinthura.factory.boundary.BoundaryException;
 import com.googlecode.pinthura.factory.boundary.FieldBoundary;
 import com.googlecode.pinthura.util.Arrayz;
 import com.googlecode.pinthura.util.RandomDataChooser;
@@ -70,14 +69,16 @@ public final class AFieldSetterUnderTest {
     public void shouldThrowABoundaryExceptionWhenAFieldCantBeSet() {
         mockFieldBoundary.setAccessible(true);
         mockFieldBoundary.set(instance, value);
-        EasyMock.expectLastCall().andThrow(new BoundaryException(new IllegalAccessException()));
+        EasyMock.expectLastCall().andThrow(new IllegalArgumentException("blah"));
         mockControl.replay();
 
         try {
             fieldSetter.setValue(mockFieldBoundary, instance, value);
             fail();
-        } catch (BoundaryException e) {
-            assertThat((Class<IllegalAccessException>) e.getCause().getClass(), equalTo(IllegalAccessException.class));
+        } catch (FieldSetterException e) {
+            assertThat((Class<IllegalArgumentException>) e.getCause().getClass(),
+                    equalTo(IllegalArgumentException.class));
+            assertThat(e.getCause().getMessage(), equalTo("blah"));
         }
     }
 }

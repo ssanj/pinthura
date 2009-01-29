@@ -141,7 +141,7 @@ public final class AnEasyMockInjectorIncubator {
     @SuppressionReason(SuppressionReason.Reason.TEST_VALUE)
     public AnEasyMockInjectorIncubator supplyExceptionalCondition() {
         exceptionSet = true;
-        EasyMock.expect(mockMockConfigurer.getMockControlName()).andThrow(new MockInjectionException(EXCEPTION_MESSAGE));
+        EasyMock.expect(mockMockConfigurer.getMockControlName()).andThrow(new RuntimeException(EXCEPTION_MESSAGE));
         return this;
     }
 
@@ -162,9 +162,13 @@ public final class AnEasyMockInjectorIncubator {
         //do nothing.
     }
 
+    @SuppressWarnings({"unchecked"})
+    @SuppressionReason(SuppressionReason.Reason.CANT_INFER_GENERICS)
     public AnEasyMockInjectorIncubator exception() {
         assertThat(exception, notNullValue());
-        assertThat(exception.getMessage(), equalTo(EXCEPTION_MESSAGE));
+        assertThat(exception.getCause(), notNullValue());
+        assertThat((Class<RuntimeException>) exception.getCause().getClass(), equalTo(RuntimeException.class));
+        assertThat(exception.getCause().getMessage(), equalTo(EXCEPTION_MESSAGE));
         return this;
     }
 

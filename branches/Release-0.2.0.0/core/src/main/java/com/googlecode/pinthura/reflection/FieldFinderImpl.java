@@ -16,7 +16,6 @@
 package com.googlecode.pinthura.reflection;
 
 import com.googlecode.pinthura.annotation.SuppressionReason;
-import com.googlecode.pinthura.exception.PinthuraException;
 import com.googlecode.pinthura.factory.boundary.ClassBoundaryImpl;
 import com.googlecode.pinthura.factory.boundary.FieldBoundary;
 import com.googlecode.pinthura.factory.boundary.FieldBoundaryImpl;
@@ -33,7 +32,7 @@ public final class FieldFinderImpl implements FieldFinder {
         try {
             return new FieldBoundaryImpl(instance.getClass().getDeclaredField(varName));
         } catch (NoSuchFieldException e) {
-            throw new PinthuraException("Could not find field [" +
+            throw new FieldFinderException("Could not find field [" +
                                         varName +
                                         "] on class [" +
                                         instance.getClass().getName() + "]", e);
@@ -50,7 +49,7 @@ public final class FieldFinderImpl implements FieldFinder {
             return fields;
         }
 
-        throw new PinthuraException("Could not find any fields prefixed with [" +
+        throw new FieldFinderException("Could not find any fields prefixed with [" +
                                     prefix +
                                     "] on class [" +
                                     instance.getClass().getName() + "]");
