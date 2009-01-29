@@ -15,11 +15,11 @@
  */
 package com.googlecode.pinthura.factory.instantiator;
 
+import com.googlecode.pinthura.boundary.java.lang.ClassBoundary;
+import com.googlecode.pinthura.boundary.java.lang.ClassBoundaryImpl;
+import com.googlecode.pinthura.boundary.java.lang.reflect.ConstructorBoundary;
 import com.googlecode.pinthura.data.Square;
 import com.googlecode.pinthura.factory.MethodParam;
-import com.googlecode.pinthura.factory.boundary.ClassBoundary;
-import com.googlecode.pinthura.factory.boundary.ClassBoundaryImpl;
-import com.googlecode.pinthura.factory.boundary.ConstructorBoundary;
 import org.easymock.EasyMock;
 import org.easymock.IMocksControl;
 import static org.hamcrest.core.IsSame.sameInstance;

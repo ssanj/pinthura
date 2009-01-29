@@ -13,21 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.pinthura.io.boundary;
+package com.googlecode.pinthura.boundary.java.lang.reflect;
 
-import java.io.Reader;
+import java.lang.reflect.Constructor;
 
-public final class NullReaderBoundary implements ReaderBoundary {
+public interface ConstructorBoundary<T> {
 
-    public int read() throws ReaderBoundaryException {
-        throw new ReaderBoundaryException();
-    }
+    Object newInstance(Object[] arguments);
 
-    public Reader getReader() {
-        throw new ReaderBoundaryException();
-    }
-
-    public void close() throws ReaderBoundaryException {
-        //do nothing.
-    }
+    Constructor<T> getConstructor();
 }

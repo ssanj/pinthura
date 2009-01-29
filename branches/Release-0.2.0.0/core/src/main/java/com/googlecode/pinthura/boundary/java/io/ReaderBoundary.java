@@ -13,13 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.pinthura.factory.boundary;
+package com.googlecode.pinthura.boundary.java.io;
 
-import java.lang.reflect.Method;
+import java.io.Reader;
 
-public final class MethodBoundaryFactoryImpl implements MethodBoundaryFactory {
+public interface ReaderBoundary {
 
-    public MethodBoundary create(final Method method) {
-        return new MethodBoundaryImpl(method);
+    int read() throws ReaderBoundaryException;
+
+    Reader getReader() throws ReaderBoundaryException;
+
+    void close() throws ReaderBoundaryException;
+
+    final class NullObject {
+
+        private NullObject() { }
+
+        public static final ReaderBoundary NULL_OBJECT = new NullReaderBoundary();
+
     }
 }

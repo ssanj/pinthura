@@ -15,8 +15,8 @@
  */
 package com.googlecode.pinthura.io;
 
-import com.googlecode.pinthura.io.boundary.ReaderBoundary;
-import static com.googlecode.pinthura.io.boundary.ReaderBoundary.NullObject.NULL_OBJECT;
+import com.googlecode.pinthura.boundary.java.io.ReaderBoundary;
+import static com.googlecode.pinthura.boundary.java.io.ReaderBoundary.NullObject.NULL_OBJECT;
 
 public final class FileContentsReader implements TextFileReader {
 

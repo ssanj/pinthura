@@ -13,9 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.pinthura.factory.boundary;
+package com.googlecode.pinthura.boundary.java.lang.reflect;
 
 import com.googlecode.pinthura.annotation.SuppressionReason;
+import com.googlecode.pinthura.boundary.java.lang.ClassBoundary;
+import com.googlecode.pinthura.boundary.java.lang.ClassBoundaryImpl;
 
 import java.lang.reflect.Field;
 

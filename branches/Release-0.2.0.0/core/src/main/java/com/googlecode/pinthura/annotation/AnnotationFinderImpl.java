@@ -15,8 +15,8 @@
  */
 package com.googlecode.pinthura.annotation;
 
-import com.googlecode.pinthura.factory.boundary.ClassBoundary;
-import com.googlecode.pinthura.factory.boundary.MethodBoundary;
+import com.googlecode.pinthura.boundary.java.lang.ClassBoundary;
+import com.googlecode.pinthura.boundary.java.lang.reflect.MethodBoundary;
 
 import java.lang.annotation.Annotation;
 

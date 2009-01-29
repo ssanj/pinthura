@@ -15,17 +15,17 @@
  */
 package com.googlecode.pinthura.factory.locator.deriver;
 
+import com.googlecode.pinthura.boundary.java.lang.ClassBoundary;
+import com.googlecode.pinthura.boundary.java.lang.ClassBoundaryImpl;
 import com.googlecode.pinthura.data.Square;
 import com.googlecode.pinthura.data.UrlBoundary;
-import com.googlecode.pinthura.factory.boundary.ClassBoundaryImpl;
-import com.googlecode.pinthura.factory.boundary.ClassBoundary;
 import com.googlecode.pinthura.factory.MethodParam;
+import org.easymock.EasyMock;
+import org.easymock.IMocksControl;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertThat;
 import org.junit.Before;
 import org.junit.Test;
-import org.easymock.EasyMock;
-import org.easymock.IMocksControl;
 
 public final class AnImplSuffixingDeriverUnderTest {
 

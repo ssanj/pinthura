@@ -13,20 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.pinthura.factory.boundary;
+package com.googlecode.pinthura.boundary.java.lang.reflect;
 
-import java.lang.reflect.Method;
-import java.lang.annotation.Annotation;
+public final class ConstructorBoundaryException extends RuntimeException {
 
-public interface MethodBoundary {
+    private static final long serialVersionUID = 8425091519261312335L;
 
-    ClassBoundary<?> getReturnType();
-
-    String getName();
-
-    Method getMethod();
-
-    ClassBoundary<?>[] getParameterTypes();
-
-    <T extends Annotation> T getAnnotation(final ClassBoundary<T> annotationClass);
+    public ConstructorBoundaryException(final Throwable cause) {
+        super(cause);
+    }
 }

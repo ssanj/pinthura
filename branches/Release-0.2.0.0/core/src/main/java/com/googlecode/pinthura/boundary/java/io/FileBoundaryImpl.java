@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.pinthura.io.boundary;
+package com.googlecode.pinthura.boundary.java.io;
 
 import java.io.File;
 

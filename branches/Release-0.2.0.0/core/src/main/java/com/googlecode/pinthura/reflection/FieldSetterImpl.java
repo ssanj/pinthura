@@ -15,7 +15,7 @@
  */
 package com.googlecode.pinthura.reflection;
 
-import com.googlecode.pinthura.factory.boundary.FieldBoundary;
+import com.googlecode.pinthura.boundary.java.lang.reflect.FieldBoundary;
 
 public final class FieldSetterImpl implements FieldSetter {
 

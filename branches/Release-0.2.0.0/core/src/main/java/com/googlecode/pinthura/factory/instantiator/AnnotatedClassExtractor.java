@@ -15,8 +15,8 @@
  */
 package com.googlecode.pinthura.factory.instantiator;
 
+import com.googlecode.pinthura.boundary.java.lang.ClassBoundary;
 import com.googlecode.pinthura.factory.MethodParam;
-import com.googlecode.pinthura.factory.boundary.ClassBoundary;
 
 public interface AnnotatedClassExtractor {
 

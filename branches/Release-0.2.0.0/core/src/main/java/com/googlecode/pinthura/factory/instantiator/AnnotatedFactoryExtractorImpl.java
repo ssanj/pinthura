@@ -16,10 +16,10 @@
 package com.googlecode.pinthura.factory.instantiator;
 
 import com.googlecode.pinthura.annotation.AnnotationFinder;
+import com.googlecode.pinthura.boundary.java.lang.ClassBoundaryImpl;
 import com.googlecode.pinthura.factory.Factory;
 import com.googlecode.pinthura.factory.InjectedFactory;
 import com.googlecode.pinthura.factory.MethodParam;
-import com.googlecode.pinthura.factory.boundary.ClassBoundaryImpl;
 
 public final class AnnotatedFactoryExtractorImpl implements AnnotatedFactoryExtractor {
 

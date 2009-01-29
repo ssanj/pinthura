@@ -13,17 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.pinthura.io.boundary;
+package com.googlecode.pinthura.boundary.java.io;
 
-import java.io.Writer;
+import java.io.Reader;
 
-public interface WriterBoundary {
+public final class NullReaderBoundary implements ReaderBoundary {
 
-    void write(String str) throws WriterBoundaryException;
+    public int read() throws ReaderBoundaryException {
+        throw new ReaderBoundaryException();
+    }
 
-    void flush() throws WriterBoundaryException;
+    public Reader getReader() {
+        throw new ReaderBoundaryException();
+    }
 
-    void close() throws WriterBoundaryException;
-
-    Writer getWriter();
+    public void close() throws ReaderBoundaryException {
+        //do nothing.
+    }
 }

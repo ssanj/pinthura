@@ -13,13 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.pinthura.factory.boundary;
+package com.googlecode.pinthura.boundary.java.lang;
 
-import java.lang.reflect.Constructor;
+import com.googlecode.pinthura.boundary.java.lang.reflect.ConstructorBoundary;
+import com.googlecode.pinthura.boundary.java.lang.reflect.FieldBoundary;
 
-public interface ConstructorBoundary<T> {
+import java.util.List;
 
-    Object newInstance(Object[] arguments);
+public interface ClassBoundary<T> {
 
-    Constructor<T> getConstructor();
+    String getName();
+
+    Class<T> getClazz();
+
+    ClassBoundary<T> forName(String className);
+
+    ConstructorBoundary<T> getConstructor(ClassBoundary<?>[] parameterTypes);
+
+    List<FieldBoundary> getDeclaredFields();
 }

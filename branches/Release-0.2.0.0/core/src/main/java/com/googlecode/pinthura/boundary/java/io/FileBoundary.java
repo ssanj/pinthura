@@ -13,13 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.pinthura.io.boundary;
+package com.googlecode.pinthura.boundary.java.io;
 
-public final class WriterBoundaryException extends RuntimeException {
+import java.io.File;
 
-    private static final long serialVersionUID = 6031802969631370602L;
+public interface FileBoundary {
 
-    public WriterBoundaryException(final Throwable cause) {
-        super(cause);
-    }
+    boolean mkdirs();
+
+    File getFile();
+
+    FileBoundary getParentFile();
+
+    boolean exists();
 }

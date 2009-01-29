@@ -13,17 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.pinthura.factory.boundary;
+package com.googlecode.pinthura.boundary.java.lang.reflect;
 
-public interface FieldBoundary<T> {
+import com.googlecode.pinthura.boundary.java.lang.ClassBoundary;
+
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
+
+public interface MethodBoundary {
+
+    ClassBoundary<?> getReturnType();
 
     String getName();
 
-    <I> T get(I instance);
+    Method getMethod();
 
-    ClassBoundary<T> getType();
+    ClassBoundary<?>[] getParameterTypes();
 
-    void setAccessible(boolean accessible);
-
-    <I> void set(I instance, T value);
+    <T extends Annotation> T getAnnotation(final ClassBoundary<T> annotationClass);
 }

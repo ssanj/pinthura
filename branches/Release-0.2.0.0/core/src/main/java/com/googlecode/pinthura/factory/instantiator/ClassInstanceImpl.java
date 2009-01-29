@@ -15,8 +15,8 @@
  */
 package com.googlecode.pinthura.factory.instantiator;
 
-import com.googlecode.pinthura.factory.boundary.ClassBoundary;
-import com.googlecode.pinthura.factory.boundary.ClassBoundaryImpl;
+import com.googlecode.pinthura.boundary.java.lang.ClassBoundary;
+import com.googlecode.pinthura.boundary.java.lang.ClassBoundaryImpl;
 
 public final class ClassInstanceImpl implements ClassInstance {
 

@@ -13,7 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.pinthura.factory.boundary;
+package com.googlecode.pinthura.boundary.java.lang;
+
+import com.googlecode.pinthura.boundary.java.lang.reflect.ConstructorBoundary;
+import com.googlecode.pinthura.boundary.java.lang.reflect.ConstructorBoundaryImpl;
+import com.googlecode.pinthura.boundary.java.lang.reflect.FieldBoundary;
+import com.googlecode.pinthura.boundary.java.lang.reflect.FieldBoundaryImpl;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;

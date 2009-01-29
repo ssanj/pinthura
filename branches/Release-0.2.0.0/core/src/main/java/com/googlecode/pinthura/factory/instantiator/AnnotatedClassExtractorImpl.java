@@ -15,11 +15,11 @@
  */
 package com.googlecode.pinthura.factory.instantiator;
 
-import com.googlecode.pinthura.factory.boundary.ClassBoundary;
-import com.googlecode.pinthura.factory.boundary.ClassBoundaryImpl;
-import com.googlecode.pinthura.factory.MethodParam;
-import com.googlecode.pinthura.factory.Implementation;
 import com.googlecode.pinthura.annotation.AnnotationFinder;
+import com.googlecode.pinthura.boundary.java.lang.ClassBoundary;
+import com.googlecode.pinthura.boundary.java.lang.ClassBoundaryImpl;
+import com.googlecode.pinthura.factory.Implementation;
+import com.googlecode.pinthura.factory.MethodParam;
 
 public final class AnnotatedClassExtractorImpl implements AnnotatedClassExtractor {
 

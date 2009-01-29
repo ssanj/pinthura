@@ -15,8 +15,8 @@
  */
 package com.googlecode.pinthura.factory.instantiator;
 
+import com.googlecode.pinthura.boundary.java.lang.reflect.ConstructorBoundary;
 import com.googlecode.pinthura.factory.MethodParam;
-import com.googlecode.pinthura.factory.boundary.ConstructorBoundary;
 
 public interface ConstructorInstantiator {
 

@@ -15,8 +15,8 @@
  */
 package com.googlecode.pinthura.io;
 
-import com.googlecode.pinthura.io.boundary.WriterBoundary;
-import com.googlecode.pinthura.io.boundary.WriterBoundaryImpl;
+import com.googlecode.pinthura.boundary.java.io.WriterBoundary;
+import com.googlecode.pinthura.boundary.java.io.WriterBoundaryImpl;
 import com.googlecode.pinthura.io.util.FileUtil;
 import com.googlecode.pinthura.io.util.FileUtilImpl;
 

@@ -15,9 +15,9 @@
  */
 package com.googlecode.pinthura.factory.instantiator;
 
+import com.googlecode.pinthura.boundary.java.lang.ClassBoundaryImpl;
 import com.googlecode.pinthura.data.UrlBoundary;
 import com.googlecode.pinthura.data.UrlBoundaryImpl;
-import com.googlecode.pinthura.factory.boundary.ClassBoundaryImpl;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertThat;
 import org.junit.Test;

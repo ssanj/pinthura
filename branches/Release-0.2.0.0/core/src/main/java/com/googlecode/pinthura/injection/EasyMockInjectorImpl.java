@@ -16,7 +16,7 @@
 package com.googlecode.pinthura.injection;
 
 import com.googlecode.pinthura.annotation.SuppressionReason;
-import com.googlecode.pinthura.factory.boundary.FieldBoundary;
+import com.googlecode.pinthura.boundary.java.lang.reflect.FieldBoundary;
 import com.googlecode.pinthura.injection.filters.ItemFilter;
 import com.googlecode.pinthura.reflection.FieldFinder;
 import com.googlecode.pinthura.reflection.FieldSetter;

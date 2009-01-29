@@ -1,8 +1,8 @@
 package com.googlecode.pinthura.injection;
 
 import com.googlecode.pinthura.annotation.SuppressionReason;
-import com.googlecode.pinthura.factory.boundary.ClassBoundary;
-import com.googlecode.pinthura.factory.boundary.FieldBoundary;
+import com.googlecode.pinthura.boundary.java.lang.ClassBoundary;
+import com.googlecode.pinthura.boundary.java.lang.reflect.FieldBoundary;
 import com.googlecode.pinthura.reflection.FieldFinder;
 import com.googlecode.pinthura.reflection.FieldSetter;
 import com.googlecode.pinthura.util.Deux;
@@ -20,7 +20,7 @@ import java.util.Map;
 public final class AnEasyMockInjectorIncubator {
 
     private static final String EXCEPTION_MESSAGE = "Test exception";
-    
+
     private final IMocksControl mockControl;
     private final MockInjector mockInjector;
     private final FieldFinder mockFieldFinder;

@@ -15,7 +15,7 @@
  */
 package com.googlecode.pinthura.io;
 
-import com.googlecode.pinthura.io.boundary.ReaderBoundary;
+import com.googlecode.pinthura.boundary.java.io.ReaderBoundary;
 import com.googlecode.pinthura.util.RandomDataCreator;
 import com.googlecode.pinthura.util.builder.RandomDataCreatorBuilder;
 import org.easymock.EasyMock;

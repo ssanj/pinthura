@@ -15,8 +15,8 @@
  */
 package com.googlecode.pinthura.io.util;
 
-import com.googlecode.pinthura.io.boundary.FileBoundary;
-import com.googlecode.pinthura.io.boundary.FileBoundaryImpl;
+import com.googlecode.pinthura.boundary.java.io.FileBoundary;
+import com.googlecode.pinthura.boundary.java.io.FileBoundaryImpl;
 
 public final class FileUtilImpl implements FileUtil {
 

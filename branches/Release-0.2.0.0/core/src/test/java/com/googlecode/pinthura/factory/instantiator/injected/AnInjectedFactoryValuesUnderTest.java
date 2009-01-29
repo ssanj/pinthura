@@ -15,9 +15,9 @@
  */
 package com.googlecode.pinthura.factory.instantiator.injected;
 
+import com.googlecode.pinthura.boundary.java.lang.ClassBoundary;
 import com.googlecode.pinthura.data.Shape;
 import com.googlecode.pinthura.data.UrlBoundary;
-import com.googlecode.pinthura.factory.boundary.ClassBoundary;
 import com.googlecode.pinthura.factory.instantiator.ClassInstance;
 import com.googlecode.pinthura.util.Arrayz;
 import org.easymock.EasyMock;

@@ -15,7 +15,7 @@
  */
 package com.googlecode.pinthura.io;
 
-import com.googlecode.pinthura.io.boundary.WriterBoundary;
+import com.googlecode.pinthura.boundary.java.io.WriterBoundary;
 import com.googlecode.pinthura.util.RandomDataChooser;
 import com.googlecode.pinthura.util.builder.RandomDataChooserBuilder;
 import org.easymock.EasyMock;

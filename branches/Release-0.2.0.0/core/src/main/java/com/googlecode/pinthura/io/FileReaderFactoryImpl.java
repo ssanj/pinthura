@@ -15,8 +15,8 @@
  */
 package com.googlecode.pinthura.io;
 
-import com.googlecode.pinthura.io.boundary.ReaderBoundary;
-import com.googlecode.pinthura.io.boundary.ReaderBoundaryImpl;
+import com.googlecode.pinthura.boundary.java.io.ReaderBoundary;
+import com.googlecode.pinthura.boundary.java.io.ReaderBoundaryImpl;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
