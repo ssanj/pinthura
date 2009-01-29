@@ -23,11 +23,11 @@ import com.googlecode.pinthura.util.builder.RandomDataCreatorBuilder;
 import org.junit.Before;
 import org.junit.Test;
 
-public final class AMockInjectorUnderTest {
+public final class AnEasyMockInjectorUnderTest {
 
     private Object randomInstance;
     private RandomDataChooser randomDataChooser;
-    private AMockInjectorIncubator incubator;
+    private AnEasyMockInjectorIncubator incubator;
     private RandomDataCreator randomDataCreator;
     private String randomPrefix;
 
@@ -35,7 +35,7 @@ public final class AMockInjectorUnderTest {
     public void setup() {
         randomDataChooser = new RandomDataChooserBuilder().build();
         randomDataCreator = new RandomDataCreatorBuilder().build();
-        incubator = new AMockInjectorIncubator();
+        incubator = new AnEasyMockInjectorIncubator();
         randomPrefix = randomDataCreator.createString(4);
         randomInstance = getRandomValue();
     }

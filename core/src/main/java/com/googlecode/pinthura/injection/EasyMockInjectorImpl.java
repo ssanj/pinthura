@@ -25,14 +25,14 @@ import org.easymock.IMocksControl;
 
 import java.util.List;
 
-public final class MockInjectorImpl implements MockInjector {
+public final class EasyMockInjectorImpl implements MockInjector {
 
     private final MockConfigurer mockConfigurer;
     private final FieldFinder fieldFinder;
     private final FieldSetter fieldSetter;
     private final EasyMockWrapper easyMockWrapper;
 
-    public MockInjectorImpl(final MockConfigurer mockConfigurer, final FieldFinder fieldFinder,
+    public EasyMockInjectorImpl(final MockConfigurer mockConfigurer, final FieldFinder fieldFinder,
                             final FieldSetter fieldSetter, final EasyMockWrapper easyMockWrapper) {
         this.mockConfigurer = mockConfigurer;
         this.fieldFinder = fieldFinder;
