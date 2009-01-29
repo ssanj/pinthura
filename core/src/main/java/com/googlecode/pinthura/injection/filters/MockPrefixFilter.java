@@ -16,7 +16,6 @@
 package com.googlecode.pinthura.injection.filters;
 
 import com.googlecode.pinthura.factory.boundary.FieldBoundary;
-import com.googlecode.pinthura.util.ItemFilter;
 
 public final class MockPrefixFilter implements ItemFilter<FieldBoundary> {
 

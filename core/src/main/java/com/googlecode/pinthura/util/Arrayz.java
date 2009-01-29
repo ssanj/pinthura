@@ -15,6 +15,8 @@
  */
 package com.googlecode.pinthura.util;
 
+import com.googlecode.pinthura.injection.filters.ItemFilter;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collection;
