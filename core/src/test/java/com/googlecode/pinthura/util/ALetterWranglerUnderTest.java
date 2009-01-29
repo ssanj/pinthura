@@ -42,6 +42,27 @@ public final class ALetterWranglerUnderTest {
     }
 
     @Test
+    public void shouldReturnAllUpperCaseLetters() {
+        List<Character> characterList = wrangler.getUpperCaseLetters();
+        assertThat(characterList.size(), equalTo(26));
+
+        for (int index = 65; index < 91; index++) {
+            assertThat(characterList.get(index - 65), equalTo((char) index));
+        }
+    }
+
+    @Test
+    public void shouldReturnAllLowerCaseLetters() {
+        List<Character> characterList = wrangler.getLowerCaseLetters();
+        assertThat(characterList.size(), equalTo(26));
+
+        //lowercase letters
+        for (int index = 97; index < 123; index++) {
+            assertThat(characterList.get(index - 97), equalTo((char) index));
+        }
+    }
+
+    @Test
     public void shouldReturnAllLetters() {
         List<Character> characters = wrangler.getAllLetters();
 

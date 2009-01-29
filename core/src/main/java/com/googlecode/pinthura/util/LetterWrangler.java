@@ -10,4 +10,6 @@ public interface LetterWrangler {
     int getNumberOfUpperCaseLetters();
     int getNumberOfLowerCaseLetters();
     int getNumberLettersInTotal();
+    List<Character> getLowerCaseLetters();
+    List<Character> getUpperCaseLetters();
 }
