@@ -20,7 +20,7 @@ import com.googlecode.pinthura.injection.data.RandomIntegralValueIncubator;
 import org.junit.Before;
 import org.junit.Test;
 
-public final class AMockInjectorUnderIntTest {
+public final class AnEasyMockInjectorUnderIntTest {
 
     @SuppressWarnings({"InstanceVariableOfConcreteClass"})
     @SuppressionReason(SuppressionReason.Reason.INCUBATOR)
@@ -28,7 +28,7 @@ public final class AMockInjectorUnderIntTest {
 
     @Before
     public void setup() {
-        incubator = new MockInjectorBuilder().build().inject(new RandomIntegralValueIncubator());
+        incubator = new EasyMockInjectorBuilder().build().inject(new RandomIntegralValueIncubator());
     }
 
     @Test
