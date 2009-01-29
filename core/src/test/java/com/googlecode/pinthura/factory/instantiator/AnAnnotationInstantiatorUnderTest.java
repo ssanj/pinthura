@@ -15,6 +15,10 @@
  */
 package com.googlecode.pinthura.factory.instantiator;
 
+import com.googlecode.pinthura.boundary.java.lang.ClassBoundary;
+import com.googlecode.pinthura.boundary.java.lang.reflect.ConstructorBoundary;
+import com.googlecode.pinthura.data.UrlBoundary;
+import com.googlecode.pinthura.factory.MethodParam;
 import org.easymock.EasyMock;
 import org.easymock.IMocksControl;
 import static org.hamcrest.core.IsEqual.equalTo;
@@ -22,10 +26,6 @@ import static org.hamcrest.core.IsSame.sameInstance;
 import static org.junit.Assert.assertThat;
 import org.junit.Before;
 import org.junit.Test;
-import com.googlecode.pinthura.factory.MethodParam;
-import com.googlecode.pinthura.factory.boundary.ClassBoundary;
-import com.googlecode.pinthura.factory.boundary.ConstructorBoundary;
-import com.googlecode.pinthura.data.UrlBoundary;
 
 public final class AnAnnotationInstantiatorUnderTest {
 

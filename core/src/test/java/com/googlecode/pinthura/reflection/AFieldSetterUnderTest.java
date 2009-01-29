@@ -16,8 +16,8 @@
 package com.googlecode.pinthura.reflection;
 
 import com.googlecode.pinthura.annotation.SuppressionReason;
+import com.googlecode.pinthura.boundary.java.lang.reflect.FieldBoundary;
 import com.googlecode.pinthura.data.SquareImpl;
-import com.googlecode.pinthura.factory.boundary.FieldBoundary;
 import com.googlecode.pinthura.util.Arrayz;
 import com.googlecode.pinthura.util.RandomDataChooser;
 import com.googlecode.pinthura.util.builder.RandomDataChooserBuilder;

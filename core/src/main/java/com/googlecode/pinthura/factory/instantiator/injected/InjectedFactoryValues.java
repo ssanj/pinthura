@@ -15,7 +15,7 @@
  */
 package com.googlecode.pinthura.factory.instantiator.injected;
 
-import com.googlecode.pinthura.factory.boundary.ClassBoundary;
+import com.googlecode.pinthura.boundary.java.lang.ClassBoundary;
 
 public interface InjectedFactoryValues {
 

@@ -15,8 +15,8 @@
  */
 package com.googlecode.pinthura.factory.instantiator.injected;
 
+import com.googlecode.pinthura.boundary.java.lang.ClassBoundary;
 import com.googlecode.pinthura.factory.MethodParam;
-import com.googlecode.pinthura.factory.boundary.ClassBoundary;
 import com.googlecode.pinthura.factory.instantiator.AnnotatedClassExtractor;
 import com.googlecode.pinthura.factory.instantiator.InstantiationStrategy;
 import com.googlecode.pinthura.filter.MatchNotFoundException;

@@ -13,11 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.pinthura.factory.boundary;
+package com.googlecode.pinthura.boundary.java.io;
 
-import java.lang.reflect.Method;
+import java.io.Writer;
 
-public interface MethodBoundaryFactory {
+public interface WriterBoundary {
 
-    MethodBoundary create(final Method method);
+    void write(String str) throws WriterBoundaryException;
+
+    void flush() throws WriterBoundaryException;
+
+    void close() throws WriterBoundaryException;
+
+    Writer getWriter();
 }

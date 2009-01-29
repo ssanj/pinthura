@@ -15,7 +15,7 @@
  */
 package com.googlecode.pinthura.injection;
 
-import com.googlecode.pinthura.factory.boundary.ClassBoundary;
+import com.googlecode.pinthura.boundary.java.lang.ClassBoundary;
 import org.easymock.IMocksControl;
 
 public interface EasyMockWrapper {

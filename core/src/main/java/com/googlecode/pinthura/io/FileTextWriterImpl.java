@@ -15,7 +15,7 @@
  */
 package com.googlecode.pinthura.io;
 
-import com.googlecode.pinthura.io.boundary.WriterBoundary;
+import com.googlecode.pinthura.boundary.java.io.WriterBoundary;
 
 public final class FileTextWriterImpl implements FileTextWriter {
 

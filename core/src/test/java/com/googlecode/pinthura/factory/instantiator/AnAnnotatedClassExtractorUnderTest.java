@@ -16,13 +16,13 @@
 package com.googlecode.pinthura.factory.instantiator;
 
 import com.googlecode.pinthura.annotation.AnnotationFinder;
+import com.googlecode.pinthura.boundary.java.lang.ClassBoundary;
+import com.googlecode.pinthura.boundary.java.lang.ClassBoundaryImpl;
+import com.googlecode.pinthura.boundary.java.lang.reflect.MethodBoundary;
 import com.googlecode.pinthura.data.SquareImpl;
 import com.googlecode.pinthura.data.UrlBoundaryImpl;
 import com.googlecode.pinthura.factory.Implementation;
 import com.googlecode.pinthura.factory.MethodParam;
-import com.googlecode.pinthura.factory.boundary.ClassBoundary;
-import com.googlecode.pinthura.factory.boundary.ClassBoundaryImpl;
-import com.googlecode.pinthura.factory.boundary.MethodBoundary;
 import org.easymock.EasyMock;
 import org.easymock.IMocksControl;
 import static org.hamcrest.core.IsEqual.equalTo;

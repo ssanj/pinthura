@@ -1,4 +1,4 @@
-package com.googlecode.pinthura.factory.boundary;
+package com.googlecode.pinthura.boundary.java.lang.reflect;
 
 public final class FieldBoundaryException extends RuntimeException {
 

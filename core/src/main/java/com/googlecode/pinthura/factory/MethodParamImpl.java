@@ -15,9 +15,9 @@
  */
 package com.googlecode.pinthura.factory;
 
-import com.googlecode.pinthura.factory.boundary.ClassBoundary;
-import com.googlecode.pinthura.factory.boundary.MethodBoundary;
-import com.googlecode.pinthura.factory.boundary.MethodBoundaryImpl;
+import com.googlecode.pinthura.boundary.java.lang.ClassBoundary;
+import com.googlecode.pinthura.boundary.java.lang.reflect.MethodBoundary;
+import com.googlecode.pinthura.boundary.java.lang.reflect.MethodBoundaryImpl;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;

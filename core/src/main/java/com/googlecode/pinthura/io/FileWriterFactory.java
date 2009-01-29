@@ -15,7 +15,7 @@
  */
 package com.googlecode.pinthura.io;
 
-import com.googlecode.pinthura.io.boundary.WriterBoundary;
+import com.googlecode.pinthura.boundary.java.io.WriterBoundary;
 
 /**
  * This interface defines how a <code>WriteBoundary</code> is created for a specified file in either overwrite or append mode.

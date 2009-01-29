@@ -15,10 +15,10 @@
  */
 package com.googlecode.pinthura.reflection;
 
+import com.googlecode.pinthura.boundary.java.lang.ClassBoundaryImpl;
 import com.googlecode.pinthura.boundary.java.lang.MathBoundary;
+import com.googlecode.pinthura.boundary.java.lang.reflect.FieldBoundary;
 import com.googlecode.pinthura.data.SquareImpl;
-import com.googlecode.pinthura.factory.boundary.ClassBoundaryImpl;
-import com.googlecode.pinthura.factory.boundary.FieldBoundary;
 import com.googlecode.pinthura.injection.data.RandomIntegralValueIncubator;
 import org.easymock.IMocksControl;
 import static org.hamcrest.core.IsEqual.equalTo;
