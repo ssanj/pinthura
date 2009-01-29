@@ -17,10 +17,10 @@ package com.googlecode.pinthura.injection;
 
 import com.googlecode.pinthura.annotation.SuppressionReason;
 import com.googlecode.pinthura.factory.boundary.FieldBoundary;
+import com.googlecode.pinthura.injection.filters.ItemFilter;
 import com.googlecode.pinthura.reflection.FieldFinder;
 import com.googlecode.pinthura.reflection.FieldSetter;
 import com.googlecode.pinthura.util.Arrayz;
-import com.googlecode.pinthura.util.ItemFilter;
 import org.easymock.IMocksControl;
 
 import java.util.List;

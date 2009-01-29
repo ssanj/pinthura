@@ -16,9 +16,11 @@
 package com.googlecode.pinthura.injection.filter;
 
 import com.googlecode.pinthura.factory.boundary.FieldBoundary;
+import com.googlecode.pinthura.injection.filters.ItemFilter;
 import com.googlecode.pinthura.injection.filters.MockPrefixFilter;
-import com.googlecode.pinthura.util.ItemFilter;
 import com.googlecode.pinthura.util.RandomDataCreator;
+import com.googlecode.pinthura.util.StringWrangler;
+import com.googlecode.pinthura.util.StringWranglerImpl;
 import com.googlecode.pinthura.util.builder.RandomDataCreatorBuilder;
 import org.easymock.EasyMock;
 import org.easymock.IMocksControl;
@@ -33,11 +35,13 @@ public final class AMockPrefixFilterUnderTest {
     private ItemFilter<FieldBoundary> filter;
     private RandomDataCreator random;
     private String randomPrefix;
+    private StringWrangler strWrangler;
 
     @Before
     public void setup() {
         mockControl = EasyMock.createControl();
         random = new RandomDataCreatorBuilder().build();
+        strWrangler = new StringWranglerImpl();
         randomPrefix = random.createString(5);
         filter = new MockPrefixFilter(randomPrefix);
     }
@@ -49,7 +53,7 @@ public final class AMockPrefixFilterUnderTest {
 
     @Test
     public void shouldFilterNamesThatHaveThePrefixInTheWrongCase() {
-        expectInclude(randomPrefix.toUpperCase() + random.createString(10), false);
+        expectInclude(strWrangler.changeCase(randomPrefix) + random.createString(10), false);
     }
 
     @Test
@@ -62,13 +66,13 @@ public final class AMockPrefixFilterUnderTest {
         expectInclude(randomPrefix + random.createString(10), true);
     }
 
-    private void expectInclude(final String prefix, final boolean expectedResult) {
+    private void expectInclude(final String fieldName, final boolean expectedResult) {
         FieldBoundary mockFieldBoundary = mockControl.createMock(FieldBoundary.class);
-        EasyMock.expect(mockFieldBoundary.getName()).andReturn(prefix);
+        EasyMock.expect(mockFieldBoundary.getName()).andReturn(fieldName);
         mockControl.replay();
 
         boolean result = filter.include(mockFieldBoundary);
-        assertThat(result, equalTo(expectedResult));
+        assertThat("[" + fieldName +"] should not match prefix [" + randomPrefix + "]", result, equalTo(expectedResult));
 
         mockControl.verify();
     }
