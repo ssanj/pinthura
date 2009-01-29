@@ -5,29 +5,41 @@ import java.util.List;
 
 public final class LetterWranglerImpl implements LetterWrangler {
 
-    private List<Character> characters;
+    private List<Character> allLetters;
+    private List<Character> lowerCaseLetters;
+    private List<Character> upperCaseLetters;
 
     public LetterWranglerImpl() {
-        characters = new ArrayList<Character>();
-        addUpperCaseCharacters();
-        addLowerCaseCharacters();        
+        upperCaseLetters = createUpperCaseCharacters();
+        lowerCaseLetters = createLowerCaseCharacters();
+        allLetters = new ArrayList<Character>();
+        allLetters.addAll(upperCaseLetters);
+        allLetters.addAll(lowerCaseLetters);
     }
 
     @Override
     public List<Character> getAllLetters() {
-        return characters;
+        return allLetters;
     }
 
-    private void addLowerCaseCharacters() {
+    private List<Character> createLowerCaseCharacters() {
+        List<Character> characters = new ArrayList<Character>();
+
         for (int index = 0; index  < getNumberOfLowerCaseLetters() ; index++) {
             characters.add((char) (getLowerCaseASCIIIndex() + index));
         }
+
+        return characters;
     }
 
-    private void addUpperCaseCharacters() {
+    private List<Character> createUpperCaseCharacters() {
+        List<Character> characters = new ArrayList<Character>();
+
         for (int index = 0; index  < getNumberOfUpperCaseLetters(); index++) {
             characters.add((char) (getUpperCaseASCIIIndex() + index));
         }
+
+        return characters;
     }
 
     @Override
@@ -53,5 +65,15 @@ public final class LetterWranglerImpl implements LetterWrangler {
     @Override
     public int getNumberLettersInTotal() {
         return 52;
+    }
+
+    @Override
+    public List<Character> getLowerCaseLetters() {
+        return lowerCaseLetters;
+    }
+
+    @Override
+    public List<Character> getUpperCaseLetters() {
+        return upperCaseLetters;
     }
 }
