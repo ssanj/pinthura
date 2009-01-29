@@ -17,7 +17,6 @@ package com.googlecode.pinthura.reflection;
 
 import com.googlecode.pinthura.boundary.java.lang.MathBoundary;
 import com.googlecode.pinthura.data.SquareImpl;
-import com.googlecode.pinthura.exception.PinthuraException;
 import com.googlecode.pinthura.factory.boundary.ClassBoundaryImpl;
 import com.googlecode.pinthura.factory.boundary.FieldBoundary;
 import com.googlecode.pinthura.injection.data.RandomIntegralValueIncubator;
@@ -63,7 +62,7 @@ public final class AFieldFinderUnderTest {
         try {
             fieldFinder.findByPrefix("blah", new RandomIntegralValueIncubator());
             fail();
-        } catch (PinthuraException e) {
+        } catch (FieldFinderException e) {
             assertThat(e.getMessage(), equalTo("Could not find any fields prefixed with [blah] " +
                                                "on class [com.googlecode.pinthura.injection.data.RandomIntegralValueIncubator]"));
         }
@@ -84,7 +83,7 @@ public final class AFieldFinderUnderTest {
         try {
             fieldFinder.findByName("bluu", new SquareImpl(2));
             fail();
-        } catch (PinthuraException e) {
+        } catch (FieldFinderException e) {
             assertThat(e.getMessage(), equalTo("Could not find field [bluu] on class [com.googlecode.pinthura.data.SquareImpl]"));
         }
     }
@@ -95,7 +94,7 @@ public final class AFieldFinderUnderTest {
         assertThat(field.getName(), equalTo(varName));
     }
 
-    private <T> void assertContainsField(final String varName, Class<T> clazz, final List<FieldBoundary<?>> fields) {
+    private <T> void assertContainsField(final String varName, final Class<T> clazz, final List<FieldBoundary<?>> fields) {
         for (FieldBoundary<?> field : fields) {
             if (field.getName().equals(varName) && field.getType().equals(new ClassBoundaryImpl<T>(clazz))) {
                 return;

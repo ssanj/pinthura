@@ -43,13 +43,17 @@ public final class EasyMockInjectorImpl implements MockInjector {
     @SuppressWarnings({"unchecked"})
     @SuppressionReason(SuppressionReason.Reason.CANT_INFER_GENERICS)
     public <I> I inject(final I instance) {
-        FieldBoundary<IMocksControl> mockControlField = fieldFinder.findByName(mockConfigurer.getMockControlName(), instance);
-        fieldSetter.setValue(mockControlField, instance, easyMockWrapper.createControl());
-        List<FieldBoundary<?>> fields = filterMockControl(fieldFinder.findByPrefix(mockConfigurer.getMockPrefix(), instance),
-                mockConfigurer.getMockControlName());
+        try {
+            FieldBoundary<IMocksControl> mockControlField = fieldFinder.findByName(mockConfigurer.getMockControlName(), instance);
+            fieldSetter.setValue(mockControlField, instance, easyMockWrapper.createControl());
+            List<FieldBoundary<?>> fields = filterMockControl(fieldFinder.findByPrefix(mockConfigurer.getMockPrefix(), instance),
+                    mockConfigurer.getMockControlName());
 
-        for (FieldBoundary field : fields) {
-            fieldSetter.setValue(field, instance, easyMockWrapper.createMock(mockControlField.get(instance), field.getType()));
+            for (FieldBoundary field : fields) {
+                fieldSetter.setValue(field, instance, easyMockWrapper.createMock(mockControlField.get(instance), field.getType()));
+            }
+        } catch (Exception e) {
+            throw new MockInjectionException(e);
         }
 
         return instance;

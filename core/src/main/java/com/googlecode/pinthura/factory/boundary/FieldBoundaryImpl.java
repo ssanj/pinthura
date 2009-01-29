@@ -33,11 +33,11 @@ public final class FieldBoundaryImpl<T> implements FieldBoundary<T> {
 
     @SuppressWarnings({"unchecked"})
     @SuppressionReason(SuppressionReason.Reason.CANT_INFER_GENERICS)
-    public <I> T get(I instance) {
+    public <I> T get(final I instance) {
         try {
             return (T) field.get(instance);
         } catch (IllegalAccessException e) {
-            throw new BoundaryException(e);
+            throw new FieldBoundaryException(e);
         }
     }
 
@@ -55,7 +55,7 @@ public final class FieldBoundaryImpl<T> implements FieldBoundary<T> {
         try {
             field.set(instance, value);
         } catch (IllegalAccessException e) {
-            throw new BoundaryException(e);
+            throw new FieldBoundaryException(e);
         }
     }
 
