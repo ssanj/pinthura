@@ -5,12 +5,10 @@ import com.googlecode.pinthura.boundary.java.lang.ClassBoundary;
 import com.googlecode.pinthura.boundary.java.lang.reflect.FieldBoundary;
 import com.googlecode.pinthura.reflection.FieldFinder;
 import com.googlecode.pinthura.reflection.FieldSetter;
+import com.googlecode.pinthura.test.Asserter;
 import com.googlecode.pinthura.util.Deux;
 import org.easymock.EasyMock;
 import org.easymock.IMocksControl;
-import static org.hamcrest.core.IsEqual.equalTo;
-import static org.hamcrest.core.IsNull.notNullValue;
-import static org.junit.Assert.assertThat;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -165,10 +163,7 @@ public final class AnEasyMockInjectorIncubator {
     @SuppressWarnings({"unchecked"})
     @SuppressionReason(SuppressionReason.Reason.CANT_INFER_GENERICS)
     public AnEasyMockInjectorIncubator exception() {
-        assertThat(exception, notNullValue());
-        assertThat(exception.getCause(), notNullValue());
-        assertThat((Class<RuntimeException>) exception.getCause().getClass(), equalTo(RuntimeException.class));
-        assertThat(exception.getCause().getMessage(), equalTo(EXCEPTION_MESSAGE));
+        Asserter.assertException(exception, RuntimeException.class, EXCEPTION_MESSAGE);
         return this;
     }
 
