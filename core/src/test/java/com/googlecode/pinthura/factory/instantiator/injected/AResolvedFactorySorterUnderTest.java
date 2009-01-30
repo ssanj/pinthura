@@ -23,25 +23,21 @@ import org.junit.Test;
 
 public final class AResolvedFactorySorterUnderTest {
 
-    private ResolvedFactorySorterTestBehaviourHandler behaviourHandler;
+    private ResolvedFactorySorterIncubator incubator;
 
     @Before
     public void setup() {
-        behaviourHandler = new ResolvedFactorySorterTestBehaviourHandler();
+        incubator = new ResolvedFactorySorterIncubator();
     }
 
     @Test
     public void shouldSortFactoriesInTheMiddle() {
-        //CHECKSTYLE_OFF
         expectSortedInstances(1, 3, 5);
-        //CHECKSTYLE_ON
     }
 
     @Test
     public void shouldSortFactoriesAtTheEdges() {
-        //CHECKSTYLE_OFF
         expectSortedInstances(0, 4, 5);
-        //CHECKSTYLE_ON
     }
 
     @Test
@@ -51,23 +47,19 @@ public final class AResolvedFactorySorterUnderTest {
 
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public void shouldThrowExceptionIfTheIndecesAreOutOfBounds() {
-        //CHECKSTYLE_OFF
         expectSortedInstances(1, 11, 2);
-        //CHECKSTYLE_ON
     }
 
     @SuppressWarnings({ "unchecked" })
     private void expectSortedInstances(final int firstIndex, final int secondIndex, final int noOfParameters) {
         ClassInstance[] classInstances = new ClassInstance[noOfParameters];
 
-        behaviourHandler.addFactory(ShapeFactory.class, firstIndex);
-        behaviourHandler.addFactory(UrlBoundaryFactory.class, secondIndex);
-        behaviourHandler.replay();
-
-        behaviourHandler.sort(classInstances);
-        behaviourHandler.expectFirstClassInstanceIsEqual(classInstances[firstIndex]);
-        behaviourHandler.expectSecondClassInstanceIsEqual(classInstances[secondIndex]);
-
-        behaviourHandler.verify();
+        incubator.supplyFactory(ShapeFactory.class).withIndex(firstIndex)
+                    .supplyFactory(UrlBoundaryFactory.class).withIndex(secondIndex)
+                    .supplyParameterClassInstances(classInstances)
+                    .performSort()
+                    .observe().instanceAt(firstIndex).is().classInstance(classInstances[firstIndex])
+                    .observe().instanceAt(secondIndex).is().classInstance(classInstances[secondIndex])
+                    .done();
     }
 }
