@@ -24,7 +24,9 @@ import com.googlecode.pinthura.util.CreationBroker;
 import org.easymock.EasyMock;
 import org.easymock.IMocksControl;
 import static org.hamcrest.core.IsEqual.equalTo;
+import static org.hamcrest.core.IsNull.nullValue;
 import org.junit.Assert;
+import static org.junit.Assert.assertThat;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,7 +40,7 @@ public final class ResolvedFactorySorterIncubator {
     private final ClassInstanceFactory mockClassInstanceFactory;
     private final FactoryCreator mockFactoryCreator;
     private final CreationBroker mockCreationBroker;
-    private int expectedIndex;
+    private final List<Integer> expectedIndeces;
     private ClassInstance[] classInstances;
     private final Map<Integer, FactoryAnnoationClassInstance> fciMap;
 
@@ -51,6 +53,7 @@ public final class ResolvedFactorySorterIncubator {
 
         annotationFactories = new ArrayList<Factory>();
         fciMap = new HashMap<Integer, FactoryAnnoationClassInstance>();
+        expectedIndeces = new ArrayList<Integer>();
     }
 
     public FactoryDigression supplyFactory(final Class<?> factoryClass) {
@@ -69,7 +72,7 @@ public final class ResolvedFactorySorterIncubator {
     }
 
     public ResolvedFactorySorterIncubator classInstance(final ClassInstance classInstance) {
-        Assert.assertThat(classInstance, equalTo(fciMap.get(expectedIndex).getClassInstance()));
+        Assert.assertThat(classInstance, equalTo(fciMap.get(getLastIndex()).getClassInstance()));
         return this;
     }
 
@@ -86,18 +89,47 @@ public final class ResolvedFactorySorterIncubator {
     }
 
     public ResolvedFactorySorterIncubator instanceAt(final int index) {
-        expectedIndex = index;
+        expectedIndeces.add(index);
         return this;
     }
-
 
     public ResolvedFactorySorterIncubator supplyParameterClassInstances(final ClassInstance[] classInstances) {
         this.classInstances = classInstances;
         return this;
     }
 
+
     public ResolvedFactorySorterIncubator is() {
         return this;
+    }
+
+    public ResolvedFactorySorterIncubator other() {
+        return this;
+    }
+
+    public ResolvedFactorySorterIncubator instances() {
+        return this;
+    }
+
+    public ResolvedFactorySorterIncubator are() {
+        return this;
+    }
+
+    public ResolvedFactorySorterIncubator untouched() {
+
+        for (int index = 0; index < classInstances.length; index++) {
+            if (expectedIndeces.contains(index)) {
+                continue;
+            }
+
+            assertThat(classInstances[index], nullValue());
+        }
+
+        return this;
+    }
+
+    private int getLastIndex() {
+        return expectedIndeces.get(expectedIndeces.size() - 1);
     }
 
     public static final class FactoryDigression {
@@ -114,7 +146,7 @@ public final class ResolvedFactorySorterIncubator {
             EasyMock.expectLastCall().andReturn(fci.getClazz()).times(2);
         }
 
-        public ResolvedFactorySorterIncubator withIndex(final int index) {
+        public ResolvedFactorySorterIncubator forIndex(final int index) {
             EasyMock.expect(fci.getFactory().index()).andReturn(index);
             parent.fciMap.put(index, fci);
             return parent;
