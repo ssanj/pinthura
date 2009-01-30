@@ -33,7 +33,7 @@ import com.googlecode.pinthura.util.CreationBroker;
 public final class ResolvedFactorySorterImpl implements ResolvedFactorySorter {
 
     private final ClassInstanceFactory classInstanceFactory;
-    private FactoryCreator factoryCreator;
+    private final FactoryCreator factoryCreator;
 
     public ResolvedFactorySorterImpl(final ClassInstanceFactory classInstanceFactory, final CreationBroker creationBroker) {
         this.classInstanceFactory = classInstanceFactory;
@@ -43,8 +43,8 @@ public final class ResolvedFactorySorterImpl implements ResolvedFactorySorter {
     @SuppressWarnings({ "unchecked" })
     public void sort(final Factory[] factories, final ClassInstance[] classInstances) {
         for (Factory factory : factories) {
-            classInstances[factory.index()] = classInstanceFactory.createClassInstance(factory.factoryClass(),
-                    factoryCreator.create(factory.factoryClass()));
+            classInstances[factory.index()] = classInstanceFactory.createClassInstance(
+                    (Class<Object>) factory.factoryClass(), factoryCreator.create(factory.factoryClass()));
         }
     }
 }
