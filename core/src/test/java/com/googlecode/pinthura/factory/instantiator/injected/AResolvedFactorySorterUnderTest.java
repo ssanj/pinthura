@@ -54,12 +54,13 @@ public final class AResolvedFactorySorterUnderTest {
     private void expectSortedInstances(final int firstIndex, final int secondIndex, final int noOfParameters) {
         ClassInstance[] classInstances = new ClassInstance[noOfParameters];
 
-        incubator.supplyFactory(ShapeFactory.class).withIndex(firstIndex)
-                    .supplyFactory(UrlBoundaryFactory.class).withIndex(secondIndex)
+        incubator.supplyFactory(ShapeFactory.class).forIndex(firstIndex)
+                    .supplyFactory(UrlBoundaryFactory.class).forIndex(secondIndex)
                     .supplyParameterClassInstances(classInstances)
                     .performSort()
                     .observe().instanceAt(firstIndex).is().classInstance(classInstances[firstIndex])
                     .observe().instanceAt(secondIndex).is().classInstance(classInstances[secondIndex])
+                    .observe().other().instances().are().untouched()
                     .done();
     }
 }
