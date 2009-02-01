@@ -16,9 +16,11 @@
 package com.googlecode.pinthura.annotation;
 
 import com.googlecode.pinthura.boundary.java.lang.ClassBoundary;
-import com.googlecode.pinthura.boundary.java.lang.ClassBoundaryImpl;
 import com.googlecode.pinthura.boundary.java.lang.reflect.MethodBoundary;
+import com.googlecode.pinthura.factory.Factory;
 import com.googlecode.pinthura.factory.Implementation;
+import com.googlecode.pinthura.util.RandomDataChooser;
+import com.googlecode.pinthura.util.builder.RandomDataChooserBuilder;
 import static junit.framework.Assert.assertTrue;
 import static junit.framework.Assert.fail;
 import org.easymock.EasyMock;
@@ -28,48 +30,53 @@ import static org.junit.Assert.assertThat;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.lang.annotation.Annotation;
+
 public final class AnAnnotationFinderUnderTest {
 
     private final IMocksControl mockControl = EasyMock.createControl();
     private AnnotationFinder finder;
     private MethodBoundary mockMethodBoundary;
-    private Implementation mockImplementation;
+    private Annotation mockRandomImplementation;
+    private ClassBoundary mockClassBoundary;
 
 
     @Before
     public void setup() {
-        mockImplementation = mockControl.createMock(Implementation.class);
+        RandomDataChooser randomDataChooser = new RandomDataChooserBuilder().build();
+        mockRandomImplementation = randomDataChooser.chooseOneOf(mockControl.createMock(Annotation.class),
+                mockControl.createMock(Implementation.class), mockControl.createMock(Factory.class));
         mockMethodBoundary = mockControl.createMock(MethodBoundary.class);
+        mockClassBoundary = mockControl.createMock(ClassBoundary.class);
 
         finder = new AnnotationFinderImpl();
     }
 
+    @SuppressWarnings({"unchecked"})
+    @SuppressionReason(SuppressionReason.Reason.CANT_INFER_GENERICS_ON_MOCKS)
     @Test
     public void shouldFindAnnotationsOnASpecifiedMethod() throws NoSuchMethodException {
-        EasyMock.expect(mockMethodBoundary.getAnnotation(createAnnotationClass())).andReturn(mockImplementation);
+        EasyMock.expect(mockMethodBoundary.getAnnotation(mockClassBoundary)).andReturn(mockRandomImplementation);
         mockControl.replay();
 
-        Implementation result = finder.find(mockMethodBoundary, createAnnotationClass());
-        assertThat(result, sameInstance(mockImplementation));
+        Annotation result = finder.find(mockMethodBoundary, mockClassBoundary);
+        assertThat(result, sameInstance(mockRandomImplementation));
 
         mockControl.verify();
     }
 
-    @SuppressWarnings({ "ThrowableInstanceNeverThrown" })
+    @SuppressWarnings("unchecked")
+    @SuppressionReason(SuppressionReason.Reason.CANT_INFER_GENERICS_ON_MOCKS)
     @Test
     public void shouldThrowAnExceptionIfTheAnnotationIsNotFound() throws NoSuchMethodException {
-        EasyMock.expect(mockMethodBoundary.getAnnotation(createAnnotationClass())).andReturn(null);
+        EasyMock.expect(mockMethodBoundary.getAnnotation(mockClassBoundary)).andReturn(null);
         mockControl.replay();
 
         try {
-            finder.find(mockMethodBoundary, createAnnotationClass());
+            finder.find(mockMethodBoundary, mockClassBoundary);
             fail();
         } catch (AnnotationNotFoundException e) {
-              assertTrue(true);
+            assertTrue(true);
         }
-    }
-
-    private ClassBoundary<Implementation> createAnnotationClass() {
-        return new ClassBoundaryImpl<Implementation>(Implementation.class);
     }
 }

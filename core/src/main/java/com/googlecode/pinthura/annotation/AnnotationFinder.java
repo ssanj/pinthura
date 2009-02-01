@@ -22,5 +22,5 @@ import java.lang.annotation.Annotation;
 
 public interface AnnotationFinder {
 
-    <T extends Annotation> T find(final MethodBoundary method, final ClassBoundary<T> annotationClass) throws AnnotationNotFoundException;
+    <T extends Annotation> T find(MethodBoundary method, ClassBoundary<T> annotationClass) throws AnnotationNotFoundException;
 }
