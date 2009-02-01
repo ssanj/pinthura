@@ -19,7 +19,6 @@ import com.googlecode.pinthura.boundary.java.lang.MathBoundary;
 
 import java.util.List;
 
-//TODO: Consider breaking this into 3 classes: RandomStrings, RandomNumbers and RandomTypes
 public final class RandomDataCreatorImpl implements RandomDataCreator {
 
     private final MathBoundary mathBoundary;
@@ -30,7 +29,6 @@ public final class RandomDataCreatorImpl implements RandomDataCreator {
         this.mathBoundary = mathBoundary;
         characterList = letterWrangler.getAllLetters();
         numberLettersInTotal = letterWrangler.getNumberLettersInTotal();
-
     }
 
     public String createString(final int length) {
