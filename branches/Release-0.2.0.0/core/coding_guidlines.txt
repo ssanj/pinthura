@@ -11,7 +11,7 @@ General
 6. Don't throw checked exceptions or RuntimeException. All exceptions should extend RuntimeException.
 7. Use incubators when test fixtures should be reused across testcases
 8. Use the project checkstyle.xml to validate all code.
-9. Javadoc external apis. Document interfaces rather than implementations. Document implementations if they have
+9. Javadoc external apis. Document interfaces rather thinstan implementations. Document implementations if they have
  nuansic behaviour.
 10. Prefer delegation over inheritence.
 11. Use long variable/paramter/field names
@@ -22,6 +22,8 @@ General
 16. Refactor to make the code easier to read.
 17. Use builders to instantiate classes where appropriate.
 18. Use a simple comment if doing something out of the ordinary.
+19. Gravitate towards immutable classes.
+20. Prefer constructor injection to setter injection.
 
 
 Testing
