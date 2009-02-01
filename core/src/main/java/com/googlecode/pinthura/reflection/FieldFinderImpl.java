@@ -26,39 +26,45 @@ import java.util.List;
 
 public final class FieldFinderImpl implements FieldFinder {
 
-    @SuppressWarnings({"unchecked"})
+    @SuppressWarnings({ "unchecked" })
     @SuppressionReason(SuppressionReason.Reason.CANT_INFER_GENERICS)
     public <T> FieldBoundary<T> findByName(final String varName, final Object instance) {
         try {
             return new FieldBoundaryImpl(instance.getClass().getDeclaredField(varName));
         } catch (NoSuchFieldException e) {
-            throw new FieldFinderException("Could not find field [" +
-                                        varName +
-                                        "] on class [" +
-                                        instance.getClass().getName() + "]", e);
+            throw new FieldFinderException(createCouldNotFindFieldMessage(varName, instance), e);
         }
     }
 
-    @SuppressWarnings({"unchecked"})
+    @SuppressWarnings({ "unchecked" })
     @SuppressionReason(SuppressionReason.Reason.CANT_INFER_GENERICS)
     public List<FieldBoundary<?>> findByPrefix(final String prefix, final Object instance) {
         List<FieldBoundary<?>> fields = Arrayz.filter(new ClassBoundaryImpl(instance.getClass()).getDeclaredFields(),
-                new PrefixedFields(prefix));
+                new PrefixedFieldsFilter(prefix));
 
-        if (!fields.isEmpty()) {
+        if (hasPrefixedFields(fields)) {
             return fields;
         }
 
-        throw new FieldFinderException("Could not find any fields prefixed with [" +
-                                    prefix +
-                                    "] on class [" +
-                                    instance.getClass().getName() + "]");
+        throw new FieldFinderException(createCouldNotFindPrefixMessage(prefix, instance));
     }
 
-    private static class PrefixedFields implements ItemFilter<FieldBoundary<?>> {
+    private String createCouldNotFindFieldMessage(final String varName, final Object instance) {
+        return "Could not find field [" + varName + "] on class [" + instance.getClass().getName() + "]";
+    }
+
+    private String createCouldNotFindPrefixMessage(final String prefix, final Object instance) {
+        return "Could not find any fields prefixed with [" + prefix + "] on class [" + instance.getClass().getName() + "]";
+    }
+
+    private boolean hasPrefixedFields(final List<FieldBoundary<?>> fields) {
+        return !fields.isEmpty();
+    }
+
+    private static class PrefixedFieldsFilter implements ItemFilter<FieldBoundary<?>> {
         private final String prefix;
 
-        public PrefixedFields(final String prefix) {
+        public PrefixedFieldsFilter(final String prefix) {
             this.prefix = prefix;
         }
 

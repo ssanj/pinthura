@@ -27,9 +27,9 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * The purpose of this annotation is to document the reason for using suppressions.
+ * The purpose of this annotation is to document the reason for using the @SuppressWarnings annotation.
  */
-@Target({METHOD, CONSTRUCTOR, FIELD, LOCAL_VARIABLE, PACKAGE, PARAMETER, TYPE})
+@Target({ PACKAGE, FIELD, TYPE, CONSTRUCTOR, METHOD, PARAMETER, LOCAL_VARIABLE })
 @Retention(RetentionPolicy.SOURCE)
 public @interface SuppressionReason {
 

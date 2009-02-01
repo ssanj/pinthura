@@ -22,7 +22,7 @@ import com.googlecode.pinthura.boundary.java.lang.MathBoundaryImpl;
 import com.googlecode.pinthura.util.RandomDataChooser;
 import com.googlecode.pinthura.util.RandomDataChooserImpl;
 
-@SuppressWarnings({"MethodReturnOfConcreteClass"})
+@SuppressWarnings("MethodReturnOfConcreteClass")
 @SuppressionReason(Reason.BUILDER_PATTERN)
 public final class RandomDataChooserBuilder {
 
