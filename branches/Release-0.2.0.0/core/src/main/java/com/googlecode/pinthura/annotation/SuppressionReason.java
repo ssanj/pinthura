@@ -27,25 +27,35 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * The purpose of this annotation is to document the reason for using the @SuppressWarnings annotation.
+ * The purpose of this annotation is to document the reasons for using the <code>SuppressWarnings</code> annotation.
+ * If you can't find the appropriate reason for the suppression within <code>Reason</code> use a value of <code>Reason.OTHER</code>
+ * and define the reason using the <code>desc</code> property. Alternatively if this is useful add it to <code>Reason</code>.
  */
 @Target({ PACKAGE, FIELD, TYPE, CONSTRUCTOR, METHOD, PARAMETER, LOCAL_VARIABLE })
 @Retention(RetentionPolicy.SOURCE)
 public @interface SuppressionReason {
 
+    /**
+     * The reasons for the Suppression. Could be one or more <code>Reason</code> values.
+     * @return The reasons for the Suppression.
+     */
     Reason[] value();
 
+    /**
+     * An additional description if using the <code>Reason.OTHER</code> value or to clarify one of the other <code>Reason</code> values.
+     * @return A description if any.
+     */
     String desc() default "";
 
     enum Reason {
-                    BUILDER_PATTERN,
-                    TEST_VALUE,
-                    CANT_INFER_GENERICS,
-                    CANT_INFER_GENERICS_ON_MOCKS,
-                    INCUBATOR,
-                    METHOD_CHAIN,
-                    INJECTED,
-                    GENERATED_CODE,
-                    OTHER
+                    BUILDER_PATTERN, /* The builder pattern is being used and hence instances will be returned from methods. */
+                    TEST_VALUE, /* A test value is being used. */
+                    CANT_INFER_GENERICS, /* can't infer generics for one reason or another. use desc if you need to. */
+                    CANT_INFER_GENERICS_ON_MOCKS, /* can't infer generic on mock objects. */
+                    INCUBATOR, /* The incubator pattern is being used, instances of the class will be returned */
+                    METHOD_CHAIN, /* Methods are chained so instances will be returned as in the builder or incubator patterns. */
+                    INJECTED, /* The value is injected and so is not set. */
+                    GENERATED_CODE, /* The code is generated so may have wierd logic and/or formatting. */
+                    OTHER /* Some other reason than the above. Use desc to define what the reason is. */
                 }
 }
