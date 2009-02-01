@@ -1,0 +1,65 @@
+Coding Guidlines
+================
+
+General
+=======
+1. Code to interfaces. Declare exceptions thrown (even if Runtime)
+2. Each class does one thing and one thing only. Coherence.
+3. All classes are final unless they have an extension.
+4. Fail fast - as in don't return nulls; throw custom exceptions instead.
+5. If a module can be used independently it should throw custom exceptions.
+6. Don't throw checked exceptions or RuntimeException. All exceptions should extend RuntimeException.
+7. Use incubators when tests should be reused across testcases
+8. Use the project checkstyle.xml to validate all code.
+9. Javadoc external apis. Document interfaces rather than implementations. Document implementations if they have
+ nuansic behaviour.
+10. Prefer delegation over inheritence.
+11. Use long variable/paramter/field names
+12. Classes should be a maximum of 200 lines long.
+13. Methods should be a maxium of 20 lines long.
+14. Use TODOs for clean up tasks
+15. use @SuppressionReason whenever @SuppressWarning is used, to explain the reason for the suppression.
+16. Refactor to make the code easier to read.
+17. Use builders to instantiate classes where appropriate.
+18. Use a simple comment if doing something out of the ordinary.
+
+
+Testing
+=======
+1. Testcases should be of the form: xxxUnderTest. Eg. ACreationBrokerUnderTest.
+2. Integration testcases should be of the form xxxUnderIntTest. Eg. AFactoryCreatorUnderIntTest.
+3. Tests themselves should take the form of: shouldxxx ,mustxxx etc. Don't start with the word 'test'.
+   Eg. shouldReturnTheNumberOfUpperCaseLetters.
+4. Use a separate testcase for each context.
+   Eg. ACollectionTraverserWithBreaksUnderTest,
+       ACollectionTraverserWithIndexUnderTest,
+       ACollectionTraverserWithPathsAndBreaksUnderTest
+5. All initialisation of tests are to be done in the @Before method. This includes member initialisation.
+6. All cleanup of tests are to be done in the @After method.
+7. Use Boundary classes where classes can't be mocked out.
+8. Mocks should be named mockxxx.
+9. Random values should be named randomxxx. Random mocks should be named mockRandomxxx
+
+
+Boundary Classes
+================
+
+1. Should wrap a single unmockable class. Eg. Class, Method, System.
+2. Should catch thrown exceptions and return custom runtime exceptions.
+3. Should only return other boundaries or primitives, Wrappers, Strings.
+   eg. Constructor<T> getConstructor(Class<?>[] parameterTypes); ->
+       ConstructorBoundary<T> getConstructor(ClassBoundary<?>[] parameterTypes);     
+4. Should convert arrays to Lists. Eg. String[] -> List<String>.
+5. Should implement intefaces.
+6. Should be named: xxxBoundary. Eg. ClassBoundary.
+7. Should override equals and hashcode.
+
+
+Checkin
+=======
+1. Compile
+2. Run checkstyle
+3. Run all tests
+4. Check cobertura (optional)
+5. Checkin
+
