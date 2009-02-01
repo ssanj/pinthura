@@ -30,5 +30,5 @@ public interface MethodBoundary {
 
     ClassBoundary<?>[] getParameterTypes();
 
-    <T extends Annotation> T getAnnotation(final ClassBoundary<T> annotationClass);
+    <T extends Annotation> T getAnnotation(ClassBoundary<T> annotationClass);
 }

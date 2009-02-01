@@ -46,5 +46,6 @@ public @interface SuppressionReason {
                     METHOD_CHAIN,
                     INJECTED,
                     GENERATED_CODE,
-                    OTHER}
+                    OTHER
+                }
 }
