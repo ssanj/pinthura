@@ -24,7 +24,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-public final class ArraysUnderTest {
+public final class AnArrayzUnderTest {
 
     @Test
     public void shouldCreateAnArrayFromASingleObject() {
