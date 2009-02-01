@@ -29,6 +29,6 @@ public final class AnnotationFinderImpl implements AnnotationFinder {
             return annotation;
         }
 
-        throw new AnnotationNotFoundException();        
+        throw new AnnotationNotFoundException();
     }
 }

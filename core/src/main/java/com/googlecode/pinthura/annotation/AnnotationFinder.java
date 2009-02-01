@@ -20,7 +20,20 @@ import com.googlecode.pinthura.boundary.java.lang.reflect.MethodBoundary;
 
 import java.lang.annotation.Annotation;
 
+/**
+ * Facilitates the searching for an <code>Annotation</code> given the <code>Annotation</code> type and the method on which the
+ * <code>Annotation</code> resides.
+ */
 public interface AnnotationFinder {
 
+    /**
+     * Returns an <code>Annotation</code> on a method, when given the type of the <code>Annotation</code>.
+     * @param method The method on which to search for the applied annotation.
+     * @param annotationClass The <code>Class</code> of the <code>Annotation</code>.
+     * @param <T> The type of the <code>Annotation</code>.
+     * @throws AnnotationNotFoundException If the <code>Annotation</code> requested can't be found on the method supplied.
+     * @return The <code>Annotation</code> instance or a  <code>AnnotationNotFoundException</code> if the <code>Annotation</code> could not
+     * be found.
+     */
     <T extends Annotation> T find(MethodBoundary method, ClassBoundary<T> annotationClass) throws AnnotationNotFoundException;
 }

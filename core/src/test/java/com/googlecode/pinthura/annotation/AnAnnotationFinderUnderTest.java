@@ -40,7 +40,6 @@ public final class AnAnnotationFinderUnderTest {
     private Annotation mockRandomImplementation;
     private ClassBoundary mockClassBoundary;
 
-
     @Before
     public void setup() {
         RandomDataChooser randomDataChooser = new RandomDataChooserBuilder().build();
@@ -52,7 +51,7 @@ public final class AnAnnotationFinderUnderTest {
         finder = new AnnotationFinderImpl();
     }
 
-    @SuppressWarnings({"unchecked"})
+    @SuppressWarnings("unchecked")
     @SuppressionReason(SuppressionReason.Reason.CANT_INFER_GENERICS_ON_MOCKS)
     @Test
     public void shouldFindAnnotationsOnASpecifiedMethod() throws NoSuchMethodException {
