@@ -25,10 +25,10 @@ public final class AnnotationFinderImpl implements AnnotationFinder {
     public <T extends Annotation> T find(final MethodBoundary method, final ClassBoundary<T> annotationClass) {
         T annotation = method.getAnnotation(annotationClass);
 
-        if (annotation == null) {
-            throw new AnnotationNotFoundException();
+        if (annotation != null) {
+            return annotation;
         }
 
-        return annotation;
+        throw new AnnotationNotFoundException();        
     }
 }
