@@ -9,7 +9,7 @@ General
 4. Fail fast - as in don't return nulls; throw custom exceptions instead.
 5. If a module can be used independently it should throw custom exceptions.
 6. Don't throw checked exceptions or RuntimeException. All exceptions should extend RuntimeException.
-7. Use incubators when tests should be reused across testcases
+7. Use incubators when test fixtures should be reused across testcases
 8. Use the project checkstyle.xml to validate all code.
 9. Javadoc external apis. Document interfaces rather than implementations. Document implementations if they have
  nuansic behaviour.
