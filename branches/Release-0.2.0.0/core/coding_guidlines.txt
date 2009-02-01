@@ -28,7 +28,7 @@ General
 
 Testing
 =======
-1. Testcases should be of the form: xxxUnderTest. Eg. ACreationBrokerUnderTest.
+1. Testcases should be of the form: [A|An]xxxUnderTest. Eg. ACreationBrokerUnderTest.
 2. Integration testcases should be of the form xxxUnderIntTest. Eg. AFactoryCreatorUnderIntTest.
 3. Tests themselves should take the form of: shouldxxx ,mustxxx etc. Don't start with the word 'test'.
    Eg. shouldReturnTheNumberOfUpperCaseLetters.

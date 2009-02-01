@@ -24,7 +24,7 @@ import java.awt.Color;
 import java.util.Arrays;
 import java.util.List;
 
-public final class ArrayzWithFiltersUnderTest {
+public final class AnArrayzWithFiltersUnderTest {
 
     @Test
     public void shouldFilterAListOfNamesByStartingLetter() {
