@@ -25,6 +25,7 @@ import java.util.List;
 /**
  * A collection of useful methods for working with arrays.
  */
+//TODO: should this have an interface?
 public final class Arrayz {
 
     private Arrayz() {

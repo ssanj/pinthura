@@ -27,6 +27,7 @@ public final class MethodParamImpl implements MethodParam {
     private final MethodBoundary method;
     private final Object[] arguments;
 
+    //TODO: Why aren't we using a MethodBoundary here?
     public MethodParamImpl(final Method method, final Object[] arguments) {
         this.arguments = arguments;
         this.method = new MethodBoundaryImpl(method);
@@ -36,6 +37,7 @@ public final class MethodParamImpl implements MethodParam {
         return method.getReturnType();
     }
 
+    //TODO: we could replace this with a ClassInstance (1)
     public Object[] getArguments() {
         return arguments;
     }
@@ -44,6 +46,7 @@ public final class MethodParamImpl implements MethodParam {
         return method;
     }
 
+    //TODO: we could replace this with a ClassInstance (2)
     public ClassBoundary<?>[] getParameterTypes() {
         return method.getParameterTypes();
     }
