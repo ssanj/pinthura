@@ -15,20 +15,19 @@
  */
 package com.googlecode.pinthura.bean;
 
+import com.googlecode.pinthura.annotation.SuppressionReason;
 import com.googlecode.pinthura.data.Authentication;
 import com.googlecode.pinthura.data.Employee;
+import com.googlecode.pinthura.test.Asserter;
 import static junit.framework.Assert.fail;
 import org.easymock.EasyMock;
 import org.easymock.IMocksControl;
-import static org.hamcrest.core.IsEqual.equalTo;
-import static org.junit.Assert.assertThat;
 import org.junit.Before;
 import org.junit.Test;
 
-public final class APathEvaluatorWithExceptionsUnderTest {
+public final class APathEvaluatorWithExceptionsUnderIntTest {
 
     private final IMocksControl mockControl = EasyMock.createControl();
-
     private PathEvaluator pathEvaluator;
     private PropertyFinder mockPropertyFinder;
 
@@ -38,9 +37,10 @@ public final class APathEvaluatorWithExceptionsUnderTest {
         pathEvaluator = new PathEvaluatorImpl(mockPropertyFinder);
     }
 
-    @SuppressWarnings({ "ThrowableInstanceNeverThrown", "unchecked" })
+    @SuppressWarnings("ThrowableInstanceNeverThrown")
+    @SuppressionReason(SuppressionReason.Reason.TEST_VALUE)
     @Test
-    public void shouldThrowAnExceptionIfAPropertyFinderExceptionIsThrown() throws NoSuchMethodException {
+    public void shouldThrowAnAPropertyFinderExceptionIfThePropertyIsNotFound() throws NoSuchMethodException {
         expectProperty("authentication", Employee.class, "getAuthentication");
         EasyMock.expect(mockPropertyFinder.findMethodFor("boohoo", Authentication.class)).andThrow(new PropertyFinderException("test"));
         mockControl.replay();
@@ -49,14 +49,14 @@ public final class APathEvaluatorWithExceptionsUnderTest {
             pathEvaluator.evaluate("authentication.boohoo", new Employee());
             fail();
         } catch (PathEvaluatorException e) {
-            assertThat((Class<PropertyFinderException>) e.getCause().getClass(), equalTo(PropertyFinderException.class));
-            assertThat(e.getCause().getMessage(), equalTo("test"));
+            Asserter.assertException(e, PropertyFinderException.class, "test");
         }
     }
 
-    @SuppressWarnings({ "ThrowableInstanceNeverThrown", "unchecked" })
+    @SuppressWarnings("ThrowableInstanceNeverThrown")
+    @SuppressionReason(SuppressionReason.Reason.TEST_VALUE)
     @Test
-    public void shouldThrowAnExceptionIfAnyExceptionIsThrown() {
+    public void shouldThrowExceptionsUnchanged() {
         EasyMock.expect(mockPropertyFinder.findMethodFor("boohoo", Authentication.class)).andThrow(new NullPointerException());
         mockControl.replay();
 
@@ -64,7 +64,7 @@ public final class APathEvaluatorWithExceptionsUnderTest {
             pathEvaluator.evaluate("boohoo", new Authentication());
             fail();
         } catch (PathEvaluatorException e) {
-            assertThat((Class<NullPointerException>) e.getCause().getClass(), equalTo(NullPointerException.class));
+            Asserter.assertException(e, NullPointerException.class);
         }
     }
 
