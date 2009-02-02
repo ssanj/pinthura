@@ -6,21 +6,21 @@ import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 
+//TODO: Clean this up.
 public final class Asserter {
 
     private static final String NO_MESSAGE = "NO MESSAGE";
 
-    public static <E> void assertException(final Throwable exception, final Class<E> nested, final String message) {
-        assertException(exception, nested);
-        assertThat(exception.getCause().getMessage(), equalTo(message));
+    public static void assertExceptionMessage(final Throwable exception, final String message) {
+        assertThat(exception.getMessage(), equalTo(message));
     }
 
     @SuppressWarnings({"unchecked"})
     @SuppressionReason(SuppressionReason.Reason.CANT_INFER_GENERICS)
-    public static <E> void assertException(final Throwable exception, final Class<E> nested) {
+    public static <EX> void assertValidException(final Throwable exception, final Class<EX> exceptionClass) {
         assertThat("Exception is null.", exception, notNullValue());
-        assertThat("Nested Exception is null.", exception.getCause(), notNullValue());
-        assertThat((Class<E>) exception.getCause().getClass(), equalTo(nested));
+        assertThat("Expected [" + exceptionClass + "] got [" + exception.getClass() + "]",
+                (Class<EX>) exception.getClass(), equalTo(exceptionClass));
     }
 
     @SuppressWarnings({"unchecked"})
@@ -31,14 +31,15 @@ public final class Asserter {
             ex.run();
             fail("Expected [" + exceptionClass + "] was not thrown.");
         } catch (Exception e) {
-            assertThat((Class<EX>) e.getClass(), equalTo(exceptionClass));
+            assertValidException(e, exceptionClass);
 
-            if (!message.equals(NO_MESSAGE)) {
-                assertException(e, nestedExceptionClass, message);
-                return;
+            if (expectsNestedException(nestedExceptionClass)) {
+                assertValidException(e.getCause(), nestedExceptionClass);
+
+                if (hasMessage(message)) {
+                    assertExceptionMessage(e.getCause(), message);
+                }                
             }
-
-            assertException(e, nestedExceptionClass);
         }
     }
 
@@ -47,8 +48,29 @@ public final class Asserter {
         assertException(exceptionClass,  nestedExceptionClass, NO_MESSAGE, ex);
     }
 
+    public static <EX> void assertException(final Class<EX> exceptionClass, final Exceptional ex) {
+        assertException(exceptionClass,  NullException.class, NO_MESSAGE, ex);
+    }
+
+    public static <EX> void assertException(final Class<EX> exceptionClass, final Exceptional ex, final String message) {
+        assertException(exceptionClass,  NullException.class, message, ex);
+    }
+
+    private static <NEX> boolean expectsNestedException(final Class<NEX> nestedExceptionClass) {
+        return nestedExceptionClass != NullException.class;
+    }
+
+    private static boolean hasMessage(final String message) {
+        return !message.equals(NO_MESSAGE);
+    }
+
     public interface Exceptional {
 
         void run();
+    }
+
+    private static final class NullException extends RuntimeException {
+
+        private static final long serialVersionUID = -2757999455436180171L;
     }
 }

@@ -18,7 +18,8 @@ package com.googlecode.pinthura.bean;
 import com.googlecode.pinthura.annotation.SuppressionReason;
 import com.googlecode.pinthura.data.Authentication;
 import com.googlecode.pinthura.data.Employee;
-import com.googlecode.pinthura.test.Asserter;
+import static com.googlecode.pinthura.test.Asserter.Exceptional;
+import static com.googlecode.pinthura.test.Asserter.assertException;
 import org.easymock.EasyMock;
 import org.easymock.IMocksControl;
 import org.junit.Before;
@@ -44,8 +45,8 @@ public final class APathEvaluatorWithExceptionsUnderIntTest {
         EasyMock.expect(mockPropertyFinder.findMethodFor("boohoo", Authentication.class)).andThrow(new PropertyFinderException("test"));
         mockControl.replay();
 
-        Asserter.assertException(PathEvaluatorException.class, PropertyFinderException.class, "test", new Asserter.Exceptional() {
-            public void run() { pathEvaluator.evaluate("authentication.boohoo", new Employee()); }});
+        assertException(PathEvaluatorException.class, PropertyFinderException.class, "test",
+                new Exceptional() {public void run() { pathEvaluator.evaluate("authentication.boohoo", new Employee()); }});
     }
 
     @SuppressWarnings("ThrowableInstanceNeverThrown")
@@ -55,8 +56,8 @@ public final class APathEvaluatorWithExceptionsUnderIntTest {
         EasyMock.expect(mockPropertyFinder.findMethodFor("boohoo", Authentication.class)).andThrow(new NullPointerException());
         mockControl.replay();
 
-        Asserter.assertException(PathEvaluatorException.class, NullPointerException.class, new Asserter.Exceptional() {
-            public void run() { pathEvaluator.evaluate("boohoo", new Authentication()); }});
+        assertException(PathEvaluatorException.class, NullPointerException.class,
+                new Exceptional() {public void run() { pathEvaluator.evaluate("boohoo", new Authentication()); }});
     }
 
     private void expectProperty(final String property, final Class<?> parentClass, final String methodName) throws NoSuchMethodException {
