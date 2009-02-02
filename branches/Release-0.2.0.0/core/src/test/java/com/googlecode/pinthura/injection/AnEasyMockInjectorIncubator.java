@@ -163,7 +163,8 @@ public final class AnEasyMockInjectorIncubator {
     @SuppressWarnings({"unchecked"})
     @SuppressionReason(SuppressionReason.Reason.CANT_INFER_GENERICS)
     public AnEasyMockInjectorIncubator exception() {
-        Asserter.assertException(exception, RuntimeException.class, EXCEPTION_MESSAGE);
+        Asserter.assertValidException(exception.getCause(), RuntimeException.class);
+        Asserter.assertExceptionMessage(exception.getCause(), EXCEPTION_MESSAGE);
         return this;
     }
 
