@@ -15,7 +15,19 @@
  */
 package com.googlecode.pinthura.bean;
 
+/**
+ * Traversers a path on an instance.
+ */
 public interface PathEvaluator {
 
-    <Instance, Ouput> Ouput evaluate(final String path, final Instance instance) throws PathEvaluatorException;
+    /**
+     * Evaluates the supplied <code>path</code> on the <code>instance</code> supplied to return the value of the <code>path</code>.
+     * @param path The path to traverse.
+     * @param instance The instance to traverse the path on.
+     * @param <Instance> The type of instance.
+     * @param <Result> The type of the resulting object returned from path resolution.
+     * @return The object pointed to by the supplied <code>path</code> on the <code>instance</code>.
+     * @throws PathEvaluatorException If the path can't be evaluated.
+     */
+    <Instance, Result> Result evaluate(String path, Instance instance) throws PathEvaluatorException;
 }

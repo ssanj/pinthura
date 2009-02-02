@@ -15,6 +15,8 @@
  */
 package com.googlecode.pinthura.bean;
 
+import com.googlecode.pinthura.annotation.SuppressionReason;
+
 import java.lang.reflect.Method;
 
 public final class PathEvaluatorImpl implements PathEvaluator {
@@ -28,9 +30,10 @@ public final class PathEvaluatorImpl implements PathEvaluator {
     }
 
     @SuppressWarnings({ "unchecked" })
+    @SuppressionReason(SuppressionReason.Reason.CANT_INFER_GENERICS)
     public <Instance, Result> Result evaluate(final String path, final Instance instance) {
         String[] properties = path.split(PATH_SEPARATOR);
-        Object currentInstance = instance;
+        Object currentInstance = instance; //this has to be non-final since it is reassigned.
         for (String property : properties) {
             try {
                 Method method = propertyFinder.findMethodFor(property, currentInstance.getClass());
