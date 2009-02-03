@@ -10,12 +10,19 @@ public final class ExceptionAsserterImpl implements ExceptionAsserter {
 
     private static final String NO_MESSAGE = "NO MESSAGE";
 
+    /**
+     * Asserts that message of the supplied <code>Exception</code> is the same as the message supplied. If not throws
+     * an <code>AssertionError</code>.
+     * @param exception The <code>Exception</code>.
+     * @param message The expected message.
+     */
     public void assertExceptionMessage(final Throwable exception, final String message) {
         assertThat(exception.getMessage(), equalTo(message));
     }
 
     /**
-     * Asserts that the <code>Exception</code> provided is of the type of <code>Class</code> provided.
+     * Asserts that the <code>Exception</code> provided is of the type of <code>Class</code> provided. If not throws
+     * an <code>AssertionError</code>.
      * @param exception The <code>Exception</code> provided.
      * @param exceptionClass The <code>Class</code> of the expected <code>Exception</code>
      * @param <EX> The type of the <code>Exception</code>. 
