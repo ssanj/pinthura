@@ -52,7 +52,7 @@ public final class Asserter {
         assertException(exceptionClass,  NullException.class, NO_MESSAGE, ex);
     }
 
-    public static <EX> void assertException(final Class<EX> exceptionClass, final Exceptional ex, final String message) {
+    public static <EX> void assertException(final Class<EX> exceptionClass, final String message, final Exceptional ex) {
         assertException(exceptionClass,  NullException.class, message, ex);
     }
 
