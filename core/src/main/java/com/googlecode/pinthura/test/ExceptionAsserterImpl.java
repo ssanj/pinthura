@@ -6,26 +6,31 @@ import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 
-public final class ExceptionAsserterImpl {
+public final class ExceptionAsserterImpl implements ExceptionAsserter {
 
     private static final String NO_MESSAGE = "NO MESSAGE";
 
-    public static void assertExceptionMessage(final Throwable exception, final String message) {
+    public void assertExceptionMessage(final Throwable exception, final String message) {
         assertThat(exception.getMessage(), equalTo(message));
     }
 
+    /**
+     * Asserts that the <code>Exception</code> provided is of the type of <code>Class</code> provided.
+     * @param exception The <code>Exception</code> provided.
+     * @param exceptionClass The <code>Class</code> of the expected <code>Exception</code>
+     * @param <EX> The type of the <code>Exception</code>. 
+     */
     @SuppressWarnings({"unchecked"})
     @SuppressionReason(SuppressionReason.Reason.CANT_INFER_GENERICS)
-    public static <EX> void assertValidException(final Throwable exception, final Class<EX> exceptionClass) {
+    public <EX> void assertValidException(final Throwable exception, final Class<EX> exceptionClass) {
         assertThat("Exception is null.", exception, notNullValue());
-        assertThat("Expected [" + exceptionClass + "] got [" + exception.getClass() + "]",
-                (Class<EX>) exception.getClass(), equalTo(exceptionClass));
+        assertThat((Class<EX>) exception.getClass(), equalTo(exceptionClass));
     }
 
     @SuppressWarnings({"unchecked"})
     @SuppressionReason(SuppressionReason.Reason.CANT_INFER_GENERICS)
-    public static <EX, NEX> void assertException(final Class<EX> expectedExceptionClass, final Class<NEX> expectedNestedExceptionClass,
-                                                 final String message, final Exceptional ex) {
+    public <EX, NEX> void assertException(final Class<EX> expectedExceptionClass, final Class<NEX> expectedNestedExceptionClass,
+                                                 final String message, final ExceptionAsserter.Exceptional ex) {
         try {
             ex.run();
             fail("Expected [" + expectedExceptionClass.getName() + "] was not thrown.");
@@ -42,34 +47,24 @@ public final class ExceptionAsserterImpl {
         }
     }
 
-    public static <EX, NEX> void assertException(final Class<EX> expectedExceptionClass, final Class<NEX> expectedNestedExceptionClass,
-                                                 final Exceptional ex) {
+    public <EX, NEX> void assertException(final Class<EX> expectedExceptionClass, final Class<NEX> expectedNestedExceptionClass,
+                                                 final ExceptionAsserter.Exceptional ex) {
         assertException(expectedExceptionClass,  expectedNestedExceptionClass, NO_MESSAGE, ex);
     }
 
-    public static <EX> void assertException(final Class<EX> expectedExceptionClass, final Exceptional ex) {
-        assertException(expectedExceptionClass,  NullException.class, NO_MESSAGE, ex);
+    public <EX> void assertException(final Class<EX> expectedExceptionClass, final ExceptionAsserter.Exceptional ex) {
+        assertException(expectedExceptionClass,  ExceptionAsserter.NullException.class, NO_MESSAGE, ex);
     }
 
-    public static <EX> void assertException(final Class<EX> expectedExceptionClass, final String message, final Exceptional ex) {
-        assertException(expectedExceptionClass,  NullException.class, message, ex);
+    public <EX> void assertException(final Class<EX> expectedExceptionClass, final String message, final ExceptionAsserter.Exceptional ex) {
+        assertException(expectedExceptionClass,  ExceptionAsserter.NullException.class, message, ex);
     }
 
-    private static <NEX> boolean expectsNestedException(final Class<NEX> nestedExceptionClass) {
-        return nestedExceptionClass != NullException.class;
+    private <NEX> boolean expectsNestedException(final Class<NEX> nestedExceptionClass) {
+        return nestedExceptionClass != ExceptionAsserter.NullException.class;
     }
 
-    private static boolean hasMessage(final String message) {
+    private boolean hasMessage(final String message) {
         return !message.equals(NO_MESSAGE);
-    }
-
-    public interface Exceptional {
-
-        void run();
-    }
-
-    private static final class NullException extends RuntimeException {
-
-        private static final long serialVersionUID = -2757999455436180171L;
     }
 }

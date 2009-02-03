@@ -18,8 +18,8 @@ package com.googlecode.pinthura.bean;
 import com.googlecode.pinthura.annotation.SuppressionReason;
 import com.googlecode.pinthura.data.Authentication;
 import com.googlecode.pinthura.data.Employee;
-import static com.googlecode.pinthura.test.ExceptionAsserterImpl.Exceptional;
-import static com.googlecode.pinthura.test.ExceptionAsserterImpl.assertException;
+import com.googlecode.pinthura.test.ExceptionAsserter;
+import com.googlecode.pinthura.test.ExceptionAsserterImpl;
 import org.easymock.EasyMock;
 import org.easymock.IMocksControl;
 import org.junit.Before;
@@ -30,11 +30,13 @@ public final class APathEvaluatorWithExceptionsUnderIntTest {
     private final IMocksControl mockControl = EasyMock.createControl();
     private PathEvaluator pathEvaluator;
     private PropertyFinder mockPropertyFinder;
+    private ExceptionAsserter asserter;
 
     @Before
     public void setup() {
         mockPropertyFinder = mockControl.createMock(PropertyFinder.class);
         pathEvaluator = new PathEvaluatorImpl(mockPropertyFinder);
+        asserter = new ExceptionAsserterImpl();
     }
 
     @SuppressWarnings("ThrowableInstanceNeverThrown")
@@ -45,8 +47,8 @@ public final class APathEvaluatorWithExceptionsUnderIntTest {
         EasyMock.expect(mockPropertyFinder.findMethodFor("boohoo", Authentication.class)).andThrow(new PropertyFinderException("test"));
         mockControl.replay();
 
-        assertException(PathEvaluatorException.class, PropertyFinderException.class, "test",
-                new Exceptional() {public void run() { pathEvaluator.evaluate("authentication.boohoo", new Employee()); }});
+        asserter.assertException(PathEvaluatorException.class, PropertyFinderException.class, "test",
+                new ExceptionAsserter.Exceptional() {public void run() { pathEvaluator.evaluate("authentication.boohoo", new Employee()); }});
     }
 
     @SuppressWarnings("ThrowableInstanceNeverThrown")
@@ -56,8 +58,8 @@ public final class APathEvaluatorWithExceptionsUnderIntTest {
         EasyMock.expect(mockPropertyFinder.findMethodFor("boohoo", Authentication.class)).andThrow(new NullPointerException());
         mockControl.replay();
 
-        assertException(PathEvaluatorException.class, NullPointerException.class,
-                new Exceptional() {public void run() { pathEvaluator.evaluate("boohoo", new Authentication()); }});
+        asserter.assertException(PathEvaluatorException.class, NullPointerException.class,
+                new ExceptionAsserter.Exceptional() {public void run() { pathEvaluator.evaluate("boohoo", new Authentication()); }});
     }
 
     private void expectProperty(final String property, final Class<?> parentClass, final String methodName) throws NoSuchMethodException {
