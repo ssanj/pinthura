@@ -47,7 +47,7 @@ public final class APathEvaluatorWithExceptionsUnderIntTest {
         EasyMock.expect(mockPropertyFinder.findMethodFor("boohoo", Authentication.class)).andThrow(new PropertyFinderException("test"));
         mockControl.replay();
 
-        asserter.assertException(PathEvaluatorException.class, PropertyFinderException.class, "test",
+        asserter.runAndAssertException(PathEvaluatorException.class, PropertyFinderException.class, "test",
                 new ExceptionAsserter.Exceptional() {public void run() { pathEvaluator.evaluate("authentication.boohoo", new Employee()); }});
     }
 
@@ -58,7 +58,7 @@ public final class APathEvaluatorWithExceptionsUnderIntTest {
         EasyMock.expect(mockPropertyFinder.findMethodFor("boohoo", Authentication.class)).andThrow(new NullPointerException());
         mockControl.replay();
 
-        asserter.assertException(PathEvaluatorException.class, NullPointerException.class,
+        asserter.runAndAssertException(PathEvaluatorException.class, NullPointerException.class,
                 new ExceptionAsserter.Exceptional() {public void run() { pathEvaluator.evaluate("boohoo", new Authentication()); }});
     }
 

@@ -36,7 +36,7 @@ public final class ExceptionAsserterImpl implements ExceptionAsserter {
 
     @SuppressWarnings({"unchecked"})
     @SuppressionReason(SuppressionReason.Reason.CANT_INFER_GENERICS)
-    public <EX, NEX> void assertException(final Class<EX> expectedExceptionClass, final Class<NEX> expectedNestedExceptionClass,
+    public <EX, NEX> void runAndAssertException(final Class<EX> expectedExceptionClass, final Class<NEX> expectedNestedExceptionClass,
                                                  final String message, final ExceptionAsserter.Exceptional ex) {
         try {
             ex.run();
@@ -54,17 +54,17 @@ public final class ExceptionAsserterImpl implements ExceptionAsserter {
         }
     }
 
-    public <EX, NEX> void assertException(final Class<EX> expectedExceptionClass, final Class<NEX> expectedNestedExceptionClass,
+    public <EX, NEX> void runAndAssertException(final Class<EX> expectedExceptionClass, final Class<NEX> expectedNestedExceptionClass,
                                                  final ExceptionAsserter.Exceptional ex) {
-        assertException(expectedExceptionClass,  expectedNestedExceptionClass, NO_MESSAGE, ex);
+        runAndAssertException(expectedExceptionClass,  expectedNestedExceptionClass, NO_MESSAGE, ex);
     }
 
-    public <EX> void assertException(final Class<EX> expectedExceptionClass, final ExceptionAsserter.Exceptional ex) {
-        assertException(expectedExceptionClass,  ExceptionAsserter.NullException.class, NO_MESSAGE, ex);
+    public <EX> void runAndAssertException(final Class<EX> expectedExceptionClass, final ExceptionAsserter.Exceptional ex) {
+        runAndAssertException(expectedExceptionClass,  ExceptionAsserter.NullException.class, NO_MESSAGE, ex);
     }
 
-    public <EX> void assertException(final Class<EX> expectedExceptionClass, final String message, final ExceptionAsserter.Exceptional ex) {
-        assertException(expectedExceptionClass,  ExceptionAsserter.NullException.class, message, ex);
+    public <EX> void runAndAssertException(final Class<EX> expectedExceptionClass, final String message, final ExceptionAsserter.Exceptional ex) {
+        runAndAssertException(expectedExceptionClass,  ExceptionAsserter.NullException.class, message, ex);
     }
 
     private <NEX> boolean expectsNestedException(final Class<NEX> nestedExceptionClass) {
