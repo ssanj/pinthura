@@ -6,8 +6,7 @@ import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 
-//TODO: Clean this up.
-public final class ExceptionAsserter {
+public final class ExceptionAsserterImpl {
 
     private static final String NO_MESSAGE = "NO MESSAGE";
 
