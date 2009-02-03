@@ -7,7 +7,7 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 
 //TODO: Clean this up.
-public final class Asserter {
+public final class ExceptionAsserter {
 
     private static final String NO_MESSAGE = "NO MESSAGE";
 
@@ -25,16 +25,16 @@ public final class Asserter {
 
     @SuppressWarnings({"unchecked"})
     @SuppressionReason(SuppressionReason.Reason.CANT_INFER_GENERICS)
-    public static <EX, NEX> void assertException(final Class<EX> exceptionClass, final Class<NEX> nestedExceptionClass, final String message,
-                                      final Exceptional ex) {
+    public static <EX, NEX> void assertException(final Class<EX> expectedExceptionClass, final Class<NEX> expectedNestedExceptionClass,
+                                                 final String message, final Exceptional ex) {
         try {
             ex.run();
-            fail("Expected [" + exceptionClass + "] was not thrown.");
+            fail("Expected [" + expectedExceptionClass.getName() + "] was not thrown.");
         } catch (Exception e) {
-            assertValidException(e, exceptionClass);
+            assertValidException(e, expectedExceptionClass);
 
-            if (expectsNestedException(nestedExceptionClass)) {
-                assertValidException(e.getCause(), nestedExceptionClass);
+            if (expectsNestedException(expectedNestedExceptionClass)) {
+                assertValidException(e.getCause(), expectedNestedExceptionClass);
 
                 if (hasMessage(message)) {
                     assertExceptionMessage(e.getCause(), message);
@@ -43,17 +43,17 @@ public final class Asserter {
         }
     }
 
-    public static <EX, NEX> void assertException(final Class<EX> exceptionClass, final Class<NEX> nestedExceptionClass,
+    public static <EX, NEX> void assertException(final Class<EX> expectedExceptionClass, final Class<NEX> expectedNestedExceptionClass,
                                                  final Exceptional ex) {
-        assertException(exceptionClass,  nestedExceptionClass, NO_MESSAGE, ex);
+        assertException(expectedExceptionClass,  expectedNestedExceptionClass, NO_MESSAGE, ex);
     }
 
-    public static <EX> void assertException(final Class<EX> exceptionClass, final Exceptional ex) {
-        assertException(exceptionClass,  NullException.class, NO_MESSAGE, ex);
+    public static <EX> void assertException(final Class<EX> expectedExceptionClass, final Exceptional ex) {
+        assertException(expectedExceptionClass,  NullException.class, NO_MESSAGE, ex);
     }
 
-    public static <EX> void assertException(final Class<EX> exceptionClass, final String message, final Exceptional ex) {
-        assertException(exceptionClass,  NullException.class, message, ex);
+    public static <EX> void assertException(final Class<EX> expectedExceptionClass, final String message, final Exceptional ex) {
+        assertException(expectedExceptionClass,  NullException.class, message, ex);
     }
 
     private static <NEX> boolean expectsNestedException(final Class<NEX> nestedExceptionClass) {
