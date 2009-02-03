@@ -5,7 +5,7 @@ import com.googlecode.pinthura.boundary.java.lang.ClassBoundary;
 import com.googlecode.pinthura.boundary.java.lang.reflect.FieldBoundary;
 import com.googlecode.pinthura.reflection.FieldFinder;
 import com.googlecode.pinthura.reflection.FieldSetter;
-import com.googlecode.pinthura.test.ExceptionAsserter;
+import com.googlecode.pinthura.test.ExceptionAsserterImpl;
 import com.googlecode.pinthura.util.Deux;
 import org.easymock.EasyMock;
 import org.easymock.IMocksControl;
@@ -163,8 +163,8 @@ public final class AnEasyMockInjectorIncubator {
     @SuppressWarnings({"unchecked"})
     @SuppressionReason(SuppressionReason.Reason.CANT_INFER_GENERICS)
     public AnEasyMockInjectorIncubator exception() {
-        ExceptionAsserter.assertValidException(exception.getCause(), RuntimeException.class);
-        ExceptionAsserter.assertExceptionMessage(exception.getCause(), EXCEPTION_MESSAGE);
+        ExceptionAsserterImpl.assertValidException(exception.getCause(), RuntimeException.class);
+        ExceptionAsserterImpl.assertExceptionMessage(exception.getCause(), EXCEPTION_MESSAGE);
         return this;
     }
 
