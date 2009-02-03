@@ -5,6 +5,7 @@ import com.googlecode.pinthura.boundary.java.lang.ClassBoundary;
 import com.googlecode.pinthura.boundary.java.lang.reflect.FieldBoundary;
 import com.googlecode.pinthura.reflection.FieldFinder;
 import com.googlecode.pinthura.reflection.FieldSetter;
+import com.googlecode.pinthura.test.ExceptionAsserter;
 import com.googlecode.pinthura.test.ExceptionAsserterImpl;
 import com.googlecode.pinthura.util.Deux;
 import org.easymock.EasyMock;
@@ -32,6 +33,7 @@ public final class AnEasyMockInjectorIncubator {
     private MockInjectionException exception;
     private boolean exceptionSet;
     private final MockConfigurer mockMockConfigurer;
+    private ExceptionAsserter asserter;
 
     public AnEasyMockInjectorIncubator() {
         mockControl = EasyMock.createControl();
@@ -42,6 +44,7 @@ public final class AnEasyMockInjectorIncubator {
 
         fieldsDeux = new ArrayList<Deux<FieldBoundary, ClassBoundary>>();
         fieldsDeuxByName = new HashMap<String, Deux<FieldBoundary, ClassBoundary>>();
+        asserter = new ExceptionAsserterImpl();
         mockInjector = new EasyMockInjectorBuilder().
                             withFieldFinder(mockFieldFinder).
                             withFieldSetter(mockFieldSetter).
@@ -163,8 +166,8 @@ public final class AnEasyMockInjectorIncubator {
     @SuppressWarnings({"unchecked"})
     @SuppressionReason(SuppressionReason.Reason.CANT_INFER_GENERICS)
     public AnEasyMockInjectorIncubator exception() {
-        ExceptionAsserterImpl.assertValidException(exception.getCause(), RuntimeException.class);
-        ExceptionAsserterImpl.assertExceptionMessage(exception.getCause(), EXCEPTION_MESSAGE);
+        asserter.assertValidException(exception.getCause(), RuntimeException.class);
+        asserter.assertExceptionMessage(exception.getCause(), EXCEPTION_MESSAGE);
         return this;
     }
 
