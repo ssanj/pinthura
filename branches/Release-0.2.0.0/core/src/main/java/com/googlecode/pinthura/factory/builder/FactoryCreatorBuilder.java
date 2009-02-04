@@ -26,7 +26,7 @@ public final class FactoryCreatorBuilder {
 
     public FactoryCreator build() {
         CreationBroker creationBroker = new CreationBrokerImpl();
-        InvocationHandler invocationHandler = new DynamicFactoryInvocationHandlerBuilder(creationBroker).build();
+        InvocationHandler invocationHandler = new DynamicFactoryInvocationHandlerBuilder().withCreationBroker(creationBroker).build();
         return new FactoryCreatorImpl(invocationHandler, creationBroker);
     }
 }
