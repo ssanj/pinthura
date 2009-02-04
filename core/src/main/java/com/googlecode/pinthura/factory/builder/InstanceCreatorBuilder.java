@@ -21,13 +21,19 @@ import com.googlecode.pinthura.factory.MethodParam;
 import com.googlecode.pinthura.filter.FilterChainImpl;
 import com.googlecode.pinthura.filter.FilterLink;
 import com.googlecode.pinthura.util.CreationBroker;
+import com.googlecode.pinthura.util.CreationBrokerImpl;
 
 public final class InstanceCreatorBuilder {
 
-    private final CreationBroker creationBroker;
+    private CreationBroker creationBroker;
 
-    public InstanceCreatorBuilder(final CreationBroker creationBroker) {
+    public InstanceCreatorBuilder() {
+        creationBroker = new CreationBrokerImpl();
+    }
+
+    public InstanceCreatorBuilder withCreationBroker(final CreationBroker creationBroker) {
         this.creationBroker = creationBroker;
+        return this;
     }
 
     //TODO: The order of these method calls should be important. Currently the end-result is the same no matter the order.

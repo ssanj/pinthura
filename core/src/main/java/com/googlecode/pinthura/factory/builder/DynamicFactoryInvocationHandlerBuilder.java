@@ -18,16 +18,23 @@ package com.googlecode.pinthura.factory.builder;
 import com.googlecode.pinthura.factory.DynamicFactoryInvocationHandler;
 import com.googlecode.pinthura.factory.MethodParamFactoryImpl;
 import com.googlecode.pinthura.util.CreationBroker;
+import com.googlecode.pinthura.util.CreationBrokerImpl;
 
 public final class DynamicFactoryInvocationHandlerBuilder {
 
-    private final CreationBroker creationBroker;
+    private CreationBroker creationBroker;
 
-    public DynamicFactoryInvocationHandlerBuilder(final CreationBroker creationBroker) {
+    public DynamicFactoryInvocationHandlerBuilder() {
+        creationBroker = new CreationBrokerImpl();
+    }
+
+    public DynamicFactoryInvocationHandlerBuilder withCreationBroker(final CreationBroker creationBroker) {
         this.creationBroker = creationBroker;
+        return this;
     }
 
     public DynamicFactoryInvocationHandler build() {
-        return new DynamicFactoryInvocationHandler(new InstanceCreatorBuilder(creationBroker).build(), new MethodParamFactoryImpl());
+        return new DynamicFactoryInvocationHandler(new InstanceCreatorBuilder().withCreationBroker(creationBroker).build(),
+                new MethodParamFactoryImpl());
     }
 }
