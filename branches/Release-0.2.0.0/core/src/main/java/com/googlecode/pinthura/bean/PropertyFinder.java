@@ -17,6 +17,9 @@ package com.googlecode.pinthura.bean;
 
 import java.lang.reflect.Method;
 
+/**
+ * Finds a named-property on given <code>Class</code>. 
+ */
 public interface PropertyFinder {
 
     /**

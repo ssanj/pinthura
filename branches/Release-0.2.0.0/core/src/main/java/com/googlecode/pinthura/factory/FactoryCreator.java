@@ -15,7 +15,16 @@
  */
 package com.googlecode.pinthura.factory;
 
+/**
+ * Creates a dynamic instance of a factory inteface.
+ */
 public interface FactoryCreator {
 
+    /**
+     * Creates a dynamic instance of the supplied factory interface. 
+     * @param factoryInterface The factory interface.
+     * @param <T> The type of the factory interface and the created instance.
+     * @return A dynamic instance of the supplied factory interface.
+     */
     <T> T create(final Class<T> factoryInterface);
 }

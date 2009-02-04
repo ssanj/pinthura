@@ -22,6 +22,14 @@ import java.lang.reflect.Proxy;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Creates a dynamic instance of a supplied factory interface. Also caches these instances so that a second call to
+ * create the same factory interface returns the cached instance. Factories should be thread-safe for this reason.
+ *
+ * A <code>CreatioBroker</code> registers an instance of this class against its <code>FactoryCreator</code> interface.
+ * This allows other classes that require access to this instance to retrieve it from the <code>CreatioBroker</code>. 
+ */
+//TODO: Write some exceptional tests.
 public final class FactoryCreatorImpl implements FactoryCreator {
 
     private final InvocationHandler invocationHandler;
@@ -41,9 +49,8 @@ public final class FactoryCreatorImpl implements FactoryCreator {
         return factoryInterface.cast(factoryCache.get(factoryInterface));
     }
 
-    @SuppressWarnings({ "unchecked" })
     private <T> T createProxy(final Class<T> factoryInterface) {
-        return (T) Proxy.newProxyInstance(getClassLoader(), createInterfaces(factoryInterface), invocationHandler);
+        return factoryInterface.cast(Proxy.newProxyInstance(getClassLoader(), createInterfaces(factoryInterface), invocationHandler));
     }
 
     private <T> Class[] createInterfaces(final Class<T> factoryInterface) {
