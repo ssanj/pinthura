@@ -48,13 +48,15 @@ Boundary Classes
 
 1. Should wrap a single unmockable class. Eg. Class, Method, System.
 2. Should catch thrown exceptions and return custom runtime exceptions.
-3. Should only return other boundaries or primitives, Wrappers, Strings.
+3. Should only return other boundaries or primitives, Wrappers or Strings.
    eg. Constructor<T> getConstructor(Class<?>[] parameterTypes); ->
        ConstructorBoundary<T> getConstructor(ClassBoundary<?>[] parameterTypes);     
 4. Should convert arrays to Lists. Eg. String[] -> List<String>. **Should this include incoming parameters?**
-5. Should implement interfaces.
-6. Should be named: xxxBoundary. Eg. ClassBoundary.
-7. Should override equals and hashcode.
+5. Should not be used @ the api layer. Users should be allowed to use classes such as Class, Method etc. Classes
+that are used by this api should accept ClassBoundary, MethodBoundary etc.
+6. Should implement interfaces.
+7. Should be named: xxxBoundary. Eg. ClassBoundary.
+8. Should override equals and hashcode.
 
 
 Checkin
@@ -64,4 +66,3 @@ Checkin
 3. Run all tests
 4. Check cobertura (optional)
 5. Checkin
-
