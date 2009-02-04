@@ -27,10 +27,9 @@ public final class CreationBrokerImpl implements CreationBroker {
         registry.put(clazz, instance);
     }
 
-    @SuppressWarnings({ "unchecked" })
     public <T> T getInstanceFor(final Class<T> clazz) {
         if (registry.containsKey(clazz)) {
-            return (T) registry.get(clazz);
+            return clazz.cast(registry.get(clazz));
         }
 
         throw new CreationBrokerException("Could not find instance for " +  clazz);
