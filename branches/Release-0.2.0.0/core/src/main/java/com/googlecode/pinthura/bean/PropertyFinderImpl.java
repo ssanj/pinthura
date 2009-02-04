@@ -23,7 +23,8 @@ import java.util.Locale;
 public final class PropertyFinderImpl implements PropertyFinder {
 
     @SuppressWarnings({ "unchecked", "ConstantConditions" })
-    public <ParentClass> Method findMethodFor(final String property, final Class<ParentClass> parentClass) {
+    public <ParentClass> Method findMethodFor(final String property, final Class<ParentClass> parentClass)
+            throws PropertyFinderException {
         List<String> properties = getCombinations(property);
 
         for (String methodName : properties) {
