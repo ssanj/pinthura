@@ -34,6 +34,17 @@ public final class ExceptionAsserterImpl implements ExceptionAsserter {
         assertThat((Class<EX>) exception.getClass(), equalTo(exceptionClass));
     }
 
+    /**
+     * Runs an <code>Exceptional</code> piece of code and asserts properties about a thrown <code>Exception</code>. If
+     * the assertions fail or the <code>Exceptional</code> does not throw an <code>Exception</code> an
+     * <code>AssertionError</code> is thrown. 
+     * @param expectedExceptionClass The <code>Class</code> of the top-level <code>Exception</code>.
+     * @param expectedNestedExceptionClass The <code>Class</code> of the nested <code>Exception</code>.
+     * @param message The message of the nested <code>Exception</code>.
+     * @param ex The <code>Exceptional</code> to run.
+     * @param <EX> The type of top-level <code>Exception</code>.
+     * @param <NEX> The type of nested <code>Exception</code>.
+     */
     @SuppressWarnings({"unchecked"})
     @SuppressionReason(SuppressionReason.Reason.CANT_INFER_GENERICS)
     public <EX, NEX> void runAndAssertException(final Class<EX> expectedExceptionClass, final Class<NEX> expectedNestedExceptionClass,
@@ -49,7 +60,7 @@ public final class ExceptionAsserterImpl implements ExceptionAsserter {
 
                 if (hasMessage(message)) {
                     assertExceptionMessage(e.getCause(), message);
-                }                
+                }
             }
         }
     }
