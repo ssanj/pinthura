@@ -20,6 +20,7 @@ import com.googlecode.pinthura.data.Authentication;
 import com.googlecode.pinthura.data.Employee;
 import com.googlecode.pinthura.test.ExceptionAsserter;
 import com.googlecode.pinthura.test.ExceptionAsserterImpl;
+import com.googlecode.pinthura.test.Exceptional;
 import org.easymock.EasyMock;
 import org.easymock.IMocksControl;
 import org.junit.Before;
@@ -48,7 +49,7 @@ public final class APathEvaluatorWithExceptionsUnderIntTest {
         mockControl.replay();
 
         asserter.runAndAssertException(PathEvaluatorException.class, PropertyFinderException.class, "test",
-                new ExceptionAsserter.Exceptional() {public void run() { pathEvaluator.evaluate("authentication.boohoo", new Employee()); }});
+                new Exceptional() {public void run() { pathEvaluator.evaluate("authentication.boohoo", new Employee()); }});
     }
 
     @SuppressWarnings("ThrowableInstanceNeverThrown")
@@ -59,7 +60,7 @@ public final class APathEvaluatorWithExceptionsUnderIntTest {
         mockControl.replay();
 
         asserter.runAndAssertException(PathEvaluatorException.class, NullPointerException.class,
-                new ExceptionAsserter.Exceptional() {public void run() { pathEvaluator.evaluate("boohoo", new Authentication()); }});
+                new Exceptional() {public void run() { pathEvaluator.evaluate("boohoo", new Authentication()); }});
     }
 
     private void expectProperty(final String property, final Class<?> parentClass, final String methodName) throws NoSuchMethodException {

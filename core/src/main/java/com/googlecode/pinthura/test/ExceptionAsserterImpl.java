@@ -37,7 +37,7 @@ public final class ExceptionAsserterImpl implements ExceptionAsserter {
     @SuppressWarnings({"unchecked"})
     @SuppressionReason(SuppressionReason.Reason.CANT_INFER_GENERICS)
     public <EX, NEX> void runAndAssertException(final Class<EX> expectedExceptionClass, final Class<NEX> expectedNestedExceptionClass,
-                                                 final String message, final ExceptionAsserter.Exceptional ex) {
+                                                 final String message, final Exceptional ex) {
         try {
             ex.run();
             fail("Expected [" + expectedExceptionClass.getName() + "] was not thrown.");
@@ -55,20 +55,20 @@ public final class ExceptionAsserterImpl implements ExceptionAsserter {
     }
 
     public <EX, NEX> void runAndAssertException(final Class<EX> expectedExceptionClass, final Class<NEX> expectedNestedExceptionClass,
-                                                 final ExceptionAsserter.Exceptional ex) {
+                                                 final Exceptional ex) {
         runAndAssertException(expectedExceptionClass,  expectedNestedExceptionClass, NO_MESSAGE, ex);
     }
 
-    public <EX> void runAndAssertException(final Class<EX> expectedExceptionClass, final ExceptionAsserter.Exceptional ex) {
-        runAndAssertException(expectedExceptionClass,  ExceptionAsserter.NullException.class, NO_MESSAGE, ex);
+    public <EX> void runAndAssertException(final Class<EX> expectedExceptionClass, final Exceptional ex) {
+        runAndAssertException(expectedExceptionClass,  NullException.class, NO_MESSAGE, ex);
     }
 
-    public <EX> void runAndAssertException(final Class<EX> expectedExceptionClass, final String message, final ExceptionAsserter.Exceptional ex) {
-        runAndAssertException(expectedExceptionClass,  ExceptionAsserter.NullException.class, message, ex);
+    public <EX> void runAndAssertException(final Class<EX> expectedExceptionClass, final String message, final Exceptional ex) {
+        runAndAssertException(expectedExceptionClass,  NullException.class, message, ex);
     }
 
     private <NEX> boolean expectsNestedException(final Class<NEX> nestedExceptionClass) {
-        return nestedExceptionClass != ExceptionAsserter.NullException.class;
+        return nestedExceptionClass != NullException.class;
     }
 
     private boolean hasMessage(final String message) {
