@@ -11,7 +11,7 @@ General
 6. Don't throw checked exceptions or RuntimeException. All exceptions should extend RuntimeException.
 7. Use incubators when test fixtures should be reused across testcases
 8. Use the project checkstyle.xml to validate all code.
-9. Javadoc external apis. Document interfaces rather thinstan implementations. Document implementations if they have
+9. Javadoc external apis. Document interfaces rather than implementations. Document implementations if they have
  nuansic behaviour.
 10. Prefer delegation over inheritence.
 11. Use long variable/paramter/field names
@@ -51,8 +51,8 @@ Boundary Classes
 3. Should only return other boundaries or primitives, Wrappers, Strings.
    eg. Constructor<T> getConstructor(Class<?>[] parameterTypes); ->
        ConstructorBoundary<T> getConstructor(ClassBoundary<?>[] parameterTypes);     
-4. Should convert arrays to Lists. Eg. String[] -> List<String>.
-5. Should implement intefaces.
+4. Should convert arrays to Lists. Eg. String[] -> List<String>. **Should this include incoming parameters?**
+5. Should implement interfaces.
 6. Should be named: xxxBoundary. Eg. ClassBoundary.
 7. Should override equals and hashcode.
 
