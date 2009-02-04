@@ -15,6 +15,9 @@
  */
 package com.googlecode.pinthura.bean;
 
+import com.googlecode.pinthura.test.ExceptionAsserter;
+import com.googlecode.pinthura.test.ExceptionAsserterImpl;
+import com.googlecode.pinthura.test.Exceptional;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertThat;
 import org.junit.Before;
@@ -22,15 +25,15 @@ import org.junit.Test;
 
 import java.lang.reflect.Method;
 
-import static junit.framework.Assert.fail;
-
 public final class APropertyFinderUnderTest {
 
     private PropertyFinder propertyFinder;
+    private ExceptionAsserter asserter;
 
     @Before
     public void setup() {
         propertyFinder = new PropertyFinderImpl();
+        asserter = new ExceptionAsserterImpl();
     }
 
     @Test
@@ -49,13 +52,9 @@ public final class APropertyFinderUnderTest {
     }
 
     @Test
-    public void shouldThrownAnExceptionIfThePropertyIsNotFound() {
-        try {
-            propertyFinder.findMethodFor("blah", String.class);
-            fail();
-        } catch (PropertyFinderException e) {
-            assertThat(e.getMessage(), equalTo("Could not find property: blah on class java.lang.String"));
-        }
+    public void shouldThrownAPropertyFinderExceptionIfThePropertyIsNotFound() {
+        asserter.runAndAssertException(PropertyFinderException.class, "Could not find property: blah on class java.lang.String",
+                new Exceptional() {@Override public void run() { propertyFinder.findMethodFor("blah", String.class); }});
     }
 
     private void expectProperty(final String property, final Class<?> parentClass, final String methodName)

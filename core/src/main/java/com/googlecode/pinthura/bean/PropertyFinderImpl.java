@@ -20,6 +20,11 @@ import java.util.List;
 import java.util.Arrays;
 import java.util.Locale;
 
+/**
+ * Finds a <code>Method</code> given a property and a <code>Class</code>.
+ * Uses a strategy of get[methodName], is[MethodName] and methodName respectively in turn to find the correct method
+ * on the supplied <code>Class</code>.
+ */
 public final class PropertyFinderImpl implements PropertyFinder {
 
     @SuppressWarnings({ "unchecked", "ConstantConditions" })

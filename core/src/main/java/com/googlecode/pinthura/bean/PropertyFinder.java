@@ -19,5 +19,13 @@ import java.lang.reflect.Method;
 
 public interface PropertyFinder {
 
+    /**
+     * Returns the <code>Method</code> given a property and the parent <code>Class</code>.
+     * @param property The property to search for.
+     * @param parentClass The parent <code>Class</code>.
+     * @param <ParentClass> The type of parent.
+     * @return The <code>Method</code> for the property provided.
+     * @throws PropertyFinderException If the property can't be found.
+     */
     <ParentClass> Method findMethodFor(String property, Class<ParentClass> parentClass) throws PropertyFinderException;
 }
