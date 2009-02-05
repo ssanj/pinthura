@@ -26,6 +26,12 @@ import java.util.List;
 
 public final class FieldFinderImpl implements FieldFinder {
 
+    private final Arrayz arrayz;
+
+    public FieldFinderImpl(final Arrayz arrayz) {
+        this.arrayz = arrayz;
+    }
+
     @SuppressWarnings({ "unchecked" })
     @SuppressionReason(SuppressionReason.Reason.CANT_INFER_GENERICS)
     public <T> FieldBoundary<T> findByName(final String varName, final Object instance) {
@@ -39,7 +45,7 @@ public final class FieldFinderImpl implements FieldFinder {
     @SuppressWarnings({ "unchecked" })
     @SuppressionReason(SuppressionReason.Reason.CANT_INFER_GENERICS)
     public List<FieldBoundary<?>> findByPrefix(final String prefix, final Object instance) {
-        List<FieldBoundary<?>> fields = Arrayz.filter(new ClassBoundaryImpl(instance.getClass()).getDeclaredFields(),
+        List<FieldBoundary<?>> fields = arrayz.filter(new ClassBoundaryImpl(instance.getClass()).getDeclaredFields(),
                 new PrefixedFieldsFilter(prefix));
 
         if (hasPrefixedFields(fields)) {

@@ -15,16 +15,19 @@
  */
 package com.googlecode.pinthura.factory;
 
-import com.googlecode.pinthura.factory.instantiator.SimpleInstantiator;
-import com.googlecode.pinthura.factory.instantiator.ConstructorLocatorImpl;
 import com.googlecode.pinthura.factory.instantiator.ConstructorInstantiatorImpl;
+import com.googlecode.pinthura.factory.instantiator.ConstructorLocatorImpl;
+import com.googlecode.pinthura.factory.instantiator.SimpleInstantiator;
 import com.googlecode.pinthura.factory.locator.deriver.ImplSuffixingDeriver;
+import com.googlecode.pinthura.util.ArrayzImpl;
+import com.googlecode.pinthura.util.Arrayz;
 
 public final class SimpleInstantiatorBuilder {
 
     public SimpleInstantiator build() {
-        ConstructorLocatorImpl constructorLocator = new ConstructorLocatorImpl();
-        ConstructorInstantiatorImpl constructorInstantiator = new ConstructorInstantiatorImpl();
+        Arrayz arrayz = new ArrayzImpl();
+        ConstructorLocatorImpl constructorLocator = new ConstructorLocatorImpl(arrayz);
+        ConstructorInstantiatorImpl constructorInstantiator = new ConstructorInstantiatorImpl(arrayz);
 
         return new SimpleInstantiator(new ImplSuffixingDeriver(), constructorLocator, constructorInstantiator);
     }

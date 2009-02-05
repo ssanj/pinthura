@@ -22,16 +22,17 @@ import com.googlecode.pinthura.boundary.java.lang.reflect.MethodBoundaryImpl;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.List;
 
-//TODO: move to internal
+//TODO: this seems like a compound boundary object. move to the boundary package.
+//TODO: rename to MethodParamBoundary. 
 public final class MethodParamImpl implements MethodParam {
 
     private final MethodBoundary method;
-    private final Object[] arguments;
+    private final List<Object> arguments;
 
-    //TODO: Why aren't we using a MethodBoundary here?
     public MethodParamImpl(final Method method, final Object[] arguments) {
-        this.arguments = arguments;
+        this.arguments = Arrays.asList(arguments);
         this.method = new MethodBoundaryImpl(method);
     }
 
@@ -39,8 +40,7 @@ public final class MethodParamImpl implements MethodParam {
         return method.getReturnType();
     }
 
-    //TODO: we could replace this with a ClassInstance (1)
-    public Object[] getArguments() {
+    public List<Object> getArguments() {
         return arguments;
     }
 
@@ -48,27 +48,37 @@ public final class MethodParamImpl implements MethodParam {
         return method;
     }
 
-    //TODO: we could replace this with a ClassInstance (2)
-    public ClassBoundary<?>[] getParameterTypes() {
-        return method.getParameterTypes();
+    public List<ClassBoundary<?>> getParameterTypes() {
+        return Arrays.asList(method.getParameterTypes());
     }
 
-    @SuppressWarnings({"InstanceofInterfaces", "CastToConcreteClass"})
+    @SuppressWarnings({"RedundantIfStatement"})
     @SuppressionReason(SuppressionReason.Reason.GENERATED_CODE)
     @Override
-    public boolean equals(final Object object) {
-        return object != null && object instanceof MethodParamImpl
-                && method.equals(((MethodParamImpl) object).getMethod())
-                && Arrays.equals(arguments, ((MethodParamImpl) object).getArguments());
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        MethodParamImpl that = (MethodParamImpl) o;
+
+        if (arguments != null ? !arguments.equals(that.arguments) : that.arguments != null) {
+            return false;
+        }
+        if (method != null ? !method.equals(that.method) : that.method != null) {
+            return false;
+        }
+
+        return true;
     }
 
     @Override
     public int hashCode() {
-        int result;
-        result = (method != null ? method.hashCode() : 0);
-        //CHECKSTYLE_OFF
-        result = 31 * result + (arguments != null ? Arrays.hashCode(arguments) : 0);
-        //CHECKSTYLE_ON
+        int result = method != null ? method.hashCode() : 0;
+        result = 31 * result + (arguments != null ? arguments.hashCode() : 0);
         return result;
     }
 }

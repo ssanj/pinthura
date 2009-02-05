@@ -16,16 +16,19 @@
 package com.googlecode.pinthura.factory.instantiator;
 
 import com.googlecode.pinthura.boundary.java.lang.ClassBoundary;
-import com.googlecode.pinthura.boundary.java.lang.ClassBoundaryImpl;
 import com.googlecode.pinthura.boundary.java.lang.reflect.ConstructorBoundary;
 import com.googlecode.pinthura.data.Square;
 import com.googlecode.pinthura.factory.MethodParam;
+import com.googlecode.pinthura.util.Arrayz;
 import org.easymock.EasyMock;
 import org.easymock.IMocksControl;
 import static org.hamcrest.core.IsSame.sameInstance;
 import static org.junit.Assert.assertThat;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.Arrays;
+import java.util.List;
 
 public final class AConstructorLocatorUnderTest {
 
@@ -34,35 +37,42 @@ public final class AConstructorLocatorUnderTest {
     private final IMocksControl mockControl = EasyMock.createControl();
     private ConstructorLocator constructorLocator;
     private MethodParam mockMethodParam;
+    private Arrayz mockArrayz;
+    private ClassBoundary mockReturnType;
+    private ClassBoundary mockLoadedClass;
+    private ConstructorBoundary mockConstructorBoundary;
+    private ClassBoundary mockParameterClassBoundary;
 
     @Before
     public void setup() {
         mockMethodParam = mockControl.createMock(MethodParam.class);
-        constructorLocator = new ConstructorLocatorImpl();
+        mockArrayz = mockControl.createMock(Arrayz.class);
+        mockReturnType = mockControl.createMock(ClassBoundary.class);
+        mockLoadedClass = mockControl.createMock(ClassBoundary.class);
+        mockConstructorBoundary = mockControl.createMock(ConstructorBoundary.class);
+        mockParameterClassBoundary = mockControl.createMock(ClassBoundary.class);
+        
+        constructorLocator = new ConstructorLocatorImpl(mockArrayz);
     }
 
     @SuppressWarnings({ "unchecked" })
     @Test
     public void shouldLocateAConstructor() {
-        ClassBoundary mockReturnType = mockControl.createMock(ClassBoundary.class);
-        ClassBoundary mockLoadedClass = mockControl.createMock(ClassBoundary.class);
-        ConstructorBoundary mockConstructorBoundary = mockControl.createMock(ConstructorBoundary.class);
-
         EasyMock.expect(mockMethodParam.getReturnType()).andReturn(mockReturnType);
         EasyMock.expect(mockReturnType.forName(CLASS_NAME)).andReturn(mockLoadedClass);
 
-        ClassBoundary<?>[] argTypes = createArgTypes();
-        EasyMock.expect(mockMethodParam.getParameterTypes()).andReturn(argTypes);
-        EasyMock.expect(mockLoadedClass.getConstructor(argTypes)).andReturn(mockConstructorBoundary);
+        List<ClassBoundary> parameterTypes = Arrays.asList(mockParameterClassBoundary);
+        EasyMock.expect(mockMethodParam.getParameterTypes());
+        EasyMock.expectLastCall().andReturn(parameterTypes);
+
+        ClassBoundary[] classBoundaries = {mockParameterClassBoundary};
+        EasyMock.expect(mockArrayz.fromCollection(parameterTypes, ClassBoundary.class)).andReturn(classBoundaries);
+        EasyMock.expect(mockLoadedClass.getConstructor(classBoundaries)).andReturn(mockConstructorBoundary);
         mockControl.replay();
 
         ConstructorBoundary<Square> constructorBoundary = constructorLocator.locate(mockMethodParam, CLASS_NAME);
         assertThat(constructorBoundary, sameInstance(mockConstructorBoundary));
 
         mockControl.verify();
-    }
-
-    private ClassBoundary<?>[] createArgTypes() {
-        return new ClassBoundary[] {new ClassBoundaryImpl<Square>(Square.class)};
     }
 }

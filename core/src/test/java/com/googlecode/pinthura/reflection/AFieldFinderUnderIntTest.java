@@ -20,6 +20,7 @@ import com.googlecode.pinthura.boundary.java.lang.MathBoundary;
 import com.googlecode.pinthura.boundary.java.lang.reflect.FieldBoundary;
 import com.googlecode.pinthura.data.SquareImpl;
 import com.googlecode.pinthura.injection.data.RandomIntegralValueIncubator;
+import com.googlecode.pinthura.util.ArrayzImpl;
 import org.easymock.IMocksControl;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.hamcrest.core.IsNull.notNullValue;
@@ -30,13 +31,13 @@ import org.junit.Test;
 
 import java.util.List;
 
-public final class AFieldFinderUnderTest {
+public final class AFieldFinderUnderIntTest {
 
     private FieldFinder fieldFinder;
 
     @Before
     public void setup() {
-        fieldFinder = new FieldFinderImpl();
+        fieldFinder = new FieldFinderImpl(new ArrayzImpl());
     }
 
     @Test

@@ -19,8 +19,8 @@ import com.googlecode.pinthura.data.UrlBoundary;
 import com.googlecode.pinthura.data.UrlBoundaryFactory;
 import com.googlecode.pinthura.data.UrlBoundaryImpl;
 import com.googlecode.pinthura.factory.MethodParam;
+import com.googlecode.pinthura.factory.instantiator.builder.SimpleInstantiatorBuilder;
 import com.googlecode.pinthura.factory.locator.MethodParamBuilder;
-import com.googlecode.pinthura.factory.locator.deriver.ImplSuffixingDeriver;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.assertThat;
@@ -32,18 +32,11 @@ public final class ASimpleInstantiatorUnderIntTest {
 
     @Test
     public void shouldCreateAnInstanceOfTheRequiredClass() {
-        Object result = createInstantiator().filter(createMethodParam());
+        Object result = new SimpleInstantiatorBuilder().build().filter(createMethodParam());
 
         assertThat(result, notNullValue());
         assertThat(result.getClass() == UrlBoundaryImpl.class, equalTo(true));
         assertThat(URL, equalTo(((UrlBoundary) result).getUrlAsString()));
-    }
-
-    private SimpleInstantiator createInstantiator() {
-        return new SimpleInstantiator(
-                new ImplSuffixingDeriver(),
-                new ConstructorLocatorImpl(),
-                new ConstructorInstantiatorImpl());
     }
 
     @SuppressWarnings({ "unchecked" })

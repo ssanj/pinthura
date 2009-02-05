@@ -17,10 +17,17 @@ package com.googlecode.pinthura.factory.instantiator;
 
 import com.googlecode.pinthura.boundary.java.lang.reflect.ConstructorBoundary;
 import com.googlecode.pinthura.factory.MethodParam;
+import com.googlecode.pinthura.util.Arrayz;
 
 public final class ConstructorInstantiatorImpl implements ConstructorInstantiator {
 
+    private final Arrayz arrayz;
+
+    public ConstructorInstantiatorImpl(final Arrayz arrayz) {
+        this.arrayz = arrayz;
+    }
+
     public <T> Object instantiate(final MethodParam methodParam, final ConstructorBoundary<T> constructorBoundary) {
-        return constructorBoundary.newInstance(methodParam.getArguments());
+        return constructorBoundary.newInstance(arrayz.fromCollection(methodParam.getArguments(), Object.class));
     }
 }

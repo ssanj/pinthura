@@ -15,75 +15,59 @@
  */
 package com.googlecode.pinthura.factory.instantiator;
 
-import com.googlecode.pinthura.annotation.AnnotationFinder;
-import com.googlecode.pinthura.boundary.java.lang.ClassBoundary;
-import com.googlecode.pinthura.boundary.java.lang.ClassBoundaryImpl;
-import com.googlecode.pinthura.boundary.java.lang.reflect.MethodBoundary;
-import com.googlecode.pinthura.factory.Factory;
-import com.googlecode.pinthura.factory.InjectedFactory;
-import com.googlecode.pinthura.factory.MethodParam;
-import com.googlecode.pinthura.util.Arrayz;
-import org.easymock.EasyMock;
-import org.easymock.IMocksControl;
-import static org.hamcrest.core.IsEqual.equalTo;
-import static org.junit.Assert.assertThat;
-
-import java.util.ArrayList;
-import java.util.List;
-
 public final class AnnotatedFactoryExtractorTestBehaviourHandler {
 
-    private final IMocksControl mockControl;
-    private List<Factory> factories;
-    private MethodParam mockMethodParam;
-    private AnnotationFinder mockAnnotationFinder;
-
-    public AnnotatedFactoryExtractorTestBehaviourHandler() {
-        mockControl = EasyMock.createControl();
-        mockMethodParam = mockControl.createMock(MethodParam.class);
-        mockAnnotationFinder = mockControl.createMock(AnnotationFinder.class);
-
-        this.factories = new ArrayList<Factory>();
-    }
-
-    AnnotatedFactoryExtractorTestBehaviourHandler createFactory() {
-        factories.add(mockControl.createMock(Factory.class));
-        return this;
-    }
-
-    @SuppressWarnings({ "unchecked" })
-    void replay() {
-        MethodBoundary mockMethodBoundary = mockControl.createMock(MethodBoundary.class);
-        ClassBoundary classBoundary = new ClassBoundaryImpl<InjectedFactory>(InjectedFactory.class);
-        InjectedFactory mockInjectedFactory = mockControl.createMock(InjectedFactory.class);
-        EasyMock.expect(mockMethodParam.getMethod()).andReturn(mockMethodBoundary);
-        EasyMock.expect(mockAnnotationFinder.find(mockMethodBoundary, classBoundary)).andReturn(mockInjectedFactory);
-        EasyMock.expect(mockInjectedFactory.value()).andReturn(asArray());
-
-        mockControl.replay();
-    }
-
-    public InjectedFactory extract() {
-        return new AnnotatedFactoryExtractorImpl(mockAnnotationFinder).extract(mockMethodParam);
-    }
-
-    public Factory[] extractFactories() {
-        return new AnnotatedFactoryExtractorImpl(mockAnnotationFinder).extractFactories(mockMethodParam);
-    }
-
-    public void expectAnnotatedFactoriesAreReturned(final InjectedFactory injectedFactory) {
-        assertThat(injectedFactory.value(), equalTo(asArray()));
-    }
-
-    public void expectAnnotatedFactoriesAreReturned(final Factory[] result) {
-        assertThat(result, equalTo(asArray()));
-    }
-
-    void verify() {
-        mockControl.verify();
-    }
-
-    private Factory[] asArray() {
-        return Arrayz.fromCollection(factories, Factory.class);
-    }
+//    private final IMocksControl mockControl;
+//    private List<Factory> factories;
+//    private MethodParam mockMethodParam;
+//    private AnnotationFinder mockAnnotationFinder;
+//
+//    public AnnotatedFactoryExtractorTestBehaviourHandler() {
+//        mockControl = EasyMock.createControl();
+//        mockMethodParam = mockControl.createMock(MethodParam.class);
+//        mockAnnotationFinder = mockControl.createMock(AnnotationFinder.class);
+//
+//        this.factories = new ArrayList<Factory>();
+//    }
+//
+//    AnnotatedFactoryExtractorTestBehaviourHandler createFactory() {
+//        factories.add(mockControl.createMock(Factory.class));
+//        return this;
+//    }
+//
+//    @SuppressWarnings({ "unchecked" })
+//    void replay() {
+//        MethodBoundary mockMethodBoundary = mockControl.createMock(MethodBoundary.class);
+//        ClassBoundary classBoundary = new ClassBoundaryImpl<InjectedFactory>(InjectedFactory.class);
+//        InjectedFactory mockInjectedFactory = mockControl.createMock(InjectedFactory.class);
+//        EasyMock.expect(mockMethodParam.getMethod()).andReturn(mockMethodBoundary);
+//        EasyMock.expect(mockAnnotationFinder.find(mockMethodBoundary, classBoundary)).andReturn(mockInjectedFactory);
+//        EasyMock.expect(mockInjectedFactory.value()).andReturn(asArray());
+//
+//        mockControl.replay();
+//    }
+//
+//    public InjectedFactory extract() {
+//        return new AnnotatedFactoryExtractorImpl(mockAnnotationFinder).extract(mockMethodParam);
+//    }
+//
+//    public Factory[] extractFactories() {
+//        return new AnnotatedFactoryExtractorImpl(mockAnnotationFinder).extractFactories(mockMethodParam);
+//    }
+//
+//    public void expectAnnotatedFactoriesAreReturned(final InjectedFactory injectedFactory) {
+//        assertThat(injectedFactory.value(), equalTo(asArray()));
+//    }
+//
+//    public void expectAnnotatedFactoriesAreReturned(final Factory[] result) {
+//        assertThat(result, equalTo(asArray()));
+//    }
+//
+//    void verify() {
+//        mockControl.verify();
+//    }
+//
+//    private Factory[] asArray() {
+//        return ArrayzImpl.fromCollection(factories, Factory.class);
+//    }
 }

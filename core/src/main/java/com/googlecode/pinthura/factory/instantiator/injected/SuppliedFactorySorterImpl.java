@@ -20,6 +20,8 @@ import com.googlecode.pinthura.factory.MethodParam;
 import com.googlecode.pinthura.factory.instantiator.ClassInstance;
 import com.googlecode.pinthura.factory.instantiator.ClassInstanceFactory;
 
+import java.util.List;
+
 /**
  * This class adds the supplied parameters into each of the unused slots in the <code>ClassInstance[]</code> supplied.
  * Eg.
@@ -37,11 +39,12 @@ public final class SuppliedFactorySorterImpl implements SuppliedFactorySorter {
 
     @SuppressWarnings({ "unchecked" })
     public void sort(final MethodParam methodParam, final ClassInstance[] classInstances) {
-        ClassBoundary[] methodParamTypes = methodParam.getParameterTypes();
-        Object[] methodParamArgs = methodParam.getArguments();
-        for (int x = 0, count = 0; x < classInstances.length && count < methodParamTypes.length; x++) {
+        List<ClassBoundary<?>> methodParamTypes = methodParam.getParameterTypes();
+        List<Object> methodParamArgs = methodParam.getArguments();
+        for (int x = 0, count = 0; x < classInstances.length && count < methodParamTypes.size(); x++) {
             if (classInstances[x] == null) {
-                classInstances[x] = classInstanceFactory.createClassInstance(methodParamTypes[count], methodParamArgs[count++]);
+                classInstances[x] = classInstanceFactory.createClassInstance((ClassBoundary<Object>) methodParamTypes.get(count),
+                        methodParamArgs.get(count++));
             }
         }
     }
