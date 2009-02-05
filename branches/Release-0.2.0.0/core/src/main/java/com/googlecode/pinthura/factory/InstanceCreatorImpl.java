@@ -26,7 +26,7 @@ public final class InstanceCreatorImpl implements InstanceCreator {
         this.filterChain = filterChain;
     }
 
-    public Object createInstance(final MethodParam param) {
+    public Object createInstance(final MethodParam param) throws InstanceCreationException {
         try {
             return filterChain.filter(param);
         } catch (MatchNotFoundException e) {

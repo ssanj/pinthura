@@ -1,5 +1,6 @@
 package com.googlecode.pinthura.factory;
 
+import com.googlecode.pinthura.annotation.SuppressionReason;
 import com.googlecode.pinthura.util.CreationBroker;
 import org.easymock.EasyMock;
 import org.easymock.IMocksControl;
@@ -11,6 +12,8 @@ import static org.junit.Assert.assertThat;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
 
+@SuppressWarnings("MethodReturnOfConcreteClass")
+@SuppressionReason(SuppressionReason.Reason.INCUBATOR)
 public final class AFactoryCreatorIncubator {
 
     private final IMocksControl mockControl;
@@ -33,7 +36,7 @@ public final class AFactoryCreatorIncubator {
 
 
     public AFactoryCreatorIncubator performCreate() {
-        mockCreationBroker.setInstance(EasyMock.eq(FactoryCreator.class), EasyMock.isA(FactoryCreatorImpl.class));        
+        mockCreationBroker.setInstance(EasyMock.eq(FactoryCreator.class), EasyMock.isA(FactoryCreatorImpl.class));
         mockControl.replay();
 
         factoryCreator = new FactoryCreatorImpl(mockInvocationHandler, mockCreationBroker);
@@ -51,7 +54,7 @@ public final class AFactoryCreatorIncubator {
                 equalTo(true));
         assertThat(result, IsNull.notNullValue());
         assertThat(Proxy.isProxyClass(result.getClass()), equalTo(true));
-        assertThat(Proxy.getInvocationHandler(result), IsSame.sameInstance(mockInvocationHandler));        
+        assertThat(Proxy.getInvocationHandler(result), IsSame.sameInstance(mockInvocationHandler));
         return this;
     }
 

@@ -17,5 +17,5 @@ package com.googlecode.pinthura.factory;
 
 public interface InstanceCreator {
 
-    Object createInstance(MethodParam param);
+    Object createInstance(MethodParam param) throws InstanceCreationException;
 }

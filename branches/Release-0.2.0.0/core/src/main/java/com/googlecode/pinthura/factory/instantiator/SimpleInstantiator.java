@@ -32,8 +32,8 @@ public final class SimpleInstantiator implements InstantiationStrategy {
     public SimpleInstantiator(final ClassNameDeriver classNameDeriver, final ConstructorLocator locator,
                               final ConstructorInstantiator instantiator) {
         this.classNameDeriver = classNameDeriver;
-        this.constructorLocator = locator;
-        this.constructorInstantiator = instantiator;
+        constructorLocator = locator;
+        constructorInstantiator = instantiator;
     }
 
     @SuppressWarnings({ "unchecked" })
