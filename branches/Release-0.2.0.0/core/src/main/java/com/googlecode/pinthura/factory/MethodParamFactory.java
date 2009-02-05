@@ -17,7 +17,17 @@ package com.googlecode.pinthura.factory;
 
 import java.lang.reflect.Method;
 
+/**
+ * Creates a <code>MethodParam</code> object given a <code>Method</code> and its arguments.
+ */
+//TODO: move to internal
 public interface MethodParamFactory {
 
+    /**
+     * Creates a <code>MethodParam</code> object given a <code>Method</code> and its arguments.
+     * @param method The <code>Method</code>.
+     * @param args The arguments.
+     * @return A <code>MethodParam</code> object.
+     */
     MethodParam create(Method method, Object[] args);
 }

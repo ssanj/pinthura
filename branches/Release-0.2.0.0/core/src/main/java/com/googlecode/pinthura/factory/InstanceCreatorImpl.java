@@ -18,6 +18,10 @@ package com.googlecode.pinthura.factory;
 import com.googlecode.pinthura.filter.FilterLink;
 import com.googlecode.pinthura.filter.MatchNotFoundException;
 
+/**
+ * Creates instances using a <code>FilterLink</code> of instantiation strategies.
+ */
+//TODO: move to internal
 public final class InstanceCreatorImpl implements InstanceCreator {
 
     private final FilterLink<MethodParam, Object> filterChain;

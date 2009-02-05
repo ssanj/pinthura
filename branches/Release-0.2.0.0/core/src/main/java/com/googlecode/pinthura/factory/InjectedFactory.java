@@ -15,14 +15,21 @@
  */
 package com.googlecode.pinthura.factory;
 
-import java.lang.annotation.Target;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
+/**
+ * Annotation for an injected factory.
+ */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface InjectedFactory {
 
+    /**
+     * An array of <code>Factory</code> describing the instances to be dynamically injected.
+     * @return An array of <code>Factory</code> describing the instances to be dynamically injected.
+     */
     Factory[] value();
 }

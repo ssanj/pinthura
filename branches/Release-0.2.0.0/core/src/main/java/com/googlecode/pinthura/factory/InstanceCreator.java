@@ -15,7 +15,16 @@
  */
 package com.googlecode.pinthura.factory;
 
+/**
+ * Creates an instance of an object given a <code>MethodParam</code>.
+ */
 public interface InstanceCreator {
 
+    /**
+     * Creates an instance of the return type of a <code>MethodParam</code>.
+     * @param param The <code>MethodParam</code> describing the return type.
+     * @return An instance of the return type of a <code>MethodParam</code>.
+     * @throws InstanceCreationException If the to instantiate could not be found.
+     */
     Object createInstance(MethodParam param) throws InstanceCreationException;
 }

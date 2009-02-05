@@ -15,10 +15,10 @@
  */
 package com.googlecode.pinthura.factory;
 
+import com.googlecode.pinthura.annotation.SuppressionReason;
 import com.googlecode.pinthura.data.UrlBoundaryFactory;
 import com.googlecode.pinthura.io.FileReaderFactory;
 import com.googlecode.pinthura.util.builder.RandomDataChooserBuilder;
-import com.googlecode.pinthura.annotation.SuppressionReason;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -35,7 +35,7 @@ public final class AFactoryCreatorUnderTest {
     public void setup() {
         randomFactoryClass = new RandomDataChooserBuilder().build().chooseOneOf(
                                 UrlBoundaryFactory.class,
-                                InvocationFactory.class,
+                                MethodParamFactory.class,
                                 FileReaderFactory.class);
         incubator = new AFactoryCreatorIncubator();
     }
