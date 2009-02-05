@@ -15,40 +15,74 @@
  */
 package com.googlecode.pinthura.factory.instantiator;
 
+import com.googlecode.pinthura.annotation.SuppressionReason;
+import com.googlecode.pinthura.boundary.java.lang.reflect.ConstructorBoundary;
+import com.googlecode.pinthura.data.Shape;
+import com.googlecode.pinthura.data.ShapeFactory;
+import com.googlecode.pinthura.data.UrlBoundary;
+import com.googlecode.pinthura.factory.MethodParam;
+import com.googlecode.pinthura.util.Arrayz;
+import com.googlecode.pinthura.util.RandomDataChooser;
+import com.googlecode.pinthura.util.builder.RandomDataChooserBuilder;
+import org.easymock.EasyMock;
+import org.easymock.IMocksControl;
+import static org.hamcrest.core.IsSame.sameInstance;
+import static org.junit.Assert.assertThat;
+import org.junit.Before;
+import org.junit.Test;
+
+import java.util.Arrays;
+import java.util.List;
+
 public final class AConstructorInstantiatorUnderTest {
 
-//    private final IMocksControl mockControl = EasyMock.createControl();
-//    private ConstructorInstantiator instantiator;
-//    private MethodParam mockMethodParam;
-//    private ConstructorBoundary mockConstructorBoundary;
-//
-//    @Before
-//    public void setup() {
-//        mockMethodParam = mockControl.createMock(MethodParam.class);
-//        mockConstructorBoundary = mockControl.createMock(ConstructorBoundary.class);
-//        instantiator = new ConstructorInstantiatorImpl();
-//    }
-//
-//    @Test
-//    public void shouldInstantiateAConstructorGivenItsParameters() {
-//        expectInstantiation(new Object[]{"testing 1 2 3"}, ShapeFactory.class);
-//    }
-//
-//    @Test
-//    public void shouldInstantiateAParameterlessConstructor() {
-//        expectInstantiation(new Object[]{}, UrlBoundary.class);
-//    }
-//
-//    @SuppressWarnings({ "unchecked" })
-//    private void expectInstantiation(final Object[] args, final Class<?> type) {
-//        Object mockTypeInstance = mockControl.createMock(type);
-//        EasyMock.expect(mockMethodParam.getArguments()).andReturn(Arrays.asList(args));
-//        EasyMock.expect(mockConstructorBoundary.newInstance(EasyMock.eq(args))).andReturn(mockTypeInstance);
-//        mockControl.replay();
-//
-//        Object result = instantiator.instantiate(mockMethodParam, mockConstructorBoundary);
-//        assertThat(result, sameInstance(mockTypeInstance));
-//
-//        mockControl.verify();
-//    }
+    private final IMocksControl mockControl = EasyMock.createControl();
+    private ConstructorInstantiator instantiator;
+    private MethodParam mockMethodParam;
+    private ConstructorBoundary mockConstructorBoundary;
+    private Arrayz mockArrayz;
+    private RandomDataChooser randomDataChooser;
+
+    @Before
+    public void setup() {
+        mockMethodParam = mockControl.createMock(MethodParam.class);
+        mockConstructorBoundary = mockControl.createMock(ConstructorBoundary.class);
+        mockArrayz = mockControl.createMock(Arrayz.class);
+
+        randomDataChooser = new RandomDataChooserBuilder().build();
+        instantiator = new ConstructorInstantiatorImpl(mockArrayz);
+    }
+
+    @SuppressWarnings("unchecked")
+    @SuppressionReason(SuppressionReason.Reason.CANT_INFER_GENERICS)
+    @Test
+    public void shouldInstantiateAParameteredConstructor() {
+        List<Object> randomArguments = randomDataChooser.chooseOneOf(
+                Arrays.<Object>asList("testing", "one two three"), 
+                Arrays.<Object>asList(1, 2, 3));
+        expectInstantiation(randomArguments, randomDataChooser.<Class>chooseOneOf(
+                ShapeFactory.class,
+                UrlBoundary.class,
+                Shape.class));
+    }
+
+    @Test
+    public void shouldInstantiateAParameterlessConstructor() {
+        expectInstantiation(Arrays.<Object>asList(), UrlBoundary.class);
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    private void expectInstantiation(final List<Object> argsList, final Class<?> type) {
+        Object mockTypeInstance = mockControl.createMock(type);
+        EasyMock.expect(mockMethodParam.getArguments()).andReturn(argsList);
+        Object[] argsArray = argsList.toArray();
+        EasyMock.expect(mockArrayz.fromCollection(argsList, Object.class)).andReturn(argsArray);
+        EasyMock.expect(mockConstructorBoundary.newInstance(argsArray)).andReturn(mockTypeInstance);
+        mockControl.replay();
+
+        Object result = instantiator.instantiate(mockMethodParam, mockConstructorBoundary);
+        assertThat(result, sameInstance(mockTypeInstance));
+
+        mockControl.verify();
+    }
 }

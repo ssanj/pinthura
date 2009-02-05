@@ -15,6 +15,7 @@
  */
 package com.googlecode.pinthura.factory.instantiator;
 
+import com.googlecode.pinthura.annotation.SuppressionReason;
 import com.googlecode.pinthura.boundary.java.lang.ClassBoundary;
 import com.googlecode.pinthura.boundary.java.lang.reflect.ConstructorBoundary;
 import com.googlecode.pinthura.data.Square;
@@ -58,21 +59,35 @@ public final class AConstructorLocatorUnderTest {
     @SuppressWarnings({ "unchecked" })
     @Test
     public void shouldLocateAConstructor() {
-        EasyMock.expect(mockMethodParam.getReturnType()).andReturn(mockReturnType);
-        EasyMock.expect(mockReturnType.forName(CLASS_NAME)).andReturn(mockLoadedClass);
-
-        List<ClassBoundary> parameterTypes = Arrays.asList(mockParameterClassBoundary);
-        EasyMock.expect(mockMethodParam.getParameterTypes());
-        EasyMock.expectLastCall().andReturn(parameterTypes);
-
-        ClassBoundary[] classBoundaries = {mockParameterClassBoundary};
-        EasyMock.expect(mockArrayz.fromCollection(parameterTypes, ClassBoundary.class)).andReturn(classBoundaries);
-        EasyMock.expect(mockLoadedClass.getConstructor(classBoundaries)).andReturn(mockConstructorBoundary);
+        expectClassLoaded();
+        expectConstructor(expectParameterTypes());
         mockControl.replay();
 
         ConstructorBoundary<Square> constructorBoundary = constructorLocator.locate(mockMethodParam, CLASS_NAME);
         assertThat(constructorBoundary, sameInstance(mockConstructorBoundary));
 
         mockControl.verify();
+    }
+
+    @SuppressWarnings({"unchecked"})
+    @SuppressionReason(SuppressionReason.Reason.CANT_INFER_GENERICS_ON_MOCKS)    
+    private void expectConstructor(final List<ClassBoundary> parameterTypes) {
+        ClassBoundary[] classBoundaries = {mockParameterClassBoundary};
+        EasyMock.expect(mockArrayz.fromCollection(parameterTypes, ClassBoundary.class)).andReturn(classBoundaries);
+        EasyMock.expect(mockLoadedClass.getConstructor(classBoundaries)).andReturn(mockConstructorBoundary);
+    }
+
+    private List<ClassBoundary> expectParameterTypes() {
+        List<ClassBoundary> parameterTypes = Arrays.asList(mockParameterClassBoundary);
+        EasyMock.expect(mockMethodParam.getParameterTypes());
+        EasyMock.expectLastCall().andReturn(parameterTypes);
+        return parameterTypes;
+    }
+
+    @SuppressWarnings({"unchecked"})
+    @SuppressionReason(SuppressionReason.Reason.CANT_INFER_GENERICS_ON_MOCKS)
+    private void expectClassLoaded() {
+        EasyMock.expect(mockMethodParam.getReturnType()).andReturn(mockReturnType);
+        EasyMock.expect(mockReturnType.forName(CLASS_NAME)).andReturn(mockLoadedClass);
     }
 }
