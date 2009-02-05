@@ -17,6 +17,10 @@ package com.googlecode.pinthura.factory.locator.deriver;
 
 import com.googlecode.pinthura.factory.MethodParam;
 
+/**
+ * Derives a <code>Class</code> name by appending "Impl" to the end of the <code>Class</code> name.
+ */
+//TODO: move to internal
 public final class ImplSuffixingDeriver implements ClassNameDeriver {
 
     private static final String DEFAULT_SUFFIX  = "Impl";

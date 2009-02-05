@@ -17,7 +17,16 @@ package com.googlecode.pinthura.factory.locator.deriver;
 
 import com.googlecode.pinthura.factory.MethodParam;
 
+/**
+ * Derives a <code>Class</code> name from the return type of a <code>MethodParam</code>.
+ */
+//TODO: move to internal
 public interface ClassNameDeriver {
 
+    /**
+     * Derives a <code>Class</code> name from the return type of the supplied <code>MethodParam</code>.
+     * @param methodParam The <code>MethodParam</code> containing the return type.
+     * @return A <code>Class</code> name derived from the return type of <code>MethodParam</code>.
+     */
     String derive(MethodParam methodParam);
 }
