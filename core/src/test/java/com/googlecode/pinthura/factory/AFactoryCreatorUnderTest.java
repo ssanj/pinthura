@@ -25,6 +25,8 @@ import org.junit.Test;
 public final class AFactoryCreatorUnderTest {
 
     private Class<?> randomFactoryClass;
+    @SuppressWarnings({"InstanceVariableOfConcreteClass"})
+    @SuppressionReason(SuppressionReason.Reason.INCUBATOR)
     private AFactoryCreatorIncubator incubator;
 
     @Before
@@ -51,6 +53,6 @@ public final class AFactoryCreatorUnderTest {
         incubator.supplyParameterFactoryClass(randomFactoryClass).
                     performCreate().
                     observe().expectedInstance().isCached().
-                    done();        
+                    done();
     }
 }
