@@ -21,7 +21,7 @@ public final class MethodParamBuilder<A, I> {
 
     public MethodParamBuilder havingMethod(final String methodName, final Class<?>... paramTypes) {
         try {
-            this.method = factoryInterface.getMethod(methodName, paramTypes);
+            method = factoryInterface.getMethod(methodName, paramTypes);
         } catch (NoSuchMethodException e) {
             throw new IllegalArgumentException(e);
         }

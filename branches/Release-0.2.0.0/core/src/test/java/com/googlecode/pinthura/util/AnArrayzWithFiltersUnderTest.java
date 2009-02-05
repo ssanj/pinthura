@@ -18,6 +18,7 @@ package com.googlecode.pinthura.util;
 import com.googlecode.pinthura.injection.filters.ItemFilter;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertThat;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.awt.Color;
@@ -26,24 +27,31 @@ import java.util.List;
 
 public final class AnArrayzWithFiltersUnderTest {
 
+    private Arrayz arrayz;
+
+    @Before
+    public void setup() {
+        arrayz = new ArrayzImpl();
+    }
+
     @Test
     public void shouldFilterAListOfNamesByStartingLetter() {
         List<String> names = Arrays.asList("sunny", "annie", "Sandra", "bob");
-        List<String> filteredNames = Arrayz.filter(names, new StartsWithSFilter());
+        List<String> filteredNames = arrayz.filter(names, new StartsWithSFilter());
         assertThat(filteredNames, equalTo(Arrays.asList("sunny", "Sandra")));
     }
 
     @Test
     public void shouldFilterAListOfNumberByValue() {
         List<Integer> numbers = Arrays.asList(5, 10, 15, 20, 25);
-        List<Integer> filteredNumbers = Arrayz.filter(numbers, new TenAndBelowFilter());
+        List<Integer> filteredNumbers = arrayz.filter(numbers, new TenAndBelowFilter());
         assertThat(filteredNumbers, equalTo(Arrays.asList(5, 10)));
     }
 
     @Test
     public void shouldReturnAllElementsIfTheFilterIsEmpty() {
         List<Color> colours = Arrays.asList(Color.BLUE, Color.YELLOW, Color.BLACK);
-        assertThat(colours, equalTo(Arrayz.filter(colours, new AllColoursFilter())));
+        assertThat(colours, equalTo(arrayz.filter(colours, new AllColoursFilter())));
     }
 
     private static final class StartsWithSFilter implements ItemFilter<String> {

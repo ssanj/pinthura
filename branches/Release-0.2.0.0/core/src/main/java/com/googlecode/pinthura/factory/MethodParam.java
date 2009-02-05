@@ -18,6 +18,8 @@ package com.googlecode.pinthura.factory;
 import com.googlecode.pinthura.boundary.java.lang.ClassBoundary;
 import com.googlecode.pinthura.boundary.java.lang.reflect.MethodBoundary;
 
+import java.util.List;
+
 /**
  * Encapsulates a <code>Method</code> and its parameters and returns boundary versions of its methods.
  */
@@ -32,10 +34,9 @@ public interface MethodParam {
 
     /**
      * The supplied method arguments.
-     * @return The supplied method arguments.
+     * @return The supplied method arguments as a <code>List<Object></code>. 
      */
-    //TODO: This should be a List<Object>
-    Object[] getArguments();
+    List<Object> getArguments();
 
     /**
      * A boundary representing the encapsulated <code>Method</code>.
@@ -45,8 +46,7 @@ public interface MethodParam {
 
     /**
      * A <code>Class</code> boundary array representing the argument types supplied to the encapsulated <code>Method</code>.
-     * @return A <code>Class</code> boundary array representing the argument types supplied to the encapsulated <code>Method</code>.
+     * @return A <code>List<ClassBoundary></code> representing the argument types supplied to the encapsulated <code>Method</code>.
      */
-    //TODO: This should be a List<Class<?>>
-    ClassBoundary<?>[] getParameterTypes();
+    List<ClassBoundary<?>> getParameterTypes();
 }

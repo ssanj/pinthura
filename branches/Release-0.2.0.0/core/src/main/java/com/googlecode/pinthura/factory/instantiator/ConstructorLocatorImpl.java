@@ -18,15 +18,23 @@ package com.googlecode.pinthura.factory.instantiator;
 import com.googlecode.pinthura.boundary.java.lang.ClassBoundary;
 import com.googlecode.pinthura.boundary.java.lang.reflect.ConstructorBoundary;
 import com.googlecode.pinthura.factory.MethodParam;
+import com.googlecode.pinthura.util.Arrayz;
 
 public final class ConstructorLocatorImpl implements ConstructorLocator {
 
+    private final Arrayz arrayz;
+
+    public ConstructorLocatorImpl(final Arrayz arrayz) {
+        this.arrayz = arrayz;
+    }
+
     @SuppressWarnings({ "unchecked" })
     public <T> ConstructorBoundary<T> locate(final MethodParam methodParam, final String className) {
-        return (ConstructorBoundary<T>) methodParam.getReturnType().forName(className).getConstructor(methodParam.getParameterTypes());
+        return (ConstructorBoundary<T>) methodParam.getReturnType().forName(className).getConstructor(
+                arrayz.fromCollection(methodParam.getParameterTypes(), ClassBoundary.class));
     }
 
     public <T> ConstructorBoundary<T> locate(final MethodParam methodParam, final ClassBoundary<T> clazz) {
-        return clazz.getConstructor(methodParam.getParameterTypes());
+        return clazz.getConstructor(arrayz.fromCollection(methodParam.getParameterTypes(), ClassBoundary.class));
     }
 }

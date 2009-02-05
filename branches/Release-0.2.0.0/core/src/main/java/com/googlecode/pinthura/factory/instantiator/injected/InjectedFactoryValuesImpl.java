@@ -17,7 +17,7 @@ package com.googlecode.pinthura.factory.instantiator.injected;
 
 import com.googlecode.pinthura.boundary.java.lang.ClassBoundary;
 import com.googlecode.pinthura.factory.instantiator.ClassInstance;
-import static com.googlecode.pinthura.util.Arrayz.fromCollection;
+import com.googlecode.pinthura.util.Arrayz;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,9 +25,11 @@ import java.util.List;
 public final class InjectedFactoryValuesImpl implements InjectedFactoryValues {
 
     private final ClassInstance[] classInstances;
+    private final Arrayz arrayz;
 
-    public InjectedFactoryValuesImpl(final ClassInstance[] classInstances) {
+    public InjectedFactoryValuesImpl(final ClassInstance[] classInstances, final Arrayz arrayz) {
         this.classInstances = classInstances;
+        this.arrayz = arrayz;
     }
 
     public ClassBoundary<?>[] getConstructorTypes() {
@@ -37,7 +39,7 @@ public final class InjectedFactoryValuesImpl implements InjectedFactoryValues {
             typeList.add(classInstance.getClazz());
         }
 
-        return fromCollection(typeList, ClassBoundary.class);
+        return arrayz.fromCollection(typeList, ClassBoundary.class);
     }
 
     public Object[] getConstructorArguments() {
@@ -47,6 +49,6 @@ public final class InjectedFactoryValuesImpl implements InjectedFactoryValues {
             instanceList.add(classInstance.getInstance());
         }
 
-        return fromCollection(instanceList, Object.class);
+        return arrayz.fromCollection(instanceList, Object.class);
     }
 }

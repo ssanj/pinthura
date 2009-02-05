@@ -22,6 +22,8 @@ import com.googlecode.pinthura.factory.instantiator.AnnotatedFactoryExtractor;
 import com.googlecode.pinthura.factory.instantiator.ClassInstance;
 import com.googlecode.pinthura.factory.instantiator.ClassInstanceFactory;
 
+import java.util.List;
+
 public final class InjectedFactoryResolverImpl implements InjectedFactoryResolver {
 
     private final AnnotatedFactoryExtractor extractor;
@@ -40,8 +42,8 @@ public final class InjectedFactoryResolverImpl implements InjectedFactoryResolve
     @SuppressWarnings({ "unchecked" })
     public InjectedFactoryValues resolve(final MethodParam methodParam) {
         Factory[] factories = extractor.extractFactories(methodParam);
-        ClassBoundary<?>[] methodParamTypes = methodParam.getParameterTypes();
-        ClassInstance[] classInstances = classInstanceFactory.createClassInstanceArray(methodParamTypes.length + factories.length);
+        List<ClassBoundary<?>> methodParamTypes = methodParam.getParameterTypes();
+        ClassInstance[] classInstances = classInstanceFactory.createClassInstanceArray(methodParamTypes.size() + factories.length);
 
         instanceSorterFactory.createResolvedSorter().sort(factories, classInstances);
         instanceSorterFactory.createSuppliedSorter().sort(methodParam, classInstances);

@@ -22,6 +22,7 @@ import com.googlecode.pinthura.factory.instantiator.injected.InjectedFactoryReso
 import com.googlecode.pinthura.factory.instantiator.injected.InjectedFactoryResolverImpl;
 import com.googlecode.pinthura.factory.instantiator.injected.InjectedFactoryValuesFactoryImpl;
 import com.googlecode.pinthura.factory.instantiator.injected.InjectedInstanceSorterFactoryImpl;
+import com.googlecode.pinthura.util.ArrayzImpl;
 import com.googlecode.pinthura.util.CreationBroker;
 
 public final class InjectedFactoryResolverBuilder {
@@ -37,6 +38,7 @@ public final class InjectedFactoryResolverBuilder {
         ClassInstanceFactoryImpl classInstanceFactory = new ClassInstanceFactoryImpl();
 
         return  new InjectedFactoryResolverImpl(new AnnotatedFactoryExtractorImpl(finder), classInstanceFactory,
-                new InjectedInstanceSorterFactoryImpl(classInstanceFactory, creationBroker), new InjectedFactoryValuesFactoryImpl());
+                new InjectedInstanceSorterFactoryImpl(classInstanceFactory, creationBroker),
+                new InjectedFactoryValuesFactoryImpl(new ArrayzImpl()));
     }
 }

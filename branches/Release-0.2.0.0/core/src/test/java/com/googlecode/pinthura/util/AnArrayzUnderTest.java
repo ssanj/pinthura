@@ -18,6 +18,7 @@ package com.googlecode.pinthura.util;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertThat;
 import org.junit.Test;
+import org.junit.Before;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,38 +27,45 @@ import java.util.Set;
 
 public final class AnArrayzUnderTest {
 
+    private Arrayz arrayz;
+
+    @Before
+    public void setup() {
+        arrayz = new ArrayzImpl();
+    }
+
     @Test
     public void shouldCreateAnArrayFromASingleObject() {
-        String[] array = Arrayz.fromObjects("one");
+        String[] array = arrayz.fromObjects("one");
         assertThat(array, equalTo(new String[] { "one" }));
     }
 
     @Test
     public void shouldCreateAnArrayFromMultipleObjects() {
-        Integer[] numbers = Arrayz.fromObjects(1, 2, 3, 4, 5, 6);
+        Integer[] numbers = arrayz.fromObjects(1, 2, 3, 4, 5, 6);
         assertThat(numbers, equalTo(new Integer[] {1, 2, 3, 4, 5, 6}));
     }
 
     @Test
     public void shouldReturnAnEmptyArrayIfNoObectsAreSupplied() {
-        assertThat(Arrayz.<String>fromObjects().length, equalTo(0));
+        assertThat(arrayz.<String>fromObjects().length, equalTo(0));
     }
 
     @Test
     public void shouldReturnAnArrayOfACollectionWithOneItem() {
         Set<Double> set = new HashSet<Double>();
         set.add(5.2d);
-        assertThat(Arrayz.fromCollection(set, Double.class), equalTo(new Double[] { 5.2 }));
+        assertThat(arrayz.fromCollection(set, Double.class), equalTo(new Double[] { 5.2 }));
     }
 
     @Test
     public void shouldReturnAnArrayOfAListWithMultipleItems() {
-        String[] words = Arrayz.fromCollection(Arrays.asList("what", "will", "this", "be"), String.class);
+        String[] words = arrayz.fromCollection(Arrays.asList("what", "will", "this", "be"), String.class);
         assertThat(words, equalTo(new String[] { "what", "will", "this", "be" }));
     }
 
     @Test
     public void shouldReturnAnEmptyArrayForAnEmptyList() {
-        assertThat(Arrayz.fromCollection(new ArrayList<Integer>(), Integer.class).length, equalTo(0));
+        assertThat(arrayz.fromCollection(new ArrayList<Integer>(), Integer.class).length, equalTo(0));
     }
 }

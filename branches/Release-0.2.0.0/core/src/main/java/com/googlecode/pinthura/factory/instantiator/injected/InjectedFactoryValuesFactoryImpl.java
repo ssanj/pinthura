@@ -16,10 +16,17 @@
 package com.googlecode.pinthura.factory.instantiator.injected;
 
 import com.googlecode.pinthura.factory.instantiator.ClassInstance;
+import com.googlecode.pinthura.util.Arrayz;
 
 public final class InjectedFactoryValuesFactoryImpl implements InjectedFactoryValuesFactory {
 
+    private Arrayz arrayz;
+
+    public InjectedFactoryValuesFactoryImpl(final Arrayz arrayz) {
+        this.arrayz = arrayz;
+    }
+
     public InjectedFactoryValues createInjectedFactoryValues(final ClassInstance[] classInstances) {
-        return new InjectedFactoryValuesImpl(classInstances);
+        return new InjectedFactoryValuesImpl(classInstances, arrayz);
     }
 }

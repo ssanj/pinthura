@@ -15,17 +15,20 @@
  */
 package com.googlecode.pinthura.factory.instantiator.builder;
 
-import com.googlecode.pinthura.factory.instantiator.AnnotationInstantiator;
-import com.googlecode.pinthura.factory.instantiator.AnnotatedClassExtractorImpl;
-import com.googlecode.pinthura.factory.instantiator.ConstructorLocatorImpl;
-import com.googlecode.pinthura.factory.instantiator.ConstructorInstantiatorImpl;
 import com.googlecode.pinthura.annotation.AnnotationFinderImpl;
+import com.googlecode.pinthura.factory.instantiator.AnnotatedClassExtractorImpl;
+import com.googlecode.pinthura.factory.instantiator.AnnotationInstantiator;
+import com.googlecode.pinthura.factory.instantiator.ConstructorInstantiatorImpl;
+import com.googlecode.pinthura.factory.instantiator.ConstructorLocatorImpl;
+import com.googlecode.pinthura.util.Arrayz;
+import com.googlecode.pinthura.util.ArrayzImpl;
 
 public final class AnnotationInstantiatorBuilder {
 
     public AnnotationInstantiator build() {
-        ConstructorLocatorImpl constructorLocator = new ConstructorLocatorImpl();
-        ConstructorInstantiatorImpl constructorInstantiator = new ConstructorInstantiatorImpl();
+        Arrayz arrayz = new ArrayzImpl();
+        ConstructorLocatorImpl constructorLocator = new ConstructorLocatorImpl(arrayz);
+        ConstructorInstantiatorImpl constructorInstantiator = new ConstructorInstantiatorImpl(arrayz);
 
         return new AnnotationInstantiator(new AnnotatedClassExtractorImpl(new AnnotationFinderImpl()), constructorLocator,
                 constructorInstantiator);

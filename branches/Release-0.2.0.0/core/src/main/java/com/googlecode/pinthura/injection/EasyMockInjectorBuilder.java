@@ -20,6 +20,8 @@ import com.googlecode.pinthura.reflection.FieldFinder;
 import com.googlecode.pinthura.reflection.FieldFinderImpl;
 import com.googlecode.pinthura.reflection.FieldSetter;
 import com.googlecode.pinthura.reflection.FieldSetterImpl;
+import com.googlecode.pinthura.util.ArrayzImpl;
+import com.googlecode.pinthura.util.Arrayz;
 
 @SuppressWarnings({"MethodReturnOfConcreteClass"})
 @SuppressionReason(SuppressionReason.Reason.BUILDER_PATTERN)
@@ -29,9 +31,11 @@ public final class EasyMockInjectorBuilder {
     private FieldSetter fieldSetter;
     private EasyMockWrapper easyMockWrapper;
     private MockConfigurer mockConfigurer;
+    private Arrayz arrayz;
 
     public EasyMockInjectorBuilder() {
-        fieldFinder = new FieldFinderImpl();
+        arrayz = new ArrayzImpl();
+        fieldFinder = new FieldFinderImpl(arrayz);
         fieldSetter = new FieldSetterImpl();
         easyMockWrapper = new EasyMockWrapperImpl();
         mockConfigurer = new MockPrefixMockConfigurer();
@@ -57,7 +61,12 @@ public final class EasyMockInjectorBuilder {
         return this;
     }
 
+    public EasyMockInjectorBuilder withArrayz(final Arrayz arrayz) {
+        this.arrayz = arrayz;
+        return this;
+    }
+
     public MockInjector build() {
-        return new EasyMockInjectorImpl(mockConfigurer, fieldFinder, fieldSetter, easyMockWrapper);
+        return new EasyMockInjectorImpl(mockConfigurer, fieldFinder, fieldSetter, easyMockWrapper, arrayz);
     }
 }

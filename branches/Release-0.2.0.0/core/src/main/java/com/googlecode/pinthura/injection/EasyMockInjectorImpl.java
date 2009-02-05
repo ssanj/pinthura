@@ -31,13 +31,15 @@ public final class EasyMockInjectorImpl implements MockInjector {
     private final FieldFinder fieldFinder;
     private final FieldSetter fieldSetter;
     private final EasyMockWrapper easyMockWrapper;
+    private final Arrayz arrayz;
 
-    public EasyMockInjectorImpl(final MockConfigurer mockConfigurer, final FieldFinder fieldFinder,
-                            final FieldSetter fieldSetter, final EasyMockWrapper easyMockWrapper) {
+    public EasyMockInjectorImpl(final MockConfigurer mockConfigurer, final FieldFinder fieldFinder, final FieldSetter fieldSetter,
+                                final EasyMockWrapper easyMockWrapper, final Arrayz arrayz) {
         this.mockConfigurer = mockConfigurer;
         this.fieldFinder = fieldFinder;
         this.fieldSetter = fieldSetter;
         this.easyMockWrapper = easyMockWrapper;
+        this.arrayz = arrayz;
     }
 
     @SuppressWarnings({"unchecked"})
@@ -60,7 +62,7 @@ public final class EasyMockInjectorImpl implements MockInjector {
     }
 
     private List<FieldBoundary<?>> filterMockControl(final List<FieldBoundary<?>> fieldsByPrefix, final String mockControlName) {
-        return Arrayz.filter(fieldsByPrefix, new RemoveMockControlFromPrefixListFilter(mockControlName));
+        return arrayz.filter(fieldsByPrefix, new RemoveMockControlFromPrefixListFilter(mockControlName));
     }
 
     private class RemoveMockControlFromPrefixListFilter implements ItemFilter<FieldBoundary<?>> {
