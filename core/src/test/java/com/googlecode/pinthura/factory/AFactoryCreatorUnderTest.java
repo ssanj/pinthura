@@ -15,65 +15,42 @@
  */
 package com.googlecode.pinthura.factory;
 
-import com.googlecode.pinthura.data.ShapeFactory;
 import com.googlecode.pinthura.data.UrlBoundaryFactory;
-import com.googlecode.pinthura.util.CreationBroker;
-import org.easymock.EasyMock;
-import org.easymock.IMocksControl;
-import static org.hamcrest.core.IsEqual.equalTo;
-import org.hamcrest.core.IsNull;
-import org.hamcrest.core.IsSame;
-import static org.junit.Assert.assertThat;
+import com.googlecode.pinthura.io.FileReaderFactory;
+import com.googlecode.pinthura.util.builder.RandomDataChooserBuilder;
+import com.googlecode.pinthura.annotation.SuppressionReason;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Proxy;
-
 public final class AFactoryCreatorUnderTest {
 
-    private final IMocksControl mockControl = EasyMock.createControl();
-    private InvocationHandler mockInvocationHandler;
-    private CreationBroker mockCreationBroker;
+    private Class<?> randomFactoryClass;
+    private AFactoryCreatorIncubator incubator;
 
     @Before
+    @SuppressWarnings("unchecked")
+    @SuppressionReason(SuppressionReason.Reason.CANT_INFER_GENERICS)
     public void setup() {
-        mockInvocationHandler = mockControl.createMock(InvocationHandler.class);
-        mockCreationBroker = mockControl.createMock(CreationBroker.class);
+        randomFactoryClass = new RandomDataChooserBuilder().build().chooseOneOf(
+                                UrlBoundaryFactory.class,
+                                InvocationFactory.class,
+                                FileReaderFactory.class);
+        incubator = new AFactoryCreatorIncubator();
     }
 
     @Test
     public void shouldCreateAnInstanceForAGivenFactoryInterface() {
-        expectCreateFactory(UrlBoundaryFactory.class);
-    }
-
-    @Test
-    public void shouldCreateAnInstanceForAnotherFactoryInterface() {
-        expectCreateFactory(InvocationFactory.class);
+        incubator.supplyParameterFactoryClass(randomFactoryClass).
+                    performCreate().
+                    observe().expectedInstance().isCreated().
+                    done();
     }
 
     @Test
     public void shouldCacheCreatedInstances() {
-        mockCreationBroker.setInstance(EasyMock.eq(FactoryCreator.class), EasyMock.isA(FactoryCreatorImpl.class));
-        mockControl.replay();
-
-        FactoryCreator fc = new FactoryCreatorImpl(mockInvocationHandler, mockCreationBroker);
-        assertThat(fc.create(ShapeFactory.class) == fc.create(ShapeFactory.class), equalTo(true));
-
-        mockControl.verify();
-    }
-
-    private <T> void expectCreateFactory(final Class<T> factoryClass) {
-        mockCreationBroker.setInstance(EasyMock.eq(FactoryCreator.class), EasyMock.isA(FactoryCreatorImpl.class));
-        mockControl.replay();
-
-        FactoryCreator fc = new FactoryCreatorImpl(mockInvocationHandler, mockCreationBroker);
-        T proxy = fc.create(factoryClass);
-
-        assertThat(proxy, IsNull.notNullValue());
-        assertThat(Proxy.isProxyClass(proxy.getClass()), equalTo(true));
-        assertThat(Proxy.getInvocationHandler(proxy), IsSame.sameInstance(mockInvocationHandler));
-
-        mockControl.verify();
+        incubator.supplyParameterFactoryClass(randomFactoryClass).
+                    performCreate().
+                    observe().expectedInstance().isCached().
+                    done();        
     }
 }
