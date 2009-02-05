@@ -26,10 +26,9 @@ import java.util.Map;
  * Creates a dynamic instance of a supplied factory interface. Also caches these instances so that a second call to
  * create the same factory interface returns the cached instance. Factories should be thread-safe for this reason.
  *
- * A <code>CreationBroker</code> registers an instance of this class against its <code>FactoryCreator</code> interface.
+ * A <code>CreationBroker</code> registers an instance of this class against the <code>FactoryCreator</code> interface.
  * This allows other classes that require access to this instance to retrieve it from the <code>CreationBroker</code>.
  */
-//TODO: Write some exceptional tests.
 public final class FactoryCreatorImpl implements FactoryCreator {
 
     private final InvocationHandler invocationHandler;

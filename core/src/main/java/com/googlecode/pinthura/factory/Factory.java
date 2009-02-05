@@ -20,10 +20,22 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+/**
+ * Annotation used for dynamic factory injection.
+ */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Factory {
 
+    /**
+     * The factory <code>Class</code>. to use.
+     * @return The factory <code>Class</code>. to use.
+     */
     Class<?> factoryClass();
+
+    /**
+     * The index of this parameter on the target objects constructor.
+     * @return The index of this parameter on the target object's constructor.
+     */
     int index();
 }

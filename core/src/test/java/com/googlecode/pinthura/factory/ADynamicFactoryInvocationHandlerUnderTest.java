@@ -48,7 +48,6 @@ public final class ADynamicFactoryInvocationHandlerUnderTest {
         handler = new DynamicFactoryInvocationHandler(mockInstanceCreator, mockMethodParamFactory);
     }
 
-
     @Test
     public void shouldReturnAnInstanceOfTheRequestedType() throws Throwable {
         UrlBoundary expectedResult = new UrlBoundaryImpl(URL1);

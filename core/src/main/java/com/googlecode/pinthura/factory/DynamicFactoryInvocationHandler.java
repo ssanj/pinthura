@@ -18,16 +18,35 @@ package com.googlecode.pinthura.factory;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
+/**
+ * Creates a dynamic instance of the <code>Class</code> returned by the <code>Method</code> supplied.
+ */
+//TODO: should this be in an internal package?
 public final class DynamicFactoryInvocationHandler implements InvocationHandler {
 
     private final InstanceCreator instanceCreators;
     private final MethodParamFactory methodParamFactory;
 
+
+    /**
+     * Constructor.
+     * @param instanceCreators Strategy of instance creators.
+     * @param methodParamFactory Factory that creates <code>MethodParam</code> objects.
+     */
     public DynamicFactoryInvocationHandler(final InstanceCreator instanceCreators, final MethodParamFactory methodParamFactory) {
         this.instanceCreators = instanceCreators;
         this.methodParamFactory = methodParamFactory;
     }
 
+    /**
+     * Creates an instance of the return type exposed by the supplied <code>Method</code>.
+     * @param proxy The proxy for the wrapped object.
+     * @param method The <code>Method</code> called on the proxy.
+     * @param args The arguments supplied to the <code>Method</code>.
+     * @return An instance of the type returned by the <code>Method</code>.
+     * @throws InstanceCreationException If an instance can't be created for a type.
+     * @throws Throwable If an other exception occurs.
+     */
     public Object invoke(final Object proxy, final Method method, final Object[] args) throws Throwable {
         return instanceCreators.createInstance(methodParamFactory.create(method, args));
     }
