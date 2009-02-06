@@ -37,19 +37,11 @@ public final class ASuppliedFactorySorterIncubator {
         randomInstance = new RandomDataChooserBuilder().build().chooseOneOf("testing", 1, 2.9, new UrlBoundaryImpl());
     }
 
-    public ASuppliedFactorySorterIncubator expect() {
-        return this;
-    }
-
     public ASuppliedFactorySorterIncubator supplyClassInstances() {
         return this;
     }
 
-    public ASuppliedFactorySorterIncubator withVacantIndex() {
-        return this;
-    }
-
-    public ASuppliedFactorySorterIncubator inTheMiddle() {
+    public ASuppliedFactorySorterIncubator supplyVacantMiddleIndex() {
         mockInstance1 = mockControl.createMock(ClassInstance.class);
         mockInstance2 = mockControl.createMock(ClassInstance.class);
         classInstances[0] = mockInstance1;
@@ -86,6 +78,11 @@ public final class ASuppliedFactorySorterIncubator {
     }
 
     public ASuppliedFactorySorterIncubator done() {
+        mockControl.verify();
+        return this;
+    }
+
+    public ASuppliedFactorySorterIncubator observe() {
         mockControl.verify();
         return this;
     }
