@@ -22,8 +22,6 @@ import com.googlecode.pinthura.data.Square;
 import com.googlecode.pinthura.factory.MethodParam;
 import com.googlecode.pinthura.factory.instantiator.ClassInstance;
 import com.googlecode.pinthura.factory.instantiator.ClassInstanceFactory;
-import com.googlecode.pinthura.util.Arrayz;
-import com.googlecode.pinthura.util.ArrayzImpl;
 import org.easymock.EasyMock;
 import org.easymock.IMocksControl;
 import static org.hamcrest.core.IsSame.sameInstance;
@@ -42,13 +40,11 @@ public final class ASuppliedFactorySorterUnderTest {
     private ClassInstanceFactory mockClassInstanceFactory;
     private SuppliedFactorySorter sorter;
     private MethodParam mockMethodParam;
-    private Arrayz arrayz;
 
     @Before
     public void setup() {
         mockClassInstanceFactory = mockControl.createMock(ClassInstanceFactory.class);
         mockMethodParam = mockControl.createMock(MethodParam.class);
-        arrayz = new ArrayzImpl();
 
         sorter = new SuppliedFactorySorterImpl(mockClassInstanceFactory);
     }
