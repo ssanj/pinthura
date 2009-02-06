@@ -15,32 +15,37 @@
  */
 package com.googlecode.pinthura.factory.instantiator;
 
+import com.googlecode.pinthura.factory.Factory;
+import com.googlecode.pinthura.factory.InjectedFactory;
+import org.junit.Before;
+import org.junit.Test;
+
 public final class AnAnnotatedFactoryExtractorUnderTest {
 
-//    private AnnotatedFactoryExtractorTestBehaviourHandler behaviour;
-//
-//    @Before
-//    public void setup() {
-//        behaviour = new AnnotatedFactoryExtractorTestBehaviourHandler();
-//    }
-//
-//    @Test
-//    public void shouldExtractFactoryInjectedFactoryAnnotations() {
-//        behaviour.createFactory().createFactory().replay();
-//
-//        InjectedFactory result = behaviour.extract();
-//        behaviour.expectAnnotatedFactoriesAreReturned(result);
-//
-//        behaviour.verify();
-//    }
-//
-//    @Test
-//    public void shouldExtractFactoryAnnotations() {
-//        behaviour.createFactory().replay();
-//
-//        Factory[] factories = behaviour.extractFactories();
-//        behaviour.expectAnnotatedFactoriesAreReturned(factories);
-//
-//        behaviour.verify();
-//    }
+    private AnnotatedFactoryExtractorTestBehaviourHandler behaviour;
+
+    @Before
+    public void setup() {
+        behaviour = new AnnotatedFactoryExtractorTestBehaviourHandler();
+    }
+
+    @Test
+    public void shouldExtractFactoryInjectedFactoryAnnotations() {
+        behaviour.createFactory().createFactory().replay();
+
+        InjectedFactory result = behaviour.extract();
+        behaviour.expectAnnotatedFactoriesAreReturned(result);
+
+        behaviour.verify();
+    }
+
+    @Test
+    public void shouldExtractFactoryAnnotations() {
+        behaviour.createFactory().replay();
+
+        Factory[] factories = behaviour.extractFactories();
+        behaviour.expectAnnotatedFactoriesAreReturned(factories);
+
+        behaviour.verify();
+    }
 }
