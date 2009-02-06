@@ -15,46 +15,52 @@
  */
 package com.googlecode.pinthura.factory.instantiator.injected;
 
+import com.googlecode.pinthura.data.ShapeFactory;
+import com.googlecode.pinthura.data.UrlBoundaryFactory;
+import com.googlecode.pinthura.factory.instantiator.ClassInstance;
+import org.junit.Before;
+import org.junit.Test;
+
 public final class AResolvedFactorySorterUnderTest {
 
-//    private ResolvedFactorySorterIncubator incubator;
-//
-//    @Before
-//    public void setup() {
-//        incubator = new ResolvedFactorySorterIncubator();
-//    }
-//
-//    @Test
-//    public void shouldSortFactoriesInTheMiddle() {
-//        expectSortedInstances(1, 3, 5);
-//    }
-//
-//    @Test
-//    public void shouldSortFactoriesAtTheEdges() {
-//        expectSortedInstances(0, 4, 5);
-//    }
-//
-//    @Test
-//    public void shouldSortFactoriesWhenThereAreNoGaps() {
-//        expectSortedInstances(0, 1, 2);
-//    }
-//
-//    @Test(expected = ArrayIndexOutOfBoundsException.class)
-//    public void shouldThrowExceptionIfTheIndecesAreOutOfBounds() {
-//        expectSortedInstances(1, 11, 2);
-//    }
-//
-//    @SuppressWarnings({ "unchecked" })
-//    private void expectSortedInstances(final int firstIndex, final int secondIndex, final int noOfParameters) {
-//        ClassInstance[] classInstances = new ClassInstance[noOfParameters];
-//
-//        incubator.supplyFactory(ShapeFactory.class).forIndex(firstIndex)
-//                    .supplyFactory(UrlBoundaryFactory.class).forIndex(secondIndex)
-//                    .supplyParameterClassInstances(classInstances)
-//                    .performSort()
-//                    .observe().instanceAt(firstIndex).is().classInstance(classInstances[firstIndex])
-//                    .observe().instanceAt(secondIndex).is().classInstance(classInstances[secondIndex])
-//                    .observe().other().instances().are().untouched()
-//                    .done();
-//    }
+    private ResolvedFactorySorterIncubator incubator;
+
+    @Before
+    public void setup() {
+        incubator = new ResolvedFactorySorterIncubator();
+    }
+
+    @Test
+    public void shouldSortFactoriesInTheMiddle() {
+        expectSortedInstances(1, 3, 5);
+    }
+
+    @Test
+    public void shouldSortFactoriesAtTheEdges() {
+        expectSortedInstances(0, 4, 5);
+    }
+
+    @Test
+    public void shouldSortFactoriesWhenThereAreNoGaps() {
+        expectSortedInstances(0, 1, 2);
+    }
+
+    @Test(expected = ArrayIndexOutOfBoundsException.class)
+    public void shouldThrowExceptionIfTheIndecesAreOutOfBounds() {
+        expectSortedInstances(1, 11, 2);
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    private void expectSortedInstances(final int firstIndex, final int secondIndex, final int noOfParameters) {
+        ClassInstance[] classInstances = new ClassInstance[noOfParameters];
+
+        incubator.supplyFactory(ShapeFactory.class).forIndex(firstIndex)
+                    .supplyFactory(UrlBoundaryFactory.class).forIndex(secondIndex)
+                    .supplyParameterClassInstances(classInstances)
+                    .performSort()
+                    .observe().instanceAt(firstIndex).is().classInstance(classInstances[firstIndex])
+                    .observe().instanceAt(secondIndex).is().classInstance(classInstances[secondIndex])
+                    .observe().other().instances().are().untouched()
+                    .done();
+    }
 }
