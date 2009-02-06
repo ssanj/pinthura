@@ -34,17 +34,17 @@ import java.util.Arrays;
 //TODO: Move to TestBehaviourHandler
 public final class ASuppliedFactorySorterUnderTest {
 
-    private static final String STRING_INSTANCE = "testing";
-
     private final IMocksControl mockControl = EasyMock.createControl();
     private ClassInstanceFactory mockClassInstanceFactory;
     private SuppliedFactorySorter sorter;
     private MethodParam mockMethodParam;
+    private ASuppliedFactorySorterIncubator incubator;
 
     @Before
     public void setup() {
         mockClassInstanceFactory = mockControl.createMock(ClassInstanceFactory.class);
         mockMethodParam = mockControl.createMock(MethodParam.class);
+        incubator = new ASuppliedFactorySorterIncubator();
 
         sorter = new SuppliedFactorySorterImpl(mockClassInstanceFactory);
     }
@@ -52,28 +52,11 @@ public final class ASuppliedFactorySorterUnderTest {
     @SuppressWarnings({ "unchecked" })
     @Test
     public void shouldSortInstancesIntoASingleGap() {
-        //CHECKSTYLE_OFF
-        ClassInstance[] classInstances = new ClassInstance[3];
-        //CHECKSTYLE_ON
-        ClassInstance mockInstance1 = mockControl.createMock(ClassInstance.class);
-        ClassInstance mockInstance2 = mockControl.createMock(ClassInstance.class);
-        classInstances[0] = mockInstance1;
-        classInstances[2] = mockInstance2;
-        ClassBoundary mockClassBoundary = mockControl.createMock(ClassBoundary.class);
-        EasyMock.expect(mockMethodParam.getParameterTypes());
-        EasyMock.expectLastCall().andReturn(Arrays.asList(mockClassBoundary));
-        EasyMock.expect(mockMethodParam.getArguments());
-        EasyMock.expectLastCall().andReturn(Arrays.asList(STRING_INSTANCE));
-        ClassInstance mockClassInstance = mockControl.createMock(ClassInstance.class);
-        EasyMock.expect(mockClassInstanceFactory.createClassInstance(mockClassBoundary, STRING_INSTANCE)).andReturn(mockClassInstance);
-        mockControl.replay();
-
-        sorter.sort(mockMethodParam, classInstances);
-        assertThat(classInstances[0], sameInstance(mockInstance1));
-        assertThat(classInstances[1], sameInstance(mockClassInstance));
-        assertThat(classInstances[2], sameInstance(mockInstance2));
-
-        mockControl.verify();
+        incubator.supplyClassInstances().
+                supplyVacantMiddleIndex().
+                performSort().
+                observe().middleIndex().isFilled().
+                done();
     }
 
     @SuppressWarnings({ "unchecked" })
