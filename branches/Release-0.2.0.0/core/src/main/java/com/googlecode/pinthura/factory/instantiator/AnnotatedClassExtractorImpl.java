@@ -24,10 +24,12 @@ import com.googlecode.pinthura.factory.MethodParam;
 public final class AnnotatedClassExtractorImpl implements AnnotatedClassExtractor {
 
     private final AnnotationFinder annotationFinder;
-    private final ClassBoundary<Implementation> annotatation = new ClassBoundaryImpl<Implementation>(Implementation.class);
+    private final ClassBoundary<Implementation> annotatation;
 
     public AnnotatedClassExtractorImpl(final AnnotationFinder annotationFinder) {
         this.annotationFinder = annotationFinder;
+        //TODO: Pass in a ClassBoundaryFactory.
+        annotatation = new ClassBoundaryImpl<Implementation>(Implementation.class);
     }
 
     @SuppressWarnings({ "unchecked" })
