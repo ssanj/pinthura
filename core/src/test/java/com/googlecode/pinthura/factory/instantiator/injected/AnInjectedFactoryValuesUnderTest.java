@@ -15,50 +15,76 @@
  */
 package com.googlecode.pinthura.factory.instantiator.injected;
 
+import com.googlecode.pinthura.annotation.SuppressionReason;
+import com.googlecode.pinthura.boundary.java.lang.ClassBoundary;
+import com.googlecode.pinthura.data.Shape;
+import com.googlecode.pinthura.data.UrlBoundary;
+import com.googlecode.pinthura.factory.instantiator.ClassInstance;
+import com.googlecode.pinthura.util.Arrayz;
+import org.easymock.EasyMock;
+import org.easymock.IMocksControl;
+import static org.hamcrest.core.IsEqual.equalTo;
+import static org.junit.Assert.assertThat;
+import org.junit.Before;
+import org.junit.Test;
+
+import java.util.Arrays;
+import java.util.List;
+
 public final class AnInjectedFactoryValuesUnderTest {
 
-//    private final IMocksControl mockControl = EasyMock.createControl();
-//    private ClassInstance mockClassInstance1;
-//    private ClassInstance mockClassInstance2;
-//    private ClassInstance[] classInstances;
-//
-//    @Before
-//    public void setup() {
-//        mockClassInstance1 = mockControl.createMock(ClassInstance.class);
-//        mockClassInstance2 = mockControl.createMock(ClassInstance.class);
-//
-//
-//        classInstances = ArrayzImpl.fromObjects(mockClassInstance1,  mockClassInstance2);
-//    }
-//
-//    @SuppressWarnings({ "unchecked" })
-//    @Test
-//    public void shouldReturnConstructorTypes() {
-//        ClassBoundary mockClassBoundary1 = mockControl.createMock(ClassBoundary.class);
-//        ClassBoundary mockClassBoundary2 = mockControl.createMock(ClassBoundary.class);
-//        EasyMock.expect(mockClassInstance1.getClazz()).andReturn(mockClassBoundary1);
-//        EasyMock.expect(mockClassInstance2.getClazz()).andReturn(mockClassBoundary2);
-//        mockControl.replay();
-//
-//        InjectedFactoryValues values = new InjectedFactoryValuesImpl(classInstances, arrayz);
-//        ClassBoundary<?>[] result = values.getConstructorTypes();
-//        assertThat(result, equalTo(ArrayzImpl.fromObjects(mockClassBoundary1, mockClassBoundary2)));
-//
-//        mockControl.verify();
-//    }
-//
-//    @Test
-//    public void shouldReturnConstructorArgs() {
-//        UrlBoundary mockUrlBoundary = mockControl.createMock(UrlBoundary.class);
-//        Shape mockShape = mockControl.createMock(Shape.class);
-//        EasyMock.expect(mockClassInstance1.getInstance()).andReturn(mockUrlBoundary);
-//        EasyMock.expect(mockClassInstance2.getInstance()).andReturn(mockShape);
-//        mockControl.replay();
-//
-//        InjectedFactoryValues values = new InjectedFactoryValuesImpl(classInstances, arrayz);
-//        Object[] result = values.getConstructorArguments();
-//        assertThat(result, equalTo(ArrayzImpl.fromObjects(mockUrlBoundary, mockShape)));
-//
-//        mockControl.verify();
-//    }
+    private final IMocksControl mockControl = EasyMock.createControl();
+    private ClassInstance mockClassInstance1;
+    private ClassInstance mockClassInstance2;
+    private ClassInstance[] classInstances;
+    private Arrayz mockArrayz;
+
+    @Before
+    public void setup() {
+        mockClassInstance1 = mockControl.createMock(ClassInstance.class);
+        mockClassInstance2 = mockControl.createMock(ClassInstance.class);
+        mockArrayz = mockControl.createMock(Arrayz.class);
+
+        classInstances = new ClassInstance[] {mockClassInstance1,  mockClassInstance2};
+    }
+
+    @SuppressWarnings("unchecked")
+    @SuppressionReason(SuppressionReason.Reason.CANT_INFER_GENERICS_ON_MOCKS)
+    @Test
+    public void shouldReturnConstructorTypes() {
+        ClassBoundary mockClassBoundary1 = mockControl.createMock(ClassBoundary.class);
+        ClassBoundary mockClassBoundary2 = mockControl.createMock(ClassBoundary.class);
+        EasyMock.expect(mockClassInstance1.getClazz()).andReturn(mockClassBoundary1);
+        EasyMock.expect(mockClassInstance2.getClazz()).andReturn(mockClassBoundary2);
+        ClassBoundary[] classes = {mockClassBoundary1, mockClassBoundary2};
+        List<ClassBoundary> classBoundaryList = Arrays.asList(classes);
+        EasyMock.expect(mockArrayz.fromCollection(EasyMock.eq(classBoundaryList), EasyMock.eq(ClassBoundary.class))).
+                    andReturn(classes);
+        mockControl.replay();
+
+        InjectedFactoryValues values = new InjectedFactoryValuesImpl(classInstances, mockArrayz);
+        ClassBoundary<?>[] result = values.getConstructorTypes();
+        assertThat(result, equalTo(classes));
+
+        mockControl.verify();
+    }
+
+    @Test
+    public void shouldReturnConstructorArgs() {
+        UrlBoundary mockUrlBoundary = mockControl.createMock(UrlBoundary.class);
+        Shape mockShape = mockControl.createMock(Shape.class);
+        EasyMock.expect(mockClassInstance1.getInstance()).andReturn(mockUrlBoundary);
+        EasyMock.expect(mockClassInstance2.getInstance()).andReturn(mockShape);
+        List<Object> instanceList = Arrays.asList(mockUrlBoundary, mockShape);
+        Object[] instanceArray = {mockUrlBoundary, mockShape};
+        EasyMock.expect(mockArrayz.fromCollection(EasyMock.eq(instanceList), EasyMock.eq(Object.class))).
+                andReturn(instanceArray);
+        mockControl.replay();
+
+        InjectedFactoryValues values = new InjectedFactoryValuesImpl(classInstances, mockArrayz);
+        Object[] result = values.getConstructorArguments();
+        assertThat(result, equalTo(instanceArray));
+
+        mockControl.verify();
+    }
 }
