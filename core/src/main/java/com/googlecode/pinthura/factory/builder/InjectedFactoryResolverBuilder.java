@@ -16,7 +16,10 @@
 package com.googlecode.pinthura.factory.builder;
 
 import com.googlecode.pinthura.annotation.AnnotationFinderImpl;
+import com.googlecode.pinthura.boundary.java.lang.ClassBoundaryFactoryImpl;
+import com.googlecode.pinthura.boundary.java.lang.ClassBoundaryFactory;
 import com.googlecode.pinthura.factory.instantiator.AnnotatedFactoryExtractorImpl;
+import com.googlecode.pinthura.factory.instantiator.ClassInstanceFactory;
 import com.googlecode.pinthura.factory.instantiator.ClassInstanceFactoryImpl;
 import com.googlecode.pinthura.factory.instantiator.injected.InjectedFactoryResolver;
 import com.googlecode.pinthura.factory.instantiator.injected.InjectedFactoryResolverImpl;
@@ -34,10 +37,12 @@ public final class InjectedFactoryResolverBuilder {
     }
 
     public InjectedFactoryResolver build() {
+        //TODO: use the factoryCreator for this.
         AnnotationFinderImpl finder = new AnnotationFinderImpl();
-        ClassInstanceFactoryImpl classInstanceFactory = new ClassInstanceFactoryImpl();
+        ClassInstanceFactory classInstanceFactory = new ClassInstanceFactoryImpl();
+        ClassBoundaryFactory factory = new ClassBoundaryFactoryImpl();
 
-        return  new InjectedFactoryResolverImpl(new AnnotatedFactoryExtractorImpl(finder), classInstanceFactory,
+        return  new InjectedFactoryResolverImpl(new AnnotatedFactoryExtractorImpl(finder, factory), classInstanceFactory,
                 new InjectedInstanceSorterFactoryImpl(classInstanceFactory, creationBroker),
                 new InjectedFactoryValuesFactoryImpl(new ArrayzImpl()));
     }

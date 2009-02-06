@@ -15,37 +15,35 @@
  */
 package com.googlecode.pinthura.factory.instantiator;
 
-import com.googlecode.pinthura.factory.Factory;
-import com.googlecode.pinthura.factory.InjectedFactory;
 import org.junit.Before;
 import org.junit.Test;
 
 public final class AnAnnotatedFactoryExtractorUnderTest {
 
-    private AnnotatedFactoryExtractorTestBehaviourHandler behaviour;
+    private AnAnnotatedFactoryExtractorIncubator incubator;
 
     @Before
     public void setup() {
-        behaviour = new AnnotatedFactoryExtractorTestBehaviourHandler();
+        incubator = new AnAnnotatedFactoryExtractorIncubator();
     }
 
     @Test
     public void shouldExtractFactoryInjectedFactoryAnnotations() {
-        behaviour.createFactory().createFactory().replay();
-
-        InjectedFactory result = behaviour.extract();
-        behaviour.expectAnnotatedFactoriesAreReturned(result);
-
-        behaviour.verify();
+        incubator.supplyAFactory().
+                supplyAFactory().
+                supplyAFactory().
+                performExtract().
+                observe().injectedFactory().isReturned().
+                done();
     }
 
     @Test
     public void shouldExtractFactoryAnnotations() {
-        behaviour.createFactory().replay();
-
-        Factory[] factories = behaviour.extractFactories();
-        behaviour.expectAnnotatedFactoriesAreReturned(factories);
-
-        behaviour.verify();
+        incubator.supplyAFactory().
+                supplyAFactory().
+                performExtractFactories().
+                observe().factory().
+                isReturned().
+                done();
     }
 }
