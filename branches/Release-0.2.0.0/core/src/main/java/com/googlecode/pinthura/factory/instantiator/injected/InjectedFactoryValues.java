@@ -19,6 +19,9 @@ import com.googlecode.pinthura.boundary.java.lang.ClassBoundary;
 
 public interface InjectedFactoryValues {
 
+    //TODO: change this to List<ClassBoundary>
     ClassBoundary<?>[] getConstructorTypes();
+
+    //TODO: change this to List<Object>
     Object[] getConstructorArguments();
 }
