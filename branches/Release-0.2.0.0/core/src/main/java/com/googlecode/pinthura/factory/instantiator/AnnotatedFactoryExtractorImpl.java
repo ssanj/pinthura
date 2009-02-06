@@ -16,7 +16,7 @@
 package com.googlecode.pinthura.factory.instantiator;
 
 import com.googlecode.pinthura.annotation.AnnotationFinder;
-import com.googlecode.pinthura.boundary.java.lang.ClassBoundaryImpl;
+import com.googlecode.pinthura.boundary.java.lang.ClassBoundaryFactory;
 import com.googlecode.pinthura.factory.Factory;
 import com.googlecode.pinthura.factory.InjectedFactory;
 import com.googlecode.pinthura.factory.MethodParam;
@@ -24,13 +24,15 @@ import com.googlecode.pinthura.factory.MethodParam;
 public final class AnnotatedFactoryExtractorImpl implements AnnotatedFactoryExtractor {
 
     private final AnnotationFinder annotationFinder;
+    private final ClassBoundaryFactory classBoundaryFactory;
 
-    public AnnotatedFactoryExtractorImpl(final AnnotationFinder annotationFinder) {
+    public AnnotatedFactoryExtractorImpl(final AnnotationFinder annotationFinder, final ClassBoundaryFactory classBoundaryFactory) {
         this.annotationFinder = annotationFinder;
+        this.classBoundaryFactory = classBoundaryFactory;
     }
 
     public InjectedFactory extract(final MethodParam methodParam) {
-        return annotationFinder.find(methodParam.getMethod(), new ClassBoundaryImpl<InjectedFactory>(InjectedFactory.class));
+        return annotationFinder.find(methodParam.getMethod(), classBoundaryFactory.create(InjectedFactory.class));
     }
 
     public Factory[] extractFactories(final MethodParam methodParam) {
