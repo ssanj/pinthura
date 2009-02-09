@@ -7,7 +7,7 @@ import com.googlecode.pinthura.reflection.FieldFinder;
 import com.googlecode.pinthura.reflection.FieldSetter;
 import com.googlecode.pinthura.test.ExceptionAsserter;
 import com.googlecode.pinthura.test.ExceptionAsserterImpl;
-import com.googlecode.pinthura.util.Deux;
+import com.googlecode.pinthura.test.types.Deux;
 import org.easymock.EasyMock;
 import org.easymock.IMocksControl;
 
