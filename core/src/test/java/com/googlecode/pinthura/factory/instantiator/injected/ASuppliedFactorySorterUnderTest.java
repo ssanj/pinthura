@@ -15,13 +15,16 @@
  */
 package com.googlecode.pinthura.factory.instantiator.injected;
 
+import com.googlecode.pinthura.annotation.SuppressionReason;
 import org.junit.Before;
 import org.junit.Test;
 
 public final class ASuppliedFactorySorterUnderTest {
 
+    @SuppressWarnings({"InstanceVariableOfConcreteClass"})
+    @SuppressionReason(SuppressionReason.Reason.INCUBATOR)
     private ASuppliedFactorySorterIncubator incubator;
-    
+
     @Before
     public void setup() {
         incubator = new ASuppliedFactorySorterIncubator();
@@ -29,7 +32,7 @@ public final class ASuppliedFactorySorterUnderTest {
 
     @SuppressWarnings({ "unchecked" })
     @Test
-    public void shouldSortInstancesIntoASingleGap() {
+    public void shouldPlaceDynamicInstancesInTheMiddle() {
         //[*][][*]
         incubator.supplyClassInstaceArrayOfSize(3).
                 supplyInstance().atIndex(0).
@@ -43,7 +46,7 @@ public final class ASuppliedFactorySorterUnderTest {
 
     @SuppressWarnings({ "unchecked" })
     @Test
-    public void shouldSortInstancesAroundUsedSpaces() {
+    public void shouldPlaceDynamicInstancesAtTheEnds() {
         //[][][*][]
         incubator.supplyClassInstaceArrayOfSize(4).
                 supplyInstance().atIndex(2).
@@ -53,5 +56,16 @@ public final class ASuppliedFactorySorterUnderTest {
                 observe().index(2).isUnchanged().
                 observe().index(3).isCreated().dynamically().
                 done();
-    }    
+    }
+
+    @Test
+    public void shouldPlaceDynamicInstancesThroughout() {
+        //[][][]
+        incubator.supplyClassInstaceArrayOfSize(3).
+                performSort().
+                observe().index(0).isCreated().dynamically().
+                observe().index(1).isCreated().dynamically().
+                observe().index(2).isCreated().dynamically().
+                done();
+    }
 }
