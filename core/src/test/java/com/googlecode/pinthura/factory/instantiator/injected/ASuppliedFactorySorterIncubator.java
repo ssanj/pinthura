@@ -20,6 +20,8 @@ import java.lang.reflect.Proxy;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("MethodReturnOfConcreteClass")
+@SuppressionReason(SuppressionReason.Reason.INCUBATOR)
 public final class ASuppliedFactorySorterIncubator {
 
     private final IMocksControl mockControl;
@@ -62,7 +64,8 @@ public final class ASuppliedFactorySorterIncubator {
         ClassInstance mockClassInstance = mockControl.createMock(ClassInstance.class);
         ClassBoundary mockClassBoundary = mockControl.createMock(ClassBoundary.class);
         Object randomInstance = getRandomInstance();
-        classInstanceClassBoundaryInstanceList.add(new TresImpl<ClassInstance, ClassBoundary, Object>(mockClassInstance, mockClassBoundary, randomInstance));
+        classInstanceClassBoundaryInstanceList.add(new TresImpl<ClassInstance, ClassBoundary, Object>(mockClassInstance, mockClassBoundary,
+                randomInstance));
     }
 
     @SuppressWarnings("unchecked")
