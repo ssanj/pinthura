@@ -1,5 +1,6 @@
 package com.googlecode.pinthura.test;
 
+//TODO: update to use Deux.
 public interface ExceptionAsserter {
 
     /**

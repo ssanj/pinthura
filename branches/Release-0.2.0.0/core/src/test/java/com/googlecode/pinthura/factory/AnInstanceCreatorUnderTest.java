@@ -15,7 +15,10 @@
  */
 package com.googlecode.pinthura.factory;
 
+import com.googlecode.pinthura.data.SquareImpl;
+import com.googlecode.pinthura.data.UrlBoundaryImpl;
 import com.googlecode.pinthura.filter.FilterLink;
+import com.googlecode.pinthura.util.builder.RandomDataChooserBuilder;
 import org.easymock.EasyMock;
 import org.easymock.IMocksControl;
 import static org.hamcrest.core.IsEqual.equalTo;
@@ -25,34 +28,26 @@ import org.junit.Test;
 
 public final class AnInstanceCreatorUnderTest {
 
-    private static final String STRING_INSTANCE = "String instance!";
-    private static final int INTEGER_INSTANCE   = 100;
-
     private final IMocksControl mockControl = EasyMock.createControl();
     private FilterLink<MethodParam, Object> mockFilterLink;
     private MethodParam mockMethodParam;
     private InstanceCreator instanceCreator;
+    private Object createdInstance;
 
-    @SuppressWarnings({ "unchecked" })
+    @SuppressWarnings("unchecked")
     @Before
     public void setup() {
         mockMethodParam = mockControl.createMock(MethodParam.class);
         mockFilterLink = mockControl.createMock(FilterLink.class);
+        //TODO:Create a class that returns random objects.
+        createdInstance = new RandomDataChooserBuilder().build().
+                chooseOneOf("String instance!", new SquareImpl(4), new UrlBoundaryImpl(), 20);
 
         instanceCreator = new InstanceCreatorImpl(mockFilterLink);
     }
 
     @Test
     public void shouldCreateAnInstanceGivenAMethodParam() {
-        expectInstanceCreation(STRING_INSTANCE);
-    }
-
-    @Test
-    public void shouldCreateAnotherInstanceGivenAnotherMethodParam() {
-        expectInstanceCreation(INTEGER_INSTANCE);
-    }
-
-    private void expectInstanceCreation(final Object createdInstance) {
         EasyMock.expect(mockFilterLink.filter(mockMethodParam)).andReturn(createdInstance);
         mockControl.replay();
 
@@ -61,4 +56,5 @@ public final class AnInstanceCreatorUnderTest {
 
         mockControl.verify();
     }
+
 }
