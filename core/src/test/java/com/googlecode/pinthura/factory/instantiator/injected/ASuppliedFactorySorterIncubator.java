@@ -8,6 +8,7 @@ import com.googlecode.pinthura.factory.MethodParam;
 import com.googlecode.pinthura.factory.instantiator.ClassInstance;
 import com.googlecode.pinthura.factory.instantiator.ClassInstanceFactory;
 import com.googlecode.pinthura.factory.instantiator.ClassInstanceImpl;
+import com.googlecode.pinthura.test.types.Tres;
 import com.googlecode.pinthura.util.Deux;
 import com.googlecode.pinthura.util.RandomDataChooser;
 import com.googlecode.pinthura.util.builder.RandomDataChooserBuilder;
@@ -64,7 +65,7 @@ public final class ASuppliedFactorySorterIncubator {
         ClassInstance mockClassInstance = mockControl.createMock(ClassInstance.class);
         ClassBoundary mockClassBoundary = mockControl.createMock(ClassBoundary.class);
         Object randomInstance = getRandomInstance();
-        classInstanceClassBoundaryInstanceList.add(new TresImpl<ClassInstance, ClassBoundary, Object>(mockClassInstance, mockClassBoundary,
+        classInstanceClassBoundaryInstanceList.add(new Tres<ClassInstance, ClassBoundary, Object>(mockClassInstance, mockClassBoundary,
                 randomInstance));
     }
 
@@ -81,8 +82,8 @@ public final class ASuppliedFactorySorterIncubator {
         return this;
     }
 
-    @SuppressWarnings("unchecked")
-    @SuppressionReason(SuppressionReason.Reason.CANT_INFER_GENERICS_ON_MOCKS)
+    @SuppressWarnings({"unchecked", "MethodParameterOfConcreteClass"})
+    @SuppressionReason({SuppressionReason.Reason.CANT_INFER_GENERICS_ON_MOCKS, SuppressionReason.Reason.TEST_TYPE})
     private void expectMethodParam() {
         EasyMock.expect(mockMethodParam.getParameterTypes());
         EasyMock.expectLastCall().andReturn(getSuppliedClassBoundaries());
@@ -103,18 +104,21 @@ public final class ASuppliedFactorySorterIncubator {
     }
 
     @SuppressWarnings("unchecked")
+    @SuppressionReason(SuppressionReason.Reason.CANT_CREATE_GENERIC_ARRAY)
     private Deux<Class,Object> getRandomClassAndInstance() {
-       Deux[] instances = new Deux[] { new Deux.DeuxImpl<Class, Object>(String.class, "testing"),
-                                     new Deux.DeuxImpl<Class, Object>(Integer.class, 1),
-                                     new Deux.DeuxImpl<Class, Object>(Double.class, 2.9d),
-                                     new Deux.DeuxImpl<Class, Object>(UrlBoundary.class, new UrlBoundaryImpl())};
-        return (Deux<Class, Object>) randomDataChooser.chooseOneOf(instances);
+       Deux[] instances = new Deux[] { new Deux.DeuxImpl(String.class, "testing"),
+                                     new Deux.DeuxImpl(Integer.class, 1),
+                                     new Deux.DeuxImpl(Double.class, 2.9d),
+                                     new Deux.DeuxImpl(UrlBoundary.class, new UrlBoundaryImpl())};
+        return randomDataChooser.chooseOneOf(instances);
     }
 
     private Object getRandomInstance() {
         return randomDataChooser.chooseOneOf("testing", 1, 2.9d, new UrlBoundaryImpl());
     }
 
+    @SuppressWarnings("MethodParameterOfConcreteClass")
+    @SuppressionReason(SuppressionReason.Reason.TEST_TYPE)
     private List<Object> getSuppliedRandomInstance() {
         List<Object> instanceList = new ArrayList<Object>();
 
@@ -125,6 +129,8 @@ public final class ASuppliedFactorySorterIncubator {
         return instanceList;
     }
 
+    @SuppressWarnings("MethodParameterOfConcreteClass")
+    @SuppressionReason(SuppressionReason.Reason.TEST_TYPE)
     private List<ClassBoundary> getSuppliedClassBoundaries() {
         List<ClassBoundary> classBoundaries = new ArrayList<ClassBoundary>();
 
@@ -161,37 +167,5 @@ public final class ASuppliedFactorySorterIncubator {
 
     public ASuppliedFactorySorterIncubator dynamically() {
         return this;
-    }
-
-    private interface Tres<one, two ,three> {
-
-        one one();
-        two two();
-        three three();
-    }
-
-    private static final class TresImpl<one, two, three> implements Tres<one, two, three> {
-
-        private one one;
-        private two two;
-        private three three;
-
-        private TresImpl(final one one, final two two, final three three) {
-            this.one = one;
-            this.two = two;
-            this.three = three;
-        }
-
-        public one one() {
-            return one;
-        }
-
-        public two two() {
-            return two;
-        }
-
-        public three three() {
-            return three;
-        }
     }
 }
