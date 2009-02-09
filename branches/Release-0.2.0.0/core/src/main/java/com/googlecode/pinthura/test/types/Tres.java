@@ -64,4 +64,13 @@ public final class Tres<ONE, TWO, THREE> {
         result = 31 * result + three.hashCode();
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "Tres{" +
+                "one=" + one +
+                ", two=" + two +
+                ", three=" + three +
+                '}';
+    }
 }
