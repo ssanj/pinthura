@@ -15,18 +15,22 @@
  */
 package com.googlecode.pinthura.factory;
 
+import com.googlecode.pinthura.annotation.SuppressionReason;
 import com.googlecode.pinthura.boundary.java.lang.ClassBoundary;
 import com.googlecode.pinthura.boundary.java.lang.ClassBoundaryImpl;
 import com.googlecode.pinthura.data.UrlBoundaryImpl;
 import com.googlecode.pinthura.filter.FilterLink;
 import com.googlecode.pinthura.filter.MatchNotFoundException;
-import static junit.framework.Assert.fail;
+import com.googlecode.pinthura.test.ExceptionAsserter;
+import com.googlecode.pinthura.test.ExceptionAsserterImpl;
+import com.googlecode.pinthura.test.Exceptional;
 import org.easymock.EasyMock;
 import org.easymock.IMocksControl;
-import static org.hamcrest.core.IsEqual.equalTo;
-import static org.junit.Assert.assertThat;
 import org.junit.Before;
 import org.junit.Test;
+import static org.junit.Assert.fail;
+import static org.junit.Assert.assertThat;
+import static org.hamcrest.core.IsEqual.equalTo;
 
 public final class AnInstanceCreatorWithErrorsUnderTest {
 
@@ -34,12 +38,15 @@ public final class AnInstanceCreatorWithErrorsUnderTest {
     private FilterLink<MethodParam, Object> mockFilterLink;
     private MethodParam mockMethodParam;
     private InstanceCreator instanceCreator;
+    private ExceptionAsserter exceptionAsserter;
 
-    @SuppressWarnings({ "unchecked" })
+    @SuppressWarnings("unchecked")
+    @SuppressionReason(SuppressionReason.Reason.CANT_INFER_GENERICS_ON_MOCKS)
     @Before
     public void setup() {
         mockMethodParam = mockControl.createMock(MethodParam.class);
         mockFilterLink = mockControl.createMock(FilterLink.class);
+        exceptionAsserter = new ExceptionAsserterImpl();
 
         instanceCreator = new InstanceCreatorImpl(mockFilterLink);
     }
@@ -52,6 +59,7 @@ public final class AnInstanceCreatorWithErrorsUnderTest {
         EasyMock.expect(mockMethodParam.getReturnType()).andReturn(classBoundary);
         mockControl.replay();
 
+        //TODO: can't make this use ExceptionAsserter until we can match the message on the expected exception.
         try {
             instanceCreator.createInstance(mockMethodParam);
             fail();
@@ -62,13 +70,13 @@ public final class AnInstanceCreatorWithErrorsUnderTest {
         }
     }
 
-    @SuppressWarnings({ "ThrowableInstanceNeverThrown" })
-    @Test (expected = IllegalArgumentException.class)
+    @SuppressWarnings("ThrowableInstanceNeverThrown")
+    @Test
     public void shouldRethrowOtherExceptionsDirectly() {
         EasyMock.expect(mockFilterLink.filter(mockMethodParam)).andThrow(new IllegalArgumentException());
         mockControl.replay();
-
-        instanceCreator.createInstance(mockMethodParam);
+        
+        exceptionAsserter.runAndAssertException(IllegalArgumentException.class, new Exceptional() {
+            @Override public void run() { instanceCreator.createInstance(mockMethodParam) ;}});
     }
-
 }
