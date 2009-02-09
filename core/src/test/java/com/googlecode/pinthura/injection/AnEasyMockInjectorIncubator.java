@@ -16,6 +16,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@SuppressWarnings({"MethodReturnOfConcreteClass", "InstanceVariableOfConcreteClass", "MethodParameterOfConcreteClass"})
+@SuppressionReason({SuppressionReason.Reason.INCUBATOR, SuppressionReason.Reason.TEST_TYPE})
 public final class AnEasyMockInjectorIncubator {
 
     private static final String EXCEPTION_MESSAGE = "Test exception";
@@ -120,12 +122,12 @@ public final class AnEasyMockInjectorIncubator {
     }
 
     private Deux<FieldBoundary, ClassBoundary> createFieldClassBoundaryDeux() {
-        return new Deux.DeuxImpl<FieldBoundary, ClassBoundary>(mockControl.createMock(FieldBoundary.class),
+        return new Deux<FieldBoundary, ClassBoundary>(mockControl.createMock(FieldBoundary.class),
                 mockControl.createMock(ClassBoundary.class));
     }
 
     private Deux<FieldBoundary, IMocksControl> createFieldMockControlDeux() {
-        return new Deux.DeuxImpl<FieldBoundary, IMocksControl>(mockControl.createMock(FieldBoundary.class),
+        return new Deux<FieldBoundary, IMocksControl>(mockControl.createMock(FieldBoundary.class),
                 mockControl.createMock(IMocksControl.class));
     }
 

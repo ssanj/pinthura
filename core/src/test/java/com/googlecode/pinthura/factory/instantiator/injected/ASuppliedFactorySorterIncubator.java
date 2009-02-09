@@ -106,10 +106,10 @@ public final class ASuppliedFactorySorterIncubator {
     @SuppressWarnings("unchecked")
     @SuppressionReason(SuppressionReason.Reason.CANT_CREATE_GENERIC_ARRAY)
     private Deux<Class,Object> getRandomClassAndInstance() {
-       Deux[] instances = new Deux[] { new Deux.DeuxImpl(String.class, "testing"),
-                                     new Deux.DeuxImpl(Integer.class, 1),
-                                     new Deux.DeuxImpl(Double.class, 2.9d),
-                                     new Deux.DeuxImpl(UrlBoundary.class, new UrlBoundaryImpl())};
+       Deux[] instances = new Deux[] { new Deux(String.class, "testing"),
+                                     new Deux(Integer.class, 1),
+                                     new Deux(Double.class, 2.9d),
+                                     new Deux(UrlBoundary.class, new UrlBoundaryImpl())};
         return randomDataChooser.chooseOneOf(instances);
     }
 
@@ -129,6 +129,7 @@ public final class ASuppliedFactorySorterIncubator {
         return instanceList;
     }
 
+    //TODO: move this into a Collections type class for both Deux and Tres.
     @SuppressWarnings("MethodParameterOfConcreteClass")
     @SuppressionReason(SuppressionReason.Reason.TEST_TYPE)
     private List<ClassBoundary> getSuppliedClassBoundaries() {
