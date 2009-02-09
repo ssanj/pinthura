@@ -15,87 +15,43 @@
  */
 package com.googlecode.pinthura.factory.instantiator.injected;
 
-import com.googlecode.pinthura.boundary.java.lang.ClassBoundary;
-import com.googlecode.pinthura.data.Person;
-import com.googlecode.pinthura.data.Shape;
-import com.googlecode.pinthura.data.Square;
-import com.googlecode.pinthura.factory.MethodParam;
-import com.googlecode.pinthura.factory.instantiator.ClassInstance;
-import com.googlecode.pinthura.factory.instantiator.ClassInstanceFactory;
-import org.easymock.EasyMock;
-import org.easymock.IMocksControl;
-import static org.hamcrest.core.IsSame.sameInstance;
-import static org.junit.Assert.assertThat;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Arrays;
-
-//TODO: Move to TestBehaviourHandler
 public final class ASuppliedFactorySorterUnderTest {
 
-    private final IMocksControl mockControl = EasyMock.createControl();
-    private ClassInstanceFactory mockClassInstanceFactory;
-    private SuppliedFactorySorter sorter;
-    private MethodParam mockMethodParam;
     private ASuppliedFactorySorterIncubator incubator;
-
+    
     @Before
     public void setup() {
-        mockClassInstanceFactory = mockControl.createMock(ClassInstanceFactory.class);
-        mockMethodParam = mockControl.createMock(MethodParam.class);
         incubator = new ASuppliedFactorySorterIncubator();
-
-        sorter = new SuppliedFactorySorterImpl(mockClassInstanceFactory);
     }
 
     @SuppressWarnings({ "unchecked" })
     @Test
     public void shouldSortInstancesIntoASingleGap() {
-        incubator.supplyClassInstances().
-                supplyVacantMiddleIndex().
+        //[*][][*]
+        incubator.supplyClassInstaceArrayOfSize(3).
+                supplyInstance().atIndex(0).
+                supplyInstance().atIndex(2).
                 performSort().
-                observe().middleIndex().isFilled().
+                observe().index(0).isUnchanged().
+                observe().index(1).isCreated().dynamically().
+                observe().index(2).isUnchanged().
                 done();
     }
 
     @SuppressWarnings({ "unchecked" })
     @Test
     public void shouldSortInstancesAroundUsedSpaces() {
-        //CHECKSTYLE_OFF
-        ClassInstance[] classInstances = new ClassInstance[4];
-        //CHECKSTYLE_ON
-        ClassInstance mockUsedInstance = mockControl.createMock(ClassInstance.class);
-        classInstances[2] = mockUsedInstance;
-
-        ClassBoundary mockClassBoundary1 = mockControl.createMock(ClassBoundary.class);
-        ClassBoundary mockClassBoundary2 = mockControl.createMock(ClassBoundary.class);
-        ClassBoundary mockClassBoundary3 = mockControl.createMock(ClassBoundary.class);
-        EasyMock.expect(mockMethodParam.getParameterTypes());
-        EasyMock.expectLastCall().andReturn(Arrays.asList(mockClassBoundary1, mockClassBoundary2, mockClassBoundary3));
-
-        Person mockPerson = mockControl.createMock(Person.class);
-        Shape mockShape = mockControl.createMock(Shape.class);
-        Square mockSquare = mockControl.createMock(Square.class);
-        EasyMock.expect(mockMethodParam.getArguments());
-        EasyMock.expectLastCall().andReturn(Arrays.asList(mockPerson, mockShape, mockSquare));
-
-        ClassInstance mockClassInstance1 = mockControl.createMock(ClassInstance.class);
-        ClassInstance mockClassInstance2 = mockControl.createMock(ClassInstance.class);
-        ClassInstance mockClassInstance3 = mockControl.createMock(ClassInstance.class);
-        EasyMock.expect(mockClassInstanceFactory.createClassInstance(mockClassBoundary1, mockPerson)).andReturn(mockClassInstance1);
-        EasyMock.expect(mockClassInstanceFactory.createClassInstance(mockClassBoundary2, mockShape)).andReturn(mockClassInstance2);
-        EasyMock.expect(mockClassInstanceFactory.createClassInstance(mockClassBoundary3, mockSquare)).andReturn(mockClassInstance3);
-        mockControl.replay();
-
-        sorter.sort(mockMethodParam, classInstances);
-        assertThat(classInstances[0], sameInstance(mockClassInstance1));
-        assertThat(classInstances[1], sameInstance(mockClassInstance2));
-        assertThat(classInstances[2], sameInstance(mockUsedInstance));
-        //CHECKSTYLE_OFF
-        assertThat(classInstances[3], sameInstance(mockClassInstance3));
-        //CHECKSTYLE_ON
-
-        mockControl.verify();
-    }
+        //[][][*][]
+        incubator.supplyClassInstaceArrayOfSize(4).
+                supplyInstance().atIndex(2).
+                performSort().
+                observe().index(0).isCreated().dynamically().
+                observe().index(1).isCreated().dynamically().
+                observe().index(2).isUnchanged().
+                observe().index(3).isCreated().dynamically().
+                done();
+    }    
 }
