@@ -30,7 +30,7 @@ public final class ASuppliedFactorySorterUnderTest {
         incubator = new ASuppliedFactorySorterIncubator();
     }
 
-    @SuppressWarnings({ "unchecked" })
+    @SuppressWarnings("unchecked")
     @Test
     public void shouldPlaceDynamicInstancesInTheMiddle() {
         //[*][][*]
@@ -67,5 +67,22 @@ public final class ASuppliedFactorySorterUnderTest {
                 observe().index(1).isCreated().dynamically().
                 observe().index(2).isCreated().dynamically().
                 done();
+    }
+
+    @Test
+    public void shouldPlaceDynamicInstacesInTheGaps() {
+        //[*][][*][][*]
+        incubator.supplyClassInstaceArrayOfSize(5).
+                supplyInstance().atIndex(0).
+                supplyInstance().atIndex(2).
+                supplyInstance().atIndex(4).
+                performSort().
+                observe().index(0).isUnchanged().
+                observe().index(1).isCreated().dynamically().
+                observe().index(2).isUnchanged().
+                observe().index(3).isCreated().dynamically().
+                observe().index(4).isUnchanged().
+                done();
+
     }
 }
