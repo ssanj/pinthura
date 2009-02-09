@@ -50,13 +50,14 @@ Boundary Classes
 2. Should catch thrown exceptions and return custom runtime exceptions.
 3. Should only return other boundaries or primitives, Wrappers or Strings.
    eg. Constructor<T> getConstructor(Class<?>[] parameterTypes); ->
-       ConstructorBoundary<T> getConstructor(ClassBoundary<?>[] parameterTypes);     
+       ConstructorBoundary<T> getConstructor(ClassBoundary<?>[] parameterTypes);
 4. Should convert arrays to Lists. Eg. String[] -> List<String>. **Should this include incoming parameters?**
 5. Should not be used @ the api layer. Users should be allowed to use classes such as Class, Method etc. Classes
 that are used by this api should accept ClassBoundary, MethodBoundary etc.
 6. Should implement interfaces.
 7. Should be named: xxxBoundary. Eg. ClassBoundary.
 8. Should override equals and hashcode.
+9. Should not give access to the wrapped object unless absolutely necessary. Some exceptions are Class and Method.
 
 
 Checkin

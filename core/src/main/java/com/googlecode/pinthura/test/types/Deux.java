@@ -1,4 +1,4 @@
-package com.googlecode.pinthura.util;
+package com.googlecode.pinthura.test.types;
 
 import com.googlecode.pinthura.annotation.SuppressionReason;
 
