@@ -50,7 +50,9 @@ public @interface SuppressionReason {
     enum Reason {
                     BUILDER_PATTERN, /* The builder pattern is being used and hence instances will be returned from methods. */
                     TEST_VALUE, /* A test value is being used. */
+                    TEST_TYPE, /* A test type is being used. eg. Deux, Tres.*/
                     CANT_INFER_GENERICS, /* can't infer generics for one reason or another. use desc if you need to. */
+                    CANT_CREATE_GENERIC_ARRAY, /* can't create generic arrays.  */
                     CANT_INFER_GENERICS_ON_MOCKS, /* can't infer generic on mock objects. */
                     INCUBATOR, /* The incubator pattern is being used, instances of the class will be returned */
                     METHOD_CHAIN, /* Methods are chained so instances will be returned as in the builder or incubator patterns. */
