@@ -2,8 +2,6 @@ package com.googlecode.pinthura.test;
 
 public final class ExceptionInfoImpl implements ExceptionInfo {
 
-    private static final NullExceptionInfo NO_EXCEPTION = new NullExceptionInfo();
-    
     private final Class<? extends Throwable> exceptionClass;
     private final String message;
     private final ExceptionInfo nestedException;
@@ -52,21 +50,4 @@ public final class ExceptionInfoImpl implements ExceptionInfo {
         return nestedException;
     }
 
-    private static final class NullExceptionInfo implements ExceptionInfo {
-
-        @Override
-        public Class<? extends Throwable> getExceptionClass() {
-            throw new UnsupportedOperationException("getExceptionClass() called on NullExceptionInfo.");
-        }
-
-        @Override
-        public String getMessage() {
-            throw new UnsupportedOperationException("getMessage() called on NullExceptionInfo.");
-        }
-
-        @Override
-        public ExceptionInfo getNestedException() {
-            throw new UnsupportedOperationException("getNestedException() called on NullExceptionInfo.");
-        }
-    }
 }
