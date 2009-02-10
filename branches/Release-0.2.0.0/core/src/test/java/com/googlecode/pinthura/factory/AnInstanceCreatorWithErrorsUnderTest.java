@@ -23,14 +23,15 @@ import com.googlecode.pinthura.filter.FilterLink;
 import com.googlecode.pinthura.filter.MatchNotFoundException;
 import com.googlecode.pinthura.test.ExceptionAsserter;
 import com.googlecode.pinthura.test.ExceptionAsserterImpl;
+import com.googlecode.pinthura.test.ExceptionInfoImpl;
 import com.googlecode.pinthura.test.Exceptional;
 import org.easymock.EasyMock;
 import org.easymock.IMocksControl;
+import static org.hamcrest.core.IsEqual.equalTo;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.fail;
-import static org.junit.Assert.assertThat;
-import static org.hamcrest.core.IsEqual.equalTo;
 
 public final class AnInstanceCreatorWithErrorsUnderTest {
 
@@ -76,7 +77,7 @@ public final class AnInstanceCreatorWithErrorsUnderTest {
         EasyMock.expect(mockFilterLink.filter(mockMethodParam)).andThrow(new IllegalArgumentException());
         mockControl.replay();
         
-        exceptionAsserter.runAndAssertException(IllegalArgumentException.class, new Exceptional() {
+        exceptionAsserter.runAndAssertException(new ExceptionInfoImpl(IllegalArgumentException.class), new Exceptional() {
             @Override public void run() { instanceCreator.createInstance(mockMethodParam) ;}});
     }
 }

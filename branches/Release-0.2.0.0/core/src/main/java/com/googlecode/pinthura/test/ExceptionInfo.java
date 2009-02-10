@@ -46,6 +46,12 @@ public interface ExceptionInfo {
     boolean hasMessage();
 
     /**
+     * The <code>Class</code> name of the exception <code>Class</code>.
+     * @return The <code>Class</code> name of the exception <code>Class</code>.
+     */
+    String getExceptionClassName();
+
+    /**
      * Models a null object representing the state where an exception has not been supplied. All methods throw an
      * <code>UnsupportedOperationException</code>.
      */
@@ -74,6 +80,11 @@ public interface ExceptionInfo {
         @Override
         public boolean hasMessage() {
             throw new UnsupportedOperationException("hasMessage() called on NullExceptionInfo.");
+        }
+
+        @Override
+        public String getExceptionClassName() {
+            throw new UnsupportedOperationException("getExceptionClassName() called on NullExceptionInfo.");
         }
     }
 }

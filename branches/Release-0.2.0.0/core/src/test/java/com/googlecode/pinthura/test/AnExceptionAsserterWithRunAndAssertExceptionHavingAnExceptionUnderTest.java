@@ -22,7 +22,7 @@ public final class AnExceptionAsserterWithRunAndAssertExceptionHavingAnException
 
     @Test
     public void shouldPassWhenExceptionsAreValid() {
-        asserter.runAndAssertException(PathEvaluatorException.class,
+        asserter.runAndAssertException(new ExceptionInfoImpl(PathEvaluatorException.class),
                 new Exceptional() { @Override public void run() {
                     throw new PathEvaluatorException(new NullPointerException());
                 }
@@ -32,7 +32,7 @@ public final class AnExceptionAsserterWithRunAndAssertExceptionHavingAnException
     @Test
     public void shouldFailForAnInvalidException() {
         try {
-            asserter.runAndAssertException(ArrayIndexOutOfBoundsException.class,
+            asserter.runAndAssertException(new ExceptionInfoImpl(ArrayIndexOutOfBoundsException.class),
                     new Exceptional() { @Override public void run() {
                         throw new PathEvaluatorException(new ArrayIndexOutOfBoundsException());
                     }
@@ -47,7 +47,7 @@ public final class AnExceptionAsserterWithRunAndAssertExceptionHavingAnException
     @Test
     public void shouldFailIfAnExceptionIsNotThrown() {
         try {
-            asserter.runAndAssertException(PropertyFinderException.class,
+            asserter.runAndAssertException(new ExceptionInfoImpl(PropertyFinderException.class),
                     new Exceptional() { @Override public void run() { /*do nothing.*/ }});
             fail("Expected AssertionError.");
         } catch (AssertionError e) {

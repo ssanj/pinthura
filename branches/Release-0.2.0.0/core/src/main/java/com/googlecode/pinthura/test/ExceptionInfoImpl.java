@@ -38,6 +38,10 @@ public final class ExceptionInfoImpl implements ExceptionInfo {
         return message.equals(NO_MESSAGE);
     }
 
+    public String getExceptionClassName() {
+        return exceptionClass.getName();
+    }
+
     public Class<? extends Throwable> getExceptionClass() {
         return exceptionClass;
     }
