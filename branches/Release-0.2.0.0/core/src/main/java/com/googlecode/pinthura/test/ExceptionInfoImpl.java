@@ -35,7 +35,7 @@ public final class ExceptionInfoImpl implements ExceptionInfo {
     }
 
     public boolean hasMessage() {
-        return message.equals(NO_MESSAGE);
+        return !message.equals(NO_MESSAGE);
     }
 
     public String getExceptionClassName() {

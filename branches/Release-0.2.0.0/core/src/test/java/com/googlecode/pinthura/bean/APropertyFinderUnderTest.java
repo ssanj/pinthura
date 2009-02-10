@@ -17,6 +17,7 @@ package com.googlecode.pinthura.bean;
 
 import com.googlecode.pinthura.test.ExceptionAsserter;
 import com.googlecode.pinthura.test.ExceptionAsserterImpl;
+import com.googlecode.pinthura.test.ExceptionInfoImpl;
 import com.googlecode.pinthura.test.Exceptional;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertThat;
@@ -53,7 +54,8 @@ public final class APropertyFinderUnderTest {
 
     @Test
     public void shouldThrownAPropertyFinderExceptionIfThePropertyIsNotFound() {
-        asserter.runAndAssertException(PropertyFinderException.class, "Could not find property: blah on class java.lang.String",
+        asserter.runAndAssertException(new ExceptionInfoImpl(PropertyFinderException.class,
+                                        "Could not find property: blah on class java.lang.String"),
                 new Exceptional() {@Override public void run() { propertyFinder.findMethodFor("blah", String.class); }});
     }
 

@@ -71,16 +71,12 @@ public final class ExceptionAsserterImpl implements ExceptionAsserter {
 //
 //                return;
 //            }
-//            if (exceptionInfo.hasMessage()) {
-//                assertExceptionMessage(e, exceptionInfo.getMessage());
-//            }
+            if (exceptionInfo.hasMessage()) {
+                assertExceptionMessage(e, exceptionInfo.getMessage());
+            }
         }
     }
 
-    public <EX> void runAndAssertException(final Class<EX> expectedExceptionClass, final String message, final Exceptional ex)
-            throws AssertionError {
-        runAndAssertException(expectedExceptionClass,  NullException.class, message, ex);
-    }    
 
     private <NEX> boolean expectsNestedException(final Class<NEX> nestedExceptionClass) {
         return nestedExceptionClass != NullException.class;
