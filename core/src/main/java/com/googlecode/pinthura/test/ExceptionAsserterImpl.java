@@ -19,9 +19,9 @@ public final class ExceptionAsserterImpl implements ExceptionAsserter {
 
     @SuppressWarnings({"unchecked"})
     @SuppressionReason(SuppressionReason.Reason.CANT_INFER_GENERICS)
-    public <EX> void assertValidException(final Throwable exception, final Class<EX> exceptionClass) {
+    public <EX> void assertValidException(final Throwable exception, final Class<EX> expectedExceptionClass) {
         assertThat("Exception is null.", exception, notNullValue());
-        assertThat((Class<EX>) exception.getClass(), equalTo(exceptionClass));
+        assertThat((Class<EX>) exception.getClass(), equalTo(expectedExceptionClass));
     }
 
     @SuppressWarnings({"unchecked"})
@@ -55,8 +55,26 @@ public final class ExceptionAsserterImpl implements ExceptionAsserter {
         runAndAssertException(expectedExceptionClass,  expectedNestedExceptionClass, NO_MESSAGE, ex);
     }
 
-    public <EX> void runAndAssertException(final Class<EX> expectedExceptionClass, final Exceptional ex) throws AssertionError {
-        runAndAssertException(expectedExceptionClass,  NullException.class, NO_MESSAGE, ex);
+    public void runAndAssertException(final ExceptionInfo exceptionInfo, final Exceptional ex) throws AssertionError {
+        try {
+            ex.run();
+            fail("Expected [" + exceptionInfo.getExceptionClassName() + "] was not thrown.");
+        } catch (Exception e) {
+            assertValidException(e, exceptionInfo.getExceptionClass());
+
+//            if (expectsNestedException(expectedNestedExceptionClass)) {
+//                assertValidException(e.getCause(), expectedNestedExceptionClass);
+//
+//                if (hasMessage(message)) {
+//                    assertExceptionMessage(e.getCause(), message);
+//                }
+//
+//                return;
+//            }
+//            if (exceptionInfo.hasMessage()) {
+//                assertExceptionMessage(e, exceptionInfo.getMessage());
+//            }
+        }
     }
 
     public <EX> void runAndAssertException(final Class<EX> expectedExceptionClass, final String message, final Exceptional ex)
