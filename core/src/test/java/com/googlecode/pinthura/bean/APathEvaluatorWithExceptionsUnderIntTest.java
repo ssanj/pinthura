@@ -20,6 +20,7 @@ import com.googlecode.pinthura.data.Authentication;
 import com.googlecode.pinthura.data.Employee;
 import com.googlecode.pinthura.test.ExceptionAsserter;
 import com.googlecode.pinthura.test.ExceptionAsserterImpl;
+import com.googlecode.pinthura.test.ExceptionInfoImpl;
 import com.googlecode.pinthura.test.Exceptional;
 import org.easymock.EasyMock;
 import org.easymock.IMocksControl;
@@ -59,7 +60,8 @@ public final class APathEvaluatorWithExceptionsUnderIntTest {
         EasyMock.expect(mockPropertyFinder.findMethodFor("boohoo", Authentication.class)).andThrow(new NullPointerException());
         mockControl.replay();
 
-        asserter.runAndAssertException(PathEvaluatorException.class, NullPointerException.class,
+        asserter.runAndAssertException(new ExceptionInfoImpl(PathEvaluatorException.class,
+                                        new ExceptionInfoImpl(NullPointerException.class)),
                 new Exceptional() {public void run() { pathEvaluator.evaluate("boohoo", new Authentication()); }});
     }
 

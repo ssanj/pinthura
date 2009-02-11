@@ -15,7 +15,7 @@ public final class ExceptionInfoImpl implements ExceptionInfo {
     public ExceptionInfoImpl(final Class<? extends Throwable> exceptionClass) {
         this.exceptionClass = exceptionClass;
         message = NO_MESSAGE;
-        nestedException = new NullExceptionInfo();
+        nestedException = NO_EXCEPTION;
     }
 
     public ExceptionInfoImpl(final Class<? extends Throwable> exceptionClass, final String message) {
@@ -31,7 +31,7 @@ public final class ExceptionInfoImpl implements ExceptionInfo {
     }
 
     public boolean hasNestedException() {
-        return nestedException == NO_EXCEPTION;
+        return nestedException != NO_EXCEPTION;
     }
 
     public boolean hasMessage() {
