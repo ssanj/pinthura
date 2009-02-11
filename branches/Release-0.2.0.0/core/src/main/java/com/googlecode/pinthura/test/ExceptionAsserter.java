@@ -7,8 +7,9 @@ public interface ExceptionAsserter {
      * an <code>AssertionError</code>.
      * @param exception The <code>Exception</code>.
      * @param message The expected message.
+     * @throws AssertionError if the message of the supplied <code>Exception</code> is not the same as the message supplied. 
      */    
-    void assertExceptionMessage(Throwable exception, String message);
+    void assertExceptionMessage(Throwable exception, String message) throws AssertionError;
 
     /**
      * Asserts that the <code>Exception</code> provided is of the type of <code>Class</code> provided. If not throws
@@ -16,37 +17,9 @@ public interface ExceptionAsserter {
      * @param exception The <code>Exception</code> provided.
      * @param exceptionClass The <code>Class</code> of the expected <code>Exception</code>
      * @param <EX> The type of the <code>Exception</code>.
+     * @throws AssertionError  If the <code>Exception</code> provided is not of the type of <code>Class</code> provided.
      */    
-    <EX> void assertValidException(Throwable exception, Class<EX> exceptionClass);
-
-    /**
-     * Runs an <code>Exceptional</code> piece of code and asserts properties about a thrown <code>Exception</code>. If
-     * the assertions fail or the <code>Exceptional</code> does not throw an <code>Exception</code> an
-     * <code>AssertionError</code> is thrown.
-     * @param expectedExceptionClass The <code>Class</code> of the top-level <code>Exception</code>.
-     * @param expectedNestedExceptionClass The <code>Class</code> of the nested <code>Exception</code>.
-     * @param message The message of the nested <code>Exception</code>.
-     * @param ex The <code>Exceptional</code> to run.
-     * @param <EX> The type of top-level <code>Exception</code>.
-     * @param <NEX> The type of nested <code>Exception</code>.
-     * @throws AssertionError If an assertion fails or the <code>Exceptional</code> code does not throw an <code>Exception</code>.
-     */    
-    <EX, NEX> void runAndAssertException(Class<EX> expectedExceptionClass, Class<NEX> expectedNestedExceptionClass,
-                                                 String message, Exceptional ex) throws AssertionError;
-
-//    /**
-//     * Runs an <code>Exceptional</code> piece of code and asserts properties about a thrown <code>Exception</code>. If
-//     * the assertions fail or the <code>Exceptional</code> does not throw an <code>Exception</code> an
-//     * <code>AssertionError</code> is thrown.
-//     * @param expectedExceptionClass The <code>Class</code> of the top-level <code>Exception</code>.
-//     * @param expectedNestedExceptionClass The <code>Class</code> of the nested <code>Exception</code>.
-//     * @param ex The <code>Exceptional</code> to run.
-//     * @param <EX> The type of top-level <code>Exception</code>.
-//     * @param <NEX> The type of nested <code>Exception</code>.
-//     * @throws AssertionError If an assertion fails or the <code>Exceptional</code> code does not throw an <code>Exception</code>.
-//     */    
-//    <EX, NEX> void runAndAssertException(Class<EX> expectedExceptionClass, Class<NEX> expectedNestedExceptionClass,
-//                                                 Exceptional ex) throws AssertionError;
+    <EX> void assertValidException(Throwable exception, Class<EX> exceptionClass) throws AssertionError;
 
     /**
      * Runs an <code>Exceptional</code> piece of code and asserts properties about a thrown <code>Exception</code>. If
