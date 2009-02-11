@@ -91,4 +91,25 @@ public final class AnExceptionAsserterWithRunAndAssertExceptionHavingMultipleNes
                     equalTo("Exception is null. Expected java.lang.IllegalArgumentException.\nExpected: not null\n     got: null\n"));
         }
     }
+    
+    @Test
+    public void shouldFailWhenExceptionTypesAreIncorrect() {
+        try {
+            exceptionAsserter.runAndAssertException(new ExceptionInfoImpl(RuntimeException.class,
+                    new ExceptionInfoImpl(MatchNotFoundException.class, new ExceptionInfoImpl(IllegalArgumentException.class,
+                    new ExceptionInfoImpl(IndexOutOfBoundsException.class)))),
+                    new Exceptional() { @Override
+                public void run() {
+                        throw new RuntimeException(
+                                new MatchNotFoundException(
+                                        new IllegalArgumentException(
+                                                new NullPointerException()
+                                        )));
+                    }});
+            fail("Expected AssertionError.");
+        } catch (AssertionError ae) {
+            assertThat(ae.getMessage(), equalTo("\nExpected: <class java.lang.IndexOutOfBoundsException>" +
+                    "\n     got: <class java.lang.NullPointerException>\n"));            
+        }
+    }
 }
