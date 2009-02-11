@@ -25,8 +25,9 @@ import com.googlecode.pinthura.factory.instantiator.AnnotatedClassExtractor;
 import com.googlecode.pinthura.factory.instantiator.InstantiationStrategy;
 import com.googlecode.pinthura.filter.MatchNotFoundException;
 import com.googlecode.pinthura.test.ExceptionAsserter;
-import com.googlecode.pinthura.test.Exceptional;
 import com.googlecode.pinthura.test.ExceptionAsserterImpl;
+import com.googlecode.pinthura.test.ExceptionInfoImpl;
+import com.googlecode.pinthura.test.Exceptional;
 import com.googlecode.pinthura.util.Arrayz;
 import com.googlecode.pinthura.util.ArrayzImpl;
 import org.easymock.EasyMock;
@@ -97,7 +98,8 @@ public final class ADynamicFactoryInstantiatorUnderTest {
         EasyMock.expect(mockAnnotatedClassExtractor.extract(mockMethodParam)).andThrow(new IllegalArgumentException("boom"));
         mockControl.replay();
 
-        exceptionAsserter.runAndAssertException(MatchNotFoundException.class, IllegalArgumentException.class, "boom",
+        exceptionAsserter.runAndAssertException(new ExceptionInfoImpl(MatchNotFoundException.class,
+                                                new ExceptionInfoImpl(IllegalArgumentException.class, "boom")),
                 new Exceptional() {@Override public void run() { instantiator.filter(mockMethodParam); }
         });
 

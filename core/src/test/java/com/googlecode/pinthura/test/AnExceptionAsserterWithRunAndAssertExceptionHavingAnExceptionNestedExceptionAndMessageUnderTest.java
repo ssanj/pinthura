@@ -29,7 +29,7 @@ public final class AnExceptionAsserterWithRunAndAssertExceptionHavingAnException
     @Test
     public void shouldPassWhenExceptionsAndMessageAreValid() {
         final String message = randomDataCreator.createString(10);
-        asserter.runAndAssertException(PathEvaluatorException.class, ArrayIndexOutOfBoundsException.class, message,
+        asserter.runAndAssertException(new ExceptionInfoImpl(PathEvaluatorException.class, new ExceptionInfoImpl(ArrayIndexOutOfBoundsException.class, message)),
                 new Exceptional() { @Override public void run() {
                     throw new PathEvaluatorException(new ArrayIndexOutOfBoundsException(message));
                 }
@@ -40,7 +40,7 @@ public final class AnExceptionAsserterWithRunAndAssertExceptionHavingAnException
     public void shouldFailForAnInvalidException() {
         final String message = randomDataCreator.createString(10);
         try {
-            asserter.runAndAssertException(ArrayIndexOutOfBoundsException.class, PathEvaluatorException.class, message,
+            asserter.runAndAssertException(new ExceptionInfoImpl(ArrayIndexOutOfBoundsException.class, new ExceptionInfoImpl(PathEvaluatorException.class, message)),
                     new Exceptional() { @Override public void run() {
                         throw new PathEvaluatorException(new ArrayIndexOutOfBoundsException(message));
                     }
@@ -57,7 +57,8 @@ public final class AnExceptionAsserterWithRunAndAssertExceptionHavingAnException
     public void shouldFailForAnInvalidNestedException() {
         final String message = randomDataCreator.createString(10);
         try {
-            asserter.runAndAssertException(PropertyFinderException.class, NullPointerException.class, message,
+            asserter.runAndAssertException(new ExceptionInfoImpl(PropertyFinderException.class,
+                                            new ExceptionInfoImpl(NullPointerException.class, message)),
                     new Exceptional() { @Override public void run() {
                         throw new PropertyFinderException(new FileNotFoundException(message));
                     }
@@ -74,7 +75,8 @@ public final class AnExceptionAsserterWithRunAndAssertExceptionHavingAnException
         String message = randomDataCreator.createString(10);
         final String invalidMessage = message + "blah";
         try {
-            asserter.runAndAssertException(PropertyFinderException.class, NullPointerException.class, message,
+            asserter.runAndAssertException(new ExceptionInfoImpl(PropertyFinderException.class,
+                                            new ExceptionInfoImpl(NullPointerException.class, message)),
                     new Exceptional() { @Override public void run() {
                         throw new PropertyFinderException(new NullPointerException(invalidMessage));
                     }
@@ -89,7 +91,7 @@ public final class AnExceptionAsserterWithRunAndAssertExceptionHavingAnException
     public void shouldFailIfAnExceptionIsNotThrown() {
         String message = randomDataCreator.createString(10);
         try {
-            asserter.runAndAssertException(PropertyFinderException.class, NullPointerException.class, message,
+            asserter.runAndAssertException(new ExceptionInfoImpl(PropertyFinderException.class, new ExceptionInfoImpl(NullPointerException.class, message)),
                     new Exceptional() { @Override public void run() { /*do nothing.*/ }});
             fail("Expected AssertionError.");
         } catch (AssertionError e) {
