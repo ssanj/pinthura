@@ -6,7 +6,6 @@ import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 
-//TODO: Add test case for 1. multiple nested exceptions, 2. 2 exceptions each with messages.
 public final class ExceptionAsserterImpl implements ExceptionAsserter {
 
     public void assertExceptionMessage(final Throwable exception, final String message)  throws AssertionError {
@@ -16,7 +15,7 @@ public final class ExceptionAsserterImpl implements ExceptionAsserter {
     @SuppressWarnings({"unchecked"})
     @SuppressionReason(SuppressionReason.Reason.CANT_INFER_GENERICS)
     public <EX> void assertValidException(final Throwable exception, final Class<EX> expectedExceptionClass)  throws AssertionError {
-        assertThat("Exception is null.", exception, notNullValue());
+        assertThat("Exception is null. Expected " + expectedExceptionClass.getName() + ".", exception, notNullValue());
         assertThat((Class<EX>) exception.getClass(), equalTo(expectedExceptionClass));
     }
 

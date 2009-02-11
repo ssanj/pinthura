@@ -29,7 +29,7 @@ public final class AnExceptionAsserterWithAssertValidExceptionUnderTest {
             asserter.assertValidException(null, Exception.class);
             fail("Expected AssertionError.");
         } catch (AssertionError e) {
-            assertThat(e.getMessage(), equalTo("Exception is null.\nExpected: not null\n     got: null\n"));
+            assertThat(e.getMessage(), equalTo("Exception is null. Expected java.lang.Exception.\nExpected: not null\n     got: null\n"));
         }
     }
     
