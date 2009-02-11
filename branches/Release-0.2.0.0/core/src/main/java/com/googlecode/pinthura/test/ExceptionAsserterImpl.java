@@ -60,20 +60,23 @@ public final class ExceptionAsserterImpl implements ExceptionAsserter {
             ex.run();
             fail("Expected [" + exceptionInfo.getExceptionClassName() + "] was not thrown.");
         } catch (Exception e) {
-            assertValidException(e, exceptionInfo.getExceptionClass());
+            ExceptionInfo currentExceptionInfo = exceptionInfo;
+            Throwable throwable = e;
+            assertExceptionAndMessage(currentExceptionInfo, throwable);
 
-//            if (expectsNestedException(expectedNestedExceptionClass)) {
-//                assertValidException(e.getCause(), expectedNestedExceptionClass);
-//
-//                if (hasMessage(message)) {
-//                    assertExceptionMessage(e.getCause(), message);
-//                }
-//
-//                return;
-//            }
-            if (exceptionInfo.hasMessage()) {
-                assertExceptionMessage(e, exceptionInfo.getMessage());
+            while (currentExceptionInfo.hasNestedException()) {
+                currentExceptionInfo = currentExceptionInfo.getNestedException();
+                throwable = throwable.getCause();
+                assertExceptionAndMessage(currentExceptionInfo, throwable);
             }
+        }
+    }
+
+    private void assertExceptionAndMessage(final ExceptionInfo exceptionInfo, final Throwable e) {
+        assertValidException(e, exceptionInfo.getExceptionClass());
+
+        if (exceptionInfo.hasMessage()) {
+            assertExceptionMessage(e, exceptionInfo.getMessage());
         }
     }
 
