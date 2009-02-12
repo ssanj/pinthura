@@ -17,11 +17,13 @@ public final class AnExceptionAsserterWithRunAndAssertExceptionHavingMultipleNes
 
     private ExceptionAsserter exceptionAsserter;
     private RandomDataCreator randomDataCreator;
+    private ExceptionMessageBuilder exceptionMessageBuilder;
 
     @Before
     public void setup() {
         exceptionAsserter = new ExceptionAsserterImpl();
         randomDataCreator = new RandomDataCreatorBuilder().build();
+        exceptionMessageBuilder = new ExceptionMessageBuilder();
     }
 
     @Test
@@ -73,7 +75,8 @@ public final class AnExceptionAsserterWithRunAndAssertExceptionHavingMultipleNes
            });
             fail("Expected AssertionError.");
         } catch (AssertionError ae) {
-            assertThat(ae.getMessage(), equalTo("\nExpected: \"" + message4 + "\"\n     got: \"" + message4Error + "\"\n"));
+            assertThat(ae.getMessage(), equalTo(exceptionMessageBuilder.withExpectedObject(message4).
+                    withReceivedObject(message4Error).build()));
         }
     }
 
@@ -108,8 +111,8 @@ public final class AnExceptionAsserterWithRunAndAssertExceptionHavingMultipleNes
                     }});
             fail("Expected AssertionError.");
         } catch (AssertionError ae) {
-            assertThat(ae.getMessage(), equalTo("\nExpected: <class java.lang.IndexOutOfBoundsException>" +
-                    "\n     got: <class java.lang.NullPointerException>\n"));            
+            assertThat(ae.getMessage(), equalTo(exceptionMessageBuilder.withExpectedClass(IndexOutOfBoundsException.class).
+                    withReceivedClass(NullPointerException.class).build()));            
         }
     }
 }

@@ -17,11 +17,13 @@ public final class AnExceptionAsserterWithRunAndAssertExceptionHavingAnException
 
     private ExceptionAsserter asserter;
     private RandomDataCreator randomDataCreator;
+    private ExceptionMessageBuilder exceptionMessageBuilder;
 
     @Before
     public void setup() {
         asserter = new ExceptionAsserterImpl();
         randomDataCreator = new RandomDataCreatorBuilder().build();
+        exceptionMessageBuilder = new ExceptionMessageBuilder();
     }
 
     @Test
@@ -45,9 +47,8 @@ public final class AnExceptionAsserterWithRunAndAssertExceptionHavingAnException
             });
             fail("Expected AssertionError.");
         } catch (AssertionError e) {
-            assertThat(e.getMessage(), equalTo("\nExpected: <class java.lang.ArrayIndexOutOfBoundsException>" +
-                    "\n     got: <class com.googlecode.pinthura.bean.PathEvaluatorException>\n"));
-
+            assertThat(e.getMessage(), equalTo(exceptionMessageBuilder.withExpectedClass(ArrayIndexOutOfBoundsException.class).
+                    withReceivedClass(PathEvaluatorException.class).build()));
         }
     }
 
@@ -63,7 +64,7 @@ public final class AnExceptionAsserterWithRunAndAssertExceptionHavingAnException
             });
             fail("Expected AssertionError.");
         } catch (AssertionError e) {
-             assertThat(e.getMessage(), equalTo("\nExpected: \"" + message + "\"\n     got: \"" + invalidMessage + "\"\n"));
+             assertThat(e.getMessage(), equalTo(exceptionMessageBuilder.withExpectedObject(message).withReceivedObject(invalidMessage).build()));
         }
     }
 
