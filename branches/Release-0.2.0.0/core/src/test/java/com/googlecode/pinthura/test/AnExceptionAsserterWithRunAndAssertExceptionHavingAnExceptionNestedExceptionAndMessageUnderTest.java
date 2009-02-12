@@ -19,17 +19,20 @@ public final class AnExceptionAsserterWithRunAndAssertExceptionHavingAnException
 
     private ExceptionAsserter asserter;
     private RandomDataCreator randomDataCreator;
+    private ExceptionMessageBuilder exceptionMessageBuilder;
 
     @Before
     public void setup() {
         asserter = new ExceptionAsserterImpl();
         randomDataCreator = new RandomDataCreatorBuilder().build();
+        exceptionMessageBuilder = new ExceptionMessageBuilder();
     }
 
     @Test
     public void shouldPassWhenExceptionsAndMessageAreValid() {
         final String message = randomDataCreator.createString(10);
-        asserter.runAndAssertException(new ExceptionInfoImpl(PathEvaluatorException.class, new ExceptionInfoImpl(ArrayIndexOutOfBoundsException.class, message)),
+        asserter.runAndAssertException(new ExceptionInfoImpl(PathEvaluatorException.class,
+                new ExceptionInfoImpl(ArrayIndexOutOfBoundsException.class, message)),
                 new Exceptional() { @Override public void run() {
                     throw new PathEvaluatorException(new ArrayIndexOutOfBoundsException(message));
                 }
@@ -40,15 +43,17 @@ public final class AnExceptionAsserterWithRunAndAssertExceptionHavingAnException
     public void shouldFailForAnInvalidException() {
         final String message = randomDataCreator.createString(10);
         try {
-            asserter.runAndAssertException(new ExceptionInfoImpl(ArrayIndexOutOfBoundsException.class, new ExceptionInfoImpl(PathEvaluatorException.class, message)),
+            asserter.runAndAssertException(new ExceptionInfoImpl(ArrayIndexOutOfBoundsException.class,
+                    new ExceptionInfoImpl(PathEvaluatorException.class, message)),
                     new Exceptional() { @Override public void run() {
                         throw new PathEvaluatorException(new ArrayIndexOutOfBoundsException(message));
                     }
             });
             fail("Expected AssertionError.");
         } catch (AssertionError e) {
-            assertThat(e.getMessage(), equalTo("\nExpected: <class java.lang.ArrayIndexOutOfBoundsException>" +
-                    "\n     got: <class com.googlecode.pinthura.bean.PathEvaluatorException>\n"));
+            assertThat(e.getMessage(), equalTo(
+                    exceptionMessageBuilder.withExpectedClass(ArrayIndexOutOfBoundsException.class).
+                                            withReceivedClass(PathEvaluatorException.class).build()));
 
         }
     }
@@ -65,8 +70,9 @@ public final class AnExceptionAsserterWithRunAndAssertExceptionHavingAnException
             });
             fail("Expected AssertionError.");
         } catch (AssertionError e) {
-            assertThat(e.getMessage(), equalTo("\nExpected: <class java.lang.NullPointerException>" +
-                    "\n     got: <class java.io.FileNotFoundException>\n"));            
+            assertThat(e.getMessage(),
+                    equalTo(exceptionMessageBuilder.withExpectedClass(NullPointerException.class).
+                                                    withReceivedClass(FileNotFoundException.class).build()));
         }
     }
 
