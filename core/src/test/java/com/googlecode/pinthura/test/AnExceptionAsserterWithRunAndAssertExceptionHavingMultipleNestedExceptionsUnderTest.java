@@ -26,18 +26,18 @@ public final class AnExceptionAsserterWithRunAndAssertExceptionHavingMultipleNes
 
     @Test
     public void shouldPassWhenExceptionsAndMessagesAreValid() {
-        final String message1 = randomDataCreator.createString(10);
-        final String message2 = randomDataCreator.createString(14);
-        final String message3 = randomDataCreator.createString(12);
-        exceptionAsserter.runAndAssertException(new ExceptionInfoImpl(RuntimeException.class, message1,
-                                                new ExceptionInfoImpl(MatchNotFoundException.class, message2,
-                                                        new ExceptionInfoImpl(ResolvedFactorySorterException.class, message3))),
+        final String randomMessage1 = randomDataCreator.createString(10);
+        final String randomMessage2 = randomDataCreator.createString(14);
+        final String randomMessage3 = randomDataCreator.createString(12);
+        exceptionAsserter.runAndAssertException(new ExceptionInfoImpl(RuntimeException.class, randomMessage1,
+                                                new ExceptionInfoImpl(MatchNotFoundException.class, randomMessage2,
+                                                        new ExceptionInfoImpl(ResolvedFactorySorterException.class, randomMessage3))),
                new Exceptional() {
            @Override
            public void run() {
-               throw new RuntimeException(message1,
-                       new MatchNotFoundException(message2,
-                               new ResolvedFactorySorterException(message3))); 
+               throw new RuntimeException(randomMessage1,
+                       new MatchNotFoundException(randomMessage2,
+                               new ResolvedFactorySorterException(randomMessage3)));
            }
        });
     }
@@ -52,22 +52,22 @@ public final class AnExceptionAsserterWithRunAndAssertExceptionHavingMultipleNes
     
     @Test
     public void shouldFailWhenMessagesAreDifferent() {
-        final String message1 = randomDataCreator.createString(20);
-        final String message2 = randomDataCreator.createString(4);
-        final String message3 = randomDataCreator.createString(7);
+        final String randomMessage1 = randomDataCreator.createString(20);
+        final String randomMessage2 = randomDataCreator.createString(4);
+        final String randomMessage3 = randomDataCreator.createString(7);
         String message4 = randomDataCreator.createString(9);
         final String message4Error = message4 +"Error";
         try {
-            exceptionAsserter.runAndAssertException(new ExceptionInfoImpl(MatchNotFoundException.class, message1,
-                                                    new ExceptionInfoImpl(ResolvedFactorySorterException.class, message2,
-                                                            new ExceptionInfoImpl(RuntimeException.class, message3,
+            exceptionAsserter.runAndAssertException(new ExceptionInfoImpl(MatchNotFoundException.class, randomMessage1,
+                                                    new ExceptionInfoImpl(ResolvedFactorySorterException.class, randomMessage2,
+                                                            new ExceptionInfoImpl(RuntimeException.class, randomMessage3,
                                                                     new ExceptionInfoImpl(IllegalArgumentException.class, message4)))),
                    new Exceptional() {
                @Override
                public void run() {
-                   throw new MatchNotFoundException(message1,
-                           new ResolvedFactorySorterException(message2,
-                                   new RuntimeException(message3,
+                   throw new MatchNotFoundException(randomMessage1,
+                           new ResolvedFactorySorterException(randomMessage2,
+                                   new RuntimeException(randomMessage3,
                                            new IllegalArgumentException(message4Error))));
                }
            });

@@ -14,10 +14,12 @@ import org.junit.Test;
 public final class AnExceptionAsserterWithRunAndAssertExceptionHavingAnExceptionUnderTest {
 
     private ExceptionAsserter asserter;
+    private ExceptionMessageBuilder exceptionMessageBuilder;
 
     @Before
     public void setup() {
         asserter = new ExceptionAsserterImpl();
+        exceptionMessageBuilder = new ExceptionMessageBuilder();
     }
 
     @Test
@@ -39,8 +41,8 @@ public final class AnExceptionAsserterWithRunAndAssertExceptionHavingAnException
             });
             fail("Expected AssertionError.");
         } catch (AssertionError e) {
-            assertThat(e.getMessage(), equalTo("\nExpected: <class java.lang.ArrayIndexOutOfBoundsException>" +
-                    "\n     got: <class com.googlecode.pinthura.bean.PathEvaluatorException>\n"));
+            assertThat(e.getMessage(), equalTo(exceptionMessageBuilder.withExpectedClass(ArrayIndexOutOfBoundsException.class).
+                    withReceivedClass(PathEvaluatorException.class).build()));
         }
     }
 
