@@ -105,9 +105,11 @@ public final class AnExceptionAsserterWithRunAndAssertExceptionHavingMultipleNes
                 public void run() { throw new RuntimeException(new MatchNotFoundException(new IllegalAccessException())); }});
             fail("Expected AssertionError.");
         } catch (AssertionError ae) {
-            assertThat(ae.getMessage(), equalTo(new StringBuilder("Exception is null. Expected java.lang.IllegalArgumentException.").
-                            append(exceptionMessageBuilder.withExpectedObject("not null").andReceivedObject("null").
-                            build()).toString()));
+            assertThat(ae.getMessage(), equalTo(exceptionMessageBuilder.
+                                        havingMessage("Exception is null. Expected java.lang.IllegalArgumentException.").
+                                        withExpectedObject("not null").
+                                        andReceivedObject("null").
+                                        build()));
         }
     }
     

@@ -40,8 +40,8 @@ public final class AnExceptionAsserterWithAssertExceptionMessageUnderTest {
     @SuppressionReason(SuppressionReason.Reason.TEST_VALUE)
     @Test
     public void shouldPassWhenTheExceptionMessageIsCorrect() {
-        String message = "blah de blah";
-        asserter.assertExceptionMessage(new RuntimeException(message), message);
+        String randomMessage = randomDataCreator.createFileName(15);
+        asserter.assertExceptionMessage(new RuntimeException(randomMessage), randomMessage);
     }
 
     @SuppressWarnings({"ThrowableInstanceNeverThrown"})
