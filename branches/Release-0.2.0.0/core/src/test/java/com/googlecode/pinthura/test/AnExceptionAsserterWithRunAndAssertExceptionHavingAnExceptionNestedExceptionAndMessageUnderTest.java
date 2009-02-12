@@ -88,8 +88,9 @@ public final class AnExceptionAsserterWithRunAndAssertExceptionHavingAnException
                     }
             });
             fail("Expected AssertionError.");
-        } catch (AssertionError e) {
-             assertThat(e.getMessage(), equalTo("\nExpected: \"" + message + "\"\n     got: \"" + invalidMessage + "\"\n"));
+        } catch (AssertionError ae) {
+             assertThat(ae.getMessage(),
+                     equalTo(exceptionMessageBuilder.withExpectedObject(message).withReceivedObject(invalidMessage).build()));
         }
     }
     
