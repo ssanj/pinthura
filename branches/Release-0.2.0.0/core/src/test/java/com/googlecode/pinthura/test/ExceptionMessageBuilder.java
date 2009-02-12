@@ -16,23 +16,18 @@
 package com.googlecode.pinthura.test;
 
 public final class ExceptionMessageBuilder {
-    private Object expectedObject;
-    private Object receivedObject;
+
     private ExceptionMessageBuilderForClass classBuilder;
+    private ExceptionMessageBuilderForObject objectBuilder;
 
     public ExceptionMessageBuilderForClass withExpectedClass(final Class<?> expectedClass) {
         classBuilder = new ExceptionMessageBuilderForClass(this, expectedClass);
         return classBuilder;
     }
 
-    public ExceptionMessageBuilder withExpectedObject(final Object expectedObject) {
-        this.expectedObject = expectedObject;
-        return this;
-    }
-
-    public ExceptionMessageBuilder withReceivedObject(final Object receivedObject) {
-        this.receivedObject = receivedObject;
-        return this;
+    public ExceptionMessageBuilderForObject withExpectedObject(final Object expectedObject) {
+        objectBuilder = new ExceptionMessageBuilderForObject(this, expectedObject);
+        return objectBuilder;
     }
 
     public String build() {
@@ -40,13 +35,11 @@ public final class ExceptionMessageBuilder {
             return classBuilder.build();
         }
 
-        if (expectedObject != null && receivedObject != null) {
-            return new StringBuilder().
-                        append("\nExpected: \"").append(expectedObject).append("\"\n     ").
-                        append("got: \"").append(receivedObject).append("\"\n").toString();
+        if (objectBuilder != null) {
+            return objectBuilder.build();
         }
 
-        return "";
+        throw new IllegalStateException("ExceptionMessageBuilder has not been correctly configure.");
     }
 
     public static final class ExceptionMessageBuilderForClass {
@@ -60,16 +53,40 @@ public final class ExceptionMessageBuilder {
             this.expectedClass = expectedClass;
         }
 
-        ExceptionMessageBuilder andReceivedClass(final Class<?> receivedClass) {
+        public ExceptionMessageBuilder andReceivedClass(final Class<?> receivedClass) {
             this.receivedClass = receivedClass;
             return parent;
         }
 
-        String build() {
+        private String build() {
             return new StringBuilder().
                     append("\nExpected: <").append(expectedClass).append(">\n     ").
                     append("got: <").append(receivedClass).append(">\n").toString();
 
         }
+    }
+
+    public static final class ExceptionMessageBuilderForObject {
+
+        private final ExceptionMessageBuilder parent;
+        private final Object expectedObject;
+        private Object receivedObject;
+
+        private ExceptionMessageBuilderForObject(final ExceptionMessageBuilder parent, final Object expectedObject) {
+            this.parent = parent;
+            this.expectedObject = expectedObject;
+        }
+
+        public ExceptionMessageBuilder andReceivedObject(final Object receivedObject) {
+            this.receivedObject = receivedObject;
+            return parent;
+        }
+
+        private String build() {
+            return new StringBuilder().
+                    append("\nExpected: \"").append(expectedObject).append("\"\n     ").
+                    append("got: \"").append(receivedObject).append("\"\n").toString();
+        }
+
     }
 }

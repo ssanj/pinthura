@@ -105,7 +105,9 @@ public final class AnExceptionAsserterWithRunAndAssertExceptionHavingAnException
             fail("Expected AssertionError.");
         } catch (AssertionError ae) {
              assertThat(ae.getMessage(),
-                     equalTo(exceptionMessageBuilder.withExpectedObject(message).withReceivedObject(invalidMessage).build()));
+                     equalTo(exceptionMessageBuilder.withExpectedObject(message).
+                                                    andReceivedObject(invalidMessage).
+                                                    build()));
         }
     }
     

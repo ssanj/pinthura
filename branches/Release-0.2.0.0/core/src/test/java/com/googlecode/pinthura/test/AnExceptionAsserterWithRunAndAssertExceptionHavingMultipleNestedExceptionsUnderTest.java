@@ -90,8 +90,8 @@ public final class AnExceptionAsserterWithRunAndAssertExceptionHavingMultipleNes
            });
             fail("Expected AssertionError.");
         } catch (AssertionError ae) {
-            assertThat(ae.getMessage(), equalTo(exceptionMessageBuilder.withExpectedObject(message4).
-                    withReceivedObject(message4Error).build()));
+            assertThat(ae.getMessage(),
+                    equalTo(exceptionMessageBuilder.withExpectedObject(message4).andReceivedObject(message4Error).build()));
         }
     }
 
