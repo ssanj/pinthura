@@ -8,11 +8,14 @@ import org.junit.Before;
 import org.junit.Test;
 
 public final class AnExceptionAsserterWithAssertValidExceptionUnderTest {
-    private ExceptionAsserterImpl asserter;
+
+    private ExceptionAsserter asserter;
+    private ExceptionMessageBuilder exceptionMessageBuilder;
 
     @Before
     public void setup() {
         asserter = new ExceptionAsserterImpl();
+        exceptionMessageBuilder = new ExceptionMessageBuilder();
     }
 
     @SuppressWarnings("ThrowableInstanceNeverThrown")
@@ -40,8 +43,8 @@ public final class AnExceptionAsserterWithAssertValidExceptionUnderTest {
         try {
             asserter.assertValidException(new RuntimeException(), IllegalArgumentException.class);
         } catch (AssertionError e) {
-            assertThat(e.getMessage(), equalTo("\nExpected: <class java.lang.IllegalArgumentException>" +
-                                                "\n     got: <class java.lang.RuntimeException>\n"));
+            assertThat(e.getMessage(), equalTo(exceptionMessageBuilder.withExpectedClass(IllegalArgumentException.class).
+                    withReceivedClass(RuntimeException.class).build()));
         }
     }
 }
