@@ -59,7 +59,7 @@ public final class AnExceptionAsserterWithRunAndAssertExceptionHavingAnException
             assertThat(e.getMessage(),
                     equalTo(exceptionMessageBuilder.withExpectedClass(ArrayIndexOutOfBoundsException.class).
                                                     andReceivedClass(PathEvaluatorException.class).
-                                                    build()));
+                                                    build()));            
         }
     }
 
