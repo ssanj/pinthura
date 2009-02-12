@@ -54,7 +54,7 @@ public final class AnExceptionAsserterWithAssertExceptionMessageUnderTest {
             asserter.assertExceptionMessage(new NullPointerException(randomMessage1), randomMessage2);
         } catch (AssertionError e) {
             assertThat(e.getMessage(),
-                    equalTo(exceptionMessageBuilder.withExpectedObject(randomMessage2).andReceivedObject(randomMessage1).build()));
+                    equalTo(exceptionMessageBuilder.withExpectedString(randomMessage2).andReceivedString(randomMessage1).build()));
         }
     }
 }

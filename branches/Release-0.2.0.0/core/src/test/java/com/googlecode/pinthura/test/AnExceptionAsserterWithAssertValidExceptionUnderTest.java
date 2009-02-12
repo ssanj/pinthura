@@ -47,7 +47,8 @@ public final class AnExceptionAsserterWithAssertValidExceptionUnderTest {
             asserter.assertValidException(null, Exception.class);
             fail("Expected AssertionError.");
         } catch (AssertionError e) {
-            assertThat(e.getMessage(), equalTo("Exception is null. Expected java.lang.Exception.\nExpected: not null\n     got: null\n"));
+            assertThat(e.getMessage(), equalTo(new StringBuilder("Exception is null. Expected java.lang.Exception.").
+                    append(exceptionMessageBuilder.withExpectedObject("not null").andReceivedObject("null").build()).toString()));
         }
     }
     

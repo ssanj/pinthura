@@ -18,11 +18,17 @@ package com.googlecode.pinthura.test;
 public final class ExceptionMessageBuilder {
 
     private ExceptionMessageBuilderForClass classBuilder;
+    private ExceptionMessageBuilderForStrings stringBuilder;
     private ExceptionMessageBuilderForObject objectBuilder;
 
     public ExceptionMessageBuilderForClass withExpectedClass(final Class<?> expectedClass) {
         classBuilder = new ExceptionMessageBuilderForClass(this, expectedClass);
         return classBuilder;
+    }
+
+    public ExceptionMessageBuilderForStrings withExpectedString(final String expectedString) {
+        stringBuilder = new ExceptionMessageBuilderForStrings(this, expectedString);
+        return stringBuilder;
     }
 
     public ExceptionMessageBuilderForObject withExpectedObject(final Object expectedObject) {
@@ -33,6 +39,10 @@ public final class ExceptionMessageBuilder {
     public String build() {
         if (classBuilder != null) {
             return classBuilder.build();
+        }
+
+        if (stringBuilder != null) {
+            return stringBuilder.build();
         }
 
         if (objectBuilder != null) {
@@ -66,6 +76,30 @@ public final class ExceptionMessageBuilder {
         }
     }
 
+    public static final class ExceptionMessageBuilderForStrings {
+
+        private final ExceptionMessageBuilder parent;
+        private final Object expectedObject;
+        private Object receivedObject;
+
+        private ExceptionMessageBuilderForStrings(final ExceptionMessageBuilder parent, final Object expectedObject) {
+            this.parent = parent;
+            this.expectedObject = expectedObject;
+        }
+
+        public ExceptionMessageBuilder andReceivedString(final Object receivedObject) {
+            this.receivedObject = receivedObject;
+            return parent;
+        }
+
+        private String build() {
+            return new StringBuilder().
+                    append("\nExpected: \"").append(expectedObject).append("\"\n     ").
+                    append("got: \"").append(receivedObject).append("\"\n").toString();
+        }
+
+    }
+
     public static final class ExceptionMessageBuilderForObject {
 
         private final ExceptionMessageBuilder parent;
@@ -84,9 +118,8 @@ public final class ExceptionMessageBuilder {
 
         private String build() {
             return new StringBuilder().
-                    append("\nExpected: \"").append(expectedObject).append("\"\n     ").
-                    append("got: \"").append(receivedObject).append("\"\n").toString();
+                    append("\nExpected: ").append(expectedObject).append("\n     ").
+                    append("got: ").append(receivedObject).append("\n").toString();
         }
-
     }
 }
