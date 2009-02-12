@@ -17,42 +17,46 @@ package com.googlecode.pinthura.test;
 
 public final class ExceptionMessageBuilder {
 
-    private ExceptionMessageBuilderForClass classBuilder;
-    private ExceptionMessageBuilderForStrings stringBuilder;
-    private ExceptionMessageBuilderForObject objectBuilder;
+    private ExceptionMessageBuilderType type;
+    private String message = "";
 
-    public ExceptionMessageBuilderForClass withExpectedClass(final Class<?> expectedClass) {
-        classBuilder = new ExceptionMessageBuilderForClass(this, expectedClass);
-        return classBuilder;
+    public ExceptionMessageBuilderForClassType withExpectedClass(final Class<?> expectedClass) {
+        type = new ExceptionMessageBuilderForClass(this, expectedClass);
+        return (ExceptionMessageBuilderForClass) type;
     }
 
-    public ExceptionMessageBuilderForStrings withExpectedString(final String expectedString) {
-        stringBuilder = new ExceptionMessageBuilderForStrings(this, expectedString);
-        return stringBuilder;
+    public ExceptionMessageBuilderForStringsType withExpectedString(final String expectedString) {
+        type = new ExceptionMessageBuilderForStrings(this, expectedString);
+        return (ExceptionMessageBuilderForStrings) type;
     }
 
-    public ExceptionMessageBuilderForObject withExpectedObject(final Object expectedObject) {
-        objectBuilder = new ExceptionMessageBuilderForObject(this, expectedObject);
-        return objectBuilder;
+    public ExceptionMessageBuilderForObjectType withExpectedObject(final Object expectedObject) {
+        type = new ExceptionMessageBuilderForObject(this, expectedObject);
+        return (ExceptionMessageBuilderForObjectType) type;
+    }
+
+    public ExceptionMessageBuilder havingMessage(final String message) {
+        this.message = message;
+        return this;
     }
 
     public String build() {
-        if (classBuilder != null) {
-            return classBuilder.build();
-        }
-
-        if (stringBuilder != null) {
-            return stringBuilder.build();
-        }
-
-        if (objectBuilder != null) {
-            return objectBuilder.build();
+        if (type != null) {
+            return message + type.build();
         }
 
         throw new IllegalStateException("ExceptionMessageBuilder has not been correctly configure.");
     }
 
-    public static final class ExceptionMessageBuilderForClass {
+    private interface ExceptionMessageBuilderType {
+        String build();
+    }
+
+    public interface ExceptionMessageBuilderForClassType {
+        ExceptionMessageBuilder andReceivedClass(Class<?> receivedClass);
+    }
+
+    private static final class ExceptionMessageBuilderForClass implements ExceptionMessageBuilderForClassType, ExceptionMessageBuilderType {
 
         private final ExceptionMessageBuilder parent;
         private Class<?> receivedClass;
@@ -68,7 +72,7 @@ public final class ExceptionMessageBuilder {
             return parent;
         }
 
-        private String build() {
+        public String build() {
             return new StringBuilder().
                     append("\nExpected: <").append(expectedClass).append(">\n     ").
                     append("got: <").append(receivedClass).append(">\n").toString();
@@ -76,23 +80,27 @@ public final class ExceptionMessageBuilder {
         }
     }
 
-    public static final class ExceptionMessageBuilderForStrings {
+    public interface ExceptionMessageBuilderForStringsType {
+        ExceptionMessageBuilder andReceivedString(String receivedObject);
+    }
+
+    private static final class ExceptionMessageBuilderForStrings implements ExceptionMessageBuilderForStringsType, ExceptionMessageBuilderType {
 
         private final ExceptionMessageBuilder parent;
-        private final Object expectedObject;
-        private Object receivedObject;
+        private final String expectedObject;
+        private String receivedObject;
 
-        private ExceptionMessageBuilderForStrings(final ExceptionMessageBuilder parent, final Object expectedObject) {
+        private ExceptionMessageBuilderForStrings(final ExceptionMessageBuilder parent, final String expectedObject) {
             this.parent = parent;
             this.expectedObject = expectedObject;
         }
 
-        public ExceptionMessageBuilder andReceivedString(final Object receivedObject) {
+        public ExceptionMessageBuilder andReceivedString(final String receivedObject) {
             this.receivedObject = receivedObject;
             return parent;
         }
 
-        private String build() {
+        public String build() {
             return new StringBuilder().
                     append("\nExpected: \"").append(expectedObject).append("\"\n     ").
                     append("got: \"").append(receivedObject).append("\"\n").toString();
@@ -100,7 +108,11 @@ public final class ExceptionMessageBuilder {
 
     }
 
-    public static final class ExceptionMessageBuilderForObject {
+    public interface ExceptionMessageBuilderForObjectType {
+        ExceptionMessageBuilder andReceivedObject(Object receivedObject);
+    }
+
+    private static final class ExceptionMessageBuilderForObject implements ExceptionMessageBuilderForObjectType, ExceptionMessageBuilderType {
 
         private final ExceptionMessageBuilder parent;
         private final Object expectedObject;
@@ -116,7 +128,7 @@ public final class ExceptionMessageBuilder {
             return parent;
         }
 
-        private String build() {
+        public String build() {
             return new StringBuilder().
                     append("\nExpected: ").append(expectedObject).append("\n     ").
                     append("got: ").append(receivedObject).append("\n").toString();
