@@ -15,35 +15,69 @@
  */
 package com.googlecode.pinthura.factory.builder;
 
+import com.googlecode.pinthura.annotation.AnnotationFinder;
 import com.googlecode.pinthura.annotation.AnnotationFinderImpl;
-import com.googlecode.pinthura.boundary.java.lang.ClassBoundaryFactoryImpl;
 import com.googlecode.pinthura.boundary.java.lang.ClassBoundaryFactory;
+import com.googlecode.pinthura.boundary.java.lang.ClassBoundaryFactoryImpl;
 import com.googlecode.pinthura.factory.instantiator.AnnotatedFactoryExtractorImpl;
 import com.googlecode.pinthura.factory.instantiator.ClassInstanceFactory;
 import com.googlecode.pinthura.factory.instantiator.ClassInstanceFactoryImpl;
 import com.googlecode.pinthura.factory.instantiator.injected.InjectedFactoryResolver;
 import com.googlecode.pinthura.factory.instantiator.injected.InjectedFactoryResolverImpl;
+import com.googlecode.pinthura.factory.instantiator.injected.InjectedFactoryValuesFactory;
 import com.googlecode.pinthura.factory.instantiator.injected.InjectedFactoryValuesFactoryImpl;
 import com.googlecode.pinthura.factory.instantiator.injected.InjectedInstanceSorterFactoryImpl;
 import com.googlecode.pinthura.util.ArrayzImpl;
 import com.googlecode.pinthura.util.CreationBroker;
+import com.googlecode.pinthura.util.CreationBrokerImpl;
 
 public final class InjectedFactoryResolverBuilder {
 
-    private final CreationBroker creationBroker;
+    private CreationBroker creationBroker;
+    private AnnotationFinder annotationFinder;
+    private ClassInstanceFactory classInstanceFactory;
+    private ClassBoundaryFactory classBoundaryFactory;
+    private InjectedFactoryValuesFactory injectedFactoryValuesFactory;
 
-    public InjectedFactoryResolverBuilder(final CreationBroker creationBroker) {
+    public InjectedFactoryResolverBuilder() {
+        creationBroker = new CreationBrokerImpl();
+        annotationFinder = new AnnotationFinderImpl();
+        classInstanceFactory = new ClassInstanceFactoryImpl();
+        classBoundaryFactory = new ClassBoundaryFactoryImpl();
+        injectedFactoryValuesFactory = new InjectedFactoryValuesFactoryImpl(new ArrayzImpl());
+    }
+
+    public InjectedFactoryResolverBuilder withCreationBroker(final CreationBroker creationBroker) {
         this.creationBroker = creationBroker;
+        return this;
+    }
+
+    public InjectedFactoryResolverBuilder withClassInstanceFactory(final ClassInstanceFactory classInstanceFactory) {
+        this.classInstanceFactory = classInstanceFactory;
+        return this;
+    }
+
+    public InjectedFactoryResolverBuilder withClassBoundaryFactory(final ClassBoundaryFactory classBoundaryFactory) {
+        this.classBoundaryFactory = classBoundaryFactory;
+        return this;
+    }
+
+    public InjectedFactoryResolverBuilder withAnnotationFinder(final AnnotationFinder annotationFinder) {
+        this.annotationFinder = annotationFinder;
+        return this;
+    }
+
+    public InjectedFactoryResolverBuilder withFactoryValuesFactory(final InjectedFactoryValuesFactory injectedFactoryValuesFactory) {
+        this.injectedFactoryValuesFactory = injectedFactoryValuesFactory;
+        return this;
     }
 
     public InjectedFactoryResolver build() {
         //TODO: use the factoryCreator for this.
-        AnnotationFinderImpl finder = new AnnotationFinderImpl();
-        ClassInstanceFactory classInstanceFactory = new ClassInstanceFactoryImpl();
-        ClassBoundaryFactory factory = new ClassBoundaryFactoryImpl();
-
-        return  new InjectedFactoryResolverImpl(new AnnotatedFactoryExtractorImpl(finder, factory), classInstanceFactory,
+        //TODO: pass in all object so that they can be created from a common bootstrapper if required.
+        return  new InjectedFactoryResolverImpl(new AnnotatedFactoryExtractorImpl(annotationFinder, classBoundaryFactory),
+                classInstanceFactory,
                 new InjectedInstanceSorterFactoryImpl(classInstanceFactory, creationBroker),
-                new InjectedFactoryValuesFactoryImpl(new ArrayzImpl()));
+                injectedFactoryValuesFactory);
     }
 }

@@ -43,7 +43,8 @@ public final class DynamicFactoryInstantiatorBuilder {
     }
 
     public DynamicFactoryInstantiator build() {
+        //TODO: pass in all object so that they can be created from a common bootstrapper if required.
         return new DynamicFactoryInstantiator(new AnnotatedClassExtractorImpl(annotationFinder),
-                new InjectedFactoryResolverBuilder(creationBroker).build());
+                new InjectedFactoryResolverBuilder().withCreationBroker(creationBroker).build());
     }
 }
