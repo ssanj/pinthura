@@ -24,8 +24,18 @@ import java.lang.reflect.InvocationHandler;
 
 public final class FactoryCreatorBuilder {
 
+    private CreationBroker creationBroker;
+
+    public FactoryCreatorBuilder() {
+        creationBroker = new CreationBrokerImpl();
+    }
+
+    public FactoryCreatorBuilder withCreationBroker(final CreationBroker creationBroker) {
+        this.creationBroker = creationBroker;
+        return this;
+    }
+
     public FactoryCreator build() {
-        CreationBroker creationBroker = new CreationBrokerImpl();
         InvocationHandler invocationHandler = new DynamicFactoryInvocationHandlerBuilder().withCreationBroker(creationBroker).build();
         return new FactoryCreatorImpl(invocationHandler, creationBroker);
     }

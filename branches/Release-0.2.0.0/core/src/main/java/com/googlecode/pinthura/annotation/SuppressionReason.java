@@ -52,6 +52,7 @@ public @interface SuppressionReason {
                     TEST_VALUE, /* A test value is being used. */
                     TEST_TYPE, /* A test type is being used. eg. Deux, Tres.*/
                     CANT_INFER_GENERICS, /* can't infer generics for one reason or another. use desc if you need to. */
+                    SIMPLIFY_GENERICS, /* Some generic information has been dropped to make the type easier to read. */
                     CANT_CREATE_GENERIC_ARRAY, /* can't create generic arrays.  */
                     CANT_INFER_GENERICS_ON_MOCKS, /* can't infer generic on mock objects. */
                     INCUBATOR, /* The incubator pattern is being used, instances of the class will be returned */
