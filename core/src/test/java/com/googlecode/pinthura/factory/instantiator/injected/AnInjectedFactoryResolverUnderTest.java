@@ -45,7 +45,7 @@ public final class AnInjectedFactoryResolverUnderTest {
     private InjectedInstanceSorterFactory mockInjectedInstanceSorterFactory;
     private InjectedFactoryResolver resolver;
     private MethodParam mockMethodParam;
-    private InjectedFactoryValuesFactory mockInjectedFactoryValuesFactory;
+    private ConstructorParamFactory mockConstructorParamFactory;
     private Arrayz arrayz;
 
 
@@ -54,12 +54,12 @@ public final class AnInjectedFactoryResolverUnderTest {
         mockAnnotatedFactoryExtractor = mockControl.createMock(AnnotatedFactoryExtractor.class);
         mockClassInstanceFactory = mockControl.createMock(ClassInstanceFactory.class);
         mockInjectedInstanceSorterFactory = mockControl.createMock(InjectedInstanceSorterFactory.class);
-        mockInjectedFactoryValuesFactory = mockControl.createMock(InjectedFactoryValuesFactory.class);
+        mockConstructorParamFactory = mockControl.createMock(ConstructorParamFactory.class);
         mockMethodParam = mockControl.createMock(MethodParam.class);
         arrayz = new ArrayzImpl();
 
         resolver = new InjectedFactoryResolverImpl(mockAnnotatedFactoryExtractor, mockClassInstanceFactory,
-                mockInjectedInstanceSorterFactory, mockInjectedFactoryValuesFactory);
+                mockInjectedInstanceSorterFactory, mockConstructorParamFactory);
     }
 
     @SuppressWarnings({ "unchecked" })
@@ -95,13 +95,13 @@ public final class AnInjectedFactoryResolverUnderTest {
         mockResolvedFactorySorter.sort(factories, classInstanceArray);
         mockSuppliedFactorySorter.sort(mockMethodParam, classInstanceArray);
 
-        InjectedFactoryValues mockInjectedFactoryValues = mockControl.createMock(InjectedFactoryValues.class);
-        EasyMock.expect(mockInjectedFactoryValuesFactory.createInjectedFactoryValues(classInstanceArray)).
-                andReturn(mockInjectedFactoryValues);
+        ConstructorParam mockConstructorParam = mockControl.createMock(ConstructorParam.class);
+        EasyMock.expect(mockConstructorParamFactory.createInjectedFactoryValues(classInstanceArray)).
+                andReturn(mockConstructorParam);
         mockControl.replay();
 
-        InjectedFactoryValues injectedFactoryValues = resolver.resolve(mockMethodParam);
-        assertThat(injectedFactoryValues, sameInstance(mockInjectedFactoryValues));
+        ConstructorParam constructorParam = resolver.resolve(mockMethodParam);
+        assertThat(constructorParam, sameInstance(mockConstructorParam));
 
         mockControl.verify();
     }

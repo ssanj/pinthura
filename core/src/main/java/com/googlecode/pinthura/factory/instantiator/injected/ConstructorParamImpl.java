@@ -22,12 +22,12 @@ import com.googlecode.pinthura.util.Arrayz;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class InjectedFactoryValuesImpl implements InjectedFactoryValues {
+public final class ConstructorParamImpl implements ConstructorParam {
 
     private final ClassInstance[] classInstances;
     private final Arrayz arrayz;
 
-    public InjectedFactoryValuesImpl(final ClassInstance[] classInstances, final Arrayz arrayz) {
+    public ConstructorParamImpl(final ClassInstance[] classInstances, final Arrayz arrayz) {
         this.classInstances = classInstances;
         this.arrayz = arrayz;
     }

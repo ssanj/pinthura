@@ -30,8 +30,8 @@ import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.List;
-
-public final class AnInjectedFactoryValuesUnderTest {
+//TODO: Move to an incubator.
+public final class AConstructorParamUnderTest {
 
     private final IMocksControl mockControl = EasyMock.createControl();
     private ClassInstance mockClassInstance1;
@@ -62,7 +62,7 @@ public final class AnInjectedFactoryValuesUnderTest {
                     andReturn(classes);
         mockControl.replay();
 
-        InjectedFactoryValues values = new InjectedFactoryValuesImpl(classInstances, mockArrayz);
+        ConstructorParam values = new ConstructorParamImpl(classInstances, mockArrayz);
         ClassBoundary<?>[] result = values.getConstructorTypes();
         assertThat(result, equalTo(classes));
 
@@ -81,7 +81,7 @@ public final class AnInjectedFactoryValuesUnderTest {
                 andReturn(instanceArray);
         mockControl.replay();
 
-        InjectedFactoryValues values = new InjectedFactoryValuesImpl(classInstances, mockArrayz);
+        ConstructorParam values = new ConstructorParamImpl(classInstances, mockArrayz);
         Object[] result = values.getConstructorArguments();
         assertThat(result, equalTo(instanceArray));
 

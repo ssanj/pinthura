@@ -27,5 +27,5 @@ public interface InjectedFactoryResolver {
      * @param methodParam The annotated method.
      * @return An <code>InjectedFactoryValues</code> object encapsulating <code>Constructor</code> parameters.
      */
-    InjectedFactoryValues resolve(final MethodParam methodParam);
+    ConstructorParam resolve(final MethodParam methodParam);
 }
