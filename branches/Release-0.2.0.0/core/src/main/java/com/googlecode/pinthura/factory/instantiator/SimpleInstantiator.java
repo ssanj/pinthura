@@ -63,7 +63,7 @@ public final class SimpleInstantiator implements InstantiationStrategy {
     }
 
     /**
-     * The name of this filter.
+     * The filter name displayed when a filter list is displayed.
      * @return The name of this filter.
      */
     public String getFilterName() {

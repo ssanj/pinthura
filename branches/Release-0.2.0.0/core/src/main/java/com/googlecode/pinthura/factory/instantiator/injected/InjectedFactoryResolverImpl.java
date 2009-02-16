@@ -24,6 +24,9 @@ import com.googlecode.pinthura.factory.instantiator.ClassInstanceFactory;
 
 import java.util.List;
 
+/**
+ * Locates the correct constructor on an object when injected and supplied parameters are specified.
+ */
 public final class InjectedFactoryResolverImpl implements InjectedFactoryResolver {
 
     private final AnnotatedFactoryExtractor extractor;
@@ -31,6 +34,13 @@ public final class InjectedFactoryResolverImpl implements InjectedFactoryResolve
     private final InjectedInstanceSorterFactory instanceSorterFactory;
     private final InjectedFactoryValuesFactory factoryValuesFactory;
 
+    /**
+     * Constructor.
+     * @param extractor Strategy or extracting annotations.
+     * @param classInstanceFactory Factory for creating <code>ClassInstance</code>es.
+     * @param instanceSorterFactory Strategy for sorting instances.
+     * @param factoryValuesFactory  Factory for creating <code>InjectedFactoryValues</code>.
+     */
     public InjectedFactoryResolverImpl(final AnnotatedFactoryExtractor extractor, final ClassInstanceFactory classInstanceFactory,
         final InjectedInstanceSorterFactory instanceSorterFactory, final InjectedFactoryValuesFactory factoryValuesFactory) {
         this.extractor = extractor;
@@ -39,7 +49,12 @@ public final class InjectedFactoryResolverImpl implements InjectedFactoryResolve
         this.factoryValuesFactory = factoryValuesFactory;
     }
 
-    @SuppressWarnings({ "unchecked" })
+    /**
+     * Derives a constructor for the target object when given the <code>MethodParam</code>.
+     * @param methodParam The annotated method.
+     * @return An <code>InjectedFactoryValues</code> object which encapsulates constructor details.
+     */
+    @SuppressWarnings("unchecked")
     public InjectedFactoryValues resolve(final MethodParam methodParam) {
         Factory[] factories = extractor.extractFactories(methodParam);
         List<ClassBoundary<?>> methodParamTypes = methodParam.getParameterTypes();
