@@ -67,14 +67,14 @@ public final class ADynamicFactoryInstantiatorUnderTest {
         ClassBoundary mockConstructorArg = mockControl.createMock(ClassBoundary.class);
         UrlBoundary mockUrlBoundary = mockControl.createMock(UrlBoundary.class);
         Shape mockShape = mockControl.createMock(Shape.class);
-        InjectedFactoryValues mockInjectedFactoryValues = mockControl.createMock(InjectedFactoryValues.class);
+        ConstructorParam mockConstructorParam = mockControl.createMock(ConstructorParam.class);
         EasyMock.expect(mockAnnotatedClassExtractor.extract(mockMethodParam)).andReturn(mockImplementation);
-        EasyMock.expect(mockInjectedFactoryResolver.resolve(mockMethodParam)).andReturn(mockInjectedFactoryValues);
+        EasyMock.expect(mockInjectedFactoryResolver.resolve(mockMethodParam)).andReturn(mockConstructorParam);
 
         ClassBoundary[] constructorTypes = arrayz.fromObjects(mockConstructorArg);
         Object[] arguments = arrayz.fromObjects(mockUrlBoundary);
-        EasyMock.expect(mockInjectedFactoryValues.getConstructorTypes()).andReturn(constructorTypes);
-        EasyMock.expect(mockInjectedFactoryValues.getConstructorArguments()).andReturn(arguments);
+        EasyMock.expect(mockConstructorParam.getConstructorTypes()).andReturn(constructorTypes);
+        EasyMock.expect(mockConstructorParam.getConstructorArguments()).andReturn(arguments);
         ConstructorBoundary mockConstructorBoundary = mockControl.createMock(ConstructorBoundary.class);
         EasyMock.expect(mockImplementation.getConstructor(constructorTypes)).andReturn(mockConstructorBoundary);
         EasyMock.expect(mockConstructorBoundary.newInstance(arguments)).andReturn(mockShape);

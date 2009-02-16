@@ -24,8 +24,8 @@ import com.googlecode.pinthura.factory.instantiator.ClassInstanceFactory;
 import com.googlecode.pinthura.factory.instantiator.ClassInstanceFactoryImpl;
 import com.googlecode.pinthura.factory.instantiator.injected.InjectedFactoryResolver;
 import com.googlecode.pinthura.factory.instantiator.injected.InjectedFactoryResolverImpl;
-import com.googlecode.pinthura.factory.instantiator.injected.InjectedFactoryValuesFactory;
-import com.googlecode.pinthura.factory.instantiator.injected.InjectedFactoryValuesFactoryImpl;
+import com.googlecode.pinthura.factory.instantiator.injected.ConstructorParamFactory;
+import com.googlecode.pinthura.factory.instantiator.injected.ConstructorParamFactoryImpl;
 import com.googlecode.pinthura.factory.instantiator.injected.InjectedInstanceSorterFactoryImpl;
 import com.googlecode.pinthura.util.ArrayzImpl;
 import com.googlecode.pinthura.util.CreationBroker;
@@ -37,14 +37,14 @@ public final class InjectedFactoryResolverBuilder {
     private AnnotationFinder annotationFinder;
     private ClassInstanceFactory classInstanceFactory;
     private ClassBoundaryFactory classBoundaryFactory;
-    private InjectedFactoryValuesFactory injectedFactoryValuesFactory;
+    private ConstructorParamFactory constructorParamFactory;
 
     public InjectedFactoryResolverBuilder() {
         creationBroker = new CreationBrokerImpl();
         annotationFinder = new AnnotationFinderImpl();
         classInstanceFactory = new ClassInstanceFactoryImpl();
         classBoundaryFactory = new ClassBoundaryFactoryImpl();
-        injectedFactoryValuesFactory = new InjectedFactoryValuesFactoryImpl(new ArrayzImpl());
+        constructorParamFactory = new ConstructorParamFactoryImpl(new ArrayzImpl());
     }
 
     public InjectedFactoryResolverBuilder withCreationBroker(final CreationBroker creationBroker) {
@@ -67,8 +67,8 @@ public final class InjectedFactoryResolverBuilder {
         return this;
     }
 
-    public InjectedFactoryResolverBuilder withFactoryValuesFactory(final InjectedFactoryValuesFactory injectedFactoryValuesFactory) {
-        this.injectedFactoryValuesFactory = injectedFactoryValuesFactory;
+    public InjectedFactoryResolverBuilder withFactoryValuesFactory(final ConstructorParamFactory constructorParamFactory) {
+        this.constructorParamFactory = constructorParamFactory;
         return this;
     }
 
@@ -78,6 +78,6 @@ public final class InjectedFactoryResolverBuilder {
         return  new InjectedFactoryResolverImpl(new AnnotatedFactoryExtractorImpl(annotationFinder, classBoundaryFactory),
                 classInstanceFactory,
                 new InjectedInstanceSorterFactoryImpl(classInstanceFactory, creationBroker),
-                injectedFactoryValuesFactory);
+                constructorParamFactory);
     }
 }

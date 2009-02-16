@@ -50,10 +50,10 @@ public final class DynamicFactoryInstantiator implements InstantiationStrategy {
     public Object filter(final MethodParam methodParam) throws MatchNotFoundException {
         try {
             ClassBoundary<?> implClass = classExtractor.extract(methodParam);
-            InjectedFactoryValues injectedFactoryValues = factoryResolver.resolve(methodParam);
+            ConstructorParam constructorParam = factoryResolver.resolve(methodParam);
 
-            return implClass.getConstructor(injectedFactoryValues.getConstructorTypes()).
-                    newInstance(injectedFactoryValues.getConstructorArguments());
+            return implClass.getConstructor(constructorParam.getConstructorTypes()).
+                    newInstance(constructorParam.getConstructorArguments());
         } catch (Exception e) {
             throw new MatchNotFoundException(e);
         }

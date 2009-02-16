@@ -18,15 +18,15 @@ package com.googlecode.pinthura.factory.instantiator.injected;
 import com.googlecode.pinthura.factory.instantiator.ClassInstance;
 import com.googlecode.pinthura.util.Arrayz;
 
-public final class InjectedFactoryValuesFactoryImpl implements InjectedFactoryValuesFactory {
+public final class ConstructorParamFactoryImpl implements ConstructorParamFactory {
 
     private Arrayz arrayz;
 
-    public InjectedFactoryValuesFactoryImpl(final Arrayz arrayz) {
+    public ConstructorParamFactoryImpl(final Arrayz arrayz) {
         this.arrayz = arrayz;
     }
 
-    public InjectedFactoryValues createInjectedFactoryValues(final ClassInstance[] classInstances) {
-        return new InjectedFactoryValuesImpl(classInstances, arrayz);
+    public ConstructorParam createInjectedFactoryValues(final ClassInstance[] classInstances) {
+        return new ConstructorParamImpl(classInstances, arrayz);
     }
 }

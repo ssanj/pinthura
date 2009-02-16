@@ -32,7 +32,7 @@ public final class InjectedFactoryResolverImpl implements InjectedFactoryResolve
     private final AnnotatedFactoryExtractor extractor;
     private final ClassInstanceFactory classInstanceFactory;
     private final InjectedInstanceSorterFactory instanceSorterFactory;
-    private final InjectedFactoryValuesFactory factoryValuesFactory;
+    private final ConstructorParamFactory factoryValuesFactory;
 
     /**
      * Constructor.
@@ -42,7 +42,7 @@ public final class InjectedFactoryResolverImpl implements InjectedFactoryResolve
      * @param factoryValuesFactory  Factory for creating <code>InjectedFactoryValues</code>.
      */
     public InjectedFactoryResolverImpl(final AnnotatedFactoryExtractor extractor, final ClassInstanceFactory classInstanceFactory,
-        final InjectedInstanceSorterFactory instanceSorterFactory, final InjectedFactoryValuesFactory factoryValuesFactory) {
+        final InjectedInstanceSorterFactory instanceSorterFactory, final ConstructorParamFactory factoryValuesFactory) {
         this.extractor = extractor;
         this.classInstanceFactory = classInstanceFactory;
         this.instanceSorterFactory = instanceSorterFactory;
@@ -55,7 +55,7 @@ public final class InjectedFactoryResolverImpl implements InjectedFactoryResolve
      * @return An <code>InjectedFactoryValues</code> object which encapsulates constructor details.
      */
     @SuppressWarnings("unchecked")
-    public InjectedFactoryValues resolve(final MethodParam methodParam) {
+    public ConstructorParam resolve(final MethodParam methodParam) {
         Factory[] factories = extractor.extractFactories(methodParam);
         List<ClassBoundary<?>> methodParamTypes = methodParam.getParameterTypes();
         ClassInstance[] classInstances = classInstanceFactory.createClassInstanceArray(methodParamTypes.size() + factories.length);

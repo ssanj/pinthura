@@ -21,7 +21,7 @@ import com.googlecode.pinthura.boundary.java.lang.ClassBoundary;
  * Encapsulates <code>Constructor</code> parameters.
  */
 //TODO: Rename this class. Maybe ConstructorParam ?
-public interface InjectedFactoryValues {
+public interface ConstructorParam {
 
     /**
      * A <code>ClassBoundary[]</code> of types used for a <code>Constructor</code>.

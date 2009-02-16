@@ -18,14 +18,14 @@ package com.googlecode.pinthura.factory.instantiator.injected;
 import com.googlecode.pinthura.factory.instantiator.ClassInstance;
 
 /**
- * Creates <code>InjectedFactoryValues</code> instances.
+ * Creates <code>ConstructorParam</code> instances.
  */
-public interface InjectedFactoryValuesFactory {
+public interface ConstructorParamFactory {
 
     /**
-     * Creates an <code>InjectedFactoryValues</code> instance given a <code>ClassInstance[]</code>.
+     * Creates an <code>ConstructorParam</code> instance given a <code>ClassInstance[]</code>.
      * @param classInstances The <code>ClassInstance</code>s that make up the <code>InjectedFactoryValues</code> object.
-     * @return An <code>InjectedFactoryValues</code> instance.
+     * @return An <code>ConstructorParam</code> instance.
      */
-    InjectedFactoryValues createInjectedFactoryValues(ClassInstance[] classInstances);
+    ConstructorParam createInjectedFactoryValues(ClassInstance[] classInstances);
 }
