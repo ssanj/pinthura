@@ -18,6 +18,9 @@ package com.googlecode.pinthura.factory.instantiator;
 import com.googlecode.pinthura.factory.MethodParam;
 import com.googlecode.pinthura.filter.FilterLink;
 
+/**
+ * Interface that creates a <code>FilterLink</code> that takes in a <code>MethodParam</code> and an <code>Object</code>.
+ */
 public interface InstantiationStrategy extends FilterLink<MethodParam, Object> {
     //This interface has been introduced to make the generics easier to use.
 }
