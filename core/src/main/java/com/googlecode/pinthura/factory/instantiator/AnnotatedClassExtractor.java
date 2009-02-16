@@ -18,7 +18,18 @@ package com.googlecode.pinthura.factory.instantiator;
 import com.googlecode.pinthura.boundary.java.lang.ClassBoundary;
 import com.googlecode.pinthura.factory.MethodParam;
 
+/**
+ * Extracts a <code>ClassBoundary</code> for a specific annotation which exists on the supplied <code>MethodParam</code>.
+ */
 public interface AnnotatedClassExtractor {
 
+    /**
+     * Returns a <code>ClassBoundary</code> for a specifc annotation given the <code>MethodParam</code> which contains
+     * the annotation.
+     * @param param The method that contains the annotation.
+     * @param <T> The type of annotation.
+     * @return The <code>ClassBoundary</code> for the annotation retrieved.
+     * Exceptions are propagated from underlying classes.
+     */
     <T> ClassBoundary<T> extract(MethodParam param);
 }

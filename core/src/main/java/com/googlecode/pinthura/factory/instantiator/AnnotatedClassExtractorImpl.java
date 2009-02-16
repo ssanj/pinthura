@@ -21,6 +21,9 @@ import com.googlecode.pinthura.boundary.java.lang.ClassBoundaryImpl;
 import com.googlecode.pinthura.factory.Implementation;
 import com.googlecode.pinthura.factory.MethodParam;
 
+/**
+ * Extracts the <code>Implementation</code> annotation from a <code>MethodParam</code> object.
+ */
 public final class AnnotatedClassExtractorImpl implements AnnotatedClassExtractor {
 
     private final AnnotationFinder annotationFinder;
