@@ -20,15 +20,23 @@ import com.googlecode.pinthura.factory.MethodParam;
 import com.googlecode.pinthura.factory.locator.deriver.ClassNameDeriver;
 import com.googlecode.pinthura.filter.MatchNotFoundException;
 
+/**
+ * Locates and instantiates a <code>Class</code> by deriving its class name.
+ */
 public final class SimpleInstantiator implements InstantiationStrategy {
 
     private static final String FILTER_NAME = "Simple Instantiator";
 
     private final ConstructorLocator constructorLocator;
     private final ConstructorInstantiator constructorInstantiator;
-
     private final ClassNameDeriver classNameDeriver;
 
+    /**
+     * Constructor.
+     * @param classNameDeriver The strategy used to derive class names.
+     * @param locator The strategy used to locate constructors.
+     * @param instantiator The strategy used to instantiate classes.
+     */
     public SimpleInstantiator(final ClassNameDeriver classNameDeriver, final ConstructorLocator locator,
                               final ConstructorInstantiator instantiator) {
         this.classNameDeriver = classNameDeriver;
@@ -36,7 +44,13 @@ public final class SimpleInstantiator implements InstantiationStrategy {
         constructorInstantiator = instantiator;
     }
 
-    @SuppressWarnings({ "unchecked" })
+    /**
+     * Returns an instance of a class given a <code>MethodParam</code> that hints to the class name.
+     * @param methodParam The method.
+     * @return An instance of a class whose name was derived.
+     * @throws MatchNotFoundException If the class whose name was derived can't be instantiated.
+     */
+    @SuppressWarnings("unchecked")
     public Object filter(final MethodParam methodParam) {
         String implClass = "[Unknown]";
         try {
@@ -48,6 +62,10 @@ public final class SimpleInstantiator implements InstantiationStrategy {
         }
     }
 
+    /**
+     * The name of this filter.
+     * @return The name of this filter.
+     */
     public String getFilterName() {
         return FILTER_NAME;
     }
