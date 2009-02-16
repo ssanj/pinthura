@@ -19,6 +19,9 @@ import com.googlecode.pinthura.boundary.java.lang.reflect.ConstructorBoundary;
 import com.googlecode.pinthura.factory.MethodParam;
 import com.googlecode.pinthura.filter.MatchNotFoundException;
 
+/**
+ * Instantiates a class from annotations provided on a <code>MethodParam</code>.
+ */
 public final class AnnotationInstantiator implements InstantiationStrategy {
 
     private static final String FILTER_NAME = "Annotation Instantiator";
@@ -27,6 +30,12 @@ public final class AnnotationInstantiator implements InstantiationStrategy {
     private final ConstructorLocator constructorLocator;
     private final ConstructorInstantiator instantiator;
 
+    /**
+     * Constructor.
+     * @param annotationExtractor Strategy for extracting annotations.
+     * @param constructorLocator Strategy for locating the correct constructor.
+     * @param instantiator Strategy for instantiating located constructor.
+     */
     public AnnotationInstantiator(final AnnotatedClassExtractor annotationExtractor, final ConstructorLocator constructorLocator,
                                   final ConstructorInstantiator instantiator) {
         this.annotationExtractor = annotationExtractor;
@@ -34,7 +43,13 @@ public final class AnnotationInstantiator implements InstantiationStrategy {
         this.instantiator = instantiator;
     }
 
-    public Object filter(final MethodParam methodParam) {
+    /**
+     * Creates an instance of an object hinted to by annotations on the supplied <code>MethodParam</code>.
+     * @param methodParam The annotated method.
+     * @return An instance of the object hinted to by annotations on the supplied <code>MethodParam</code>.
+     * @throws MatchNotFoundException If the instance could not be created.
+     */
+    public Object filter(final MethodParam methodParam) throws MatchNotFoundException {
         try {
             ConstructorBoundary<?> constructor = constructorLocator.locate(methodParam, annotationExtractor.extract(methodParam));
             return instantiator.instantiate(methodParam, constructor);
@@ -43,6 +58,10 @@ public final class AnnotationInstantiator implements InstantiationStrategy {
         }
     }
 
+    /**
+     * The filter name displayed when a filter list is displayed.
+     * @return The filter name.
+     */
     public String getFilterName() {
         return FILTER_NAME;
     }

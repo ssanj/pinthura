@@ -17,7 +17,15 @@ package com.googlecode.pinthura.factory.instantiator.injected;
 
 import com.googlecode.pinthura.factory.instantiator.ClassInstance;
 
+/**
+ * Creates <code>InjectedFactoryValues</code> instances.
+ */
 public interface InjectedFactoryValuesFactory {
 
+    /**
+     * Creates an <code>InjectedFactoryValues</code> instance given a <code>ClassInstance[]</code>.
+     * @param classInstances The <code>ClassInstance</code>s that make up the <code>InjectedFactoryValues</code> object.
+     * @return An <code>InjectedFactoryValues</code> instance.
+     */
     InjectedFactoryValues createInjectedFactoryValues(ClassInstance[] classInstances);
 }

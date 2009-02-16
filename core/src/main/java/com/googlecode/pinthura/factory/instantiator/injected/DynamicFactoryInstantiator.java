@@ -60,7 +60,7 @@ public final class DynamicFactoryInstantiator implements InstantiationStrategy {
     }
 
     /**
-     * The filter name.
+     * The filter name displayed when a filter list is displayed.
      * @return The filter name.
      */
     public String getFilterName() {
