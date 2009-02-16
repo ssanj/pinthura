@@ -17,7 +17,15 @@ package com.googlecode.pinthura.factory.instantiator.injected;
 
 import com.googlecode.pinthura.factory.MethodParam;
 
+/**
+ * Derives a <code>Constructor</code> from the annotations of <code>MethodParam</code>.
+ */
 public interface InjectedFactoryResolver {
 
+    /**
+     * Derives constructor parameters from the supplied <code>MethodParam</code>.
+     * @param methodParam The annotated method.
+     * @return An <code>InjectedFactoryValues</code> object encapsulating <code>Constructor</code> parameters.
+     */
     InjectedFactoryValues resolve(final MethodParam methodParam);
 }
