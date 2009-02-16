@@ -19,8 +19,24 @@ import com.googlecode.pinthura.factory.MethodParam;
 import com.googlecode.pinthura.factory.InjectedFactory;
 import com.googlecode.pinthura.factory.Factory;
 
+/**
+ * Extracts factory information from a supplied <code>MethodParam</code> object.
+ */
 public interface AnnotatedFactoryExtractor {
 
+    /**
+     * Extracts a <code>InjectedFactory</code> from a <code>MethodParam</code>
+     * @param methodParam The method.
+     * @return The InjectedFactory on the method.
+     * Exceptions are propagated from underlying classes.
+     */
     InjectedFactory extract(final MethodParam methodParam);
+
+    /**
+     * Extracts a <code>Factory[]</code> from a <code>MethodParam</code>
+     * @param methodParam The method.
+     * @return The Factory[] on the method.
+     * Exceptions are propagated from underlying classes.
+     */
     Factory[] extractFactories(final MethodParam methodParam);
 }
