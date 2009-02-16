@@ -1,0 +1,8 @@
+code cleanup guidelines
+=======================
+
+1. javadoc
+2. unit tests
+3. methods should define exceptions
+4. remove final modifier from interfaces
+5. Make it hard for the user to make mistakes.
