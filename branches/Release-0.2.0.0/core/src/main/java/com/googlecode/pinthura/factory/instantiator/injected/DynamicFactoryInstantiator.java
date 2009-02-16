@@ -21,6 +21,9 @@ import com.googlecode.pinthura.factory.instantiator.AnnotatedClassExtractor;
 import com.googlecode.pinthura.factory.instantiator.InstantiationStrategy;
 import com.googlecode.pinthura.filter.MatchNotFoundException;
 
+/**
+ * Creates an instance of an object via dynamic injection of factory classes.
+ */
 public final class DynamicFactoryInstantiator implements InstantiationStrategy {
 
     private static final String FILTER_NAME = "Dynamic Parameter Instantiator";
@@ -28,11 +31,22 @@ public final class DynamicFactoryInstantiator implements InstantiationStrategy {
     private final AnnotatedClassExtractor classExtractor;
     private final InjectedFactoryResolver factoryResolver;
 
+    /**
+     * Constructor.
+     * @param classExtractor Strategy for extracting annotations from a class.
+     * @param factoryResolver Strategy for sorting injected factory classes.
+     */
     public DynamicFactoryInstantiator(final AnnotatedClassExtractor classExtractor, final InjectedFactoryResolver factoryResolver) {
         this.classExtractor = classExtractor;
         this.factoryResolver = factoryResolver;
     }
 
+    /**
+     * Creates an instance of a <code>Class</code> given an annotated <code>MethodParam</code>.
+     * @param methodParam The annotated method.
+     * @return An instead created from the information on the annotated <code>MethodParam</code>.
+     * @throws MatchNotFoundException If the instance could not be created.
+     */
     public Object filter(final MethodParam methodParam) throws MatchNotFoundException {
         try {
             ClassBoundary<?> implClass = classExtractor.extract(methodParam);
@@ -45,6 +59,10 @@ public final class DynamicFactoryInstantiator implements InstantiationStrategy {
         }
     }
 
+    /**
+     * The filter name.
+     * @return The filter name.
+     */
     public String getFilterName() {
         return FILTER_NAME;
     }
