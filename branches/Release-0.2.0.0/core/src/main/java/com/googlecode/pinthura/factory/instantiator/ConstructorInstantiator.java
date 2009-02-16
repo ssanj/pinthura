@@ -18,7 +18,19 @@ package com.googlecode.pinthura.factory.instantiator;
 import com.googlecode.pinthura.boundary.java.lang.reflect.ConstructorBoundary;
 import com.googlecode.pinthura.factory.MethodParam;
 
+/**
+ * Creates an instance from a <code>ConstructorBoundary</code> and a <code>MethodParam</code>
+ * with the necessary parameters for that construction.
+ */
 public interface ConstructorInstantiator {
 
+    /**
+     * Creates an instance from a constructor and a method which has its constructor
+     * parameters.
+     * @param methodParam The method and its parameters.
+     * @param constructorBoundary The constructor.
+     * @param <T> The <code>Class</code> on which the constructor exists.
+     * @return An instance created from the constructor.
+     */
     <T> Object instantiate(MethodParam methodParam, ConstructorBoundary<T> constructorBoundary);
 }

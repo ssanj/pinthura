@@ -23,6 +23,7 @@ public final class ClassInstanceImpl implements ClassInstance {
     private ClassBoundary<?> clazz;
     private final Object instance;
 
+    //TODO: This should not be doing any dynamic allocation. Do it through a factory.
     public <T> ClassInstanceImpl(final Class<T> clazz, final T instance) {
         this(new ClassBoundaryImpl<T>(clazz), instance);
     }

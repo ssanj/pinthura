@@ -19,9 +19,28 @@ import com.googlecode.pinthura.boundary.java.lang.ClassBoundary;
 import com.googlecode.pinthura.boundary.java.lang.reflect.ConstructorBoundary;
 import com.googlecode.pinthura.factory.MethodParam;
 
+/**
+ * Locates a constructor given various parameters.
+ */
 public interface ConstructorLocator {
 
+    /**
+     * Returns a constructor given a <code>MethodParam</code> and the name of the <code>Class</code> on which the constructor exists.
+     * @param methodParam The method containing the constructor parameters.
+     * @param className The name of the class on which the constructor exists.
+     * @param <T> The type of the <code>Class</code> on which the constructor exists.
+     * @return A constructor.
+     * Exceptions are propagated from underlying classes.
+     */
     <T> ConstructorBoundary<T> locate(MethodParam methodParam, String className);
 
+    /**
+     * Returns a constructor given a <code>MethodParam</code> and the class on which the constructor exists.
+     * @param methodParam The method containing the constructor parameters.
+     * @param clazz The class on which the constructor exists.
+     * @param <T> The type of the <code>Class</code> on which the constructor exists.
+     * @return A constructor.
+     * Exceptions are propagated from underlying classes.
+     */
     <T> ConstructorBoundary<T> locate(MethodParam methodParam, ClassBoundary<T> clazz);
 }
