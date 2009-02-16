@@ -17,11 +17,33 @@ package com.googlecode.pinthura.factory.instantiator;
 
 import com.googlecode.pinthura.boundary.java.lang.ClassBoundary;
 
+/**
+ * Creates a <code>ClassInstance</code> given various parameters.
+ */
 public interface ClassInstanceFactory {
 
+    /**
+     * Returns a <code>ClassInstance</code> given a <code>Class</code> and its instance.
+     * @param clazz The <code>Class</code>.
+     * @param instance The instance.
+     * @param <T> The types of <code>Class</code> and its instance.
+     * @return A <code>ClassInstance</code>.
+     */
     <T> ClassInstance createClassInstance(Class<T> clazz, T instance);
 
+    /**
+     * Returns a <code>ClassInstance</code> given a <code>ClassBoundary</code> and its instance.
+     * @param clazz The class.
+     * @param instance The instance.
+     * @param <T> The types of <code>ClassBoundary</code> and its instance.
+     * @return A <code>ClassInstance</code>.
+     */
     <T> ClassInstance createClassInstance(ClassBoundary<T> clazz, T instance);
 
+    /**
+     * Returns a <code>ClassInstance[]</code> of requested size.
+     * @param size The size of the array.
+     * @return A <code>ClassInstance[]</code> of requested size.
+     */
     ClassInstance[] createClassInstanceArray(int size);
 }
