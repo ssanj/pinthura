@@ -19,7 +19,7 @@ import com.googlecode.pinthura.boundary.java.lang.ClassBoundary;
 import com.googlecode.pinthura.factory.MethodParam;
 import com.googlecode.pinthura.factory.instantiator.AnnotatedClassExtractor;
 import com.googlecode.pinthura.factory.instantiator.InstantiationStrategy;
-import com.googlecode.pinthura.filter.CouldNotProcessInputException;
+import com.googlecode.pinthura.processer.CouldNotProcessInputException;
 
 /**
  * Creates an instance of an object via dynamic injection of factory classes.

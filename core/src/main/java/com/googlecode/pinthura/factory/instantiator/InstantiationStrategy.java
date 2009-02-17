@@ -16,7 +16,7 @@
 package com.googlecode.pinthura.factory.instantiator;
 
 import com.googlecode.pinthura.factory.MethodParam;
-import com.googlecode.pinthura.filter.ProcesserChainlet;
+import com.googlecode.pinthura.processer.ProcesserChainlet;
 
 /**
  * Interface that creates a <code>ProcesserChainlet</code> that takes in a <code>MethodParam</code> and an <code>Object</code>.

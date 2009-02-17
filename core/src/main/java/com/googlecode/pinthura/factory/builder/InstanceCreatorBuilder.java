@@ -18,8 +18,8 @@ package com.googlecode.pinthura.factory.builder;
 import com.googlecode.pinthura.factory.InstanceCreator;
 import com.googlecode.pinthura.factory.InstanceCreatorImpl;
 import com.googlecode.pinthura.factory.MethodParam;
-import com.googlecode.pinthura.filter.ChainOfResponsibility;
-import com.googlecode.pinthura.filter.ProcesserChain;
+import com.googlecode.pinthura.processer.ChainOfResponsibility;
+import com.googlecode.pinthura.processer.ProcesserChain;
 import com.googlecode.pinthura.util.CreationBroker;
 import com.googlecode.pinthura.util.CreationBrokerImpl;
 

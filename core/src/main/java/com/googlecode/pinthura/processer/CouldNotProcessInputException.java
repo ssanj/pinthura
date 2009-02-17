@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.pinthura.filter;
+package com.googlecode.pinthura.processer;
 
 /**
  * Throw this exception when a <code>ProcesserChainlet</code> can't process its input.

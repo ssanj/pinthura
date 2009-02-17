@@ -23,7 +23,7 @@ import com.googlecode.pinthura.data.UrlBoundary;
 import com.googlecode.pinthura.factory.MethodParam;
 import com.googlecode.pinthura.factory.instantiator.AnnotatedClassExtractor;
 import com.googlecode.pinthura.factory.instantiator.InstantiationStrategy;
-import com.googlecode.pinthura.filter.CouldNotProcessInputException;
+import com.googlecode.pinthura.processer.CouldNotProcessInputException;
 import com.googlecode.pinthura.test.ExceptionAsserter;
 import com.googlecode.pinthura.test.ExceptionAsserterImpl;
 import com.googlecode.pinthura.test.ExceptionInfoImpl;
