@@ -23,7 +23,7 @@ import com.googlecode.pinthura.data.UrlBoundary;
 import com.googlecode.pinthura.factory.MethodParam;
 import com.googlecode.pinthura.factory.instantiator.AnnotatedClassExtractor;
 import com.googlecode.pinthura.factory.instantiator.InstantiationStrategy;
-import com.googlecode.pinthura.filter.MatchNotFoundException;
+import com.googlecode.pinthura.filter.CouldNotProcessInputException;
 import com.googlecode.pinthura.test.ExceptionAsserter;
 import com.googlecode.pinthura.test.ExceptionAsserterImpl;
 import com.googlecode.pinthura.test.ExceptionInfoImpl;
@@ -98,7 +98,7 @@ public final class ADynamicFactoryInstantiatorUnderTest {
         EasyMock.expect(mockAnnotatedClassExtractor.extract(mockMethodParam)).andThrow(new IllegalArgumentException("boom"));
         mockControl.replay();
 
-        exceptionAsserter.runAndAssertException(new ExceptionInfoImpl(MatchNotFoundException.class,
+        exceptionAsserter.runAndAssertException(new ExceptionInfoImpl(CouldNotProcessInputException.class,
                                                 new ExceptionInfoImpl(IllegalArgumentException.class, "boom")),
                 new Exceptional() {@Override public void run() { instantiator.process(mockMethodParam); }
         });

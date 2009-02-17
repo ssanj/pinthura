@@ -19,7 +19,7 @@ import com.googlecode.pinthura.boundary.java.lang.ClassBoundary;
 import com.googlecode.pinthura.factory.MethodParam;
 import com.googlecode.pinthura.factory.instantiator.AnnotatedClassExtractor;
 import com.googlecode.pinthura.factory.instantiator.InstantiationStrategy;
-import com.googlecode.pinthura.filter.MatchNotFoundException;
+import com.googlecode.pinthura.filter.CouldNotProcessInputException;
 
 /**
  * Creates an instance of an object via dynamic injection of factory classes.
@@ -45,9 +45,9 @@ public final class DynamicFactoryInstantiator implements InstantiationStrategy {
      * Creates an instance of a <code>Class</code> given an annotated <code>MethodParam</code>.
      * @param methodParam The annotated method.
      * @return An instead created from the information on the annotated <code>MethodParam</code>.
-     * @throws MatchNotFoundException If the instance could not be created.
+     * @throws CouldNotProcessInputException If the instance could not be created.
      */
-    public Object process(final MethodParam methodParam) throws MatchNotFoundException {
+    public Object process(final MethodParam methodParam) throws CouldNotProcessInputException {
         try {
             ClassBoundary<?> implClass = classExtractor.extract(methodParam);
             ConstructorParam constructorParam = factoryResolver.resolve(methodParam);
@@ -55,7 +55,7 @@ public final class DynamicFactoryInstantiator implements InstantiationStrategy {
             return implClass.getConstructor(constructorParam.getConstructorTypes()).
                     newInstance(constructorParam.getConstructorArguments());
         } catch (Exception e) {
-            throw new MatchNotFoundException(e);
+            throw new CouldNotProcessInputException(e);
         }
     }
 

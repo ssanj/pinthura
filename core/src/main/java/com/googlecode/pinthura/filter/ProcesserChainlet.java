@@ -20,7 +20,7 @@ package com.googlecode.pinthura.filter;
  * 
  * <p>
  * A <code>ChainOfResponsibility</code> takes in a list of <code>ProcesserChainlet</code>s. The processers are mutallually
- * exclusive. If a processer can't handle a request it throws a <code>MatchNotFoundException</code>.
+ * exclusive. If a processer can't handle a request it throws a <code>CouldNotProcessInputException</code>.
  * If it can handle the request it simply returns the value of the processing of the request.
  *
  * <Input> Type of input.
@@ -34,13 +34,13 @@ package com.googlecode.pinthura.filter;
 public interface ProcesserChainlet<Input, Output> {
 
     /**
-     * Either processes an input and returns its value or throws a <code>MatchNotFoundException</code>to indicate that
-     * another filter should handle it.
+     * Either processes an input and returns its value or throws a <code>CouldNotProcessInputException</code>to indicate that
+     * another processer should handle it.
      * @param input The input parameter.
      * @return The result of processing the input paramater.
-     * @throws MatchNotFoundException If the input parameter can't be handled by this filter.
+     * @throws CouldNotProcessInputException If the input parameter can't be handled by this filter.
      */
-    Output process(final Input input) throws MatchNotFoundException;
+    Output process(final Input input) throws CouldNotProcessInputException;
 
     /**
      * @return The name of this processer.

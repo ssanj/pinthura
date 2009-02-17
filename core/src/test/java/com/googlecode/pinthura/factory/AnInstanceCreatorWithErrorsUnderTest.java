@@ -20,7 +20,7 @@ import com.googlecode.pinthura.boundary.java.lang.ClassBoundary;
 import com.googlecode.pinthura.boundary.java.lang.ClassBoundaryImpl;
 import com.googlecode.pinthura.data.UrlBoundaryImpl;
 import com.googlecode.pinthura.filter.ChainOfResponsibility;
-import com.googlecode.pinthura.filter.MatchNotFoundException;
+import com.googlecode.pinthura.filter.CouldNotProcessInputException;
 import com.googlecode.pinthura.test.ExceptionAsserter;
 import com.googlecode.pinthura.test.ExceptionAsserterImpl;
 import com.googlecode.pinthura.test.ExceptionInfoImpl;
@@ -56,7 +56,7 @@ public final class AnInstanceCreatorWithErrorsUnderTest {
     @Test
     public void shouldThrownANewExceptionIfAMatchNotFoundExceptionIsThrown() {
         ClassBoundary classBoundary = new ClassBoundaryImpl(UrlBoundaryImpl.class);
-        EasyMock.expect(mockChainOfResponsibility.process(mockMethodParam)).andThrow(new MatchNotFoundException());
+        EasyMock.expect(mockChainOfResponsibility.process(mockMethodParam)).andThrow(new CouldNotProcessInputException());
         EasyMock.expect(mockMethodParam.getReturnType()).andReturn(classBoundary);
         mockControl.replay();
 
@@ -65,7 +65,7 @@ public final class AnInstanceCreatorWithErrorsUnderTest {
             instanceCreator.createInstance(mockMethodParam);
             fail();
         } catch (InstanceCreationException e) {
-            assertThat(e.getCause().getClass() == MatchNotFoundException.class, equalTo(true));
+            assertThat(e.getCause().getClass() == CouldNotProcessInputException.class, equalTo(true));
             assertThat(e.getMessage(),
                     equalTo("Could not create instance of ClassBoundaryImpl[class com.googlecode.pinthura.data.UrlBoundaryImpl]"));
         }

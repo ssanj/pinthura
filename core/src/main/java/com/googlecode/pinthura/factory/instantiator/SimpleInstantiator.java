@@ -18,7 +18,7 @@ package com.googlecode.pinthura.factory.instantiator;
 import com.googlecode.pinthura.boundary.java.lang.reflect.ConstructorBoundary;
 import com.googlecode.pinthura.factory.MethodParam;
 import com.googlecode.pinthura.factory.locator.deriver.ClassNameDeriver;
-import com.googlecode.pinthura.filter.MatchNotFoundException;
+import com.googlecode.pinthura.filter.CouldNotProcessInputException;
 
 /**
  * Locates and instantiates a <code>Class</code> by deriving its class name.
@@ -48,7 +48,7 @@ public final class SimpleInstantiator implements InstantiationStrategy {
      * Returns an instance of a class given a <code>MethodParam</code> that hints to the class name.
      * @param methodParam The method.
      * @return An instance of a class whose name was derived.
-     * @throws MatchNotFoundException If the class whose name was derived can't be instantiated.
+     * @throws CouldNotProcessInputException If the class whose name was derived can't be instantiated.
      */
     @SuppressWarnings("unchecked")
     public Object process(final MethodParam methodParam) {
@@ -58,7 +58,7 @@ public final class SimpleInstantiator implements InstantiationStrategy {
             ConstructorBoundary constructorBoundary = constructorLocator.locate(methodParam, implClass);
             return constructorInstantiator.instantiate(methodParam, constructorBoundary);
         } catch (Exception e) {
-            throw new MatchNotFoundException("Could not load implementation for class: " + implClass, e);
+            throw new CouldNotProcessInputException("Could not load implementation for class: " + implClass, e);
         }
     }
 

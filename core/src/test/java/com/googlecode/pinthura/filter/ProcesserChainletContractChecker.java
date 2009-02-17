@@ -34,11 +34,11 @@ public final class ProcesserChainletContractChecker {
 
         try {
             link.process(invalidInput);
-            fail("Excepted MatchNotFoundException to be thrown with invalid input: " + invalidInput);
-        } catch (MatchNotFoundException e) {
+            fail("Excepted CouldNotProcessInputException to be thrown with invalid input: " + invalidInput);
+        } catch (CouldNotProcessInputException e) {
             assertTrue(true);
         } catch (Exception e) {
-            fail("Excepted MatchNotFoundException to be thrown with invalid input: " + invalidInput + ". Got: " + e);
+            fail("Excepted CouldNotProcessInputException to be thrown with invalid input: " + invalidInput + ". Got: " + e);
         }
     }
 }

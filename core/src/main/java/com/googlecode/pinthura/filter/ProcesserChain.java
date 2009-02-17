@@ -24,7 +24,7 @@ import java.util.List;
  * Handles passing the <code>Input</code> parameter to each successor on the <code>List<ProcesserChainlet></code> supplied to its constructor.
  *
  * If a <code>ProcesserChainlet</code> processes the <code>Input</code>, then the result is returned as an <code>Output</code>.
- * If not a <code>MatchNotFoundException</code> is thrown when there are no more <code>FilterLink</code>s to process the input.
+ * If not a <code>CouldNotProcessInputException</code> is thrown when there are no more <code>ProcesserChainlet</code>s to process the input.
  */
 public final class ProcesserChain<Input, Output> implements ChainOfResponsibility<Input, Output> {
 
@@ -43,11 +43,11 @@ public final class ProcesserChain<Input, Output> implements ChainOfResponsibilit
             try {
                 return (Output) processerChainlet.process(input);
                 //CHECKSTYLE_OFF
-            } catch (MatchNotFoundException e) {/*do nothing.*/}
+            } catch (CouldNotProcessInputException e) {/*do nothing.*/}
             //CHECKSTYLE_ON
         }
 
-        throw new MatchNotFoundException("No match found for: " + input + " with processers: " + withProcessers());
+        throw new CouldNotProcessInputException("No match found for: " + input + " with processers: " + withProcessers());
     }
 
     private String withProcessers() {

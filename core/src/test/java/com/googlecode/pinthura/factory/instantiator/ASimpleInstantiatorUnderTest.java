@@ -19,7 +19,7 @@ import com.googlecode.pinthura.boundary.java.lang.reflect.ConstructorBoundary;
 import com.googlecode.pinthura.data.UrlBoundary;
 import com.googlecode.pinthura.factory.MethodParam;
 import com.googlecode.pinthura.factory.locator.deriver.ClassNameDeriver;
-import com.googlecode.pinthura.filter.MatchNotFoundException;
+import com.googlecode.pinthura.filter.CouldNotProcessInputException;
 import static junit.framework.Assert.fail;
 import org.easymock.EasyMock;
 import org.easymock.IMocksControl;
@@ -71,7 +71,7 @@ public final class ASimpleInstantiatorUnderTest {
         try {
             instantiator.process(mockMethodParam);
             fail();
-        } catch (MatchNotFoundException e) {
+        } catch (CouldNotProcessInputException e) {
             assertThat(e.getCause().getClass() == IllegalStateException.class, equalTo(true));
             assertThat(e.getMessage(), equalTo("Could not load implementation for class: [Unknown]"));
         }
@@ -87,7 +87,7 @@ public final class ASimpleInstantiatorUnderTest {
         try {
             instantiator.process(mockMethodParam);
             fail();
-        } catch (MatchNotFoundException e) {
+        } catch (CouldNotProcessInputException e) {
             assertThat(e.getCause().getClass() == IllegalArgumentException.class, equalTo(true));
             assertThat(e.getMessage(), equalTo("Could not load implementation for class: com.googlecode.pinthura.data.UrlBoundaryImpl"));
         }

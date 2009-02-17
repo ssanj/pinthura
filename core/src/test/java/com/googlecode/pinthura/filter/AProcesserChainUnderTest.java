@@ -52,7 +52,7 @@ public final class AProcesserChainUnderTest {
     @SuppressWarnings({ "unchecked", "ThrowableInstanceNeverThrown" })
     @Test
     public void shouldReturnTheFoundMatch() {
-        EasyMock.expect(mockChainlet1.process(STRING_INPUT)).andThrow(new MatchNotFoundException());
+        EasyMock.expect(mockChainlet1.process(STRING_INPUT)).andThrow(new CouldNotProcessInputException());
         EasyMock.expect(mockChainlet2.process(STRING_INPUT)).andReturn(mockCollection);
         mockControl.replay();
 
@@ -66,9 +66,9 @@ public final class AProcesserChainUnderTest {
     @SuppressWarnings({ "ThrowableInstanceNeverThrown" })
     @Test
     public void shouldThrowAnExceptionIfAMatchIsNotFound() {
-        EasyMock.expect(mockChainlet1.process(STRING_INPUT)).andThrow(new MatchNotFoundException());
+        EasyMock.expect(mockChainlet1.process(STRING_INPUT)).andThrow(new CouldNotProcessInputException());
         EasyMock.expect(mockChainlet1.getProcesserName()).andReturn(FILTER1);
-        EasyMock.expect(mockChainlet2.process(STRING_INPUT)).andThrow(new MatchNotFoundException());
+        EasyMock.expect(mockChainlet2.process(STRING_INPUT)).andThrow(new CouldNotProcessInputException());
         EasyMock.expect(mockChainlet2.getProcesserName()).andReturn(FILTER2);
         mockControl.replay();
 
@@ -89,7 +89,7 @@ public final class AProcesserChainUnderTest {
         try {
             createFilterChain().process(STRING_INPUT);
             fail();
-        } catch (MatchNotFoundException e) {
+        } catch (CouldNotProcessInputException e) {
             assertThat(e.getMessage(), equalTo("No match found for: " + STRING_INPUT + " with processers: Filter1, Filter2"));
             mockControl.verify();
         }
