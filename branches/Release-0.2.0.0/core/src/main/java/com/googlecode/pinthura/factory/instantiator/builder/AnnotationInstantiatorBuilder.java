@@ -15,22 +15,60 @@
  */
 package com.googlecode.pinthura.factory.instantiator.builder;
 
+import com.googlecode.pinthura.annotation.AnnotationFinder;
 import com.googlecode.pinthura.annotation.AnnotationFinderImpl;
+import com.googlecode.pinthura.factory.instantiator.AnnotatedClassExtractor;
 import com.googlecode.pinthura.factory.instantiator.AnnotatedClassExtractorImpl;
 import com.googlecode.pinthura.factory.instantiator.AnnotationInstantiator;
+import com.googlecode.pinthura.factory.instantiator.ConstructorInstantiator;
 import com.googlecode.pinthura.factory.instantiator.ConstructorInstantiatorImpl;
+import com.googlecode.pinthura.factory.instantiator.ConstructorLocator;
 import com.googlecode.pinthura.factory.instantiator.ConstructorLocatorImpl;
 import com.googlecode.pinthura.util.Arrayz;
 import com.googlecode.pinthura.util.ArrayzImpl;
 
 public final class AnnotationInstantiatorBuilder {
 
-    public AnnotationInstantiator build() {
-        Arrayz arrayz = new ArrayzImpl();
-        ConstructorLocatorImpl constructorLocator = new ConstructorLocatorImpl(arrayz);
-        ConstructorInstantiatorImpl constructorInstantiator = new ConstructorInstantiatorImpl(arrayz);
+    private Arrayz arrayz;
+    private ConstructorLocator constructorLocator;
+    private ConstructorInstantiator constructorInstantiator;
+    private AnnotationFinder annotationFinder;
+    private AnnotatedClassExtractor annotatedClassExtractor;
 
-        return new AnnotationInstantiator(new AnnotatedClassExtractorImpl(new AnnotationFinderImpl()), constructorLocator,
-                constructorInstantiator);
+    public AnnotationInstantiatorBuilder() {
+        arrayz = new ArrayzImpl();
+        constructorLocator = new ConstructorLocatorImpl(arrayz);
+        constructorInstantiator = new ConstructorInstantiatorImpl(arrayz);
+        annotationFinder = new AnnotationFinderImpl();
+        annotatedClassExtractor = new AnnotatedClassExtractorImpl(annotationFinder);
+    }
+
+    public AnnotationInstantiatorBuilder withArrayz(final Arrayz arrayz) {
+        this.arrayz = arrayz;
+        return this;
+    }
+
+    public AnnotationInstantiatorBuilder withConstructorLocator(final ConstructorLocator constructorLocator) {
+        this.constructorLocator = constructorLocator;
+        return this;
+    }
+
+    public AnnotationInstantiatorBuilder withConstructoInstantiator(final ConstructorInstantiator constructorInstantiator) {
+        this.constructorInstantiator = constructorInstantiator;
+        return this;
+    }
+
+    public AnnotationInstantiatorBuilder withAnnotationFinder(final AnnotationFinder annotationFinder) {
+        this.annotationFinder = annotationFinder;
+        return this;
+    }
+
+    public AnnotationInstantiatorBuilder withAnnotatedClassExtractor(final AnnotatedClassExtractor annotatedClassExtractor) {
+        this.annotatedClassExtractor = annotatedClassExtractor;
+        return this;
+    }
+
+    public AnnotationInstantiator build() {
+        return new AnnotationInstantiator(annotatedClassExtractor, constructorLocator, constructorInstantiator);
     }
 }
