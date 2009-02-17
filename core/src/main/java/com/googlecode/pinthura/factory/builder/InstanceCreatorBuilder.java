@@ -18,8 +18,8 @@ package com.googlecode.pinthura.factory.builder;
 import com.googlecode.pinthura.factory.InstanceCreator;
 import com.googlecode.pinthura.factory.InstanceCreatorImpl;
 import com.googlecode.pinthura.factory.MethodParam;
+import com.googlecode.pinthura.filter.ChainOfResponsibility;
 import com.googlecode.pinthura.filter.FilterChainImpl;
-import com.googlecode.pinthura.filter.FilterLink;
 import com.googlecode.pinthura.util.CreationBroker;
 import com.googlecode.pinthura.util.CreationBrokerImpl;
 
@@ -38,13 +38,13 @@ public final class InstanceCreatorBuilder {
 
     //TODO: The order of these method calls should be important. Currently the end-result is the same no matter the order.
     public InstanceCreator build() {
-        FilterLink<MethodParam, Object> filterChain =
+        ChainOfResponsibility<MethodParam, Object> chain =
                 new FilterChainImpl<MethodParam, Object>(
                     new InstanceCreatorFilterBuilder().
                         havingAnnotationInstantiator().
                         havingSimpleInstantiator().
                         havingDynamicaFactoryInstantiator(creationBroker).
                         build());
-        return new InstanceCreatorImpl(filterChain);
+        return new InstanceCreatorImpl(chain);
     }
 }
