@@ -20,6 +20,7 @@ package com.googlecode.pinthura.filter;
  * This implementation of the Chain of Responsibility pattern has been modified such that the passing of the input parameter to subsequent
  * successors when it can't be handled, is not performed by each Handler/FilterLink. It is done by the <code>FilterChainImpl</code>
  *
+ * <p>
  * The <code>FilterChainImpl</code> takes in a list of <code>FilterLink</code>s. The filters are mutallually exclusive. If a filter can't
  * handle a request it throws a <code>MatchNotFoundException</code>.
  * If it can handle the request it simply returns the value of the processing of the request.
@@ -28,6 +29,7 @@ package com.googlecode.pinthura.filter;
  * <Output> Type of output.
  *
  * Eg. FilterLink<String, Integer>
+ * </p>
  *
  * @see FilterChainImpl
  */
