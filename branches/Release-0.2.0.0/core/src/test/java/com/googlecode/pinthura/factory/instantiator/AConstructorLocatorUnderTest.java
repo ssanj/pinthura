@@ -56,7 +56,7 @@ public final class AConstructorLocatorUnderTest {
         constructorLocator = new ConstructorLocatorImpl(mockArrayz);
     }
 
-    @SuppressWarnings({ "unchecked" })
+    @SuppressWarnings("unchecked")
     @Test
     public void shouldLocateAConstructor() {
         expectClassLoaded();

@@ -40,7 +40,7 @@ public final class AFilterChainUnderTest {
     private FilterLink<String, Collection<?>> mockLink2;
     private Collection mockCollection;
 
-    @SuppressWarnings({ "unchecked" })
+    @SuppressWarnings("unchecked")
     @Before
     public void setup() {
         mockLink1 = mockControl.createMock(FilterLink.class);
@@ -80,7 +80,7 @@ public final class AFilterChainUnderTest {
         assertThat(filterChain.getFilterName(), equalTo("FilterChain"));
     }
 
-    @SuppressWarnings({ "unchecked" })
+    @SuppressWarnings("unchecked")
     @Test(expected = UnsupportedOperationException.class)
     public void shouldNotAllowModificationOfSetFilters() {
         mockControl.replay();
@@ -100,7 +100,7 @@ public final class AFilterChainUnderTest {
         }
     }
 
-    @SuppressWarnings({ "unchecked" })
+    @SuppressWarnings("unchecked")
     private FilterLink<String, Collection<?>> createFilterChain() {
         return new FilterChainImpl<String, Collection<?>>(Arrays.asList(mockLink1, mockLink2));
     }

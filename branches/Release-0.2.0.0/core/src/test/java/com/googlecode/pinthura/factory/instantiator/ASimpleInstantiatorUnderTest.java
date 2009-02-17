@@ -98,7 +98,7 @@ public final class ASimpleInstantiatorUnderTest {
         assertThat(instantiator.getFilterName(), equalTo("Simple Instantiator"));
     }
 
-    @SuppressWarnings({ "unchecked" })
+    @SuppressWarnings("unchecked")
     private void expectInstantiation(final String className, final Object instance) {
         EasyMock.expect(mockClassNameDeriver.derive(mockMethodParam)).andReturn(className);
 

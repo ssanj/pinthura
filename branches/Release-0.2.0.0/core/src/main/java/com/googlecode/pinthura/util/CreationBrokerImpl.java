@@ -22,7 +22,7 @@ public final class CreationBrokerImpl implements CreationBroker {
 
     private final Map<Class<?>, Object> registry = new HashMap<Class<?>, Object>();
 
-    @SuppressWarnings({ "unchecked" })
+    @SuppressWarnings("unchecked")
     public <T> void setInstance(final Class<T> clazz, final T instance) {
         registry.put(clazz, instance);
     }

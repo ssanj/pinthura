@@ -33,12 +33,12 @@ public final class ClassInstanceImpl implements ClassInstance {
         this.clazz = clazz;
     }
 
-    @SuppressWarnings({ "unchecked" })
+    @SuppressWarnings("unchecked")
     public <T> ClassBoundary<T> getClazz() {
         return  (ClassBoundary<T>) clazz;
     }
 
-    @SuppressWarnings({ "unchecked" })
+    @SuppressWarnings("unchecked")
     public <T> T getInstance() {
         return (T) instance;
     }

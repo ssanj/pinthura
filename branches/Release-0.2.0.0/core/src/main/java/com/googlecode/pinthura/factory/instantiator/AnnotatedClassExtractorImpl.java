@@ -35,7 +35,7 @@ public final class AnnotatedClassExtractorImpl implements AnnotatedClassExtracto
         annotatation = new ClassBoundaryImpl<Implementation>(Implementation.class);
     }
 
-    @SuppressWarnings({ "unchecked" })
+    @SuppressWarnings("unchecked")
     public <T> ClassBoundary<T> extract(final MethodParam methodParam) {
         return new ClassBoundaryImpl(annotationFinder.find(methodParam.getMethod(), annotatation).value());
     }

@@ -71,7 +71,7 @@ public final class AConstructorInstantiatorUnderTest {
         expectInstantiation(Arrays.<Object>asList(), UrlBoundary.class);
     }
 
-    @SuppressWarnings({ "unchecked" })
+    @SuppressWarnings("unchecked")
     private void expectInstantiation(final List<Object> argsList, final Class<?> type) {
         Object mockTypeInstance = mockControl.createMock(type);
         EasyMock.expect(mockMethodParam.getArguments()).andReturn(argsList);

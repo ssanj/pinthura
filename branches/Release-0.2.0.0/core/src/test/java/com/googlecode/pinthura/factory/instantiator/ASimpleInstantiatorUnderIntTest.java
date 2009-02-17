@@ -39,7 +39,7 @@ public final class ASimpleInstantiatorUnderIntTest {
         assertThat(URL, equalTo(((UrlBoundary) result).getUrlAsString()));
     }
 
-    @SuppressWarnings({ "unchecked" })
+    @SuppressWarnings("unchecked")
     private MethodParam createMethodParam() {
         return new MethodParamBuilder<String, UrlBoundaryFactory>().
                 forInterface(UrlBoundaryFactory.class).

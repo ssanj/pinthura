@@ -29,7 +29,7 @@ public final class PathEvaluatorImpl implements PathEvaluator {
         this.propertyFinder = propertyFinder;
     }
 
-    @SuppressWarnings({ "unchecked" })
+    @SuppressWarnings("unchecked")
     @SuppressionReason(SuppressionReason.Reason.CANT_INFER_GENERICS)
     public <Instance, Result> Result evaluate(final String path, final Instance instance) throws PathEvaluatorException {
         String[] properties = path.split(PATH_SEPARATOR);

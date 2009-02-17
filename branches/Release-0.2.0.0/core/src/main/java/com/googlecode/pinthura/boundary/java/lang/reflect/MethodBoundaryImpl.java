@@ -31,7 +31,7 @@ public final class MethodBoundaryImpl implements MethodBoundary {
         this.method = method;
     }
 
-    @SuppressWarnings({ "unchecked" })
+    @SuppressWarnings("unchecked")
     public ClassBoundary<?> getReturnType() {
         return new ClassBoundaryImpl(method.getReturnType());
     }
@@ -44,7 +44,7 @@ public final class MethodBoundaryImpl implements MethodBoundary {
         return method;
     }
 
-    @SuppressWarnings({ "unchecked" })
+    @SuppressWarnings("unchecked")
     public ClassBoundary<?>[] getParameterTypes() {
         List<ClassBoundary<?>> classList = new ArrayList<ClassBoundary<?>>();
         for (Class<?> clazz : method.getParameterTypes()) {

@@ -35,7 +35,7 @@ public final class FilterChainImpl<Input, Output> implements FilterLink<Input, O
         this.filterLinks = Collections.unmodifiableList(filterLinks);
     }
 
-    @SuppressWarnings({ "unchecked" })
+    @SuppressWarnings("unchecked")
     public Output filter(final Input input) {
 
         for (FilterLink link : filterLinks) {

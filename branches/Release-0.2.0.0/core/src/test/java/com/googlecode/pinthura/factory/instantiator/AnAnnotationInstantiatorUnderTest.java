@@ -46,7 +46,7 @@ public final class AnAnnotationInstantiatorUnderTest {
         instantiator = new AnnotationInstantiator(mockAnnotatedClassExtractor, mockConstructorLocator, mockConstructorInstantiator);
     }
 
-    @SuppressWarnings({ "unchecked" })
+    @SuppressWarnings("unchecked")
     @Test
     public void shouldInstantiateAGivenClass() {
         ClassBoundary mockTargetClass = mockControl.createMock(ClassBoundary.class);
