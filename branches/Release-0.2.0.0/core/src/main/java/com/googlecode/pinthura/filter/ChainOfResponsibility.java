@@ -18,9 +18,10 @@ package com.googlecode.pinthura.filter;
 /**
  * A specification of the (Gof) Chain of Responsibility pattern.  An implementation would have some mechanism to
  * receive a list of processers. When <code>process(Input, Output)</code> is called, each processer would be given
- * a turn to process the <code>Input</code>. If one does, then it returns the result or the <code>Output</code>. If not
- * it would pass it to the next processer until a result is returned or a <code>CouldNotProcessInputException</code> is thrown
- * if none of the processers can process the <code>Input</code>.
+ * a turn to process the <code>Input</code>. If one does, then it returns the result or the <code>Output</code>.
+ * <br/>
+ * If not the implementation of this interface would pass it to the next processer until a result is returned or a
+ * <code>CouldNotProcessInputException</code> is thrown if none of the processers can process the <code>Input</code>.
  *
  * @param <Input> The input type to process.
  * @param <Output> The result of processing the <code>Input</code>.
@@ -32,7 +33,7 @@ public interface ChainOfResponsibility<Input, Output> {
      * 
      * @param input The input to process.
      * @return The result of processing the <code>Input</code>.
-     * @throws CouldNotProcessInputException If none of the processes can process the <code>Input</code>.
+     * @throws CouldNotProcessInputException If none of the processers can process the <code>Input</code>.
      */
     Output process(Input input) throws CouldNotProcessInputException;
 }
