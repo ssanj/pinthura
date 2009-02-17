@@ -16,7 +16,7 @@
 package com.googlecode.pinthura.factory;
 
 import com.googlecode.pinthura.filter.ChainOfResponsibility;
-import com.googlecode.pinthura.filter.MatchNotFoundException;
+import com.googlecode.pinthura.filter.CouldNotProcessInputException;
 
 /**
  * Creates instances using a <code>ChainOfResponsibility</code> of instantiation strategies.
@@ -33,7 +33,7 @@ public final class InstanceCreatorImpl implements InstanceCreator {
     public Object createInstance(final MethodParam param) throws InstanceCreationException {
         try {
             return chain.process(param);
-        } catch (MatchNotFoundException e) {
+        } catch (CouldNotProcessInputException e) {
             throw new InstanceCreationException("Could not create instance of " + param.getReturnType(), e);
         }
     }

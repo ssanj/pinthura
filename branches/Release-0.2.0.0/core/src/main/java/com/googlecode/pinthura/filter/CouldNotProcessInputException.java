@@ -16,25 +16,25 @@
 package com.googlecode.pinthura.filter;
 
 /**
- * Throw this exception when a <code>FilterLink</code> can't process its input.
+ * Throw this exception when a <code>ProcesserChainlet</code> can't process its input.
  */
-public final class MatchNotFoundException extends RuntimeException {
+public final class CouldNotProcessInputException extends RuntimeException {
 
     private static final long serialVersionUID = -8483219804817241329L;
 
-    public MatchNotFoundException() {
+    public CouldNotProcessInputException() {
         //no arg constructor.
     }
 
-    public MatchNotFoundException(final String message) {
+    public CouldNotProcessInputException(final String message) {
         super(message);
     }
 
-    public MatchNotFoundException(final String message, final Throwable cause) {
+    public CouldNotProcessInputException(final String message, final Throwable cause) {
         super(message, cause);
     }
 
-    public MatchNotFoundException(final Throwable cause) {
+    public CouldNotProcessInputException(final Throwable cause) {
         super(cause);
     }
 }

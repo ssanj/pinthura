@@ -17,7 +17,7 @@ package com.googlecode.pinthura.factory.instantiator;
 
 import com.googlecode.pinthura.boundary.java.lang.reflect.ConstructorBoundary;
 import com.googlecode.pinthura.factory.MethodParam;
-import com.googlecode.pinthura.filter.MatchNotFoundException;
+import com.googlecode.pinthura.filter.CouldNotProcessInputException;
 
 /**
  * Instantiates a class from annotations provided on a <code>MethodParam</code>.
@@ -47,14 +47,14 @@ public final class AnnotationInstantiator implements InstantiationStrategy {
      * Creates an instance of an object hinted to by annotations on the supplied <code>MethodParam</code>.
      * @param methodParam The annotated method.
      * @return An instance of the object hinted to by annotations on the supplied <code>MethodParam</code>.
-     * @throws MatchNotFoundException If the instance could not be created.
+     * @throws CouldNotProcessInputException If the instance could not be created.
      */
-    public Object process(final MethodParam methodParam) throws MatchNotFoundException {
+    public Object process(final MethodParam methodParam) throws CouldNotProcessInputException {
         try {
             ConstructorBoundary<?> constructor = constructorLocator.locate(methodParam, annotationExtractor.extract(methodParam));
             return instantiator.instantiate(methodParam, constructor);
         } catch (Exception e) {
-           throw new MatchNotFoundException(e);
+           throw new CouldNotProcessInputException(e);
         }
     }
 

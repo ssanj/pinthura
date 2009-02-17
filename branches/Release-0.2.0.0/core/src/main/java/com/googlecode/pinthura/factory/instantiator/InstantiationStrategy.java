@@ -19,7 +19,7 @@ import com.googlecode.pinthura.factory.MethodParam;
 import com.googlecode.pinthura.filter.ProcesserChainlet;
 
 /**
- * Interface that creates a <code>FilterLink</code> that takes in a <code>MethodParam</code> and an <code>Object</code>.
+ * Interface that creates a <code>ProcesserChainlet</code> that takes in a <code>MethodParam</code> and an <code>Object</code>.
  */
 public interface InstantiationStrategy extends ProcesserChainlet<MethodParam, Object> {
     //This interface has been introduced to make the generics easier to use.

@@ -16,7 +16,7 @@
 package com.googlecode.pinthura.test;
 
 import com.googlecode.pinthura.annotation.SuppressionReason;
-import com.googlecode.pinthura.filter.MatchNotFoundException;
+import com.googlecode.pinthura.filter.CouldNotProcessInputException;
 import com.googlecode.pinthura.injection.MockInjectionException;
 import com.googlecode.pinthura.util.RandomDataCreator;
 import com.googlecode.pinthura.util.builder.RandomDataCreatorBuilder;
@@ -47,13 +47,13 @@ public final class AnExceptionAsserterWithRunAndAssertExceptionHavingMultipleNes
         final String randomMessage2 = randomDataCreator.createString(14);
         final String randomMessage3 = randomDataCreator.createString(12);
         exceptionAsserter.runAndAssertException(new ExceptionInfoImpl(RuntimeException.class, randomMessage1,
-                                                new ExceptionInfoImpl(MatchNotFoundException.class, randomMessage2,
+                                                new ExceptionInfoImpl(CouldNotProcessInputException.class, randomMessage2,
                                                         new ExceptionInfoImpl(MockInjectionException.class, randomMessage3))),
                new Exceptional() {
            @Override
            public void run() {
                throw new RuntimeException(randomMessage1,
-                       new MatchNotFoundException(randomMessage2,
+                       new CouldNotProcessInputException(randomMessage2,
                                new MockInjectionException(randomMessage3)));
            }
        });
@@ -62,9 +62,9 @@ public final class AnExceptionAsserterWithRunAndAssertExceptionHavingMultipleNes
     @Test
     public void shouldPassWhenExceptionsAreValid() {
         exceptionAsserter.runAndAssertException(new ExceptionInfoImpl(RuntimeException.class,
-                new ExceptionInfoImpl(MatchNotFoundException.class, new ExceptionInfoImpl(IllegalAccessException.class))),
+                new ExceptionInfoImpl(CouldNotProcessInputException.class, new ExceptionInfoImpl(IllegalAccessException.class))),
                 new Exceptional() { @Override
-            public void run() { throw new RuntimeException(new MatchNotFoundException(new IllegalAccessException())); }});
+            public void run() { throw new RuntimeException(new CouldNotProcessInputException(new IllegalAccessException())); }});
     }
     
     @Test
@@ -75,14 +75,14 @@ public final class AnExceptionAsserterWithRunAndAssertExceptionHavingMultipleNes
         String message4 = randomDataCreator.createString(9);
         final String message4Error = message4 +"Error";
         try {
-            exceptionAsserter.runAndAssertException(new ExceptionInfoImpl(MatchNotFoundException.class, randomMessage1,
+            exceptionAsserter.runAndAssertException(new ExceptionInfoImpl(CouldNotProcessInputException.class, randomMessage1,
                                                     new ExceptionInfoImpl(MockInjectionException.class, randomMessage2,
                                                             new ExceptionInfoImpl(RuntimeException.class, randomMessage3,
                                                                     new ExceptionInfoImpl(IllegalArgumentException.class, message4)))),
                    new Exceptional() {
                @Override
                public void run() {
-                   throw new MatchNotFoundException(randomMessage1,
+                   throw new CouldNotProcessInputException(randomMessage1,
                            new MockInjectionException(randomMessage2,
                                    new RuntimeException(randomMessage3,
                                            new IllegalArgumentException(message4Error))));
@@ -99,10 +99,10 @@ public final class AnExceptionAsserterWithRunAndAssertExceptionHavingMultipleNes
     public void shouldFailWhenExpectedExceptionsAreNotThrown() {
         try {
             exceptionAsserter.runAndAssertException(new ExceptionInfoImpl(RuntimeException.class,
-                    new ExceptionInfoImpl(MatchNotFoundException.class, new ExceptionInfoImpl(IllegalAccessException.class,
+                    new ExceptionInfoImpl(CouldNotProcessInputException.class, new ExceptionInfoImpl(IllegalAccessException.class,
                     new ExceptionInfoImpl(IllegalArgumentException.class, new ExceptionInfoImpl(IndexOutOfBoundsException.class))))),
                     new Exceptional() { @Override
-                public void run() { throw new RuntimeException(new MatchNotFoundException(new IllegalAccessException())); }});
+                public void run() { throw new RuntimeException(new CouldNotProcessInputException(new IllegalAccessException())); }});
             fail("Expected AssertionError.");
         } catch (AssertionError ae) {
             assertThat(ae.getMessage(), equalTo(exceptionMessageBuilder.
@@ -117,12 +117,12 @@ public final class AnExceptionAsserterWithRunAndAssertExceptionHavingMultipleNes
     public void shouldFailWhenExceptionTypesAreIncorrect() {
         try {
             exceptionAsserter.runAndAssertException(new ExceptionInfoImpl(RuntimeException.class,
-                    new ExceptionInfoImpl(MatchNotFoundException.class, new ExceptionInfoImpl(IllegalArgumentException.class,
+                    new ExceptionInfoImpl(CouldNotProcessInputException.class, new ExceptionInfoImpl(IllegalArgumentException.class,
                     new ExceptionInfoImpl(IndexOutOfBoundsException.class)))),
                     new Exceptional() { @Override
                 public void run() {
                         throw new RuntimeException(
-                                new MatchNotFoundException(
+                                new CouldNotProcessInputException(
                                         new IllegalArgumentException(
                                                 new NullPointerException()
                                         )));
