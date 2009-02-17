@@ -39,7 +39,7 @@ public final class AClassInstanceUnderTest {
         expectClassAndInstance(Collection.class, new ArrayList());
     }
 
-    @SuppressWarnings({ "unchecked" })
+    @SuppressWarnings("unchecked")
     @Test
     public void shouldWrapAClassBoundaryAndAnInstance() {
         Set instance = new HashSet();
@@ -52,7 +52,7 @@ public final class AClassInstanceUnderTest {
         expectClassInstance(classInstance, clazz, instance);
     }
 
-    @SuppressWarnings({ "unchecked" })
+    @SuppressWarnings("unchecked")
     private <T> void expectClassInstance(final ClassInstance classInstance, final Class<T> clazz, final T instance) {
         assertThat((ClassBoundaryImpl<T>) classInstance.getClazz(), equalTo(new ClassBoundaryImpl<T>(clazz)));
         assertThat(clazz.cast(classInstance.getInstance()), equalTo(instance));

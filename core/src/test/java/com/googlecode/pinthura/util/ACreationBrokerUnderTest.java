@@ -54,7 +54,7 @@ public final class ACreationBrokerUnderTest {
         }
     }
 
-    @SuppressWarnings({ "unchecked" })
+    @SuppressWarnings("unchecked")
     private <T> void expectInstance(final Class<T> clazz, final T instance) {
         creationBroker.setInstance(clazz, instance);
         assertThat(creationBroker.getInstanceFor(clazz), equalTo(instance));

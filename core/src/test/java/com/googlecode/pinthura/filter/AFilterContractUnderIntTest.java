@@ -28,7 +28,7 @@ public final class AFilterContractUnderIntTest {
 
     private static final int WIDGET_ID = 100;
 
-    @SuppressWarnings({ "unchecked" })
+    @SuppressWarnings("unchecked")
     @Test
     public void shouldBeHonouredBySimpleImplementationLocator() throws NoSuchMethodException {
     FilterLinkContractChecker.checkContract(
@@ -40,18 +40,18 @@ public final class AFilterContractUnderIntTest {
                 new AnnotationInstantiatorBuilder().build(), buildValidAnnotationMethodParam(), buildInvalidAnnotationMethodParam());
     }
 
-    @SuppressWarnings({ "unchecked" })
+    @SuppressWarnings("unchecked")
     private MethodParam buildInvalidAnnotationMethodParam() {
         return new MethodParamBuilder().forInterface(WidgetFactory.class).havingMethod("createWidget").build();
     }
 
-    @SuppressWarnings({ "unchecked" })
+    @SuppressWarnings("unchecked")
     private MethodParam buildValidAnnotationMethodParam() {
         return new MethodParamBuilder().forInterface(WidgetFactory.class).havingMethod("createWidget", Integer.class).
                 withArgument(WIDGET_ID).build();
     }
 
-    @SuppressWarnings({ "unchecked" })
+    @SuppressWarnings("unchecked")
     private MethodParam buildValidSimpleMethodParam() {
         return new MethodParamBuilder().forInterface(UrlBoundaryFactory.class).havingMethod("createUrlBoundary").build();
     }

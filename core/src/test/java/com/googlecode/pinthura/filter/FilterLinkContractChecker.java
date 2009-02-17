@@ -27,7 +27,7 @@ public final class FilterLinkContractChecker {
         //Utility.
     }
 
-    @SuppressWarnings({ "unchecked" })
+    @SuppressWarnings("unchecked")
     public static <T> void checkContract(final FilterLink<T, ?> link,  final T validInput, final T invalidInput) {
         assertThat(FilterLink.class.isAssignableFrom(link.getClass()), equalTo(true));
         assertThat(link.filter(validInput), notNullValue());

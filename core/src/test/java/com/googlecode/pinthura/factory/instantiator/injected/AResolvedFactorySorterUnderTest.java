@@ -50,7 +50,7 @@ public final class AResolvedFactorySorterUnderTest {
         expectSortedInstances(1, 11, 2);
     }
 
-    @SuppressWarnings({ "unchecked" })
+    @SuppressWarnings("unchecked")
     private void expectSortedInstances(final int firstIndex, final int secondIndex, final int noOfParameters) {
         ClassInstance[] classInstances = new ClassInstance[noOfParameters];
 

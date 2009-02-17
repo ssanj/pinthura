@@ -32,7 +32,7 @@ public final class AMethodParamUnderTest {
     private static final String FACTORY_METHOD_2                    = "createWidget";
     private static final Class<WidgetFactory> FACTORY_CLASS_2       = WidgetFactory.class;
 
-    @SuppressWarnings({ "unchecked" })
+    @SuppressWarnings("unchecked")
     @Test
     public void shouldEquateASetOfIdenticalValues() {
         assertThat(createMethodParam1(), equalTo(createMethodParam1()));
@@ -49,13 +49,13 @@ public final class AMethodParamUnderTest {
 
     }
 
-    @SuppressWarnings({ "unchecked" })
+    @SuppressWarnings("unchecked")
     private MethodParam createMethodParam1() {
         return new MethodParamBuilder().forInterface(FACTORY_CLASS_1).havingMethod(FACTORY_METHOD_1, String.class).withArgument(URL).
                 build();
     }
 
-    @SuppressWarnings({ "unchecked" })
+    @SuppressWarnings("unchecked")
     private MethodParam createMethodParam2() {
         return new MethodParamBuilder().forInterface(FACTORY_CLASS_2).havingMethod(FACTORY_METHOD_2).build();
     }

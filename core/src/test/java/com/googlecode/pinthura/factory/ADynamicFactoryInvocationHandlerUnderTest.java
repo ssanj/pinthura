@@ -39,7 +39,7 @@ public final class ADynamicFactoryInvocationHandlerUnderTest {
     private InstanceCreator mockInstanceCreator;
     private MethodParamFactory mockMethodParamFactory;
 
-    @SuppressWarnings({ "unchecked" })
+    @SuppressWarnings("unchecked")
     @Before
     public void setup() {
         mockInstanceCreator = mockControl.createMock(InstanceCreator.class);

@@ -45,7 +45,7 @@ public final class ArrayzImpl implements Arrayz {
      * @return A T[] built from the contents of the <code>Collection</code> supplied. If the a <code>Set<T></code> is supplied the order of
      * elements returned in the T[] is indeterminate.
      */
-    @SuppressWarnings({ "unchecked" })
+    @SuppressWarnings("unchecked")
     public <T> T[] fromCollection(final Collection<? extends T> collection, final Class<T> clazz) {
         return collection.toArray((T[]) Array.newInstance(clazz, collection.size()));
     }

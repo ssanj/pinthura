@@ -62,7 +62,7 @@ public final class AnInjectedFactoryResolverUnderTest {
                 mockInjectedInstanceSorterFactory, mockConstructorParamFactory);
     }
 
-    @SuppressWarnings({ "unchecked" })
+    @SuppressWarnings("unchecked")
     @Test
     public void shouldResolveAGivenMethodParam() {
         Factory mockFactory = mockControl.createMock(Factory.class);

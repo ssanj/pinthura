@@ -44,7 +44,7 @@ public final class ASuppliedFactorySorterUnderTest {
                 done();
     }
 
-    @SuppressWarnings({ "unchecked" })
+    @SuppressWarnings("unchecked")
     @Test
     public void shouldPlaceDynamicInstancesAtTheEnds() {
         //[][][*][]

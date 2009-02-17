@@ -28,7 +28,7 @@ public final class ConstructorLocatorImpl implements ConstructorLocator {
         this.arrayz = arrayz;
     }
 
-    @SuppressWarnings({ "unchecked" })
+    @SuppressWarnings("unchecked")
     public <T> ConstructorBoundary<T> locate(final MethodParam methodParam, final String className) {
         return (ConstructorBoundary<T>) methodParam.getReturnType().forName(className).getConstructor(
                 arrayz.fromCollection(methodParam.getParameterTypes(), ClassBoundary.class));

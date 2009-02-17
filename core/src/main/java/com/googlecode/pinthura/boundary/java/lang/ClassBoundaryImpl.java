@@ -41,7 +41,7 @@ public final class ClassBoundaryImpl<T> implements ClassBoundary<T> {
         return clazz;
     }
 
-    @SuppressWarnings({ "unchecked" })
+    @SuppressWarnings("unchecked")
     public ClassBoundary<T> forName(final String className) {
         try {
             return new ClassBoundaryImpl(Class.forName(className));

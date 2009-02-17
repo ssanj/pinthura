@@ -32,7 +32,7 @@ public final class FieldFinderImpl implements FieldFinder {
         this.arrayz = arrayz;
     }
 
-    @SuppressWarnings({ "unchecked" })
+    @SuppressWarnings("unchecked")
     @SuppressionReason(SuppressionReason.Reason.CANT_INFER_GENERICS)
     public <T> FieldBoundary<T> findByName(final String varName, final Object instance) {
         try {
@@ -42,7 +42,7 @@ public final class FieldFinderImpl implements FieldFinder {
         }
     }
 
-    @SuppressWarnings({ "unchecked" })
+    @SuppressWarnings("unchecked")
     @SuppressionReason(SuppressionReason.Reason.CANT_INFER_GENERICS)
     public List<FieldBoundary<?>> findByPrefix(final String prefix, final Object instance) {
         List<FieldBoundary<?>> fields = arrayz.filter(new ClassBoundaryImpl(instance.getClass()).getDeclaredFields(),
