@@ -23,9 +23,9 @@ import com.googlecode.pinthura.factory.instantiator.ClassInstance;
 public interface ConstructorParamFactory {
 
     /**
-     * Creates an <code>ConstructorParam</code> instance given a <code>ClassInstance[]</code>.
+     * Creates a <code>ConstructorParam</code> instance given a <code>ClassInstance[]</code>.
      * @param classInstances The <code>ClassInstance</code>s that make up the <code>InjectedFactoryValues</code> object.
-     * @return An <code>ConstructorParam</code> instance.
+     * @return A <code>ConstructorParam</code> instance.
      */
-    ConstructorParam createInjectedFactoryValues(ClassInstance[] classInstances);
+    ConstructorParam createConstructorParam(ClassInstance[] classInstances);
 }

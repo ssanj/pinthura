@@ -96,7 +96,7 @@ public final class AnInjectedFactoryResolverUnderTest {
         mockSuppliedFactorySorter.sort(mockMethodParam, classInstanceArray);
 
         ConstructorParam mockConstructorParam = mockControl.createMock(ConstructorParam.class);
-        EasyMock.expect(mockConstructorParamFactory.createInjectedFactoryValues(classInstanceArray)).
+        EasyMock.expect(mockConstructorParamFactory.createConstructorParam(classInstanceArray)).
                 andReturn(mockConstructorParam);
         mockControl.replay();
 
