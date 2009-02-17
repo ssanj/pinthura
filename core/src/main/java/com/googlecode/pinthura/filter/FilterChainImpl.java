@@ -23,7 +23,7 @@ import java.util.List;
  * <code>FilterLink</code> list supplied to its constructor.
  *
  * If a <code>FilterLink</code> processes the input, then the result is returned.
- * If not a MatchNotFoundException is thrown when there are no more <code>FilterLink</code>s to process the input.
+ * If not a <code>MatchNotFoundException</code> is thrown when there are no more <code>FilterLink</code>s to process the input.
  */
 public final class FilterChainImpl<Input, Output> implements FilterLink<Input, Output> {
 
