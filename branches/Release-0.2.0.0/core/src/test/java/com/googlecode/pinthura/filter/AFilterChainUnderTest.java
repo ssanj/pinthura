@@ -15,6 +15,7 @@
  */
 package com.googlecode.pinthura.filter;
 
+import com.googlecode.pinthura.annotation.SuppressionReason;
 import static junit.framework.Assert.fail;
 import org.easymock.EasyMock;
 import org.easymock.IMocksControl;
@@ -55,8 +56,8 @@ public final class AFilterChainUnderTest {
         EasyMock.expect(mockLink2.filter(STRING_INPUT)).andReturn(mockCollection);
         mockControl.replay();
 
-        FilterLink<String, Collection<?>> chain = createFilterChain();
-        Collection result = chain.filter(STRING_INPUT);
+        ChainOfResponsibility<String, Collection<?>> chain = createFilterChain();
+        Collection result = chain.process(STRING_INPUT);
         assertThat(result, sameInstance(mockCollection));
 
         mockControl.verify();
@@ -74,12 +75,6 @@ public final class AFilterChainUnderTest {
         expectMatchNotFound();
     }
 
-    @Test
-    public void shouldReturnItsName() {
-        FilterLink<String, ?> filterChain = createFilterChain();
-        assertThat(filterChain.getFilterName(), equalTo("FilterChain"));
-    }
-
     @SuppressWarnings("unchecked")
     @Test(expected = UnsupportedOperationException.class)
     public void shouldNotAllowModificationOfSetFilters() {
@@ -92,7 +87,7 @@ public final class AFilterChainUnderTest {
 
     private void expectMatchNotFound() {
         try {
-            createFilterChain().filter(STRING_INPUT);
+            createFilterChain().process(STRING_INPUT);
             fail();
         } catch (MatchNotFoundException e) {
             assertThat(e.getMessage(), equalTo("No match found for: " + STRING_INPUT + " with filters: Filter1, Filter2"));
@@ -101,7 +96,8 @@ public final class AFilterChainUnderTest {
     }
 
     @SuppressWarnings("unchecked")
-    private FilterLink<String, Collection<?>> createFilterChain() {
+    @SuppressionReason(SuppressionReason.Reason.CANT_INFER_GENERICS_ON_MOCKS)
+    private ChainOfResponsibility<String, Collection<?>> createFilterChain() {
         return new FilterChainImpl<String, Collection<?>>(Arrays.asList(mockLink1, mockLink2));
     }
 }

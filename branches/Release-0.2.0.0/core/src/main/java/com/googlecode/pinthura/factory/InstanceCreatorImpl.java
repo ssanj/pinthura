@@ -15,24 +15,24 @@
  */
 package com.googlecode.pinthura.factory;
 
-import com.googlecode.pinthura.filter.FilterLink;
+import com.googlecode.pinthura.filter.ChainOfResponsibility;
 import com.googlecode.pinthura.filter.MatchNotFoundException;
 
 /**
- * Creates instances using a <code>FilterLink</code> of instantiation strategies.
+ * Creates instances using a <code>ChainOfResponsibility</code> of instantiation strategies.
  */
 //TODO: move to internal
 public final class InstanceCreatorImpl implements InstanceCreator {
+    private final ChainOfResponsibility<MethodParam, Object> chain;
 
-    private final FilterLink<MethodParam, Object> filterChain;
 
-    public InstanceCreatorImpl(final FilterLink<MethodParam, Object> filterChain) {
-        this.filterChain = filterChain;
+    public InstanceCreatorImpl(final ChainOfResponsibility<MethodParam,Object> chain) {
+        this.chain = chain;
     }
 
     public Object createInstance(final MethodParam param) throws InstanceCreationException {
         try {
-            return filterChain.filter(param);
+            return chain.process(param);
         } catch (MatchNotFoundException e) {
             throw new InstanceCreationException("Could not create instance of " + param.getReturnType(), e);
         }

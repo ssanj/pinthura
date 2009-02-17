@@ -15,9 +15,10 @@
  */
 package com.googlecode.pinthura.factory;
 
+import com.googlecode.pinthura.annotation.SuppressionReason;
 import com.googlecode.pinthura.data.SquareImpl;
 import com.googlecode.pinthura.data.UrlBoundaryImpl;
-import com.googlecode.pinthura.filter.FilterLink;
+import com.googlecode.pinthura.filter.ChainOfResponsibility;
 import com.googlecode.pinthura.util.builder.RandomDataChooserBuilder;
 import org.easymock.EasyMock;
 import org.easymock.IMocksControl;
@@ -29,26 +30,28 @@ import org.junit.Test;
 public final class AnInstanceCreatorUnderTest {
 
     private final IMocksControl mockControl = EasyMock.createControl();
-    private FilterLink<MethodParam, Object> mockFilterLink;
     private MethodParam mockMethodParam;
     private InstanceCreator instanceCreator;
     private Object createdInstance;
+    private ChainOfResponsibility mockChainOfResponsibility;
 
     @SuppressWarnings("unchecked")
     @Before
     public void setup() {
         mockMethodParam = mockControl.createMock(MethodParam.class);
-        mockFilterLink = mockControl.createMock(FilterLink.class);
+        mockChainOfResponsibility = mockControl.createMock(ChainOfResponsibility.class);
         //TODO:Create a class that returns random objects.
         createdInstance = new RandomDataChooserBuilder().build().
                 chooseOneOf("String instance!", new SquareImpl(4), new UrlBoundaryImpl(), 20);
 
-        instanceCreator = new InstanceCreatorImpl(mockFilterLink);
+        instanceCreator = new InstanceCreatorImpl(mockChainOfResponsibility);
     }
 
+    @SuppressWarnings("unchecked")
+    @SuppressionReason(SuppressionReason.Reason.CANT_INFER_GENERICS_ON_MOCKS)
     @Test
     public void shouldCreateAnInstanceGivenAMethodParam() {
-        EasyMock.expect(mockFilterLink.filter(mockMethodParam)).andReturn(createdInstance);
+        EasyMock.expect(mockChainOfResponsibility.process(mockMethodParam)).andReturn(createdInstance);
         mockControl.replay();
 
         Object instance = instanceCreator.createInstance(mockMethodParam);

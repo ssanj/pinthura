@@ -15,6 +15,8 @@
  */
 package com.googlecode.pinthura.filter;
 
+import com.googlecode.pinthura.annotation.SuppressionReason;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -25,18 +27,18 @@ import java.util.List;
  * If a <code>FilterLink</code> processes the input, then the result is returned.
  * If not a <code>MatchNotFoundException</code> is thrown when there are no more <code>FilterLink</code>s to process the input.
  */
-public final class FilterChainImpl<Input, Output> implements FilterLink<Input, Output> {
+public final class FilterChainImpl<Input, Output> implements ChainOfResponsibility<Input, Output> {
 
-    private static final String FILTER_CHAIN = "FilterChain";
+    private final List<? extends FilterLink> filterLinks;
 
-    private final List<? extends FilterLink<Input, Output>> filterLinks;
-
-    public FilterChainImpl(final List<? extends FilterLink<Input, Output>> filterLinks) {
+    @SuppressWarnings("unchecked")
+    @SuppressionReason(SuppressionReason.Reason.SIMPLIFY_GENERICS)
+    public FilterChainImpl(final List<? extends FilterLink> filterLinks) {
         this.filterLinks = Collections.unmodifiableList(filterLinks);
     }
 
     @SuppressWarnings("unchecked")
-    public Output filter(final Input input) {
+    public Output process(final Input input) {
 
         for (FilterLink link : filterLinks) {
             try {
@@ -52,7 +54,7 @@ public final class FilterChainImpl<Input, Output> implements FilterLink<Input, O
     private String withFilters() {
         StringBuilder builder = new StringBuilder();
 
-        for (FilterLink<Input, Output> filterLink : filterLinks) {
+        for (FilterLink filterLink : filterLinks) {
             if (builder.length() != 0) {
                 builder.append(", ");
             }
@@ -61,9 +63,5 @@ public final class FilterChainImpl<Input, Output> implements FilterLink<Input, O
         }
 
         return builder.toString();
-    }
-
-    public String getFilterName() {
-        return FILTER_CHAIN;
     }
 }

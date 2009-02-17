@@ -19,7 +19,7 @@ import com.googlecode.pinthura.annotation.SuppressionReason;
 import com.googlecode.pinthura.boundary.java.lang.ClassBoundary;
 import com.googlecode.pinthura.boundary.java.lang.ClassBoundaryImpl;
 import com.googlecode.pinthura.data.UrlBoundaryImpl;
-import com.googlecode.pinthura.filter.FilterLink;
+import com.googlecode.pinthura.filter.ChainOfResponsibility;
 import com.googlecode.pinthura.filter.MatchNotFoundException;
 import com.googlecode.pinthura.test.ExceptionAsserter;
 import com.googlecode.pinthura.test.ExceptionAsserterImpl;
@@ -36,27 +36,27 @@ import org.junit.Test;
 public final class AnInstanceCreatorWithErrorsUnderTest {
 
     private final IMocksControl mockControl = EasyMock.createControl();
-    private FilterLink<MethodParam, Object> mockFilterLink;
     private MethodParam mockMethodParam;
     private InstanceCreator instanceCreator;
     private ExceptionAsserter exceptionAsserter;
+    private ChainOfResponsibility mockChainOfResponsibility;
 
     @SuppressWarnings("unchecked")
     @SuppressionReason(SuppressionReason.Reason.CANT_INFER_GENERICS_ON_MOCKS)
     @Before
     public void setup() {
         mockMethodParam = mockControl.createMock(MethodParam.class);
-        mockFilterLink = mockControl.createMock(FilterLink.class);
+        mockChainOfResponsibility = mockControl.createMock(ChainOfResponsibility.class);
         exceptionAsserter = new ExceptionAsserterImpl();
 
-        instanceCreator = new InstanceCreatorImpl(mockFilterLink);
+        instanceCreator = new InstanceCreatorImpl(mockChainOfResponsibility);
     }
 
     @SuppressWarnings({ "ThrowableInstanceNeverThrown", "unchecked" })
     @Test
     public void shouldThrownANewExceptionIfAMatchNotFoundExceptionIsThrown() {
         ClassBoundary classBoundary = new ClassBoundaryImpl(UrlBoundaryImpl.class);
-        EasyMock.expect(mockFilterLink.filter(mockMethodParam)).andThrow(new MatchNotFoundException());
+        EasyMock.expect(mockChainOfResponsibility.process(mockMethodParam)).andThrow(new MatchNotFoundException());
         EasyMock.expect(mockMethodParam.getReturnType()).andReturn(classBoundary);
         mockControl.replay();
 
@@ -71,10 +71,11 @@ public final class AnInstanceCreatorWithErrorsUnderTest {
         }
     }
 
-    @SuppressWarnings("ThrowableInstanceNeverThrown")
+    @SuppressWarnings({"ThrowableInstanceNeverThrown", "unchecked"})
+    @SuppressionReason({SuppressionReason.Reason.CANT_INFER_GENERICS_ON_MOCKS, SuppressionReason.Reason.TEST_TYPE})
     @Test
     public void shouldRethrowOtherExceptionsDirectly() {
-        EasyMock.expect(mockFilterLink.filter(mockMethodParam)).andThrow(new IllegalArgumentException());
+        EasyMock.expect(mockChainOfResponsibility.process(mockMethodParam)).andThrow(new IllegalArgumentException());
         mockControl.replay();
         
         exceptionAsserter.runAndAssertException(new ExceptionInfoImpl(IllegalArgumentException.class), new Exceptional() {
