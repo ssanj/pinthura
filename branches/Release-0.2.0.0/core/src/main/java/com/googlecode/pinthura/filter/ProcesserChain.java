@@ -21,19 +21,18 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * An implementation of the (Gof) Chain of Responsibility pattern. This class handles passing the input parameter to each successor on the
- * <code>FilterLink</code> list supplied to its constructor.
+ * Handles passing the <code>Input</code> parameter to each successor on the <code>List<FilterLink></code> supplied to its constructor.
  *
- * If a <code>FilterLink</code> processes the input, then the result is returned.
+ * If a <code>FilterLink</code> processes the <code>Input</code>, then the result is returned as an <code>Output</code>.
  * If not a <code>MatchNotFoundException</code> is thrown when there are no more <code>FilterLink</code>s to process the input.
  */
-public final class FilterChainImpl<Input, Output> implements ChainOfResponsibility<Input, Output> {
+public final class ProcesserChain<Input, Output> implements ChainOfResponsibility<Input, Output> {
 
     private final List<? extends FilterLink> filterLinks;
 
     @SuppressWarnings("unchecked")
     @SuppressionReason(SuppressionReason.Reason.SIMPLIFY_GENERICS)
-    public FilterChainImpl(final List<? extends FilterLink> filterLinks) {
+    public ProcesserChain(final List<? extends FilterLink> filterLinks) {
         this.filterLinks = Collections.unmodifiableList(filterLinks);
     }
 

@@ -19,7 +19,7 @@ import com.googlecode.pinthura.factory.InstanceCreator;
 import com.googlecode.pinthura.factory.InstanceCreatorImpl;
 import com.googlecode.pinthura.factory.MethodParam;
 import com.googlecode.pinthura.filter.ChainOfResponsibility;
-import com.googlecode.pinthura.filter.FilterChainImpl;
+import com.googlecode.pinthura.filter.ProcesserChain;
 import com.googlecode.pinthura.util.CreationBroker;
 import com.googlecode.pinthura.util.CreationBrokerImpl;
 
@@ -39,7 +39,7 @@ public final class InstanceCreatorBuilder {
     //TODO: The order of these method calls should be important. Currently the end-result is the same no matter the order.
     public InstanceCreator build() {
         ChainOfResponsibility<MethodParam, Object> chain =
-                new FilterChainImpl<MethodParam, Object>(
+                new ProcesserChain<MethodParam, Object>(
                     new InstanceCreatorFilterBuilder().
                         havingAnnotationInstantiator().
                         havingSimpleInstantiator().

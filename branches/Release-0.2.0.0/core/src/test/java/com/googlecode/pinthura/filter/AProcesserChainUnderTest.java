@@ -29,7 +29,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-public final class AFilterChainUnderTest {
+public final class AProcesserChainUnderTest {
 
     private static final String STRING_INPUT = "BlablahbleuBlue";
     private static final String FILTER1 = "Filter1";
@@ -81,7 +81,7 @@ public final class AFilterChainUnderTest {
         mockControl.replay();
 
         List<FilterLink<String, Collection<?>>> filterLinkList = Arrays.asList(mockLink1, mockLink2);
-        new FilterChainImpl<String, Collection<?>>(filterLinkList);
+        new ProcesserChain<String, Collection<?>>(filterLinkList);
         filterLinkList.clear();
     }
 
@@ -98,6 +98,6 @@ public final class AFilterChainUnderTest {
     @SuppressWarnings("unchecked")
     @SuppressionReason(SuppressionReason.Reason.CANT_INFER_GENERICS_ON_MOCKS)
     private ChainOfResponsibility<String, Collection<?>> createFilterChain() {
-        return new FilterChainImpl<String, Collection<?>>(Arrays.asList(mockLink1, mockLink2));
+        return new ProcesserChain<String, Collection<?>>(Arrays.asList(mockLink1, mockLink2));
     }
 }
