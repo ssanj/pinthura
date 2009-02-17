@@ -23,8 +23,8 @@ import com.googlecode.pinthura.filter.CouldNotProcessInputException;
  */
 //TODO: move to internal
 public final class InstanceCreatorImpl implements InstanceCreator {
-    private final ChainOfResponsibility<MethodParam, Object> chain;
 
+    private final ChainOfResponsibility<MethodParam, Object> chain;
 
     public InstanceCreatorImpl(final ChainOfResponsibility<MethodParam,Object> chain) {
         this.chain = chain;

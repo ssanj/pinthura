@@ -17,23 +17,22 @@ package com.googlecode.pinthura.filter;
 
 import com.googlecode.pinthura.annotation.SuppressionReason;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Handles passing the <code>Input</code> parameter to each successor on the <code>List<ProcesserChainlet></code> supplied to its constructor.
+ * Handles passing the <code>Input</code> parameter to each processer on the <code>List<ProcesserChainlet></code> supplied to its constructor.
  *
- * If a <code>ProcesserChainlet</code> processes the <code>Input</code>, then the result is returned as an <code>Output</code>.
+ * If a <code>ProcesserChainlet</code> processers the <code>Input</code>, then the result is returned as an <code>Output</code>.
  * If not a <code>CouldNotProcessInputException</code> is thrown when there are no more <code>ProcesserChainlet</code>s to process the input.
  */
 public final class ProcesserChain<Input, Output> implements ChainOfResponsibility<Input, Output> {
 
     private final List<? extends ProcesserChainlet> processers;
 
-    @SuppressWarnings("unchecked")
     @SuppressionReason(SuppressionReason.Reason.SIMPLIFY_GENERICS)
     public ProcesserChain(final List<? extends ProcesserChainlet> processers) {
-        this.processers = Collections.unmodifiableList(processers);
+        this.processers = new ArrayList<ProcesserChainlet>(processers); //create a copy so the list is not modifyable externally.
     }
 
     @SuppressWarnings("unchecked")

@@ -19,7 +19,7 @@ package com.googlecode.pinthura.filter;
  * This represents a "Handler" in the Gof Chain of Responsibility pattern.
  * 
  * <p>
- * A <code>ChainOfResponsibility</code> takes in a list of <code>ProcesserChainlet</code>s. The processers are mutallually
+ * A {@link ProcesserChain} takes in a <code>List<ProcesserChainlet></code>s. Each processer is mutually
  * exclusive. If a processer can't handle a request it throws a <code>CouldNotProcessInputException</code>.
  * If it can handle the request it simply returns the value of the processing of the request.
  *
@@ -30,12 +30,17 @@ package com.googlecode.pinthura.filter;
  * </p>
  *
  * @see ChainOfResponsibility
+ * @see ProcesserChain
  */
 public interface ProcesserChainlet<Input, Output> {
 
     /**
      * Either processes an input and returns its value or throws a <code>CouldNotProcessInputException</code>to indicate that
      * another processer should handle it.
+     *
+     * <i>Implementations do not pass on the <code>Input</code> to another processer if it can't
+     * handle it. This is done via the <code>ProcesserChain</code>.<i>
+     * 
      * @param input The input parameter.
      * @return The result of processing the input paramater.
      * @throws CouldNotProcessInputException If the input parameter can't be handled by this filter.
