@@ -57,7 +57,7 @@ public final class AnAnnotationInstantiatorUnderTest {
         EasyMock.expect(mockConstructorInstantiator.instantiate(mockMethodParam, mockTargetConstructor)).andReturn(mockInstance);
         mockControl.replay();
 
-        UrlBoundary result = (UrlBoundary) instantiator.filter(mockMethodParam);
+        UrlBoundary result = (UrlBoundary) instantiator.process(mockMethodParam);
         assertThat(result, sameInstance(mockInstance));
 
         mockControl.verify();
@@ -67,7 +67,7 @@ public final class AnAnnotationInstantiatorUnderTest {
     public void shouldReturnItsName() {
         mockControl.replay();
 
-        assertThat("Annotation Instantiator", equalTo(instantiator.getFilterName()));
+        assertThat("Annotation Instantiator", equalTo(instantiator.getProcesserName()));
 
         mockControl.verify();
     }

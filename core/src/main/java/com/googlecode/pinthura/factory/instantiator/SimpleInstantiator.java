@@ -51,7 +51,7 @@ public final class SimpleInstantiator implements InstantiationStrategy {
      * @throws MatchNotFoundException If the class whose name was derived can't be instantiated.
      */
     @SuppressWarnings("unchecked")
-    public Object filter(final MethodParam methodParam) {
+    public Object process(final MethodParam methodParam) {
         String implClass = "[Unknown]";
         try {
             implClass = classNameDeriver.derive(methodParam);
@@ -63,10 +63,10 @@ public final class SimpleInstantiator implements InstantiationStrategy {
     }
 
     /**
-     * The filter name displayed when a filter list is displayed.
+     * The processer name displayed when a processer list is displayed.
      * @return The name of this filter.
      */
-    public String getFilterName() {
+    public String getProcesserName() {
         return FILTER_NAME;
     }
 

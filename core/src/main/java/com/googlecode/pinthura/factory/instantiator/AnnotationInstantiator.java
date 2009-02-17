@@ -49,7 +49,7 @@ public final class AnnotationInstantiator implements InstantiationStrategy {
      * @return An instance of the object hinted to by annotations on the supplied <code>MethodParam</code>.
      * @throws MatchNotFoundException If the instance could not be created.
      */
-    public Object filter(final MethodParam methodParam) throws MatchNotFoundException {
+    public Object process(final MethodParam methodParam) throws MatchNotFoundException {
         try {
             ConstructorBoundary<?> constructor = constructorLocator.locate(methodParam, annotationExtractor.extract(methodParam));
             return instantiator.instantiate(methodParam, constructor);
@@ -62,7 +62,7 @@ public final class AnnotationInstantiator implements InstantiationStrategy {
      * The filter name displayed when a filter list is displayed.
      * @return The filter name.
      */
-    public String getFilterName() {
+    public String getProcesserName() {
         return FILTER_NAME;
     }
 }

@@ -21,44 +21,44 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Handles passing the <code>Input</code> parameter to each successor on the <code>List<FilterLink></code> supplied to its constructor.
+ * Handles passing the <code>Input</code> parameter to each successor on the <code>List<ProcesserChainlet></code> supplied to its constructor.
  *
- * If a <code>FilterLink</code> processes the <code>Input</code>, then the result is returned as an <code>Output</code>.
+ * If a <code>ProcesserChainlet</code> processes the <code>Input</code>, then the result is returned as an <code>Output</code>.
  * If not a <code>MatchNotFoundException</code> is thrown when there are no more <code>FilterLink</code>s to process the input.
  */
 public final class ProcesserChain<Input, Output> implements ChainOfResponsibility<Input, Output> {
 
-    private final List<? extends FilterLink> filterLinks;
+    private final List<? extends ProcesserChainlet> processers;
 
     @SuppressWarnings("unchecked")
     @SuppressionReason(SuppressionReason.Reason.SIMPLIFY_GENERICS)
-    public ProcesserChain(final List<? extends FilterLink> filterLinks) {
-        this.filterLinks = Collections.unmodifiableList(filterLinks);
+    public ProcesserChain(final List<? extends ProcesserChainlet> processers) {
+        this.processers = Collections.unmodifiableList(processers);
     }
 
     @SuppressWarnings("unchecked")
     public Output process(final Input input) {
 
-        for (FilterLink link : filterLinks) {
+        for (ProcesserChainlet processerChainlet : processers) {
             try {
-                return (Output) link.filter(input);
+                return (Output) processerChainlet.process(input);
                 //CHECKSTYLE_OFF
             } catch (MatchNotFoundException e) {/*do nothing.*/}
             //CHECKSTYLE_ON
         }
 
-        throw new MatchNotFoundException("No match found for: " + input + " with filters: " + withFilters());
+        throw new MatchNotFoundException("No match found for: " + input + " with processers: " + withProcessers());
     }
 
-    private String withFilters() {
+    private String withProcessers() {
         StringBuilder builder = new StringBuilder();
 
-        for (FilterLink filterLink : filterLinks) {
+        for (ProcesserChainlet processerChainlet : processers) {
             if (builder.length() != 0) {
                 builder.append(", ");
             }
 
-            builder.append(filterLink.getFilterName());
+            builder.append(processerChainlet.getProcesserName());
         }
 
         return builder.toString();
