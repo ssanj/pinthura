@@ -15,8 +15,8 @@
  */
 package com.googlecode.pinthura.factory;
 
-import com.googlecode.pinthura.filter.ChainOfResponsibility;
-import com.googlecode.pinthura.filter.CouldNotProcessInputException;
+import com.googlecode.pinthura.processer.ChainOfResponsibility;
+import com.googlecode.pinthura.processer.CouldNotProcessInputException;
 
 /**
  * Creates instances using a <code>ChainOfResponsibility</code> of instantiation strategies.

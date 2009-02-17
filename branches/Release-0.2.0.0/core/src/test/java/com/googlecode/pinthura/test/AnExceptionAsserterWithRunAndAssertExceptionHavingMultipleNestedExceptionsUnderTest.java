@@ -16,7 +16,7 @@
 package com.googlecode.pinthura.test;
 
 import com.googlecode.pinthura.annotation.SuppressionReason;
-import com.googlecode.pinthura.filter.CouldNotProcessInputException;
+import com.googlecode.pinthura.processer.CouldNotProcessInputException;
 import com.googlecode.pinthura.injection.MockInjectionException;
 import com.googlecode.pinthura.util.RandomDataCreator;
 import com.googlecode.pinthura.util.builder.RandomDataCreatorBuilder;

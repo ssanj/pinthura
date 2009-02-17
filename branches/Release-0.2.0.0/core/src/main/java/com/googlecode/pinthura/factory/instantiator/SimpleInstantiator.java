@@ -18,7 +18,7 @@ package com.googlecode.pinthura.factory.instantiator;
 import com.googlecode.pinthura.boundary.java.lang.reflect.ConstructorBoundary;
 import com.googlecode.pinthura.factory.MethodParam;
 import com.googlecode.pinthura.factory.locator.deriver.ClassNameDeriver;
-import com.googlecode.pinthura.filter.CouldNotProcessInputException;
+import com.googlecode.pinthura.processer.CouldNotProcessInputException;
 
 /**
  * Locates and instantiates a <code>Class</code> by deriving its class name.

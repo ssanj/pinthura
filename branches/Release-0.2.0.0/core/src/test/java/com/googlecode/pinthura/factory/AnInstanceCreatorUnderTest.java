@@ -18,7 +18,7 @@ package com.googlecode.pinthura.factory;
 import com.googlecode.pinthura.annotation.SuppressionReason;
 import com.googlecode.pinthura.data.SquareImpl;
 import com.googlecode.pinthura.data.UrlBoundaryImpl;
-import com.googlecode.pinthura.filter.ChainOfResponsibility;
+import com.googlecode.pinthura.processer.ChainOfResponsibility;
 import com.googlecode.pinthura.util.builder.RandomDataChooserBuilder;
 import org.easymock.EasyMock;
 import org.easymock.IMocksControl;
