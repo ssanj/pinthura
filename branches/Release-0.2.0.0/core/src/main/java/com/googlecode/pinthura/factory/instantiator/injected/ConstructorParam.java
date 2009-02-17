@@ -20,7 +20,6 @@ import com.googlecode.pinthura.boundary.java.lang.ClassBoundary;
 /**
  * Encapsulates <code>Constructor</code> parameters.
  */
-//TODO: Rename this class. Maybe ConstructorParam ?
 public interface ConstructorParam {
 
     /**

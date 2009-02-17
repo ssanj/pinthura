@@ -20,13 +20,13 @@ import com.googlecode.pinthura.util.Arrayz;
 
 public final class ConstructorParamFactoryImpl implements ConstructorParamFactory {
 
-    private Arrayz arrayz;
+    private final Arrayz arrayz;
 
     public ConstructorParamFactoryImpl(final Arrayz arrayz) {
         this.arrayz = arrayz;
     }
 
-    public ConstructorParam createInjectedFactoryValues(final ClassInstance[] classInstances) {
+    public ConstructorParam createConstructorParam(final ClassInstance[] classInstances) {
         return new ConstructorParamImpl(classInstances, arrayz);
     }
 }

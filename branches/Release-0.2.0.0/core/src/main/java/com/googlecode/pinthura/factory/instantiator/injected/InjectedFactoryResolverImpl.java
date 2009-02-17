@@ -63,6 +63,6 @@ public final class InjectedFactoryResolverImpl implements InjectedFactoryResolve
         instanceSorterFactory.createResolvedSorter().sort(factories, classInstances);
         instanceSorterFactory.createSuppliedSorter().sort(methodParam, classInstances);
 
-        return factoryValuesFactory.createInjectedFactoryValues(classInstances);
+        return factoryValuesFactory.createConstructorParam(classInstances);
     }
 }
