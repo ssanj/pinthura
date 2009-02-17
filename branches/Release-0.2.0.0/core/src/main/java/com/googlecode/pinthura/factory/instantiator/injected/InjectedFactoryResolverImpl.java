@@ -25,7 +25,7 @@ import com.googlecode.pinthura.factory.instantiator.ClassInstanceFactory;
 import java.util.List;
 
 /**
- * Locates the correct constructor on an object when injected and supplied parameters are specified.
+ * Calculates the <code>ConstructorParam</code> from a <code>MethodParam</code>.
  */
 public final class InjectedFactoryResolverImpl implements InjectedFactoryResolver {
 
@@ -50,9 +50,10 @@ public final class InjectedFactoryResolverImpl implements InjectedFactoryResolve
     }
 
     /**
-     * Derives a constructor for the target object when given the <code>MethodParam</code>.
+     * Calculates the <code>ConstructorParam</code> from a <code>MethodParam</code>.
+     *
      * @param methodParam The annotated method.
-     * @return An <code>InjectedFactoryValues</code> object which encapsulates constructor details.
+     * @return A <code>ConstructorParam</code>.
      */
     @SuppressWarnings("unchecked")
     public ConstructorParam resolve(final MethodParam methodParam) {

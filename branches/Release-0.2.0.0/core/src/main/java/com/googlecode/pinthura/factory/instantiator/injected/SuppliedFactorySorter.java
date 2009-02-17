@@ -18,7 +18,17 @@ package com.googlecode.pinthura.factory.instantiator.injected;
 import com.googlecode.pinthura.factory.MethodParam;
 import com.googlecode.pinthura.factory.instantiator.ClassInstance;
 
+/**
+ * Extracts the parameters specified in the <code>MethodParam</code> to <code>ClassInstance</code>s that are put
+ * into vacant indexes in the <code>ClassInstance[]</code> supplied.
+ */
 public interface SuppliedFactorySorter {
 
+    /**
+     * Inserts the supplied <code>ClassInstance</code>s at the vacant indexes in the <code>ClassInstance[]</code>.
+     *
+     * @param param The method.
+     * @param classInstances The <code>ClassInstance[]</code>.
+     */
     void sort(MethodParam param, ClassInstance[] classInstances);
 }

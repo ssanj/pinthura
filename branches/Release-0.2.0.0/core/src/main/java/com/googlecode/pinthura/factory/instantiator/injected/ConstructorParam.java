@@ -18,7 +18,8 @@ package com.googlecode.pinthura.factory.instantiator.injected;
 import com.googlecode.pinthura.boundary.java.lang.ClassBoundary;
 
 /**
- * Encapsulates <code>Constructor</code> parameters.
+ * Encapsulates <code>Constructor</code> parameters. This includes <code>Class</code> types and instances of those
+ * <code>Classes</code>.
  */
 public interface ConstructorParam {
 
@@ -31,7 +32,7 @@ public interface ConstructorParam {
 
     /**
      * A <code>Object[]</code> of the instances of the types returned by {@link #getConstructorTypes()}.
-     * @return A <code>Object[]</code> of the instances of the types returned by {@link #getConstructorTypes()}.
+     * @return A <code>Object[]</code> of the instances of the types returned by getConstructorTypes().
      */
     //TODO: change this to List<Object>
     Object[] getConstructorArguments();

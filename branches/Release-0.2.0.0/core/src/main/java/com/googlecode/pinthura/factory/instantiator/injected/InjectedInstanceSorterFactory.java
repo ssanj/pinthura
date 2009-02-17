@@ -15,9 +15,20 @@
  */
 package com.googlecode.pinthura.factory.instantiator.injected;
 
+/**
+ * Creates instances of <code>ResolvedFactorySorter</code> and <code>SuppliedFactorySorter</code>. 
+ */
 public interface InjectedInstanceSorterFactory {
 
+    /**
+     * Creates a <code>ResolvedFactorySorter</code> to sort dynamically injected factories.
+     * @return A <code>ResolvedFactorySorter</code>.
+     */
     ResolvedFactorySorter createResolvedSorter();
 
+    /**
+     * Creates a <code>SuppliedFactorySorter</code> to sort supplied factories.
+     * @return A <code>SuppliedFactorySorter</code>.
+     */
     SuppliedFactorySorter createSuppliedSorter();
 }
