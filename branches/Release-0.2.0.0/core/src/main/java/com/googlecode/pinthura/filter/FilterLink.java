@@ -18,7 +18,7 @@ package com.googlecode.pinthura.filter;
 /**
  * This represents a "Handler" in the Gof Chain of Responsibility pattern.
  * This implementation of the Chain of Responsibility pattern has been modified such that the passing of the input parameter to subsequent
- * successors when it can't be handled, is not performed by each Handler/FilterLink. It is done by the <code>FilterChainImpl</code>
+ * successors when it can't be handled, is not performed by each Handler/FilterLink. It is done by the {@link FilterChainImpl}
  *
  * <p>
  * The <code>FilterChainImpl</code> takes in a list of <code>FilterLink</code>s. The filters are mutallually exclusive. If a filter can't
@@ -36,7 +36,8 @@ package com.googlecode.pinthura.filter;
 public interface FilterLink<Input, Output> {
 
     /**
-     * Either processes an input and returns its value or throws a MatchNotFoundException to indicate that another filter should handle it.
+     * Either processes an input and returns its value or throws a <code>MatchNotFoundException</code>to indicate that
+     * another filter should handle it.
      * @param input The input parameter.
      * @return The result of processing the input paramater.
      * @throws MatchNotFoundException If the input parameter can't be handled by this filter.
