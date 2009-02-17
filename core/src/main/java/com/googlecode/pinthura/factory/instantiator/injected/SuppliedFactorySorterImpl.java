@@ -24,10 +24,13 @@ import java.util.List;
 
 /**
  * This class adds the supplied parameters into each of the unused slots in the <code>ClassInstance[]</code> supplied.
- * Eg.
- * Assume [*] is a used slot and px is the parameter followed by its number.
- * If classInstance[] was -> [*][][*][] and 2 parameters p1 and p2 were supplied,
- * adds the parameters to -> [*][p1][*][p2]
+ *
+ * <p>
+ * <br/><br/>Eg.
+ * <br/>Assume [*] is a used slot and px is the parameter followed by its number (x).
+ * <br/>If classInstance[] was -> [*][][*][] and 2 parameters p1 and p2 were supplied,
+ * <br/>adds the parameters to -> [*][p1][*][p2]
+ * </p>
  */
 public final class SuppliedFactorySorterImpl implements SuppliedFactorySorter {
 
@@ -37,7 +40,7 @@ public final class SuppliedFactorySorterImpl implements SuppliedFactorySorter {
         this.classInstanceFactory = classInstanceFactory;
     }
 
-    @SuppressWarnings({ "unchecked" })
+    @SuppressWarnings("unchecked")
     public void sort(final MethodParam methodParam, final ClassInstance[] classInstances) {
         List<ClassBoundary<?>> methodParamTypes = methodParam.getParameterTypes();
         List<Object> methodParamArgs = methodParam.getArguments();

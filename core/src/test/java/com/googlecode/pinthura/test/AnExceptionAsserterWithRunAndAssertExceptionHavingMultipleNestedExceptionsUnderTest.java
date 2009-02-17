@@ -16,15 +16,15 @@
 package com.googlecode.pinthura.test;
 
 import com.googlecode.pinthura.annotation.SuppressionReason;
-import com.googlecode.pinthura.factory.instantiator.injected.ResolvedFactorySorterException;
 import com.googlecode.pinthura.filter.MatchNotFoundException;
-import com.googlecode.pinthura.util.builder.RandomDataCreatorBuilder;
+import com.googlecode.pinthura.injection.MockInjectionException;
 import com.googlecode.pinthura.util.RandomDataCreator;
+import com.googlecode.pinthura.util.builder.RandomDataCreatorBuilder;
+import static org.hamcrest.core.IsEqual.equalTo;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.fail;
-import static org.junit.Assert.assertThat;
-import static org.hamcrest.core.IsEqual.equalTo;
 
 @SuppressWarnings("ThrowableInstanceNeverThrown")
 @SuppressionReason(SuppressionReason.Reason.TEST_VALUE)
@@ -48,13 +48,13 @@ public final class AnExceptionAsserterWithRunAndAssertExceptionHavingMultipleNes
         final String randomMessage3 = randomDataCreator.createString(12);
         exceptionAsserter.runAndAssertException(new ExceptionInfoImpl(RuntimeException.class, randomMessage1,
                                                 new ExceptionInfoImpl(MatchNotFoundException.class, randomMessage2,
-                                                        new ExceptionInfoImpl(ResolvedFactorySorterException.class, randomMessage3))),
+                                                        new ExceptionInfoImpl(MockInjectionException.class, randomMessage3))),
                new Exceptional() {
            @Override
            public void run() {
                throw new RuntimeException(randomMessage1,
                        new MatchNotFoundException(randomMessage2,
-                               new ResolvedFactorySorterException(randomMessage3)));
+                               new MockInjectionException(randomMessage3)));
            }
        });
     }
@@ -76,14 +76,14 @@ public final class AnExceptionAsserterWithRunAndAssertExceptionHavingMultipleNes
         final String message4Error = message4 +"Error";
         try {
             exceptionAsserter.runAndAssertException(new ExceptionInfoImpl(MatchNotFoundException.class, randomMessage1,
-                                                    new ExceptionInfoImpl(ResolvedFactorySorterException.class, randomMessage2,
+                                                    new ExceptionInfoImpl(MockInjectionException.class, randomMessage2,
                                                             new ExceptionInfoImpl(RuntimeException.class, randomMessage3,
                                                                     new ExceptionInfoImpl(IllegalArgumentException.class, message4)))),
                    new Exceptional() {
                @Override
                public void run() {
                    throw new MatchNotFoundException(randomMessage1,
-                           new ResolvedFactorySorterException(randomMessage2,
+                           new MockInjectionException(randomMessage2,
                                    new RuntimeException(randomMessage3,
                                            new IllegalArgumentException(message4Error))));
                }

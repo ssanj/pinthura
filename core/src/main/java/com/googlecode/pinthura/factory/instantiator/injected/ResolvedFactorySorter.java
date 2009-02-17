@@ -18,7 +18,18 @@ package com.googlecode.pinthura.factory.instantiator.injected;
 import com.googlecode.pinthura.factory.Factory;
 import com.googlecode.pinthura.factory.instantiator.ClassInstance;
 
+/**
+ * Converts parameters specified in the <code>Factory[]</code> into <code>ClassInstance</code>s that are put into
+ * the <code>ClassInstance[]</code> supplied.
+ */
 public interface ResolvedFactorySorter {
 
+    /**
+     * Creates <code>ClassInstance</code>s from the <code>Factory[]</code> supplied and sorts those instances into
+     * the specified instances within the <code>ClassInstance[]</code> supplied.
+     *
+     * @param factories The factories.
+     * @param classInstances The <code>ClassInstance[]</code>.
+     */
     void sort(Factory[] factories, ClassInstance[] classInstances);
 }
