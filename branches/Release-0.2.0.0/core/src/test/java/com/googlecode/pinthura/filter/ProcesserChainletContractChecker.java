@@ -21,19 +21,19 @@ import static org.hamcrest.core.IsEqual.equalTo;
 import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.assertThat;
 
-public final class FilterLinkContractChecker {
+public final class ProcesserChainletContractChecker {
 
-    private FilterLinkContractChecker() {
+    private ProcesserChainletContractChecker() {
         //Utility.
     }
 
     @SuppressWarnings("unchecked")
-    public static <T> void checkContract(final FilterLink<T, ?> link,  final T validInput, final T invalidInput) {
-        assertThat(FilterLink.class.isAssignableFrom(link.getClass()), equalTo(true));
-        assertThat(link.filter(validInput), notNullValue());
+    public static <T> void checkContract(final ProcesserChainlet<T, ?> link,  final T validInput, final T invalidInput) {
+        assertThat(ProcesserChainlet.class.isAssignableFrom(link.getClass()), equalTo(true));
+        assertThat(link.process(validInput), notNullValue());
 
         try {
-            link.filter(invalidInput);
+            link.process(invalidInput);
             fail("Excepted MatchNotFoundException to be thrown with invalid input: " + invalidInput);
         } catch (MatchNotFoundException e) {
             assertTrue(true);

@@ -32,7 +32,7 @@ public final class ASimpleInstantiatorUnderIntTest {
 
     @Test
     public void shouldCreateAnInstanceOfTheRequiredClass() {
-        Object result = new SimpleInstantiatorBuilder().build().filter(createMethodParam());
+        Object result = new SimpleInstantiatorBuilder().build().process(createMethodParam());
 
         assertThat(result, notNullValue());
         assertThat(result.getClass() == UrlBoundaryImpl.class, equalTo(true));

@@ -37,23 +37,23 @@ public final class AProcesserChainUnderTest {
 
     private final IMocksControl mockControl = EasyMock.createControl();
 
-    private FilterLink<String, Collection<?>> mockLink1;
-    private FilterLink<String, Collection<?>> mockLink2;
+    private ProcesserChainlet<String, Collection<?>> mockChainlet1;
+    private ProcesserChainlet<String, Collection<?>> mockChainlet2;
     private Collection mockCollection;
 
     @SuppressWarnings("unchecked")
     @Before
     public void setup() {
-        mockLink1 = mockControl.createMock(FilterLink.class);
-        mockLink2 = mockControl.createMock(FilterLink.class);
+        mockChainlet1 = mockControl.createMock(ProcesserChainlet.class);
+        mockChainlet2 = mockControl.createMock(ProcesserChainlet.class);
         mockCollection = mockControl.createMock(Collection.class);
     }
 
     @SuppressWarnings({ "unchecked", "ThrowableInstanceNeverThrown" })
     @Test
     public void shouldReturnTheFoundMatch() {
-        EasyMock.expect(mockLink1.filter(STRING_INPUT)).andThrow(new MatchNotFoundException());
-        EasyMock.expect(mockLink2.filter(STRING_INPUT)).andReturn(mockCollection);
+        EasyMock.expect(mockChainlet1.process(STRING_INPUT)).andThrow(new MatchNotFoundException());
+        EasyMock.expect(mockChainlet2.process(STRING_INPUT)).andReturn(mockCollection);
         mockControl.replay();
 
         ChainOfResponsibility<String, Collection<?>> chain = createFilterChain();
@@ -66,10 +66,10 @@ public final class AProcesserChainUnderTest {
     @SuppressWarnings({ "ThrowableInstanceNeverThrown" })
     @Test
     public void shouldThrowAnExceptionIfAMatchIsNotFound() {
-        EasyMock.expect(mockLink1.filter(STRING_INPUT)).andThrow(new MatchNotFoundException());
-        EasyMock.expect(mockLink1.getFilterName()).andReturn(FILTER1);
-        EasyMock.expect(mockLink2.filter(STRING_INPUT)).andThrow(new MatchNotFoundException());
-        EasyMock.expect(mockLink2.getFilterName()).andReturn(FILTER2);
+        EasyMock.expect(mockChainlet1.process(STRING_INPUT)).andThrow(new MatchNotFoundException());
+        EasyMock.expect(mockChainlet1.getProcesserName()).andReturn(FILTER1);
+        EasyMock.expect(mockChainlet2.process(STRING_INPUT)).andThrow(new MatchNotFoundException());
+        EasyMock.expect(mockChainlet2.getProcesserName()).andReturn(FILTER2);
         mockControl.replay();
 
         expectMatchNotFound();
@@ -80,9 +80,9 @@ public final class AProcesserChainUnderTest {
     public void shouldNotAllowModificationOfSetFilters() {
         mockControl.replay();
 
-        List<FilterLink<String, Collection<?>>> filterLinkList = Arrays.asList(mockLink1, mockLink2);
-        new ProcesserChain<String, Collection<?>>(filterLinkList);
-        filterLinkList.clear();
+        List<ProcesserChainlet<String, Collection<?>>> processerChainletList = Arrays.asList(mockChainlet1, mockChainlet2);
+        new ProcesserChain<String, Collection<?>>(processerChainletList);
+        processerChainletList.clear();
     }
 
     private void expectMatchNotFound() {
@@ -90,7 +90,7 @@ public final class AProcesserChainUnderTest {
             createFilterChain().process(STRING_INPUT);
             fail();
         } catch (MatchNotFoundException e) {
-            assertThat(e.getMessage(), equalTo("No match found for: " + STRING_INPUT + " with filters: Filter1, Filter2"));
+            assertThat(e.getMessage(), equalTo("No match found for: " + STRING_INPUT + " with processers: Filter1, Filter2"));
             mockControl.verify();
         }
     }
@@ -98,6 +98,6 @@ public final class AProcesserChainUnderTest {
     @SuppressWarnings("unchecked")
     @SuppressionReason(SuppressionReason.Reason.CANT_INFER_GENERICS_ON_MOCKS)
     private ChainOfResponsibility<String, Collection<?>> createFilterChain() {
-        return new ProcesserChain<String, Collection<?>>(Arrays.asList(mockLink1, mockLink2));
+        return new ProcesserChain<String, Collection<?>>(Arrays.asList(mockChainlet1, mockChainlet2));
     }
 }

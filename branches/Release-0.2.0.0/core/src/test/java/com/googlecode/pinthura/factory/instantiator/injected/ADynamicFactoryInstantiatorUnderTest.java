@@ -80,7 +80,7 @@ public final class ADynamicFactoryInstantiatorUnderTest {
         EasyMock.expect(mockConstructorBoundary.newInstance(arguments)).andReturn(mockShape);
         mockControl.replay();
 
-        Shape result = (Shape) instantiator.filter(mockMethodParam);
+        Shape result = (Shape) instantiator.process(mockMethodParam);
         assertThat(result, sameInstance(mockShape));
 
         mockControl.verify();
@@ -88,7 +88,7 @@ public final class ADynamicFactoryInstantiatorUnderTest {
 
     @Test
     public void shouldReturnItsName() {
-        assertThat("Dynamic Parameter Instantiator", equalTo(instantiator.getFilterName()));
+        assertThat("Dynamic Parameter Instantiator", equalTo(instantiator.getProcesserName()));
     }
 
     @SuppressWarnings({"ThrowableInstanceNeverThrown"})
@@ -100,7 +100,7 @@ public final class ADynamicFactoryInstantiatorUnderTest {
 
         exceptionAsserter.runAndAssertException(new ExceptionInfoImpl(MatchNotFoundException.class,
                                                 new ExceptionInfoImpl(IllegalArgumentException.class, "boom")),
-                new Exceptional() {@Override public void run() { instantiator.filter(mockMethodParam); }
+                new Exceptional() {@Override public void run() { instantiator.process(mockMethodParam); }
         });
 
         mockControl.verify();

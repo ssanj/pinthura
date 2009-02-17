@@ -17,23 +17,21 @@ package com.googlecode.pinthura.filter;
 
 /**
  * This represents a "Handler" in the Gof Chain of Responsibility pattern.
- * This implementation of the Chain of Responsibility pattern has been modified such that the passing of the input parameter to subsequent
- * successors when it can't be handled, is not performed by each Handler/FilterLink. It is done by a {@link ChainOfResponsibility}
- *
+ * 
  * <p>
- * A <code>ChainOfResponsibility</code> takes in a list of <code>FilterLink</code>s. The filters are mutallually exclusive. If a filter can't
- * handle a request it throws a <code>MatchNotFoundException</code>.
+ * A <code>ChainOfResponsibility</code> takes in a list of <code>ProcesserChainlet</code>s. The processers are mutallually
+ * exclusive. If a processer can't handle a request it throws a <code>MatchNotFoundException</code>.
  * If it can handle the request it simply returns the value of the processing of the request.
  *
  * <Input> Type of input.
  * <Output> Type of output.
  *
- * Eg. FilterLink<String, Integer>
+ * Eg. ProcesserChainlet<String, Integer>
  * </p>
  *
  * @see ChainOfResponsibility
  */
-public interface FilterLink<Input, Output> {
+public interface ProcesserChainlet<Input, Output> {
 
     /**
      * Either processes an input and returns its value or throws a <code>MatchNotFoundException</code>to indicate that
@@ -42,10 +40,10 @@ public interface FilterLink<Input, Output> {
      * @return The result of processing the input paramater.
      * @throws MatchNotFoundException If the input parameter can't be handled by this filter.
      */
-    Output filter(final Input input) throws MatchNotFoundException;
+    Output process(final Input input) throws MatchNotFoundException;
 
     /**
-     * @return The name of this filter.
+     * @return The name of this processer.
      */
-    String getFilterName();
+    String getProcesserName();
 }

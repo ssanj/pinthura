@@ -24,19 +24,19 @@ import com.googlecode.pinthura.factory.SimpleInstantiatorBuilder;
 import com.googlecode.pinthura.factory.locator.MethodParamBuilder;
 import org.junit.Test;
 
-public final class AFilterContractUnderIntTest {
+public final class AProcesserChainletContractUnderIntTest {
 
     private static final int WIDGET_ID = 100;
 
     @SuppressWarnings("unchecked")
     @Test
     public void shouldBeHonouredBySimpleImplementationLocator() throws NoSuchMethodException {
-    FilterLinkContractChecker.checkContract(
+    ProcesserChainletContractChecker.checkContract(
                 new SimpleInstantiatorBuilder().build(), buildValidSimpleMethodParam(), buildInvalidSimpleMethodParam());
 }
     @Test
     public void shouldBeHonouredByAnnotationLocator() {
-        FilterLinkContractChecker.checkContract(
+        ProcesserChainletContractChecker.checkContract(
                 new AnnotationInstantiatorBuilder().build(), buildValidAnnotationMethodParam(), buildInvalidAnnotationMethodParam());
     }
 

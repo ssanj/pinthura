@@ -56,7 +56,7 @@ public final class ASimpleInstantiatorUnderTest {
         expectInstantiation(URL_BOUNDARY_IMPL, mockUrlBoundary);
         mockControl.replay();
 
-        UrlBoundary result = (UrlBoundary) instantiator.filter(mockMethodParam);
+        UrlBoundary result = (UrlBoundary) instantiator.process(mockMethodParam);
         assertThat(result, sameInstance(mockUrlBoundary));
 
         mockControl.verify();
@@ -69,7 +69,7 @@ public final class ASimpleInstantiatorUnderTest {
         mockControl.replay();
 
         try {
-            instantiator.filter(mockMethodParam);
+            instantiator.process(mockMethodParam);
             fail();
         } catch (MatchNotFoundException e) {
             assertThat(e.getCause().getClass() == IllegalStateException.class, equalTo(true));
@@ -85,7 +85,7 @@ public final class ASimpleInstantiatorUnderTest {
         mockControl.replay();
 
         try {
-            instantiator.filter(mockMethodParam);
+            instantiator.process(mockMethodParam);
             fail();
         } catch (MatchNotFoundException e) {
             assertThat(e.getCause().getClass() == IllegalArgumentException.class, equalTo(true));
@@ -95,7 +95,7 @@ public final class ASimpleInstantiatorUnderTest {
 
     @Test
     public void shouldReturnItsName() {
-        assertThat(instantiator.getFilterName(), equalTo("Simple Instantiator"));
+        assertThat(instantiator.getProcesserName(), equalTo("Simple Instantiator"));
     }
 
     @SuppressWarnings("unchecked")
