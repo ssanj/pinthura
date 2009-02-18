@@ -15,7 +15,17 @@
  */
 package com.googlecode.pinthura.injection;
 
+/**
+ * Injects mocks into the supplied instance.
+ */
 public interface MockInjector {
-    
-    <T> T inject(T instance);
+
+    /**
+     * Injects mocks into the supplied instance.
+     * @param instance The instance whose fields are to be mocked.
+     * @param <T> The type of instance.
+     * @return The same instance with fields mocked.
+     * @throws MockInjectionException If any mock can't be injected to the instance.
+     */
+    <T> T inject(T instance) throws MockInjectionException;
 }

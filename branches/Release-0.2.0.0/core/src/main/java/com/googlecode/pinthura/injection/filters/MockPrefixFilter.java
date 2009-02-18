@@ -17,14 +17,26 @@ package com.googlecode.pinthura.injection.filters;
 
 import com.googlecode.pinthura.boundary.java.lang.reflect.FieldBoundary;
 
+/**
+ * Filters fields that start with the supplied <code>prefix</code>.
+ */
 public final class MockPrefixFilter implements ItemFilter<FieldBoundary> {
 
     private final String prefix;
 
+    /**
+     * The mock prefix.
+     * @param prefix The mock prefix.
+     */
     public MockPrefixFilter(final String prefix) {
         this.prefix = prefix;
     }
 
+    /**
+     * Returns true if the field starts with the mock prefix and false if not.
+     * @param item The item to filter.
+     * @return The value true if the field starts with the mock prefix and false if not.
+     */
     public boolean include(final FieldBoundary item) {
         return item.getName().startsWith(prefix);
     }

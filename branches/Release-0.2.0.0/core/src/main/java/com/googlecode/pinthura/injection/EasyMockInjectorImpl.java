@@ -25,6 +25,11 @@ import org.easymock.IMocksControl;
 
 import java.util.List;
 
+/**
+ * Injects EasyMock mocks into mockable fields.
+ *
+ * @see <a href="http://www.easymock.org">EasyMock</a>
+ */
 public final class EasyMockInjectorImpl implements MockInjector {
 
     private final MockConfigurer mockConfigurer;
@@ -33,6 +38,16 @@ public final class EasyMockInjectorImpl implements MockInjector {
     private final EasyMockWrapper easyMockWrapper;
     private final Arrayz arrayz;
 
+    /**
+     * Constructor.
+     *
+     * @param mockConfigurer specifies information about mockable fields.
+     * @param fieldFinder Strategy for finding fields.
+     * @param fieldSetter Strategy for setting fields.
+     * @param easyMockWrapper Wrapper EasyMock methods.
+     * @param arrayz Utility class for handling arrays. 
+     */
+    //TODO: There are too many parameters here. Introduce a parameter object.
     public EasyMockInjectorImpl(final MockConfigurer mockConfigurer, final FieldFinder fieldFinder, final FieldSetter fieldSetter,
                                 final EasyMockWrapper easyMockWrapper, final Arrayz arrayz) {
         this.mockConfigurer = mockConfigurer;
@@ -42,7 +57,14 @@ public final class EasyMockInjectorImpl implements MockInjector {
         this.arrayz = arrayz;
     }
 
-    @SuppressWarnings({"unchecked"})
+    /**
+     * Injects mocks into the specified instance.
+     *
+     * @param instance The instance whose fields are to be mocked.
+     * @param <I> The type of the instance.
+     * @return The instance with its fields mocked out.
+     */
+    @SuppressWarnings("unchecked")
     @SuppressionReason(SuppressionReason.Reason.CANT_INFER_GENERICS)
     public <I> I inject(final I instance) {
         try {
@@ -61,10 +83,21 @@ public final class EasyMockInjectorImpl implements MockInjector {
         return instance;
     }
 
+    /**
+     * Given a list of fields, and the name of the mock control field, filters out the mock control field if it exists
+     * in the list of fields supplied.
+     *
+     * @param fieldsByPrefix The list of fields matching a certain prefix.
+     * @param mockControlName The name of the field for the mock control.
+     * @return The list of fields without the mock control field.
+     */
     private List<FieldBoundary<?>> filterMockControl(final List<FieldBoundary<?>> fieldsByPrefix, final String mockControlName) {
         return arrayz.filter(fieldsByPrefix, new RemoveMockControlFromPrefixListFilter(mockControlName));
     }
 
+    /**
+     * Removes the mock control field from from a list of supplied fields.
+     */
     private class RemoveMockControlFromPrefixListFilter implements ItemFilter<FieldBoundary<?>> {
 
         private final String mockControlName;
