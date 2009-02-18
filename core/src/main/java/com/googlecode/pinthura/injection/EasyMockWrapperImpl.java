@@ -19,6 +19,9 @@ import com.googlecode.pinthura.boundary.java.lang.ClassBoundary;
 import org.easymock.EasyMock;
 import org.easymock.IMocksControl;
 
+/**
+ * Wraps only the interface mocks (and not the class extension mocks) of EasyMock.
+ */
 public final class EasyMockWrapperImpl implements EasyMockWrapper {
 
     public IMocksControl createControl() {

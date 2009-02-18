@@ -15,7 +15,17 @@
  */
 package com.googlecode.pinthura.injection.filters;
 
+/**
+ * Signifies whether to include or exclude an item.
+ * @param <T> The type of the item.
+ */
 public interface ItemFilter<T> {
 
+    /**
+     * Returns true if the item should be included and false if not.
+     * 
+     * @param item The item to filter.
+     * @return The value true if the item should be included and false if not.
+     */
     boolean include(T item);
 }
