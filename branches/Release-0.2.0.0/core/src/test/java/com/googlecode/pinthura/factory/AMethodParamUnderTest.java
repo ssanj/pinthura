@@ -20,9 +20,11 @@ import com.googlecode.pinthura.data.WidgetFactory;
 import com.googlecode.pinthura.factory.locator.MethodParamBuilder;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.hamcrest.core.IsNot.not;
+import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.assertThat;
 import org.junit.Test;
 
+//TODO: Make this class easier to use. Use and incubator.
 public final class AMethodParamUnderTest {
 
     private static final String FACTORY_METHOD_1                    = "createUrlBoundary";
@@ -46,7 +48,12 @@ public final class AMethodParamUnderTest {
     @Test
     public void shouldNotEquateDifferentValues() {
         assertThat(createMethodParam2(), not(equalTo(createMethodParam1())));
+    }
 
+    @Test
+    public void shouldReturnAnEmptyListWhenNoArgumentsArePassed() {
+        MethodParam methodParam = new MethodParamImpl(createMethodParam1().getMethod().getMethod(), null);
+        assertThat(methodParam.getArguments(), notNullValue());
     }
 
     @SuppressWarnings("unchecked")
