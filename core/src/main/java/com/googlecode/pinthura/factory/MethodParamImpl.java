@@ -32,7 +32,8 @@ public final class MethodParamImpl implements MethodParam {
     private final List<Object> arguments;
 
     public MethodParamImpl(final Method method, final Object[] arguments) {
-        this.arguments = Arrays.asList(arguments);
+         //special case where the argument supplied by a proxy could be null. Have a look at: java.lang.reflect.InvocationHandler
+        this.arguments = (arguments == null) ? Arrays.<Object>asList() : Arrays.asList(arguments);
         this.method = new MethodBoundaryImpl(method);
     }
 
