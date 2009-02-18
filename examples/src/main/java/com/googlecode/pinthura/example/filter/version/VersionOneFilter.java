@@ -15,10 +15,11 @@
  */
 package com.googlecode.pinthura.example.filter.version;
 
-import com.googlecode.pinthura.filter.FilterLink;
-import com.googlecode.pinthura.filter.MatchNotFoundException;
 
-public final class VersionOneFilter implements FilterLink<XMLInformation, BusinessInformationObject>  {
+import com.googlecode.pinthura.processer.ProcesserChainlet;
+import com.googlecode.pinthura.processer.CouldNotProcessInputException;
+
+public final class VersionOneFilter implements ProcesserChainlet<XMLInformation, BusinessInformationObject> {
 
     private final XMLTransformer xmlTransformer;
 
@@ -26,15 +27,15 @@ public final class VersionOneFilter implements FilterLink<XMLInformation, Busine
         this.xmlTransformer = xmlTransformer;
     }
 
-    public BusinessInformationObject filter(final XMLInformation xmlInformation) throws MatchNotFoundException {
+    public BusinessInformationObject process(final XMLInformation xmlInformation) throws CouldNotProcessInputException {
         if (XMLVersionEnum.ONE.equals(xmlInformation.getVersion())) {
             return xmlTransformer.transform(xmlInformation);
         }
 
-        throw new MatchNotFoundException();
+        throw new CouldNotProcessInputException();
     }
 
-    public String getFilterName() {
-        return "Version One Filter";
+    public String getProcesserName() {
+        return "Version One Processer";
     }
 }

@@ -15,10 +15,10 @@
  */
 package com.googlecode.pinthura.example.filter.mail;
 
-import com.googlecode.pinthura.filter.FilterLink;
-import com.googlecode.pinthura.filter.MatchNotFoundException;
+import com.googlecode.pinthura.processer.CouldNotProcessInputException;
+import com.googlecode.pinthura.processer.ProcesserChainlet;
 
-public final class LargeAttachmentFilter implements FilterLink<Mail, Boolean> {
+public final class LargeAttachmentFilter implements ProcesserChainlet<Mail, Boolean> {
 
     private final MailMan mailMan;
     private final long attachmentLimit;
@@ -28,16 +28,16 @@ public final class LargeAttachmentFilter implements FilterLink<Mail, Boolean> {
         this.attachmentLimit = attachmentLimit;
     }
 
-    public Boolean filter(final Mail mail) throws MatchNotFoundException {
+    public Boolean process(final Mail mail) throws CouldNotProcessInputException {
         if (mail.getAttachmentSize() > attachmentLimit) {
             mailMan.moveMail(MailLocationEnum.LARGE_ATTACHMENTS);
             return true;
         }
 
-        throw new MatchNotFoundException();
+        throw new CouldNotProcessInputException();
     }
 
-    public String getFilterName() {
+    public String getProcesserName() {
         return "Large Attachment Filter";
     }
 }

@@ -15,10 +15,10 @@
  */
 package com.googlecode.pinthura.example.filter.mail;
 
-import com.googlecode.pinthura.filter.FilterLink;
-import com.googlecode.pinthura.filter.MatchNotFoundException;
+import com.googlecode.pinthura.processer.CouldNotProcessInputException;
+import com.googlecode.pinthura.processer.ProcesserChainlet;
 
-public final class SpamFilter implements FilterLink<Mail, Boolean> {
+public final class SpamFilter implements ProcesserChainlet<Mail, Boolean> {
 
     private final SpamDetector spamDetector;
     private final MailMan mailMan;
@@ -28,16 +28,16 @@ public final class SpamFilter implements FilterLink<Mail, Boolean> {
         this.mailMan = mailMan;
     }
 
-    public Boolean filter(final Mail mail) throws MatchNotFoundException {
+    public Boolean process(final Mail mail) throws CouldNotProcessInputException {
         if (spamDetector.isSpam(mail)) {
             mailMan.moveMail(MailLocationEnum.SPAM);
             return true;
         }
 
-        throw new MatchNotFoundException();
+        throw new CouldNotProcessInputException();
     }
 
-    public String getFilterName() {
+    public String getProcesserName() {
         return "Spam Filter";
     }
 }
