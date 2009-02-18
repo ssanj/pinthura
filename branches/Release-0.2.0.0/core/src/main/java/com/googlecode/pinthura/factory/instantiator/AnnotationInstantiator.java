@@ -59,8 +59,8 @@ public final class AnnotationInstantiator implements InstantiationStrategy {
     }
 
     /**
-     * The filter name displayed when a filter list is displayed.
-     * @return The filter name.
+     * The processer name displayed when a processer list is displayed.
+     * @return The processer name.
      */
     public String getProcesserName() {
         return FILTER_NAME;

@@ -64,7 +64,7 @@ public final class SimpleInstantiator implements InstantiationStrategy {
 
     /**
      * The processer name displayed when a processer list is displayed.
-     * @return The name of this filter.
+     * @return The name of this processer.
      */
     public String getProcesserName() {
         return FILTER_NAME;
