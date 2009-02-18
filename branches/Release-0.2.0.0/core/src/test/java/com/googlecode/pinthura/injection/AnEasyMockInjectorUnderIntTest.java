@@ -22,7 +22,7 @@ import org.junit.Test;
 
 public final class AnEasyMockInjectorUnderIntTest {
 
-    @SuppressWarnings({"InstanceVariableOfConcreteClass"})
+    @SuppressWarnings("InstanceVariableOfConcreteClass")
     @SuppressionReason(SuppressionReason.Reason.INCUBATOR)
     private RandomIntegralValueIncubator incubator;
 
@@ -32,11 +32,11 @@ public final class AnEasyMockInjectorUnderIntTest {
     }
 
     @Test
-    public void shouldInjectMocksIntoSuppliedInstance() {
+    public void shouldInjectMocksIntoTheSuppliedInstance() {
         incubator.createRandomIntegralValue()
                  .supplyRandomSeed(0.5)
                  .performGetRandomValue()
-                 .observeValue(100).isReturned()
+                 .observe().that().value(100).isReturned()
                  .done();
     }
 }
