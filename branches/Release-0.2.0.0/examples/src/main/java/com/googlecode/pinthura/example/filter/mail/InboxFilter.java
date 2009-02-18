@@ -15,10 +15,10 @@
  */
 package com.googlecode.pinthura.example.filter.mail;
 
-import com.googlecode.pinthura.filter.FilterLink;
-import com.googlecode.pinthura.filter.MatchNotFoundException;
+import com.googlecode.pinthura.processer.CouldNotProcessInputException;
+import com.googlecode.pinthura.processer.ProcesserChainlet;
 
-public final class InboxFilter implements FilterLink<Mail, Boolean> {
+public final class InboxFilter implements ProcesserChainlet<Mail, Boolean> {
 
     private final MailMan mailMan;
 
@@ -26,12 +26,12 @@ public final class InboxFilter implements FilterLink<Mail, Boolean> {
         this.mailMan = mailMan;
     }
 
-    public Boolean filter(final Mail mail) throws MatchNotFoundException {
+    public Boolean process(final Mail mail) throws CouldNotProcessInputException {
         mailMan.moveMail(MailLocationEnum.INBOX);
         return true;
     }
 
-    public String getFilterName() {
+    public String getProcesserName() {
         return "Inbox Filter";
     }
 }

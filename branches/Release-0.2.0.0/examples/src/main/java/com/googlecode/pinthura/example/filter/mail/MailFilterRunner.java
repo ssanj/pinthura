@@ -15,8 +15,9 @@
  */
 package com.googlecode.pinthura.example.filter.mail;
 
-import com.googlecode.pinthura.filter.FilterChainImpl;
-import com.googlecode.pinthura.filter.FilterLink;
+import com.googlecode.pinthura.processer.ChainOfResponsibility;
+import com.googlecode.pinthura.processer.ProcesserChain;
+import com.googlecode.pinthura.processer.ProcesserChainlet;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,17 +34,17 @@ public final class MailFilterRunner {
     private MailFilterRunner() { }
 
     public static void main(final String[] args) {
-        List<FilterLink<Mail, Boolean>> filters = new ArrayList<FilterLink<Mail, Boolean>>();
+        List<ProcesserChainlet<Mail, Boolean>> filters = new ArrayList<ProcesserChainlet<Mail, Boolean>>();
         MailMan mailMan = new MailManImpl();
         filters.add(new SpamFilter(new SpamDetectorImpl(), mailMan));
         filters.add(new LargeAttachmentFilter(ATTACHMENT_LIMIT_OF_50, mailMan));
         filters.add(new InboxFilter(mailMan));
 
-        FilterLink<Mail, Boolean> chainOfResp = new FilterChainImpl<Mail, Boolean>(filters);
+        ChainOfResponsibility<Mail, Boolean> chainOfResp = new ProcesserChain<Mail, Boolean>(filters);
 
-        chainOfResp.filter(new MailImpl(ATTACHMENT_OF_100, SPAM));
-        chainOfResp.filter(new MailImpl(ATTACHMENT_OF_100, NOT_SPAM));
-        chainOfResp.filter(new MailImpl(ATTACHMENT_OF_40, NOT_SPAM));
-        chainOfResp.filter(new MailImpl(ATTACHMENT_OF_60, NOT_SPAM));
+        chainOfResp.process(new MailImpl(ATTACHMENT_OF_100, SPAM));
+        chainOfResp.process(new MailImpl(ATTACHMENT_OF_100, NOT_SPAM));
+        chainOfResp.process(new MailImpl(ATTACHMENT_OF_40, NOT_SPAM));
+        chainOfResp.process(new MailImpl(ATTACHMENT_OF_60, NOT_SPAM));
     }
 }

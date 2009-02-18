@@ -15,9 +15,10 @@
  */
 package com.googlecode.pinthura.example.filter.version;
 
-import com.googlecode.pinthura.filter.FilterChainImpl;
-import com.googlecode.pinthura.filter.FilterLink;
-import com.googlecode.pinthura.filter.MatchNotFoundException;
+import com.googlecode.pinthura.processer.ChainOfResponsibility;
+import com.googlecode.pinthura.processer.CouldNotProcessInputException;
+import com.googlecode.pinthura.processer.ProcesserChain;
+import com.googlecode.pinthura.processer.ProcesserChainlet;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,23 +35,23 @@ public final class XMLVersionFilterRunner {
     private XMLVersionFilterRunner() { }
 
     public static void main(final String[] args) {
-        List<FilterLink<XMLInformation, BusinessInformationObject>> filters =
-                new ArrayList<FilterLink<XMLInformation, BusinessInformationObject>>();
+        List<ProcesserChainlet<XMLInformation, BusinessInformationObject>> filters =
+                new ArrayList<ProcesserChainlet<XMLInformation, BusinessInformationObject>>();
         filters.add(new VersionOneFilter(new VersionOneXMLTransformer()));
         filters.add(new VersionTwoFilter(new VersionTwoXMLTransformer()));
 
-        FilterLink<XMLInformation, BusinessInformationObject> chainOfResp =
-                new FilterChainImpl<XMLInformation, BusinessInformationObject>(filters);
+        ChainOfResponsibility<XMLInformation, BusinessInformationObject> chainOfResp =
+                new ProcesserChain<XMLInformation, BusinessInformationObject>(filters);
 
-        BusinessInformationObject bo1 = chainOfResp.filter(new XMLInformationImpl(XMLVersionEnum.ONE));
-        BusinessInformationObject bo2 = chainOfResp.filter(new XMLInformationImpl(XMLVersionEnum.TWO));
+        BusinessInformationObject bo1 = chainOfResp.process(new XMLInformationImpl(XMLVersionEnum.ONE));
+        BusinessInformationObject bo2 = chainOfResp.process(new XMLInformationImpl(XMLVersionEnum.TWO));
 
         System.out.println(bo1.getInformation());
         System.out.println(bo2.getInformation());
 
         try {
-            chainOfResp.filter(new XMLInformationImpl(new UnknownVersion()));
-        } catch (MatchNotFoundException e) {
+            chainOfResp.process(new XMLInformationImpl(new UnknownVersion()));
+        } catch (CouldNotProcessInputException e) {
             System.out.println("Match not found for UnknownVersion");
         }
     }
