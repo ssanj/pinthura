@@ -27,15 +27,15 @@ public final class AnEasyMockInjectorIncubator {
     private final FieldFinder mockFieldFinder;
     private final FieldSetter mockFieldSetter;
     private final EasyMockWrapper mockEasyMockWrapper;
-    private Object instance;
-    private Deux<FieldBoundary,IMocksControl> fieldMockControlDeux;
+    private final MockConfigurer mockMockConfigurer;
+    private final ExceptionAsserter asserter;
     private final List<Deux<FieldBoundary,ClassBoundary>> fieldsDeux;
     private final Map<String, Deux<FieldBoundary,ClassBoundary>> fieldsDeuxByName;
+    private Object instance;
+    private Deux<FieldBoundary,IMocksControl> fieldMockControlDeux;
     private String prefix;
     private MockInjectionException exception;
     private boolean exceptionSet;
-    private final MockConfigurer mockMockConfigurer;
-    private ExceptionAsserter asserter;
 
     public AnEasyMockInjectorIncubator() {
         mockControl = EasyMock.createControl();

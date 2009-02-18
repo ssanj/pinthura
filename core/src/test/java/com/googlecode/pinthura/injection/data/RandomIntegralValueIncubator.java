@@ -22,11 +22,11 @@ import org.easymock.IMocksControl;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertThat;
 
-@SuppressWarnings({"MethodReturnOfConcreteClass"})
+@SuppressWarnings("MethodReturnOfConcreteClass")
 @SuppressionReason(SuppressionReason.Reason.INCUBATOR)
 public final class RandomIntegralValueIncubator {
 
-    @SuppressWarnings({"InstanceVariableOfConcreteClass"})
+    @SuppressWarnings("InstanceVariableOfConcreteClass")
     @SuppressionReason(SuppressionReason.Reason.TEST_VALUE)
     private RandomIntegralValue cut;
 
@@ -42,11 +42,10 @@ public final class RandomIntegralValueIncubator {
         return this;
     }
 
-    public RandomIntegralValueIncubator supplyRandomSeed(double seed) {
+    public RandomIntegralValueIncubator supplyRandomSeed(final double seed) {
         EasyMock.expect(mockMathBoundary.random()).andReturn(seed);
         return this;
     }
-
 
     public RandomIntegralValueIncubator performGetRandomValue() {
         mockCounter.inc();
@@ -56,8 +55,16 @@ public final class RandomIntegralValueIncubator {
         return this;
     }
 
-    public RandomIntegralValueIncubator observeValue(int expectedValue) {
+    public RandomIntegralValueIncubator value(final int expectedValue) {
         assertThat(returnedRandomValue, equalTo(expectedValue));
+        return this;
+    }
+
+    public RandomIntegralValueIncubator observe() {
+        return this;
+    }
+
+    public RandomIntegralValueIncubator that() {
         return this;
     }
 
@@ -71,7 +78,7 @@ public final class RandomIntegralValueIncubator {
 
     public static final class RandomIntegralValue {
 
-        private MathBoundary mathBoundary;
+        private final MathBoundary mathBoundary;
         private final Counter counter;
 
         private RandomIntegralValue(final MathBoundary mathBoundary, final Counter counter) {
@@ -90,5 +97,4 @@ public final class RandomIntegralValueIncubator {
 
         void inc();
     }
-
 }
