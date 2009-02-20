@@ -23,4 +23,6 @@ public interface ShapeFactory {
 
     @Implementation(WobblyCircle.class)
     Circle createCircle(int radius);
+
+    Square createCraftySquare(Integer length);
 }
