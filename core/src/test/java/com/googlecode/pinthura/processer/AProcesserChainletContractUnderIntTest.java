@@ -19,7 +19,6 @@ import com.googlecode.pinthura.data.UrlBoundaryFactory;
 import com.googlecode.pinthura.data.WidgetFactory;
 import com.googlecode.pinthura.factory.AnnotationInstantiatorBuilder;
 import com.googlecode.pinthura.factory.MethodParam;
-import com.googlecode.pinthura.factory.MethodParamImpl;
 import com.googlecode.pinthura.factory.SimpleInstantiatorBuilder;
 import com.googlecode.pinthura.factory.locator.MethodParamBuilder;
 import org.junit.Test;
@@ -42,21 +41,37 @@ public final class AProcesserChainletContractUnderIntTest {
 
     @SuppressWarnings("unchecked")
     private MethodParam buildInvalidAnnotationMethodParam() {
-        return new MethodParamBuilder().forInterface(WidgetFactory.class).havingMethod("createWidget").build();
+        return new MethodParamBuilder().
+                    findMethod().
+                    onClass(WidgetFactory.class).
+                    havingMethodNameOf("createWidget").
+                    build();
     }
 
     @SuppressWarnings("unchecked")
     private MethodParam buildValidAnnotationMethodParam() {
-        return new MethodParamBuilder().forInterface(WidgetFactory.class).havingMethod("createWidget", Integer.class).
-                withArgument(WIDGET_ID).build();
+        return new MethodParamBuilder().
+                    findMethod().
+                    onClass(WidgetFactory.class).
+                    havingMethodNameOf("createWidget").
+                    withParameter(WIDGET_ID).
+                    build();
     }
 
     @SuppressWarnings("unchecked")
     private MethodParam buildValidSimpleMethodParam() {
-        return new MethodParamBuilder().forInterface(UrlBoundaryFactory.class).havingMethod("createUrlBoundary").build();
+        return new MethodParamBuilder().
+                    findMethod().
+                    onClass(UrlBoundaryFactory.class).
+                    havingMethodNameOf("createUrlBoundary").
+                    build();
     }
 
-    private MethodParam buildInvalidSimpleMethodParam() throws NoSuchMethodException {
-        return new MethodParamImpl(Object.class.getMethod("toString"), new Object[] {});
+    private MethodParam buildInvalidSimpleMethodParam() throws NoSuchMethodException {        
+        return new MethodParamBuilder().
+                    findMethod().
+                    onClass(Object.class).
+                    havingMethodNameOf("toString").
+                    build();
     }
 }
