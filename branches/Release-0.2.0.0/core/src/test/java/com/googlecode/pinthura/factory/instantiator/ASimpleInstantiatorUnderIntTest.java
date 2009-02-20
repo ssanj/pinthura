@@ -15,6 +15,8 @@
  */
 package com.googlecode.pinthura.factory.instantiator;
 
+import com.googlecode.pinthura.data.ShapeFactory;
+import com.googlecode.pinthura.data.SquareImpl;
 import com.googlecode.pinthura.data.UrlBoundary;
 import com.googlecode.pinthura.data.UrlBoundaryFactory;
 import com.googlecode.pinthura.data.UrlBoundaryImpl;
@@ -26,35 +28,46 @@ import com.googlecode.pinthura.util.builder.RandomDataCreatorBuilder;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.assertThat;
-import org.junit.Before;
 import org.junit.Test;
-//TODO: Add more tests.
+
 public final class ASimpleInstantiatorUnderIntTest {
 
-    private String url;
-
-    @Before
-    public void setup() {
+    @Test
+    public void shouldCreateAnInstanceOfUrlBoundary() {
         String domain = new RandomDataCreatorBuilder().build().createString(7);
         String suffix = new RandomDataChooserBuilder().build().chooseOneOf("com", "co.uk", "com.au", "net");
-        url = new StringBuilder().append("http://").append(domain).append(".").append(suffix).toString();
-    }
+        String url = new StringBuilder().append("http://").append(domain).append(".").append(suffix).toString();
 
-    @Test
-    public void shouldCreateAnInstanceOfTheRequiredClass() {
-        Object result = new SimpleInstantiatorBuilder().build().process(createMethodParam());
-
+        Object result = new SimpleInstantiatorBuilder().build().process(createMethodParamForUrlBoundary(url));
         assertThat("SimpleInstantiator.process() returned null.", result, notNullValue());
         assertThat(result.getClass() == UrlBoundaryImpl.class, equalTo(true));
         assertThat(url, equalTo(((UrlBoundary) result).getUrlAsString()));
     }
 
-    private MethodParam createMethodParam() {
+    @Test
+    public void shouldCreateAnInstanceOfSquare() {
+        int length = new RandomDataCreatorBuilder().build().createNumber(100);
+
+        Object result = new SimpleInstantiatorBuilder().build().process(createMethodParamForSquare(length));
+        assertThat("SimpleInstantiator.process() returned null.", result, notNullValue());
+        assertThat(result.getClass() == SquareImpl.class, equalTo(true));
+    }
+
+    private MethodParam createMethodParamForUrlBoundary(final Object value) {
         return new MethodParamBuilder().
                 findMethod().
                 onClass(UrlBoundaryFactory.class).
                 havingMethodNameOf("createUrlBoundary").
-                withParameter(url).
+                withParameter(value).
+                build();
+    }
+
+    private MethodParam createMethodParamForSquare(final Object value) {
+        return new MethodParamBuilder().
+                findMethod().
+                onClass(ShapeFactory.class).
+                havingMethodNameOf("createCraftySquare").
+                withParameter(value).
                 build();
     }
 }

@@ -25,6 +25,10 @@ public final class SquareImpl implements Square {
         this.length = length;
     }
 
+    public SquareImpl(final Integer length) {
+        this.length = length;
+    }
+
     public int getLength() {
         return SIDES_OF_SQUARE * length;
     }
