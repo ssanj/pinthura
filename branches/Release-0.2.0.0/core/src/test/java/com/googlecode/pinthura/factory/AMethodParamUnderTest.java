@@ -15,55 +15,84 @@
  */
 package com.googlecode.pinthura.factory;
 
+import com.googlecode.pinthura.data.UrlBoundary;
 import com.googlecode.pinthura.data.UrlBoundaryFactory;
+import com.googlecode.pinthura.data.Widget;
 import com.googlecode.pinthura.data.WidgetFactory;
-import com.googlecode.pinthura.factory.locator.MethodParamBuilder;
-import static org.hamcrest.core.IsEqual.equalTo;
-import static org.hamcrest.core.IsNot.not;
-import static org.hamcrest.core.IsNull.notNullValue;
-import static org.junit.Assert.assertThat;
+import com.googlecode.pinthura.factory.locator.MethodParamIncubator;
+import com.googlecode.pinthura.util.RandomDataChooser;
+import com.googlecode.pinthura.util.builder.RandomDataChooserBuilder;
+import org.junit.Before;
 import org.junit.Test;
 
-//TODO: Make this class easier to use. Use and incubator.
 public final class AMethodParamUnderTest {
 
-    private static final String FACTORY_METHOD_1                    = "createUrlBoundary";
-    private static final Class<UrlBoundaryFactory> FACTORY_CLASS_1  = UrlBoundaryFactory.class;
-    private static final String URL                                 = "http://someurl";
+    private RandomDataChooser randomDataChooser;
 
-    private static final String FACTORY_METHOD_2                    = "createWidget";
-    private static final Class<WidgetFactory> FACTORY_CLASS_2       = WidgetFactory.class;
-
-    @SuppressWarnings("unchecked")
-    @Test
-    public void shouldEquateASetOfIdenticalValues() {
-        assertThat(createMethodParam1(), equalTo(createMethodParam1()));
-    }
-
-    @Test
-    public void shouldEquateAnotherSetOfIdenticalValues() {
-        assertThat(createMethodParam2(), equalTo(createMethodParam2()));
-    }
-
-    @Test
-    public void shouldNotEquateDifferentValues() {
-        assertThat(createMethodParam2(), not(equalTo(createMethodParam1())));
-    }
-
-    @Test
-    public void shouldReturnAnEmptyListWhenNoArgumentsArePassed() {
-        MethodParam methodParam = new MethodParamImpl(createMethodParam1().getMethod().getMethod(), null);
-        assertThat(methodParam.getArguments(), notNullValue());
+    @Before
+    public void setup() {
+        randomDataChooser = new RandomDataChooserBuilder().build();
     }
 
     @SuppressWarnings("unchecked")
-    private MethodParam createMethodParam1() {
-        return new MethodParamBuilder().forInterface(FACTORY_CLASS_1).havingMethod(FACTORY_METHOD_1, String.class).withArgument(URL).
-                build();
+    @Test
+    public void shouldWrapAMethodAndItsParameters() {
+        MethodWrapper methodWrapper = randomDataChooser.chooseOneOf(
+                new MethodWrapper<UrlBoundaryFactory, UrlBoundary>("createUrlBoundary",
+                        UrlBoundaryFactory.class, "http://someurl", UrlBoundary.class),
+                new MethodWrapper<WidgetFactory, Widget>("createWidget", WidgetFactory.class, 1, Widget.class));
+
+        new MethodParamIncubator<UrlBoundaryFactory, UrlBoundary>().
+                supplyTargetClass(methodWrapper.targetClass).
+                supplyMethodName(methodWrapper.methodName).
+                supplyMethodArgument(methodWrapper.argument).
+                supplyReturnType(methodWrapper.returnType).
+                performGetMethod().
+                observe().methodName().isReturned().
+                observe().parameterTypes().areReturned().
+                observe().parameterValues().areReturned().
+                observe().methodBoundary().areReturned().
+                observe().returnType().isReturned().
+                done();
     }
 
     @SuppressWarnings("unchecked")
-    private MethodParam createMethodParam2() {
-        return new MethodParamBuilder().forInterface(FACTORY_CLASS_2).havingMethod(FACTORY_METHOD_2).build();
+    @Test
+    public void shouldNotReturnParametersWhenArgumentsAreNotSupplied() {
+        MethodWrapper methodWrapper = randomDataChooser.chooseOneOf(
+                new MethodWrapper<String, String>("trim",
+                    String.class, String.class),
+                new MethodWrapper<WidgetFactory, Widget>("createWidget", WidgetFactory.class, Widget.class));
+
+        new MethodParamIncubator<String, String>().
+                supplyTargetClass(methodWrapper.targetClass).
+                supplyMethodName(methodWrapper.methodName).
+                supplyNoParameters().
+                supplyReturnType(methodWrapper.returnType).
+                performGetMethod().
+                observe().methodName().isReturned().
+                observe().parameterValues().areEmpty().
+                observe().methodBoundary().areReturned().
+                observe().returnType().isReturned().
+                done();
+    }
+
+    private static class MethodWrapper<TARGET_CLASS, RETURN_TYPE> {
+        private final String methodName;
+        private final Class<TARGET_CLASS> targetClass;
+        private final Object argument;
+        private final Class<RETURN_TYPE> returnType;
+
+        private MethodWrapper(final String methodName, final Class<TARGET_CLASS> targetClass, final Object argument,
+                              final Class<RETURN_TYPE> returnType) {
+            this.methodName = methodName;
+            this.targetClass = targetClass;
+            this.argument = argument;
+            this.returnType = returnType;
+        }
+
+        private MethodWrapper(final String methodName, final Class<TARGET_CLASS> targetClass, final Class<RETURN_TYPE> returnType) {
+            this(methodName, targetClass, null, returnType);
+        }
     }
 }
