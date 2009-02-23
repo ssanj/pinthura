@@ -19,9 +19,31 @@ import com.googlecode.pinthura.boundary.java.lang.reflect.FieldBoundary;
 
 import java.util.List;
 
+/**
+ * Finds <code>fields</code> on an object given a criteria such as name or prefix.
+ */
 public interface FieldFinder {
 
-    <T> FieldBoundary<T> findByName(String varName, Object instance);
+    /**
+     * Returns a field given its name and the object its on or throws a <code>FieldFinderException</code> if the field can't be
+     * found.
+     *
+     * @param varName The name of the field.
+     * @param instance  The object that contains the field.
+     * @param <T> The type of field.
+     * @return The named field.
+     * @throws FieldFinderException If the field can't be found.
+     */
+    <T> FieldBoundary<T> findByName(String varName, Object instance) throws FieldFinderException;
 
-    List<FieldBoundary<?>> findByPrefix(String prefix, Object instance);
+    /**
+     * Returns a <code>List</code> of fields given a prefix and an object or throws a <code>FieldFinderException</code> if fields
+     * of the given prefix can't be found.
+     *
+     * @param prefix The prefix of the fields to return.
+     * @param instance The object that contains the fields.
+     * @return A <code>List</code> of fields of the given prefix.
+     * @throws FieldFinderException If fields of the given prefix can't be found.
+     */
+    List<FieldBoundary<?>> findByPrefix(String prefix, Object instance) throws FieldFinderException;
 }

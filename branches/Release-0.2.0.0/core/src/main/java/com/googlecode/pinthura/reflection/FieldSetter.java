@@ -17,7 +17,19 @@ package com.googlecode.pinthura.reflection;
 
 import com.googlecode.pinthura.boundary.java.lang.reflect.FieldBoundary;
 
+/**
+ * Sets the value of a field on a given object.
+ */
 public interface FieldSetter {
 
-    <I, V> void setValue(FieldBoundary<V> field, I instance, V value);
+    /**
+     * Sets the value of the field with the supplied value or throws a <code>FieldSetterException</code> if the field
+     * can't be set.
+     * @param field The field whose value is to be set.
+     * @param instance The object on which the field resides.
+     * @param value The new value of the field.
+     * @param <V> The type of the value.
+     * @throws FieldSetterException If the field can't be set.
+     */
+    <V> void setValue(FieldBoundary<V> field, Object instance, V value) throws FieldSetterException;
 }

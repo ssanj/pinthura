@@ -19,7 +19,7 @@ import com.googlecode.pinthura.boundary.java.lang.reflect.FieldBoundary;
 
 public final class FieldSetterImpl implements FieldSetter {
 
-    public <I, V> void setValue(final FieldBoundary<V> field, final I instance, final V value) {
+    public <V> void setValue(final FieldBoundary<V> field, final Object instance, final V value) {
         try {
             field.setAccessible(true);
             field.set(instance, value);
