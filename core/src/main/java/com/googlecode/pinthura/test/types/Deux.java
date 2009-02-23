@@ -17,6 +17,12 @@ package com.googlecode.pinthura.test.types;
 
 import com.googlecode.pinthura.annotation.SuppressionReason;
 
+/**
+ * Models an abstract class that holds two parameters.
+ * 
+ * @param <ONE> The type of the first parameters.
+ * @param <TWO> The type of the second parameters.
+ */
 public final class Deux<ONE, TWO> {
         private final ONE one;
         private final TWO two;

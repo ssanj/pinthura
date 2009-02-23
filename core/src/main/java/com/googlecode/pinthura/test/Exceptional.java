@@ -15,7 +15,13 @@
  */
 package com.googlecode.pinthura.test;
 
+/**
+ * Defines a block of code that should be run within the {@link #run} method.
+ */
 public interface Exceptional {
 
+    /**
+     * Runs a block of code.
+     */
     void run();
 }
