@@ -15,17 +15,24 @@
  */
 package com.googlecode.pinthura.util;
 
+/**
+ * Creates random data of various types.
+ */
 public interface RandomDataCreator {
 
     /**
-     * Creates a simple alphabetic <code>String</code>.
+     * Creates a simple alphabetic <code>String</code> composed of random upper and lowercase characters.
      * @param length The length of the <code>String</code>.
      * @return A String of the specified length composed of only alphabetic characters.
      */
     String createString(int length);
 
+    /**
+     * Creates a random file name of the specified length plus an extension.
+     * @param length The length of the filename minus the extension.
+     * @return A random file name of the specified length.
+     */
     String createFileName(int length);
-
 
     /**
      * Creates a number between 0 and value (exclusive).

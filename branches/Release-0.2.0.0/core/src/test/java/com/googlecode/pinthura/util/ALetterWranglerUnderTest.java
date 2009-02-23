@@ -17,13 +17,13 @@ public final class ALetterWranglerUnderTest {
     }
 
     @Test
-    public void shouldReturnTheUpperCaseASCIIIndex() {
-        assertThat(wrangler.getUpperCaseASCIIIndex(), equalTo(65));
+    public void shouldReturnThStartOfUpperCaseASCIIIndex() {
+        assertThat(wrangler.getStartOfUpperCaseASCIIIndex(), equalTo(65));
     }
 
     @Test
-    public void shouldReturnTheLowerCaseASCIIIndex() {
-        assertThat(wrangler.getLowerCaseASCIIIndex(), equalTo(97));
+    public void shouldReturnTheStartOfLowerCaseASCIIIndex() {
+        assertThat(wrangler.getStartOfLowerCaseASCIIIndex(), equalTo(97));
     }
 
     @Test
