@@ -38,13 +38,13 @@ public final class AnExceptionAsserterWithAssertValidExceptionUnderTest {
     @Test
     public void shouldPassOnAValidException() {
         Exception exception = new ClassNotFoundException();
-        asserter.assertValidException(exception, ClassNotFoundException.class);
+        asserter.assertNotNullAndAssignable(exception, ClassNotFoundException.class);
     }
 
     @Test
     public void shouldFailWhenAnExceptionIsNull() {
         try {
-            asserter.assertValidException(null, Exception.class);
+            asserter.assertNotNullAndAssignable(null, Exception.class);
             fail("Expected AssertionError.");
         } catch (AssertionError e) {
             assertThat(e.getMessage(), equalTo(exceptionMessageBuilder.
@@ -60,7 +60,7 @@ public final class AnExceptionAsserterWithAssertValidExceptionUnderTest {
     @Test
     public void shouldFailWhenAnExceptionIsOfTheWrongClass() {
         try {
-            asserter.assertValidException(new RuntimeException(), IllegalArgumentException.class);
+            asserter.assertNotNullAndAssignable(new RuntimeException(), IllegalArgumentException.class);
         } catch (AssertionError e) {
             assertThat(e.getMessage(), equalTo(exceptionMessageBuilder.withExpectedClass(IllegalArgumentException.class).
                                                                     andReceivedClass(RuntimeException.class).

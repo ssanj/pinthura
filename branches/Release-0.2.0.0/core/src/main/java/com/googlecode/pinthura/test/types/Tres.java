@@ -17,11 +17,18 @@ package com.googlecode.pinthura.test.types;
 
 import com.googlecode.pinthura.annotation.SuppressionReason;
 
+/**
+ * Models an abstract class that holds three parameters.
+ * 
+ * @param <ONE> The type of the first parameters.
+ * @param <TWO> The type of the second parameters.
+ * @param <THREE> The type of the third parameters.                             
+ */
 public final class Tres<ONE, TWO, THREE> {
 
-    private ONE one;
-    private TWO two;
-    private THREE three;
+    private final ONE one;
+    private final TWO two;
+    private final THREE three;
 
     public Tres(final ONE one, final TWO two, final THREE three) {
         this.one = one;

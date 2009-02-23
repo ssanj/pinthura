@@ -29,7 +29,7 @@ public final class ExceptionAsserterImpl implements ExceptionAsserter {
 
     @SuppressWarnings({"unchecked"})
     @SuppressionReason(SuppressionReason.Reason.CANT_INFER_GENERICS)
-    public <EX> void assertValidException(final Throwable exception, final Class<EX> expectedExceptionClass)  throws AssertionError {
+    public <EX> void assertNotNullAndAssignable(final Throwable exception, final Class<EX> expectedExceptionClass)  throws AssertionError {
         assertThat("Exception is null. Expected " + expectedExceptionClass.getName() + ".", exception, notNullValue());
         assertThat((Class<EX>) exception.getClass(), equalTo(expectedExceptionClass));
     }
@@ -52,7 +52,7 @@ public final class ExceptionAsserterImpl implements ExceptionAsserter {
     }
 
     private void assertExceptionAndMessage(final ExceptionInfo exceptionInfo, final Throwable e) {
-        assertValidException(e, exceptionInfo.getExceptionClass());
+        assertNotNullAndAssignable(e, exceptionInfo.getExceptionClass());
 
         if (exceptionInfo.hasMessage()) {
             assertExceptionMessage(e, exceptionInfo.getMessage());

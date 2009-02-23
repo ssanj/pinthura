@@ -15,10 +15,13 @@
  */
 package com.googlecode.pinthura.test;
 
+/**
+ * Asserts assumptions about properties of an <code>Exception</code>. 
+ */
 public interface ExceptionAsserter {
 
     /**
-     * Asserts that message of the supplied <code>Exception</code> is the same as the message supplied. If not throws
+     * Asserts that the message of the supplied <code>Exception</code> is the same as the message supplied. If not throws
      * an <code>AssertionError</code>.
      * @param exception The <code>Exception</code>.
      * @param message The expected message.
@@ -34,7 +37,7 @@ public interface ExceptionAsserter {
      * @param <EX> The type of the <code>Exception</code>.
      * @throws AssertionError  If the <code>Exception</code> provided is null or is not of the type of <code>Class</code> provided.
      */    
-    <EX> void assertValidException(Throwable exception, Class<EX> exceptionClass) throws AssertionError;
+    <EX> void assertNotNullAndAssignable(Throwable exception, Class<EX> exceptionClass) throws AssertionError;
 
     /**
      * Runs an <code>Exceptional</code> implementation and asserts properties about a thrown <code>Exception</code>. If
