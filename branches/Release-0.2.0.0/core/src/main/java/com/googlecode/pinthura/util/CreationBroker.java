@@ -15,9 +15,27 @@
  */
 package com.googlecode.pinthura.util;
 
+/**
+ * Defines a lookup registry for accessing instances that must be shared across class boundaries.
+ */
 public interface CreationBroker {
 
+    /**
+     * Sets a new instance into the broker. This can be then access later using {@link #getInstanceFor(Class)}.
+     *
+     * @param clazz The <code>Class</code> of the instance to be stored.
+     * @param instance The object to be stored.
+     * @param <T> The type of object that is to be stored.
+     */
     <T> void setInstance(Class<T> clazz, T instance);
 
-    <T> T getInstanceFor(Class<T> clazz) throws CreationBrokerException;
+    /**
+     * Returns the stored object for the supplied <code>Class</code>.
+     *
+     * @param clazz The <code>Class</code> of the required object.
+     * @param <T> The type of the required object.
+     * @return The stored instance for against the supplied <code>Class</code>.
+     * @throws CouldNotFindInstanceForClassException If an stored object can't be located for the supplied <code>Class</code>.
+     */
+    <T> T getInstanceFor(Class<T> clazz) throws CouldNotFindInstanceForClassException;
 }

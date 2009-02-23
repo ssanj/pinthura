@@ -52,7 +52,6 @@ public interface RandomDataCreator {
      */
     int createBoundedNumber(int min, int upperBoundary);
 
-
     /**
      * Returns a random element of an enumeration.
      * @param typeClass The enumeration class of T.
