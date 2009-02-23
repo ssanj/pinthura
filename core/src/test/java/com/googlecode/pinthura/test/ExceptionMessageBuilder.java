@@ -23,6 +23,10 @@ public final class ExceptionMessageBuilder {
     private ExceptionMessageBuilderType type;
     private String message = "";
 
+    public ExceptionMessageBuilder() {
+        type = new NullExceptionTypeBuilder();
+    }
+
     public ExceptionMessageBuilderForClassType withExpectedClass(final Class<?> expectedClass) {
         type = new ExceptionMessageBuilderForClass(this, expectedClass);
         return (ExceptionMessageBuilderForClass) type;
@@ -44,11 +48,7 @@ public final class ExceptionMessageBuilder {
     }
 
     public String build() {
-        if (type != null) {
-            return message + type.build();
-        }
-
-        throw new IllegalStateException("ExceptionMessageBuilder has not been correctly configure.");
+        return message + type.build();
     }
 
     /**
@@ -143,6 +143,14 @@ public final class ExceptionMessageBuilder {
             return new StringBuilder().
                     append("\nExpected: ").append(expectedObject).append("\n     ").
                     append("got: ").append(receivedObject).append("\n").toString();
+        }
+    }
+
+    private static class NullExceptionTypeBuilder implements ExceptionMessageBuilderType {
+
+        @Override
+        public String build() {
+            throw new IllegalStateException("ExceptionMessageBuilder has not been correctly configure.");            
         }
     }
 }
