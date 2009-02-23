@@ -16,8 +16,8 @@
 package com.googlecode.pinthura.test;
 
 import com.googlecode.pinthura.annotation.SuppressionReason;
-import com.googlecode.pinthura.processer.CouldNotProcessInputException;
 import com.googlecode.pinthura.injection.MockInjectionException;
+import com.googlecode.pinthura.processer.CouldNotProcessInputException;
 import com.googlecode.pinthura.util.RandomDataCreator;
 import com.googlecode.pinthura.util.builder.RandomDataCreatorBuilder;
 import static org.hamcrest.core.IsEqual.equalTo;
@@ -73,7 +73,7 @@ public final class AnExceptionAsserterWithRunAndAssertExceptionHavingMultipleNes
         final String randomMessage2 = randomDataCreator.createString(4);
         final String randomMessage3 = randomDataCreator.createString(7);
         String message4 = randomDataCreator.createString(9);
-        final String message4Error = message4 +"Error";
+        final String message4Error = message4 + "Error";
         try {
             exceptionAsserter.runAndAssertException(new ExceptionInfoImpl(CouldNotProcessInputException.class, randomMessage1,
                                                     new ExceptionInfoImpl(MockInjectionException.class, randomMessage2,

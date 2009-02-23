@@ -22,7 +22,7 @@ import static org.junit.Assert.fail;
 import org.junit.Before;
 import org.junit.Test;
 
-public final class AnExceptionAsserterWithAssertValidExceptionUnderTest {
+public final class AnExceptionAsserterWithAssertNotNullAndAssignableUnderTest {
 
     private ExceptionAsserter asserter;
     private ExceptionMessageBuilder exceptionMessageBuilder;
