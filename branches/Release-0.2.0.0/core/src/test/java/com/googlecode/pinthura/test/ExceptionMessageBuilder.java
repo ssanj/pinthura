@@ -15,6 +15,9 @@
  */
 package com.googlecode.pinthura.test;
 
+/**
+ * Builds the error message for a given type of error.
+ */
 public final class ExceptionMessageBuilder {
 
     private ExceptionMessageBuilderType type;
@@ -48,6 +51,9 @@ public final class ExceptionMessageBuilder {
         throw new IllegalStateException("ExceptionMessageBuilder has not been correctly configure.");
     }
 
+    /**
+     * All  builder types implement this.
+     */
     private interface ExceptionMessageBuilderType {
         String build();
     }
@@ -56,6 +62,11 @@ public final class ExceptionMessageBuilder {
         ExceptionMessageBuilder andReceivedClass(Class<?> receivedClass);
     }
 
+    /**
+     * Each message builder implements 2 interfaces. One for the type of class it processes and the other for
+     * <code>ExceptionMessageBuilderType</code>. This prevents external classes accessing the {@link ExceptionMessageBuilderType#build()}
+     * method. This reduces confusion on the classes using this api and in abstraction where it only exposes what is needed to external classes.  
+     */
     private static final class ExceptionMessageBuilderForClass implements ExceptionMessageBuilderForClassType, ExceptionMessageBuilderType {
 
         private final ExceptionMessageBuilder parent;
