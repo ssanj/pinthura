@@ -16,8 +16,8 @@
 package com.googlecode.pinthura.injection.filter;
 
 import com.googlecode.pinthura.boundary.java.lang.reflect.FieldBoundary;
-import com.googlecode.pinthura.injection.filters.ItemFilter;
 import com.googlecode.pinthura.injection.filters.MockPrefixFilter;
+import com.googlecode.pinthura.util.ItemFilter;
 import com.googlecode.pinthura.util.RandomDataCreator;
 import com.googlecode.pinthura.util.StringWrangler;
 import com.googlecode.pinthura.util.StringWranglerImpl;

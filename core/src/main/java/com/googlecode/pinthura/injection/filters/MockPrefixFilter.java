@@ -16,6 +16,7 @@
 package com.googlecode.pinthura.injection.filters;
 
 import com.googlecode.pinthura.boundary.java.lang.reflect.FieldBoundary;
+import com.googlecode.pinthura.util.ItemFilter;
 
 /**
  * Filters fields that start with the supplied <code>prefix</code>.

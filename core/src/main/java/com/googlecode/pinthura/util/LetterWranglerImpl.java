@@ -5,9 +5,9 @@ import java.util.List;
 
 public final class LetterWranglerImpl implements LetterWrangler {
 
-    private List<Character> allLetters;
-    private List<Character> lowerCaseLetters;
-    private List<Character> upperCaseLetters;
+    private final List<Character> allLetters;
+    private final List<Character> lowerCaseLetters;
+    private final List<Character> upperCaseLetters;
 
     public LetterWranglerImpl() {
         upperCaseLetters = createUpperCaseCharacters();
@@ -26,7 +26,7 @@ public final class LetterWranglerImpl implements LetterWrangler {
         List<Character> characters = new ArrayList<Character>();
 
         for (int index = 0; index  < getNumberOfLowerCaseLetters() ; index++) {
-            characters.add((char) (getLowerCaseASCIIIndex() + index));
+            characters.add((char) (getStartOfLowerCaseASCIIIndex() + index));
         }
 
         return characters;
@@ -36,19 +36,19 @@ public final class LetterWranglerImpl implements LetterWrangler {
         List<Character> characters = new ArrayList<Character>();
 
         for (int index = 0; index  < getNumberOfUpperCaseLetters(); index++) {
-            characters.add((char) (getUpperCaseASCIIIndex() + index));
+            characters.add((char) (getStartOfUpperCaseASCIIIndex() + index));
         }
 
         return characters;
     }
 
     @Override
-    public int getUpperCaseASCIIIndex() {
+    public int getStartOfUpperCaseASCIIIndex() {
         return 65;
     }
 
     @Override
-    public int getLowerCaseASCIIIndex() {
+    public int getStartOfLowerCaseASCIIIndex() {
         return 97;
     }
 

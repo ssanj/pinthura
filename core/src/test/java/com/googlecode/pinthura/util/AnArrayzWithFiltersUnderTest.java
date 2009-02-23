@@ -15,7 +15,6 @@
  */
 package com.googlecode.pinthura.util;
 
-import com.googlecode.pinthura.injection.filters.ItemFilter;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertThat;
 import org.junit.Before;

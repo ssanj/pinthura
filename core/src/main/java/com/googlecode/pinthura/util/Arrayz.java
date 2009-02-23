@@ -1,7 +1,5 @@
 package com.googlecode.pinthura.util;
 
-import com.googlecode.pinthura.injection.filters.ItemFilter;
-
 import java.util.Collection;
 import java.util.List;
 

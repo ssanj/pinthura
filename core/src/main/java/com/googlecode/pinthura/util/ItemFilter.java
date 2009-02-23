@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.pinthura.injection.filters;
+package com.googlecode.pinthura.util;
 
 /**
  * Signifies whether to include or exclude an item.
