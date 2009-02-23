@@ -34,7 +34,7 @@ public final class FieldFinderImpl implements FieldFinder {
 
     @SuppressWarnings("unchecked")
     @SuppressionReason(SuppressionReason.Reason.CANT_INFER_GENERICS)
-    public <T> FieldBoundary<T> findByName(final String varName, final Object instance) {
+    public <T> FieldBoundary<T> findByName(final String varName, final Object instance) throws FieldFinderException {
         try {
             return new FieldBoundaryImpl(instance.getClass().getDeclaredField(varName));
         } catch (NoSuchFieldException e) {
@@ -44,7 +44,8 @@ public final class FieldFinderImpl implements FieldFinder {
 
     @SuppressWarnings("unchecked")
     @SuppressionReason(SuppressionReason.Reason.CANT_INFER_GENERICS)
-    public List<FieldBoundary<?>> findByPrefix(final String prefix, final Object instance) {
+    public List<FieldBoundary<?>> findByPrefix(final String prefix, final Object instance) throws FieldFinderException {
+        //TODO: Supply a factory to create the ClassBoundaryImpl.
         List<FieldBoundary<?>> fields = arrayz.filter(new ClassBoundaryImpl(instance.getClass()).getDeclaredFields(),
                 new PrefixedFieldsFilter(prefix));
 
