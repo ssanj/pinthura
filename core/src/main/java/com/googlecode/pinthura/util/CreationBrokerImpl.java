@@ -32,6 +32,6 @@ public final class CreationBrokerImpl implements CreationBroker {
             return clazz.cast(registry.get(clazz));
         }
 
-        throw new CreationBrokerException("Could not find instance for " +  clazz);
+        throw new CouldNotFindInstanceForClassException("Could not find instance for " +  clazz);
     }
 }

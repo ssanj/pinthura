@@ -15,11 +15,11 @@
  */
 package com.googlecode.pinthura.util;
 
-public final class CreationBrokerException extends RuntimeException {
+public final class CouldNotFindInstanceForClassException extends RuntimeException {
 
     private static final long serialVersionUID = 3349805618759215763L;
 
-    public CreationBrokerException(final String message) {
+    public CouldNotFindInstanceForClassException(final String message) {
         super(message);
     }
 }

@@ -49,7 +49,7 @@ public final class ACreationBrokerUnderTest {
         try {
             creationBroker.getInstanceFor(String.class);
             fail();
-        } catch (CreationBrokerException e) {
+        } catch (CouldNotFindInstanceForClassException e) {
              assertThat(e.getMessage(), equalTo("Could not find instance for class java.lang.String"));
         }
     }

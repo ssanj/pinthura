@@ -15,7 +15,16 @@
  */
 package com.googlecode.pinthura.util;
 
+/**
+ * Randomly chooses one for the supplied values.
+ */
 public interface RandomDataChooser {
 
+    /**
+     * Randomly chooses one of the supplied values.
+     * @param values The values to choose from.
+     * @param <T> The type of values.
+     * @return One of the values returned randomly.
+     */
     <T> T chooseOneOf(T... values);
 }
