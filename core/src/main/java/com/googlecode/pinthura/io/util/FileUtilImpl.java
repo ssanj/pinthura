@@ -20,8 +20,8 @@ import com.googlecode.pinthura.boundary.java.io.FileBoundaryImpl;
 
 public final class FileUtilImpl implements FileUtil {
 
-    public void createPathIfNeeded(final String fileName) {
-        FileBoundary file = new FileBoundaryImpl(fileName);
+    public void createPathIfNeeded(final String pathToFle) {
+        FileBoundary file = new FileBoundaryImpl(pathToFle);
 
         if (!file.exists()) {
             file.getParentFile().mkdirs();
