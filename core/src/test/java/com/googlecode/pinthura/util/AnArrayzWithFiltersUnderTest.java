@@ -48,7 +48,7 @@ public final class AnArrayzWithFiltersUnderTest {
     }
 
     @Test
-    public void shouldReturnAllElementsIfTheFilterIsEmpty() {
+    public void shouldReturnAllElementsIfThereIsNoFilter() {
         List<Color> colours = Arrays.asList(Color.BLUE, Color.YELLOW, Color.BLACK);
         assertThat(colours, equalTo(arrayz.filter(colours, new AllColoursFilter())));
     }

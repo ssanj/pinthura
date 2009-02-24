@@ -31,6 +31,7 @@ public final class ArrayzImpl implements Arrayz {
         return collection.toArray((T[]) Array.newInstance(clazz, collection.size()));
     }
 
+    //TODO: Should this be in a Collectionz class?
     public <T> List<T> filter(final Collection<T> items, final ItemFilter<T> itemFilter) {
         List<T> filteredList = new ArrayList<T>();
 

@@ -68,6 +68,4 @@ public final class AnArrayzUnderTest {
     public void shouldReturnAnEmptyArrayForAnEmptyList() {
         assertThat(arrayz.fromCollection(new ArrayList<Integer>(), Integer.class).length, equalTo(0));
     }
-
-    //TODO: Add tests for filter.
 }
