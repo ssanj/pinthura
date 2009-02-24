@@ -22,6 +22,7 @@ public interface RandomDataCreator {
 
     /**
      * Creates a simple alphabetic <code>String</code> composed of random upper and lowercase characters.
+     *
      * @param length The length of the <code>String</code>.
      * @return A String of the specified length composed of only alphabetic characters.
      */
@@ -29,6 +30,7 @@ public interface RandomDataCreator {
 
     /**
      * Creates a random file name of the specified length plus an extension.
+     *
      * @param length The length of the filename minus the extension.
      * @return A random file name of the specified length.
      */
@@ -36,6 +38,7 @@ public interface RandomDataCreator {
 
     /**
      * Creates a number between 0 and value (exclusive).
+     *
      * @param value The value below which numbers should be generated. For positive numbers the value generated will have a maximum value of
      * (value - 1) and for negative numbers it will have a maximum value of (value + 1).
      * @return a number between 0 and value (exclusive).
@@ -46,6 +49,7 @@ public interface RandomDataCreator {
 
     /**
      * Creates a number between the min (inclusive) and the upper boundary (exclusive).
+     * 
      * @param min The lowest number possible.
      * @param upperBoundary The upper boundary for the created number. (exclusive).
      * @return A number between the lower boundary (inclusive) and the upper boundary (exclusive).
@@ -54,6 +58,7 @@ public interface RandomDataCreator {
 
     /**
      * Returns a random element of an enumeration.
+     *
      * @param typeClass The enumeration class of T.
      * @param <T> The Type of enumeration.
      * @return A random element of an enumeration of type T.

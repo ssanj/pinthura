@@ -40,6 +40,7 @@ public interface LetterWrangler {
     /**
      * Returns the total number of ASCII letters. This would be equal to
      * {@link #getNumberOfLowerCaseLetters()} + {@link #getNumberOfUpperCaseLetters()}.
+     * 
      * @return The total number of ASCII letters.
      */
     int getNumberLettersInTotal();

@@ -22,6 +22,7 @@ public interface PathEvaluator {
 
     /**
      * Evaluates the supplied <code>path</code> on the <code>instance</code> supplied to return the value of the <code>path</code>.
+     *
      * @param path The path to traverse.
      * @param instance The instance to traverse the path on.
      * @param <Instance> The type of instance.

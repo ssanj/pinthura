@@ -22,6 +22,7 @@ public interface FactoryCreator {
 
     /**
      * Creates a dynamic instance of the supplied factory interface.
+     *
      * @param factoryInterface The factory interface.
      * @param <T> The type of the factory interface and the created instance.
      * @return A dynamic instance of the supplied factory interface.

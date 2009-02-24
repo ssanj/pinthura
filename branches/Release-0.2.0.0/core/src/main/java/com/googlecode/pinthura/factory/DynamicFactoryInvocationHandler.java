@@ -30,6 +30,7 @@ public final class DynamicFactoryInvocationHandler implements InvocationHandler 
 
     /**
      * Constructor.
+     *
      * @param instanceCreators Strategy of instance creators.
      * @param methodParamFactory Factory that creates <code>MethodParam</code> objects.
      */
@@ -40,6 +41,7 @@ public final class DynamicFactoryInvocationHandler implements InvocationHandler 
 
     /**
      * Creates an instance of the return type exposed by the supplied <code>Method</code>.
+     *
      * @param proxy The proxy for the wrapped object.
      * @param method The <code>Method</code> called on the proxy.
      * @param args The arguments supplied to the <code>Method</code>.

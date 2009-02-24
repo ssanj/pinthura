@@ -28,6 +28,7 @@ public interface AnnotationFinder {
 
     /**
      * Returns an <code>Annotation</code> on a method, when given the type of the <code>Annotation</code>.
+     * 
      * @param method The method on which to search for the applied annotation.
      * @param annotationClass The <code>Class</code> of the <code>Annotation</code>.
      * @param <T> The type of the <code>Annotation</code>.
