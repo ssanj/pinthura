@@ -27,17 +27,19 @@ import org.junit.Test;
 
 public final class AFileContentsReaderUnderTest {
 
-    private final IMocksControl mockControl = EasyMock.createControl();
+    private IMocksControl mockControl;
     private TextFileReader reader;
     private FileReaderFactory mockFileReaderFactory;
     private ReaderBoundary mockReaderBoundary;
     private String fileNameRandom;
-    private RandomDataCreator randomDataCreator;
+    private String randomStringData;
 
     @Before
     public void setup() {
+        mockControl = EasyMock.createControl();
         mockFileReaderFactory = mockControl.createMock(FileReaderFactory.class);
-        randomDataCreator = new RandomDataCreatorBuilder().build();
+        RandomDataCreator randomDataCreator = new RandomDataCreatorBuilder().build();
+        randomStringData = randomDataCreator.createString(randomDataCreator.createBoundedNumber(25, 100));
         mockReaderBoundary = mockControl.createMock(ReaderBoundary.class);
         reader = new FileContentsReader(mockFileReaderFactory);
         fileNameRandom = randomDataCreator.createFileName(15);
@@ -45,12 +47,7 @@ public final class AFileContentsReaderUnderTest {
 
     @Test
     public void shouldReadAGivenFile() {
-        expectReadContent(randomDataCreator.createString(25));
-    }
-
-    @Test
-    public void shouldReaderAnotherFile() {
-        expectReadContent(randomDataCreator.createString(100));
+        expectReadContent(randomStringData);
     }
 
     private void expectReadContent(final String content) {
@@ -61,9 +58,7 @@ public final class AFileContentsReaderUnderTest {
 
     private void assertContent(final String content) {
         mockControl.replay();
-
         assertThat(reader.read(fileNameRandom), equalTo(content));
-
         mockControl.verify();
     }
 
