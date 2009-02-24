@@ -15,6 +15,7 @@
  */
 package com.googlecode.pinthura.io;
 
+import com.googlecode.pinthura.annotation.SuppressionReason;
 import com.googlecode.pinthura.util.RandomDataCreator;
 import com.googlecode.pinthura.util.builder.RandomDataCreatorBuilder;
 import org.easymock.EasyMock;
@@ -23,37 +24,41 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Arrays;
+import java.util.List;
 
 public final class AFileTextWriterThrowingExceptionsWhenAppendingUnderTest {
 
-    private final IMocksControl mockControl = EasyMock.createControl();
+    private IMocksControl mockControl;
     private FileTextWriter writer;
     private FileWriterFactory mockFileWriterFactory;
-    private RandomDataCreator randomDataCreator;
+    private List<String> randomDataList;
+    private String randomFileName;
 
     @Before
     public void setup() {
+        mockControl = EasyMock.createControl();
         mockFileWriterFactory = mockControl.createMock(FileWriterFactory.class);
-        randomDataCreator = new RandomDataCreatorBuilder().build();
+        RandomDataCreator randomDataCreator = new RandomDataCreatorBuilder().build();
         writer = new FileTextWriterImpl(mockFileWriterFactory);
+        randomFileName = randomDataCreator.createFileName(15);
+        randomDataList = Arrays.asList(randomDataCreator.createString(randomDataCreator.createNumber(25)));
     }
 
     @SuppressWarnings("ThrowableInstanceNeverThrown")
+    @SuppressionReason(SuppressionReason.Reason.TEST_VALUE)
     @Test(expected = FileTextWriterException.class)
     public void shouldThrowAnExceptionIfFileWriterFactoryThrowsAnException() {
-        String fileName = randomDataCreator.createFileName(5);
-        EasyMock.expect(mockFileWriterFactory.create(fileName, true)).andThrow(new RuntimeException());
+        EasyMock.expect(mockFileWriterFactory.create(randomFileName, true)).andThrow(new RuntimeException());
         mockControl.replay();
 
-        writer.append(fileName, Arrays.asList(randomDataCreator.createString(4)));
+        writer.append(randomFileName, randomDataList);
     }
 
     @Test(expected = FileTextWriterException.class)
     public void shouldThrowAnExceptionIfFileWriterFactoryReturnsNull() {
-        String fileName = randomDataCreator.createFileName(10);
-        EasyMock.expect(mockFileWriterFactory.create(fileName, true)).andReturn(null);
+        EasyMock.expect(mockFileWriterFactory.create(randomFileName, true)).andReturn(null);
         mockControl.replay();
 
-        writer.append(fileName, Arrays.asList(randomDataCreator.createString(16)));
+        writer.append(randomFileName, randomDataList);
     }
 }

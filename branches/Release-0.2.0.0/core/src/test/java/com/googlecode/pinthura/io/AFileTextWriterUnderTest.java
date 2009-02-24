@@ -27,43 +27,44 @@ import java.util.Arrays;
 
 public final class AFileTextWriterUnderTest {
 
-    private final IMocksControl mockControl = EasyMock.createControl();
+    private IMocksControl mockControl;
     private FileTextWriter fileTextWriter;
     private FileWriterFactory mockFileWriterFactory;
-    private String fileName;
-    private String line1;
-    private String line2;
+    private String randomFileName;
+    private String randomLine1;
+    private String randomLine2;
 
     @Before
     public void setup() {
+        mockControl = EasyMock.createControl();
         mockFileWriterFactory = mockControl.createMock(FileWriterFactory.class);
         fileTextWriter = new FileTextWriterImpl(mockFileWriterFactory);
 
         RandomDataChooser randomDataChooser = new RandomDataChooserBuilder().build();
-        fileName = randomDataChooser.chooseOneOf("one.txt", "two.xml", "ARandomFile");
-        line1    = randomDataChooser.chooseOneOf("Line1", "Line2", "Line3");
-        line2    = randomDataChooser.chooseOneOf("Line4", "Line5", "Line6");
+        randomFileName = randomDataChooser.chooseOneOf("one.txt", "two.xml", "ARandomFile");
+        randomLine1 = randomDataChooser.chooseOneOf("Line1", "Line2", "Line3");
+        randomLine2 = randomDataChooser.chooseOneOf("Line4", "Line5", "Line6");
     }
 
     @Test
     public void shouldWriteTheSuppliedText() {
         assertWriteOrAppend(false);
-        fileTextWriter.write(fileName, Arrays.asList(line1, line2));
+        fileTextWriter.write(randomFileName, Arrays.asList(randomLine1, randomLine2));
         mockControl.verify();
     }
 
     @Test
     public void shouldAppendTheSuppliedText() {
         assertWriteOrAppend(true);
-        fileTextWriter.append(fileName, Arrays.asList(line1, line2));
+        fileTextWriter.append(randomFileName, Arrays.asList(randomLine1, randomLine2));
         mockControl.verify();
     }
 
     private void assertWriteOrAppend(final boolean append) {
         WriterBoundary mockWriterBoundary = mockControl.createMock(WriterBoundary.class);
-        EasyMock.expect(mockFileWriterFactory.create(fileName, append)).andReturn(mockWriterBoundary);
-        mockWriterBoundary.write(line1);
-        mockWriterBoundary.write(line2);
+        EasyMock.expect(mockFileWriterFactory.create(randomFileName, append)).andReturn(mockWriterBoundary);
+        mockWriterBoundary.write(randomLine1);
+        mockWriterBoundary.write(randomLine2);
         mockWriterBoundary.flush();
         mockWriterBoundary.close();
         mockControl.replay();
