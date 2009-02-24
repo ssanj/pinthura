@@ -15,7 +15,15 @@
  */
 package com.googlecode.pinthura.io.util;
 
+/**
+ * Common file utilties related to files.
+ */
 public interface FileUtil {
 
-    void createPathIfNeeded(String fileName);
+    /**
+     * Creates a path (parent directories) to a file if it does not already exist.
+     *
+     * @param pathToFile The path to the specified file.
+     */
+    void createPathIfNeeded(String pathToFile);
 }
