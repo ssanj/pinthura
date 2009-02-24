@@ -10,6 +10,7 @@ public interface Arrayz {
 
     /**
      * Given a variable number of objects of a type <T> returns an T[] of the same objects.
+     *
      * @param objects The objects to include in the T[].
      * @param <T> The type of objects in the array.
      * @return A T[] of the supplied objects.
@@ -18,6 +19,7 @@ public interface Arrayz {
 
     /**
      * Given a <code>Collection</code> of elements of type <T> returns its contents as a T[].
+     *
      * @param collection The <code>Collection</code> whose items are to be returned as a T[].
      * @param clazz The Class<T>
      * @param <T> The type of object in the <code>Collection</code>.
@@ -28,6 +30,7 @@ public interface Arrayz {
 
     /**
      * Filters the items in a supplied <code>Collection</code> of type <T> and returns the result in a <code>List</code> of the same type.
+     * 
      * @param items The items to be filtered.
      * @param itemFilter The filter to use when filtering items.
      * @param <T> The type of items.

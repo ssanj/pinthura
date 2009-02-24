@@ -22,6 +22,7 @@ public interface MockInjector {
 
     /**
      * Injects mocks into the supplied instance.
+     *
      * @param instance The instance whose fields are to be mocked.
      * @param <T> The type of instance.
      * @return The same instance with fields mocked.

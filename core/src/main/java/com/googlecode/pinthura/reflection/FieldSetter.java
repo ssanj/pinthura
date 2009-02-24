@@ -25,6 +25,7 @@ public interface FieldSetter {
     /**
      * Sets the value of the field with the supplied value or throws a <code>FieldSetterException</code> if the field
      * can't be set.
+     *
      * @param field The field whose value is to be set.
      * @param instance The object on which the field resides.
      * @param value The new value of the field.

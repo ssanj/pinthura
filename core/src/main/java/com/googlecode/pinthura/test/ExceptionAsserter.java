@@ -23,6 +23,7 @@ public interface ExceptionAsserter {
     /**
      * Asserts that the message of the supplied <code>Exception</code> is the same as the message supplied. If not throws
      * an <code>AssertionError</code>.
+     *
      * @param exception The <code>Exception</code>.
      * @param message The expected message.
      * @throws AssertionError if the message of the supplied <code>Exception</code> is not the same as the message supplied. 
@@ -32,6 +33,7 @@ public interface ExceptionAsserter {
     /**
      * Asserts that the <code>Exception</code> provided is not null and is of the type of <code>Class</code> provided. If not throws
      * an <code>AssertionError</code>.
+     *
      * @param exception The <code>Exception</code> provided.
      * @param exceptionClass The <code>Class</code> of the expected <code>Exception</code>
      * @param <EX> The type of the <code>Exception</code>.
@@ -43,6 +45,7 @@ public interface ExceptionAsserter {
      * Runs an <code>Exceptional</code> implementation and asserts properties about a thrown <code>Exception</code>. If
      * the assertions fail or the <code>Exceptional</code> implementation does not throw an <code>Exception</code> an
      * <code>AssertionError</code> is thrown.
+     * 
      * @param exceptionInfo Defines the properties that will be asserted.
      * @param ex The <code>Exceptional</code> implementation to run.
      * @throws AssertionError If an assertion fails or the <code>Exceptional</code> code does not throw an <code>Exception</code>.

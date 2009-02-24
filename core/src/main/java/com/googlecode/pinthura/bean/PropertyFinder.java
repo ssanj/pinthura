@@ -24,6 +24,7 @@ public interface PropertyFinder {
 
     /**
      * Returns the <code>Method</code> given a property and the parent <code>Class</code>.
+     *
      * @param property The property to search for.
      * @param parentClass The parent <code>Class</code>.
      * @param <ParentClass> The type of parent.

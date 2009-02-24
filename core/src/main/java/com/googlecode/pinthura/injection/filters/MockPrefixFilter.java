@@ -35,6 +35,7 @@ public final class MockPrefixFilter implements ItemFilter<FieldBoundary> {
 
     /**
      * Returns true if the field starts with the mock prefix and false if not.
+     *
      * @param item The item to filter.
      * @return The value true if the field starts with the mock prefix and false if not.
      */
