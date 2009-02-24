@@ -22,6 +22,9 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 
+/**
+ * Returns a <code>ReaderBoundary</code> around a <code>BufferedReader</code>.
+ */
 public final class FileReaderFactoryImpl implements FileReaderFactory {
 
     public ReaderBoundary create(final String fileName) {

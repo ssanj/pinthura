@@ -15,7 +15,17 @@
  */
 package com.googlecode.pinthura.io;
 
+/**
+ * Reads a named text file.
+ */
 public interface TextFileReader {
 
+    /**
+     * Reads the named text file and returns its contents.
+     * 
+     * @param fileName The name of the text file.
+     * @return The contents of the text file
+     * @throws TextFileReaderException If the file contents can't be read for one reason or another.
+     */
     String read(String fileName) throws TextFileReaderException;
 }

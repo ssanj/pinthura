@@ -24,9 +24,10 @@ public interface FileWriterFactory {
 
     /**
      * Creates a <code>WriterBoundary</code> for the file specified.
+     * 
      * @param fileName The name of the file to create a <code>WriterBoundary</code> for. If the path to this file does not exist the
      * directory path will be created.
-     * @param append If true, creates a <code>WriterBoundary</code> for appending, if false for overwriting.
+     * @param append If true, creates a <code>WriterBoundary</code> for appending, if false for creates one for overwriting.
      * @return A <code>WriterBoundary</code> to the specified file.
      * @throws FileWriterFactoryException If the <code>WriterBoundary</code> could not be created.
      *

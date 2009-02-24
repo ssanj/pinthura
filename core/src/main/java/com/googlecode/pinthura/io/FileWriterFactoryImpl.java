@@ -25,15 +25,31 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 
+/**
+ * Creates a <code>WriterBoundary</code> which wraps a <code>OutputStreamWriter</code> to a specified file in either
+ * append or overwrite mode.
+ */
 public final class FileWriterFactoryImpl implements FileWriterFactory {
 
     private final FileUtil fileUtil;
 
+    /**
+     * Constructor.
+     */
     public FileWriterFactoryImpl() {
         fileUtil = new FileUtilImpl();
     }
 
-    public WriterBoundary create(final String fileName, final boolean append) {
+    /**
+     * Creates a <code>WriterBoundary</code> to a named file in an append or overwrite mode.
+     *
+     * @param fileName The name of the file to create a <code>WriterBoundary</code> for. If the path to this file does not exist the
+     * directory path will be created.
+     * @param append If true, creates a <code>WriterBoundary</code> for appending, if false for creates one for overwriting.
+     * @return A <code>WriterBoundary</code> to the name file in the mode requested.
+     * @throws FileWriterFactoryException If the file can't be opened for writing.  
+     */
+    public WriterBoundary create(final String fileName, final boolean append) throws FileWriterFactoryException {
         try {
             fileUtil.createPathIfNeeded(fileName);
             return new WriterBoundaryImpl(new OutputStreamWriter(new BufferedOutputStream(new FileOutputStream(fileName, append))));
