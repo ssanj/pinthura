@@ -28,27 +28,34 @@ import java.io.StringReader;
 
 public final class AFileContentsReaderUnderIntTest {
 
-    private static final String CONTENTS = "this is a short String";
-
     private TextFileReader reader;
-    private RandomDataCreator randomDataCreator;
+    private String randomContent;
+    private String randomFileName;
 
     @Before
     public void setup() {
-        randomDataCreator = new RandomDataCreatorBuilder().build();
-        reader = new FileContentsReader(new StringReaderFactory());
+        RandomDataCreator randomDataCreator = new RandomDataCreatorBuilder().build();
+        randomFileName = randomDataCreator.createFileName(10);
+        randomContent = randomDataCreator.createString(25);
+        reader = new FileContentsReader(new StringReaderFactory(randomContent));
     }
 
     @Test
     public void shouldReadASuppliedFile() {
-        String result = reader.read(randomDataCreator.createFileName(10));
-        assertThat(result, equalTo(CONTENTS));
+        String result = reader.read(randomFileName);
+        assertThat(result, equalTo(randomContent));
     }
 
     private static final class StringReaderFactory implements FileReaderFactory  {
 
+        private final String contents;
+
+        private StringReaderFactory(final String contents) {
+            this.contents = contents;
+        }
+
         public ReaderBoundary create(final String fileName) throws FileReaderFactoryException {
-            return new ReaderBoundaryImpl(new StringReader(CONTENTS));
+            return new ReaderBoundaryImpl(new StringReader(contents));
         }
     }
 }
