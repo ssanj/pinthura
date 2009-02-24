@@ -17,7 +17,16 @@ package com.googlecode.pinthura.io;
 
 import com.googlecode.pinthura.boundary.java.io.ReaderBoundary;
 
+/**
+ * Factory that creates a <code>ReaderBoundary</code> given file name.
+ */
 public interface FileReaderFactory {
 
+    /**
+     * Creates a <code>ReaderBoundary</code> given a file name.
+     * @param fileName The name of the file to create a boundary for.
+     * @return The <code>ReaderBoundary</code> to the named file.
+     * @throws FileReaderFactoryException If the boundary can't be created.
+     */
     ReaderBoundary create(String fileName) throws FileReaderFactoryException;
 }

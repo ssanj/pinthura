@@ -22,7 +22,9 @@ package com.googlecode.pinthura.io;
 public interface FileTextWriter {
 
     /**
-     * Appends the supplied sources to an existing file (if exists or creates one if not).
+     * Appends the supplied sources to an existing file. If the file doesn't exist its behaviour is similar to
+     * {@link #write(String, Iterable)}.
+     *
      * @param fileName The name of the file to append to.
      * @param sources The data to append to the file.
      * @throws FileTextWriterException If there is an error appending/creating the file.
@@ -31,6 +33,7 @@ public interface FileTextWriter {
 
     /**
      * Writes the supplied sources to the named file (and creates it if it does not exist).
+     *
      * @param fileName The name of the file to create.
      * @param sources The contents of the file.
      * @throws FileTextWriterException If there is an error creating the file.
