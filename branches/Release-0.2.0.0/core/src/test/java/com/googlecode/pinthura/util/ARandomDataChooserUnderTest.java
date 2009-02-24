@@ -26,12 +26,13 @@ import org.junit.Test;
 
 public final class ARandomDataChooserUnderTest {
 
-    private final IMocksControl mockControl = EasyMock.createControl();
+    private IMocksControl mockControl;
     private MathBoundary mockMathBoundary;
     private RandomDataChooser randomDataChooser;
 
     @Before
     public void setup() {
+        mockControl = EasyMock.createControl();
         mockMathBoundary = mockControl.createMock(MathBoundary.class);
         randomDataChooser = new RandomDataChooserBuilder().withMathBoundary(mockMathBoundary).build();
     }

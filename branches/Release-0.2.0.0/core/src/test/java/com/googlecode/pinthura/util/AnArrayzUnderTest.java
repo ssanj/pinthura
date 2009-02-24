@@ -17,8 +17,8 @@ package com.googlecode.pinthura.util;
 
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertThat;
-import org.junit.Test;
 import org.junit.Before;
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -68,4 +68,6 @@ public final class AnArrayzUnderTest {
     public void shouldReturnAnEmptyArrayForAnEmptyList() {
         assertThat(arrayz.fromCollection(new ArrayList<Integer>(), Integer.class).length, equalTo(0));
     }
+
+    //TODO: Add tests for filter.
 }
