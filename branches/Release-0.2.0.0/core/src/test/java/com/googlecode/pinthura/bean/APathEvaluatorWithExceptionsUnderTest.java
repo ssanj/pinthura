@@ -31,8 +31,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 //TODO: move this to an incubator.
-//TODO: Rename. This is a not an integration test.
-public final class APathEvaluatorWithExceptionsUnderIntTest {
+public final class APathEvaluatorWithExceptionsUnderTest {
 
     private IMocksControl mockControl;
     private PathEvaluator pathEvaluator;
@@ -57,7 +56,7 @@ public final class APathEvaluatorWithExceptionsUnderIntTest {
         ClassBoundary mockEmployeeClassBoundary = mockControl.createMock(ClassBoundary.class);
         EasyMock.expect(mockClassBoundaryFactory.create(Employee.class)).andReturn(mockEmployeeClassBoundary);
         MethodBoundary mockAuthenticationMethodBoundary = mockControl.createMock(MethodBoundary.class);
-        expectProperty("authentication", mockEmployeeClassBoundary, mockAuthenticationMethodBoundary);
+        EasyMock.expect(mockPropertyFinder.findMethodFor("authentication", mockEmployeeClassBoundary)).andReturn(mockAuthenticationMethodBoundary);
         EasyMock.expect(mockAuthenticationMethodBoundary.invoke(EasyMock.isA(Employee.class))).andReturn(new Authentication());
 
         ClassBoundary mockAuthenticationClassBoundary = mockControl.createMock(ClassBoundary.class);
@@ -83,10 +82,4 @@ public final class APathEvaluatorWithExceptionsUnderIntTest {
                 new Exceptional() {public void run() { pathEvaluator.evaluate("boohoo", new Authentication()); }});
     }
 
-    @SuppressWarnings("unchecked")
-    @SuppressionReason(SuppressionReason.Reason.CANT_INFER_GENERICS_ON_MOCKS)
-    private void expectProperty(final String property, final ClassBoundary parentClass,
-                                final MethodBoundary mockAuthenticationMethodBoundary) throws NoSuchMethodException {
-        EasyMock.expect(mockPropertyFinder.findMethodFor(property, parentClass)).andReturn(mockAuthenticationMethodBoundary);
-    }
 }
