@@ -46,6 +46,8 @@ Testing
 Boundary Classes
 ================
 
+* Why use boundary classes? - Boundary classes can be mocked out and therefore easily tested. *
+
 1. Should wrap a single unmockable class. Eg. Class, Method, System.
 2. Should catch thrown exceptions and return custom runtime exceptions.
 3. Should only return other boundaries or primitives, Wrappers or Strings.
