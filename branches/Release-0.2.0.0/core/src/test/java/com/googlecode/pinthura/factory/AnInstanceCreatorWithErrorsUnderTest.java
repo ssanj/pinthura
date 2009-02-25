@@ -27,9 +27,6 @@ import com.googlecode.pinthura.test.ExceptionInfoImpl;
 import com.googlecode.pinthura.test.Exceptional;
 import org.easymock.EasyMock;
 import org.easymock.IMocksControl;
-import static org.hamcrest.core.IsEqual.equalTo;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -60,15 +57,9 @@ public final class AnInstanceCreatorWithErrorsUnderTest {
         EasyMock.expect(mockMethodParam.getReturnType()).andReturn(classBoundary);
         mockControl.replay();
 
-        //TODO: can't make this use ExceptionAsserter until we can match the message on the expected exception.
-        try {
-            instanceCreator.createInstance(mockMethodParam);
-            fail();
-        } catch (InstanceCreationException e) {
-            assertThat(e.getCause().getClass() == CouldNotProcessInputException.class, equalTo(true));
-            assertThat(e.getMessage(),
-                    equalTo("Could not create instance of ClassBoundaryImpl[class com.googlecode.pinthura.data.UrlBoundaryImpl]"));
-        }
+        exceptionAsserter.runAndAssertException(new ExceptionInfoImpl(InstanceCreationException.class,
+                "Could not create instance of ClassBoundaryImpl[class com.googlecode.pinthura.data.UrlBoundaryImpl]"),
+                new Exceptional() {@Override public void run() { instanceCreator.createInstance(mockMethodParam); }});
     }
 
     @SuppressWarnings({"ThrowableInstanceNeverThrown", "unchecked"})
