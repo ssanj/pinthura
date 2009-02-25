@@ -44,6 +44,14 @@ public final class MethodBoundaryImpl implements MethodBoundary {
         return method;
     }
 
+    public Object invoke(final Object obj, final Object... args) {
+        try {
+            return method.invoke(obj, args);
+        } catch (Exception e) {
+            throw new MethodBoundaryException(e);
+        }
+    }
+
     @SuppressWarnings("unchecked")
     public ClassBoundary<?>[] getParameterTypes() {
         List<ClassBoundary<?>> classList = new ArrayList<ClassBoundary<?>>();
@@ -60,7 +68,7 @@ public final class MethodBoundaryImpl implements MethodBoundary {
 
     @Override
     public boolean equals(final Object o) {
-        return o != null && o instanceof MethodBoundary && this.method.equals(((MethodBoundary) o).getMethod());
+        return o != null && o instanceof MethodBoundary && method.equals(((MethodBoundary) o).getMethod());
 
     }
 

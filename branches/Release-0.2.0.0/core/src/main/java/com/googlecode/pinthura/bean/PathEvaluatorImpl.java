@@ -16,8 +16,7 @@
 package com.googlecode.pinthura.bean;
 
 import com.googlecode.pinthura.annotation.SuppressionReason;
-
-import java.lang.reflect.Method;
+import com.googlecode.pinthura.boundary.java.lang.reflect.MethodBoundary;
 
 public final class PathEvaluatorImpl implements PathEvaluator {
 
@@ -36,7 +35,7 @@ public final class PathEvaluatorImpl implements PathEvaluator {
         Object currentInstance = instance; //this has to be non-final since it is reassigned.
         for (String property : properties) {
             try {
-                Method method = propertyFinder.findMethodFor(property, currentInstance.getClass());
+                MethodBoundary method = propertyFinder.findMethodFor(property, currentInstance.getClass());
                 currentInstance = method.invoke(currentInstance);
             } catch (Exception e) {
                 throw new PathEvaluatorException(e);

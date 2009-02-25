@@ -19,5 +19,5 @@ import java.lang.reflect.Method;
 
 public interface MethodBoundaryFactory {
 
-    MethodBoundary create(final Method method);
+    MethodBoundary create(Method method);
 }
