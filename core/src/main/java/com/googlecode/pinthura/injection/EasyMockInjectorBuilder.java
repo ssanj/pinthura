@@ -16,12 +16,13 @@
 package com.googlecode.pinthura.injection;
 
 import com.googlecode.pinthura.annotation.SuppressionReason;
+import com.googlecode.pinthura.boundary.java.lang.ClassBoundaryFactoryImpl;
 import com.googlecode.pinthura.reflection.FieldFinder;
 import com.googlecode.pinthura.reflection.FieldFinderImpl;
 import com.googlecode.pinthura.reflection.FieldSetter;
 import com.googlecode.pinthura.reflection.FieldSetterImpl;
-import com.googlecode.pinthura.util.ArrayzImpl;
 import com.googlecode.pinthura.util.Arrayz;
+import com.googlecode.pinthura.util.ArrayzImpl;
 
 @SuppressWarnings({"MethodReturnOfConcreteClass"})
 @SuppressionReason(SuppressionReason.Reason.BUILDER_PATTERN)
@@ -35,7 +36,7 @@ public final class EasyMockInjectorBuilder {
 
     public EasyMockInjectorBuilder() {
         arrayz = new ArrayzImpl();
-        fieldFinder = new FieldFinderImpl(arrayz);
+        fieldFinder = new FieldFinderImpl(arrayz, new ClassBoundaryFactoryImpl());
         fieldSetter = new FieldSetterImpl();
         easyMockWrapper = new EasyMockWrapperImpl();
         mockConfigurer = new MockPrefixMockConfigurer();
