@@ -15,21 +15,22 @@
  */
 package com.googlecode.pinthura.bean;
 
+import com.googlecode.pinthura.boundary.java.lang.ClassBoundary;
 import com.googlecode.pinthura.boundary.java.lang.reflect.MethodBoundary;
 
 /**
- * Finds a named-property on given <code>Class</code>. 
+ * Finds a named-property on given <code>ClassBoundary</code>. 
  */
 public interface PropertyFinder {
 
     /**
-     * Returns the <code>MethodBoundary</code> given a property and the parent <code>Class</code>.
+     * Returns the <code>MethodBoundary</code> given a property and the parent <code>ClassBoundary</code>.
      *
      * @param property The property to search for.
-     * @param parentClass The parent <code>Class</code>.
+     * @param parentClass The parent <code>ClassBoundary</code>.
      * @param <ParentClass> The type of parent.
      * @return The <code>MethodBoundary</code> for the property provided.
      * @throws PropertyFinderException If the property can't be found.
      */
-    <ParentClass> MethodBoundary findMethodFor(String property, Class<ParentClass> parentClass) throws PropertyFinderException;
+    <ParentClass> MethodBoundary findMethodFor(String property, ClassBoundary<ParentClass> parentClass) throws PropertyFinderException;
 }

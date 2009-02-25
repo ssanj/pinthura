@@ -19,6 +19,8 @@ import com.googlecode.pinthura.boundary.java.lang.reflect.ConstructorBoundary;
 import com.googlecode.pinthura.boundary.java.lang.reflect.ConstructorBoundaryImpl;
 import com.googlecode.pinthura.boundary.java.lang.reflect.FieldBoundary;
 import com.googlecode.pinthura.boundary.java.lang.reflect.FieldBoundaryImpl;
+import com.googlecode.pinthura.boundary.java.lang.reflect.MethodBoundary;
+import com.googlecode.pinthura.boundary.java.lang.reflect.MethodBoundaryImpl;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -72,6 +74,15 @@ public final class ClassBoundaryImpl<T> implements ClassBoundary<T> {
         }
 
         return fieldBoundaries;
+    }
+
+    @Override
+    public MethodBoundary getMethod(final String method) {
+        try {
+            return new MethodBoundaryImpl(clazz.getMethod(method));
+        } catch (Exception e) {
+            throw new ClassBoundaryException(e);
+        }
     }
 
     @Override

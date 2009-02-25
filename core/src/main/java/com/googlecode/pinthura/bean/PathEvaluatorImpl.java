@@ -16,6 +16,7 @@
 package com.googlecode.pinthura.bean;
 
 import com.googlecode.pinthura.annotation.SuppressionReason;
+import com.googlecode.pinthura.boundary.java.lang.ClassBoundaryFactory;
 import com.googlecode.pinthura.boundary.java.lang.reflect.MethodBoundary;
 
 public final class PathEvaluatorImpl implements PathEvaluator {
@@ -23,9 +24,11 @@ public final class PathEvaluatorImpl implements PathEvaluator {
     private static final String PATH_SEPARATOR = "\\.";
 
     private final PropertyFinder propertyFinder;
+    private final ClassBoundaryFactory classBoundaryFactory;
 
-    public PathEvaluatorImpl(final PropertyFinder propertyFinder) {
+    public PathEvaluatorImpl(final PropertyFinder propertyFinder, final ClassBoundaryFactory classBoundaryFactory) {
         this.propertyFinder = propertyFinder;
+        this.classBoundaryFactory = classBoundaryFactory;
     }
 
     @SuppressWarnings("unchecked")
@@ -35,7 +38,7 @@ public final class PathEvaluatorImpl implements PathEvaluator {
         Object currentInstance = instance; //this has to be non-final since it is reassigned.
         for (String property : properties) {
             try {
-                MethodBoundary method = propertyFinder.findMethodFor(property, currentInstance.getClass());
+                MethodBoundary method = propertyFinder.findMethodFor(property, classBoundaryFactory.create(currentInstance.getClass()));
                 currentInstance = method.invoke(currentInstance);
             } catch (Exception e) {
                 throw new PathEvaluatorException(e);

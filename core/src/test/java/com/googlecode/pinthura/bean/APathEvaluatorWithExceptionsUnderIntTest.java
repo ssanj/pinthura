@@ -16,7 +16,9 @@
 package com.googlecode.pinthura.bean;
 
 import com.googlecode.pinthura.annotation.SuppressionReason;
-import com.googlecode.pinthura.boundary.java.lang.reflect.MethodBoundaryImpl;
+import com.googlecode.pinthura.boundary.java.lang.ClassBoundary;
+import com.googlecode.pinthura.boundary.java.lang.ClassBoundaryFactory;
+import com.googlecode.pinthura.boundary.java.lang.reflect.MethodBoundary;
 import com.googlecode.pinthura.data.Authentication;
 import com.googlecode.pinthura.data.Employee;
 import com.googlecode.pinthura.test.ExceptionAsserter;
@@ -28,37 +30,52 @@ import org.easymock.IMocksControl;
 import org.junit.Before;
 import org.junit.Test;
 
+//TODO: move this to an incubator.
+//TODO: Rename. This is a not an integration test.
 public final class APathEvaluatorWithExceptionsUnderIntTest {
 
-    private final IMocksControl mockControl = EasyMock.createControl();
+    private IMocksControl mockControl;
     private PathEvaluator pathEvaluator;
     private PropertyFinder mockPropertyFinder;
     private ExceptionAsserter asserter;
+    private ClassBoundaryFactory mockClassBoundaryFactory;
 
     @Before
     public void setup() {
+        mockControl = EasyMock.createControl();
+        mockClassBoundaryFactory = mockControl.createMock(ClassBoundaryFactory.class);
         mockPropertyFinder = mockControl.createMock(PropertyFinder.class);
-        pathEvaluator = new PathEvaluatorImpl(mockPropertyFinder);
+
+        pathEvaluator = new PathEvaluatorImpl(mockPropertyFinder, mockClassBoundaryFactory);
         asserter = new ExceptionAsserterImpl();
     }
 
-    @SuppressWarnings("ThrowableInstanceNeverThrown")
-    @SuppressionReason(SuppressionReason.Reason.TEST_VALUE)
+    @SuppressWarnings({"ThrowableInstanceNeverThrown", "unchecked"})
+    @SuppressionReason({SuppressionReason.Reason.TEST_VALUE, SuppressionReason.Reason.CANT_INFER_GENERICS_ON_MOCKS})
     @Test
     public void shouldThrowAnAPropertyFinderExceptionIfThePropertyIsNotFound() throws NoSuchMethodException {
-        expectProperty("authentication", Employee.class, "getAuthentication");
-        EasyMock.expect(mockPropertyFinder.findMethodFor("boohoo", Authentication.class)).andThrow(new PropertyFinderException("test"));
+        ClassBoundary mockEmployeeClassBoundary = mockControl.createMock(ClassBoundary.class);
+        EasyMock.expect(mockClassBoundaryFactory.create(Employee.class)).andReturn(mockEmployeeClassBoundary);
+        MethodBoundary mockAuthenticationMethodBoundary = mockControl.createMock(MethodBoundary.class);
+        expectProperty("authentication", mockEmployeeClassBoundary, mockAuthenticationMethodBoundary);
+        EasyMock.expect(mockAuthenticationMethodBoundary.invoke(EasyMock.isA(Employee.class))).andReturn(new Authentication());
+
+        ClassBoundary mockAuthenticationClassBoundary = mockControl.createMock(ClassBoundary.class);
+        EasyMock.expect(mockClassBoundaryFactory.create(Authentication.class)).andReturn(mockAuthenticationClassBoundary);
+        EasyMock.expect(mockPropertyFinder.findMethodFor("boohoo", mockAuthenticationClassBoundary)).andThrow(new PropertyFinderException("test"));
         mockControl.replay();
 
         asserter.runAndAssertException(new ExceptionInfoImpl(PathEvaluatorException.class, new ExceptionInfoImpl(PropertyFinderException.class, "test")),
                 new Exceptional() {public void run() { pathEvaluator.evaluate("authentication.boohoo", new Employee()); }});
     }
 
-    @SuppressWarnings("ThrowableInstanceNeverThrown")
-    @SuppressionReason(SuppressionReason.Reason.TEST_VALUE)
+    @SuppressWarnings({"ThrowableInstanceNeverThrown", "unchecked"})
+    @SuppressionReason({SuppressionReason.Reason.TEST_VALUE, SuppressionReason.Reason.CANT_INFER_GENERICS_ON_MOCKS})
     @Test
     public void shouldThrowExceptionsUnchanged() {
-        EasyMock.expect(mockPropertyFinder.findMethodFor("boohoo", Authentication.class)).andThrow(new NullPointerException());
+        ClassBoundary mockAuthenticationClassBoundary = mockControl.createMock(ClassBoundary.class);
+        EasyMock.expect(mockClassBoundaryFactory.create(Authentication.class)).andReturn(mockAuthenticationClassBoundary);
+        EasyMock.expect(mockPropertyFinder.findMethodFor("boohoo", mockAuthenticationClassBoundary)).andThrow(new NullPointerException());
         mockControl.replay();
 
         asserter.runAndAssertException(new ExceptionInfoImpl(PathEvaluatorException.class,
@@ -66,8 +83,10 @@ public final class APathEvaluatorWithExceptionsUnderIntTest {
                 new Exceptional() {public void run() { pathEvaluator.evaluate("boohoo", new Authentication()); }});
     }
 
-    private void expectProperty(final String property, final Class<?> parentClass, final String methodName) throws NoSuchMethodException {
-        EasyMock.expect(mockPropertyFinder.findMethodFor(property, parentClass)).
-                andReturn(new MethodBoundaryImpl(parentClass.getMethod(methodName)));
+    @SuppressWarnings("unchecked")
+    @SuppressionReason(SuppressionReason.Reason.CANT_INFER_GENERICS_ON_MOCKS)
+    private void expectProperty(final String property, final ClassBoundary parentClass,
+                                final MethodBoundary mockAuthenticationMethodBoundary) throws NoSuchMethodException {
+        EasyMock.expect(mockPropertyFinder.findMethodFor(property, parentClass)).andReturn(mockAuthenticationMethodBoundary);
     }
 }

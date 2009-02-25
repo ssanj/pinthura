@@ -15,8 +15,9 @@
  */
 package com.googlecode.pinthura.bean;
 
+import com.googlecode.pinthura.annotation.SuppressionReason;
+import com.googlecode.pinthura.boundary.java.lang.ClassBoundaryImpl;
 import com.googlecode.pinthura.boundary.java.lang.reflect.MethodBoundary;
-import com.googlecode.pinthura.boundary.java.lang.reflect.MethodBoundaryFactoryImpl;
 import com.googlecode.pinthura.boundary.java.lang.reflect.MethodBoundaryImpl;
 import com.googlecode.pinthura.test.ExceptionAsserter;
 import com.googlecode.pinthura.test.ExceptionAsserterImpl;
@@ -34,7 +35,7 @@ public final class APropertyFinderUnderIntTest {
 
     @Before
     public void setup() {
-        propertyFinder = new PropertyFinderImpl(new MethodBoundaryFactoryImpl());
+        propertyFinder = new PropertyFinderImpl();
         asserter = new ExceptionAsserterImpl();
     }
 
@@ -56,13 +57,17 @@ public final class APropertyFinderUnderIntTest {
     @Test
     public void shouldThrownAPropertyFinderExceptionIfThePropertyIsNotFound() {
         asserter.runAndAssertException(new ExceptionInfoImpl(PropertyFinderException.class,
-                                        "Could not find property: blah on class java.lang.String"),
-                new Exceptional() {@Override public void run() { propertyFinder.findMethodFor("blah", String.class); }});
+                                        "Could not find property: blah on ClassBoundaryImpl[class java.lang.String]"),
+                new Exceptional() {@Override public void run() {
+                    propertyFinder.findMethodFor("blah", new ClassBoundaryImpl<String>(String.class));
+                }});
     }
 
+    @SuppressWarnings("unchecked")
+    @SuppressionReason(SuppressionReason.Reason.CANT_INFER_GENERICS)
     private void expectProperty(final String property, final Class<?> parentClass, final String methodName)
             throws NoSuchMethodException {
-        MethodBoundary result = propertyFinder.findMethodFor(property, parentClass);
+        MethodBoundary result = propertyFinder.findMethodFor(property, new ClassBoundaryImpl(parentClass));
         assertThat(result, equalTo((MethodBoundary) new MethodBoundaryImpl(parentClass.getMethod(methodName))));
     }
 }
