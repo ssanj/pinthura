@@ -1,4 +1,4 @@
-/*
+package com.googlecode.pinthura.boundary.java.lang.reflect;/*
  * Copyright 2008 Sanjiv Sahayam
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,24 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.pinthura.boundary.java.lang.reflect;
 
-import com.googlecode.pinthura.boundary.java.lang.ClassBoundary;
+public final class MethodBoundaryException extends RuntimeException {
 
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
+    private static final long serialVersionUID = -5719492847130861137L;
 
-public interface MethodBoundary {
+    public MethodBoundaryException(final String message) {
+        super(message);
+    }
 
-    ClassBoundary<?> getReturnType();
+    public MethodBoundaryException(final Throwable cause) {
+        super(cause);
+    }
 
-    String getName();
 
-    Method getMethod();
-
-    ClassBoundary<?>[] getParameterTypes();
-
-    <T extends Annotation> T getAnnotation(ClassBoundary<T> annotationClass);
-
-    Object invoke(Object obj, Object... args);
+    public MethodBoundaryException(final String message, final Throwable cause) {
+        super(message, cause);
+    }
 }

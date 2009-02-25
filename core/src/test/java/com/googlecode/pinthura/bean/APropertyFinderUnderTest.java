@@ -15,6 +15,9 @@
  */
 package com.googlecode.pinthura.bean;
 
+import com.googlecode.pinthura.boundary.java.lang.reflect.MethodBoundary;
+import com.googlecode.pinthura.boundary.java.lang.reflect.MethodBoundaryFactoryImpl;
+import com.googlecode.pinthura.boundary.java.lang.reflect.MethodBoundaryImpl;
 import com.googlecode.pinthura.test.ExceptionAsserter;
 import com.googlecode.pinthura.test.ExceptionAsserterImpl;
 import com.googlecode.pinthura.test.ExceptionInfoImpl;
@@ -24,8 +27,6 @@ import static org.junit.Assert.assertThat;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.lang.reflect.Method;
-
 public final class APropertyFinderUnderTest {
 
     private PropertyFinder propertyFinder;
@@ -33,7 +34,7 @@ public final class APropertyFinderUnderTest {
 
     @Before
     public void setup() {
-        propertyFinder = new PropertyFinderImpl();
+        propertyFinder = new PropertyFinderImpl(new MethodBoundaryFactoryImpl());
         asserter = new ExceptionAsserterImpl();
     }
 
@@ -61,7 +62,7 @@ public final class APropertyFinderUnderTest {
 
     private void expectProperty(final String property, final Class<?> parentClass, final String methodName)
             throws NoSuchMethodException {
-        Method result = propertyFinder.findMethodFor(property, parentClass);
-        assertThat(result, equalTo(parentClass.getMethod(methodName)));
+        MethodBoundary result = propertyFinder.findMethodFor(property, parentClass);
+        assertThat(result, equalTo((MethodBoundary) new MethodBoundaryImpl(parentClass.getMethod(methodName))));
     }
 }

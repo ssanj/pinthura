@@ -16,6 +16,7 @@
 package com.googlecode.pinthura.bean;
 
 import com.googlecode.pinthura.annotation.SuppressionReason;
+import com.googlecode.pinthura.boundary.java.lang.reflect.MethodBoundaryImpl;
 import com.googlecode.pinthura.data.Authentication;
 import com.googlecode.pinthura.data.Employee;
 import com.googlecode.pinthura.test.ExceptionAsserter;
@@ -67,6 +68,6 @@ public final class APathEvaluatorWithExceptionsUnderIntTest {
 
     private void expectProperty(final String property, final Class<?> parentClass, final String methodName) throws NoSuchMethodException {
         EasyMock.expect(mockPropertyFinder.findMethodFor(property, parentClass)).
-                andReturn(parentClass.getMethod(methodName));
+                andReturn(new MethodBoundaryImpl(parentClass.getMethod(methodName)));
     }
 }
