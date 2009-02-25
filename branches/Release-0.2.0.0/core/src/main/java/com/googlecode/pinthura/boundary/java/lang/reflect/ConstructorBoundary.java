@@ -19,7 +19,6 @@ import java.lang.reflect.Constructor;
 
 public interface ConstructorBoundary<T> {
 
-    //TODO: should this be converted to List<Object>
     Object newInstance(Object[] arguments);
 
     Constructor<T> getConstructor();

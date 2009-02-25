@@ -1,1 +1,3 @@
 1. Provide some means of creating and caching common utility classes.
+2. Pass in factories for all instantiated classes
+3. Verify test coverage.

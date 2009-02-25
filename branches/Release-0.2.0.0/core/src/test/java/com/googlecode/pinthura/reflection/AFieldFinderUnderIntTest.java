@@ -15,6 +15,7 @@
  */
 package com.googlecode.pinthura.reflection;
 
+import com.googlecode.pinthura.boundary.java.lang.ClassBoundaryFactoryImpl;
 import com.googlecode.pinthura.boundary.java.lang.ClassBoundaryImpl;
 import com.googlecode.pinthura.boundary.java.lang.MathBoundary;
 import com.googlecode.pinthura.boundary.java.lang.reflect.FieldBoundary;
@@ -37,7 +38,7 @@ public final class AFieldFinderUnderIntTest {
 
     @Before
     public void setup() {
-        fieldFinder = new FieldFinderImpl(new ArrayzImpl());
+        fieldFinder = new FieldFinderImpl(new ArrayzImpl(), new ClassBoundaryFactoryImpl());
     }
 
     @Test

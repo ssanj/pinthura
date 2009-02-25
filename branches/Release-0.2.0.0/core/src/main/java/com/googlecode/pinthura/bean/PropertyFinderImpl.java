@@ -16,8 +16,8 @@
 package com.googlecode.pinthura.bean;
 
 import java.lang.reflect.Method;
-import java.util.List;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -27,7 +27,6 @@ import java.util.Locale;
  */
 public final class PropertyFinderImpl implements PropertyFinder {
 
-    @SuppressWarnings({ "unchecked", "ConstantConditions" })
     public <ParentClass> Method findMethodFor(final String property, final Class<ParentClass> parentClass)
             throws PropertyFinderException {
         List<String> properties = getCombinations(property);

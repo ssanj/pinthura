@@ -16,7 +16,7 @@
 package com.googlecode.pinthura.reflection;
 
 import com.googlecode.pinthura.annotation.SuppressionReason;
-import com.googlecode.pinthura.boundary.java.lang.ClassBoundaryImpl;
+import com.googlecode.pinthura.boundary.java.lang.ClassBoundaryFactory;
 import com.googlecode.pinthura.boundary.java.lang.reflect.FieldBoundary;
 import com.googlecode.pinthura.boundary.java.lang.reflect.FieldBoundaryImpl;
 import com.googlecode.pinthura.util.Arrayz;
@@ -27,9 +27,11 @@ import java.util.List;
 public final class FieldFinderImpl implements FieldFinder {
 
     private final Arrayz arrayz;
+    private final ClassBoundaryFactory classBoundaryFactory;
 
-    public FieldFinderImpl(final Arrayz arrayz) {
+    public FieldFinderImpl(final Arrayz arrayz, final ClassBoundaryFactory classBoundaryFactory) {
         this.arrayz = arrayz;
+        this.classBoundaryFactory = classBoundaryFactory;
     }
 
     @SuppressWarnings("unchecked")
@@ -45,8 +47,7 @@ public final class FieldFinderImpl implements FieldFinder {
     @SuppressWarnings("unchecked")
     @SuppressionReason(SuppressionReason.Reason.CANT_INFER_GENERICS)
     public List<FieldBoundary<?>> findByPrefix(final String prefix, final Object instance) throws FieldFinderException {
-        //TODO: Supply a factory to create the ClassBoundaryImpl.
-        List<FieldBoundary<?>> fields = arrayz.filter(new ClassBoundaryImpl(instance.getClass()).getDeclaredFields(),
+        List<FieldBoundary<?>> fields = arrayz.filter((List) classBoundaryFactory.create(instance.getClass()).getDeclaredFields(),
                 new PrefixedFieldsFilter(prefix));
 
         if (hasPrefixedFields(fields)) {
