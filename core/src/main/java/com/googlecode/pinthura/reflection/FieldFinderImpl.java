@@ -47,11 +47,11 @@ public final class FieldFinderImpl implements FieldFinder {
     @SuppressWarnings("unchecked")
     @SuppressionReason(SuppressionReason.Reason.CANT_INFER_GENERICS)
     public List<FieldBoundary<?>> findByPrefix(final String prefix, final Object instance) throws FieldFinderException {
-        List<FieldBoundary<?>> fields = arrayz.filter((List) classBoundaryFactory.create(instance.getClass()).getDeclaredFields(),
-                new PrefixedFieldsFilter(prefix));
+        List allFieldsList = classBoundaryFactory.create(instance.getClass()).getDeclaredFields();
+        List<FieldBoundary<?>> prefixedFieldsList = arrayz.filter(allFieldsList, new PrefixedFieldsFilter(prefix));
 
-        if (hasPrefixedFields(fields)) {
-            return fields;
+        if (hasPrefixedFields(prefixedFieldsList)) {
+            return prefixedFieldsList;
         }
 
         throw new FieldFinderException(createCouldNotFindPrefixMessage(prefix, instance));

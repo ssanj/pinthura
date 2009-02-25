@@ -51,7 +51,7 @@ Boundary Classes
 3. Should only return other boundaries or primitives, Wrappers or Strings.
    eg. Constructor<T> getConstructor(Class<?>[] parameterTypes); ->
        ConstructorBoundary<T> getConstructor(ClassBoundary<?>[] parameterTypes);
-4. Should convert arrays to Lists. Eg. String[] -> List<String>. **Should this include incoming parameters?**
+4. Should convert return types of arrays to Lists. Eg. String[] -> List<String>.
 5. Should not be used @ the api layer. Users should be allowed to use classes such as Class, Method etc. Classes
 that are used by this api should accept ClassBoundary, MethodBoundary etc.
 6. Should implement interfaces.
