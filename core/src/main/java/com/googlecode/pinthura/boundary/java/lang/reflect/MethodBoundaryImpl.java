@@ -55,6 +55,7 @@ public final class MethodBoundaryImpl implements MethodBoundary {
     @SuppressWarnings("unchecked")
     public ClassBoundary<?>[] getParameterTypes() {
         List<ClassBoundary<?>> classList = new ArrayList<ClassBoundary<?>>();
+        
         for (Class<?> clazz : method.getParameterTypes()) {
             classList.add(new ClassBoundaryImpl(clazz));
         }
@@ -75,5 +76,10 @@ public final class MethodBoundaryImpl implements MethodBoundary {
     @Override
     public int hashCode() {
         return method.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return method.toString();
     }
 }
