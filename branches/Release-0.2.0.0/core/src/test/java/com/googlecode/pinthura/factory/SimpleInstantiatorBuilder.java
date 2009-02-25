@@ -15,20 +15,44 @@
  */
 package com.googlecode.pinthura.factory;
 
+import com.googlecode.pinthura.factory.instantiator.ConstructorInstantiator;
 import com.googlecode.pinthura.factory.instantiator.ConstructorInstantiatorImpl;
+import com.googlecode.pinthura.factory.instantiator.ConstructorLocator;
 import com.googlecode.pinthura.factory.instantiator.ConstructorLocatorImpl;
 import com.googlecode.pinthura.factory.instantiator.SimpleInstantiator;
 import com.googlecode.pinthura.factory.locator.deriver.ImplSuffixingDeriver;
 import com.googlecode.pinthura.util.Arrayz;
 import com.googlecode.pinthura.util.ArrayzImpl;
-//TODO: Add methods for the other dependencies.
+
 public final class SimpleInstantiatorBuilder {
 
-    public SimpleInstantiator build() {
-        Arrayz arrayz = new ArrayzImpl();
-        ConstructorLocatorImpl constructorLocator = new ConstructorLocatorImpl(arrayz);
-        ConstructorInstantiatorImpl constructorInstantiator = new ConstructorInstantiatorImpl(arrayz);
+    private ConstructorLocator constructorLocator;
+    private ConstructorInstantiator constructorInstantiator;
+    private ImplSuffixingDeriver implSuffixingDeriver;
 
-        return new SimpleInstantiator(new ImplSuffixingDeriver(), constructorLocator, constructorInstantiator);
+    public SimpleInstantiatorBuilder() {
+        Arrayz arrayz = new ArrayzImpl();
+        constructorLocator = new ConstructorLocatorImpl(arrayz);
+        constructorInstantiator = new ConstructorInstantiatorImpl(arrayz);
+        implSuffixingDeriver = new ImplSuffixingDeriver();
+    }
+
+    public SimpleInstantiatorBuilder withConstructorLocator(final ConstructorLocator constructorLocator) {
+        this.constructorLocator = constructorLocator;
+        return this;
+    }
+
+    public SimpleInstantiatorBuilder withConstructorInstantiator(final ConstructorInstantiator constructorInstantiator) {
+        this.constructorInstantiator = constructorInstantiator;
+        return this;
+    }
+
+    public SimpleInstantiatorBuilder withImplSuffixingDeriver(final ImplSuffixingDeriver implSuffixingDeriver) {
+        this.implSuffixingDeriver = implSuffixingDeriver;
+        return this;
+    }
+
+    public SimpleInstantiator build() {
+        return new SimpleInstantiator(implSuffixingDeriver, constructorLocator, constructorInstantiator);
     }
 }
