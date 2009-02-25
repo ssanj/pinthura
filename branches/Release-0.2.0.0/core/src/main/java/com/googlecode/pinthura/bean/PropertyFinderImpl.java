@@ -15,8 +15,8 @@
  */
 package com.googlecode.pinthura.bean;
 
+import com.googlecode.pinthura.boundary.java.lang.ClassBoundary;
 import com.googlecode.pinthura.boundary.java.lang.reflect.MethodBoundary;
-import com.googlecode.pinthura.boundary.java.lang.reflect.MethodBoundaryFactory;
 
 import java.util.Arrays;
 import java.util.List;
@@ -29,19 +29,13 @@ import java.util.Locale;
  */
 public final class PropertyFinderImpl implements PropertyFinder {
 
-    private final MethodBoundaryFactory methodBoundaryFactory;
-
-    public PropertyFinderImpl(final MethodBoundaryFactory methodBoundaryFactory) {
-        this.methodBoundaryFactory = methodBoundaryFactory;
-    }
-
-    public <ParentClass> MethodBoundary findMethodFor(final String property, final Class<ParentClass> parentClass)
+    public <ParentClass> MethodBoundary findMethodFor(final String property, final ClassBoundary<ParentClass> parentClass)
             throws PropertyFinderException {
         List<String> properties = getCombinations(property);
 
         for (String methodName : properties) {
             try {
-                return methodBoundaryFactory.create(parentClass.getMethod(methodName));
+                return parentClass.getMethod(methodName);
                 //CHECKSTYLE_OFF
             } catch (Exception e) {
                 //do nothing.

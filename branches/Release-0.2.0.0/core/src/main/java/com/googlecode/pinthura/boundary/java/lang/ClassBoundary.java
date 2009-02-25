@@ -17,6 +17,7 @@ package com.googlecode.pinthura.boundary.java.lang;
 
 import com.googlecode.pinthura.boundary.java.lang.reflect.ConstructorBoundary;
 import com.googlecode.pinthura.boundary.java.lang.reflect.FieldBoundary;
+import com.googlecode.pinthura.boundary.java.lang.reflect.MethodBoundary;
 
 import java.util.List;
 
@@ -31,4 +32,6 @@ public interface ClassBoundary<T> {
     ConstructorBoundary<T> getConstructor(ClassBoundary<?>[] parameterTypes);
 
     List<FieldBoundary> getDeclaredFields();
+
+    MethodBoundary getMethod(String method);
 }

@@ -16,7 +16,7 @@
 package com.googlecode.pinthura.bean;
 
 import com.googlecode.pinthura.annotation.SuppressionReason;
-import com.googlecode.pinthura.boundary.java.lang.reflect.MethodBoundaryFactoryImpl;
+import com.googlecode.pinthura.boundary.java.lang.ClassBoundaryFactoryImpl;
 import com.googlecode.pinthura.data.Access;
 import com.googlecode.pinthura.data.Employee;
 import com.googlecode.pinthura.util.LetterWranglerImpl;
@@ -31,7 +31,7 @@ public final class APathEvaluatorUnderIntTest {
 
     @Before
     public void setup() {
-        pathEvaluator = new PathEvaluatorImpl(new PropertyFinderImpl(new MethodBoundaryFactoryImpl()));
+        pathEvaluator = new PathEvaluatorImpl(new PropertyFinderImpl(), new ClassBoundaryFactoryImpl());
     }
 
     @Test
