@@ -27,7 +27,7 @@ import static org.junit.Assert.assertThat;
 import org.junit.Before;
 import org.junit.Test;
 
-public final class APropertyFinderUnderTest {
+public final class APropertyFinderUnderIntTest {
 
     private PropertyFinder propertyFinder;
     private ExceptionAsserter asserter;
