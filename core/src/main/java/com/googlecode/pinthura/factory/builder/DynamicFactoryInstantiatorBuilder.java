@@ -17,6 +17,8 @@ package com.googlecode.pinthura.factory.builder;
 
 import com.googlecode.pinthura.annotation.AnnotationFinder;
 import com.googlecode.pinthura.annotation.AnnotationFinderImpl;
+import com.googlecode.pinthura.boundary.java.lang.ClassBoundaryFactoryImpl;
+import com.googlecode.pinthura.factory.instantiator.AnnotatedClassExtractor;
 import com.googlecode.pinthura.factory.instantiator.AnnotatedClassExtractorImpl;
 import com.googlecode.pinthura.factory.instantiator.injected.DynamicFactoryInstantiator;
 import com.googlecode.pinthura.util.CreationBroker;
@@ -26,10 +28,14 @@ public final class DynamicFactoryInstantiatorBuilder {
 
     private CreationBroker creationBroker;
     private AnnotationFinder annotationFinder;
+    private AnnotatedClassExtractor annotatedClassExtractor;
+    private InjectedFactoryResolverBuilder injectedFactoryResolverBuilder;
 
     public DynamicFactoryInstantiatorBuilder() {
         creationBroker = new CreationBrokerImpl();
         annotationFinder = new AnnotationFinderImpl();
+        annotatedClassExtractor = new AnnotatedClassExtractorImpl(annotationFinder, new ClassBoundaryFactoryImpl());
+        injectedFactoryResolverBuilder = new InjectedFactoryResolverBuilder().withCreationBroker(creationBroker);
     }
 
     public DynamicFactoryInstantiatorBuilder withCreationBroker(final CreationBroker creationBroker) {
@@ -42,9 +48,18 @@ public final class DynamicFactoryInstantiatorBuilder {
         return this;
     }
 
+    public DynamicFactoryInstantiatorBuilder withAnnotatedClassExtractor(final AnnotatedClassExtractor annotatedClassExtractor) {
+        this.annotatedClassExtractor = annotatedClassExtractor;
+        return this;
+    }
+
+    public DynamicFactoryInstantiatorBuilder withInjectedFactoryResolverBuilder(
+            final InjectedFactoryResolverBuilder injectedFactoryResolverBuilder) {
+        this.injectedFactoryResolverBuilder = injectedFactoryResolverBuilder;
+        return this;
+    }
+
     public DynamicFactoryInstantiator build() {
-        //TODO: pass in all object so that they can be created from a common bootstrapper if required.
-        return new DynamicFactoryInstantiator(new AnnotatedClassExtractorImpl(annotationFinder),
-                new InjectedFactoryResolverBuilder().withCreationBroker(creationBroker).build());
+        return new DynamicFactoryInstantiator(annotatedClassExtractor, injectedFactoryResolverBuilder.build());
     }
 }

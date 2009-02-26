@@ -16,21 +16,46 @@
 package com.googlecode.pinthura.factory;
 
 import com.googlecode.pinthura.annotation.AnnotationFinderImpl;
+import com.googlecode.pinthura.boundary.java.lang.ClassBoundaryFactoryImpl;
+import com.googlecode.pinthura.factory.instantiator.AnnotatedClassExtractor;
 import com.googlecode.pinthura.factory.instantiator.AnnotatedClassExtractorImpl;
 import com.googlecode.pinthura.factory.instantiator.AnnotationInstantiator;
+import com.googlecode.pinthura.factory.instantiator.ConstructorInstantiator;
 import com.googlecode.pinthura.factory.instantiator.ConstructorInstantiatorImpl;
+import com.googlecode.pinthura.factory.instantiator.ConstructorLocator;
 import com.googlecode.pinthura.factory.instantiator.ConstructorLocatorImpl;
-import com.googlecode.pinthura.util.ArrayzImpl;
 import com.googlecode.pinthura.util.Arrayz;
+import com.googlecode.pinthura.util.ArrayzImpl;
 
 public final class AnnotationInstantiatorBuilder {
 
-    public AnnotationInstantiator build() {
-        Arrayz arrayz = new ArrayzImpl();
-        ConstructorLocatorImpl constructorLocator = new ConstructorLocatorImpl(arrayz);
-        ConstructorInstantiatorImpl constructorInstantiator = new ConstructorInstantiatorImpl(arrayz);
+    private AnnotatedClassExtractor annotatedClassExtractor;
+    private ConstructorLocator constructorLocator;
+    private ConstructorInstantiator constructorInstantiator;
 
-        return new AnnotationInstantiator(new AnnotatedClassExtractorImpl(new AnnotationFinderImpl()), constructorLocator,
-                constructorInstantiator);
+    public AnnotationInstantiatorBuilder() {
+        Arrayz arrayz = new ArrayzImpl();
+        constructorLocator = new ConstructorLocatorImpl(arrayz);
+        constructorInstantiator = new ConstructorInstantiatorImpl(arrayz);
+        annotatedClassExtractor = new AnnotatedClassExtractorImpl(new AnnotationFinderImpl(), new ClassBoundaryFactoryImpl());
+    }
+
+    public AnnotationInstantiatorBuilder withAnnotatedClassExtractor(final AnnotatedClassExtractor annotatedClassExtractor) {
+        this.annotatedClassExtractor = annotatedClassExtractor;
+        return this;
+    }
+
+    public AnnotationInstantiatorBuilder withConstructorLocator(final ConstructorLocator constructorLocator) {
+        this.constructorLocator = constructorLocator;
+        return this;
+    }
+
+    public AnnotationInstantiatorBuilder withConstructorInstantiator(final ConstructorInstantiator constructorInstantiator) {
+        this.constructorInstantiator = constructorInstantiator;
+        return this;
+    }
+
+    public AnnotationInstantiator build() {
+        return new AnnotationInstantiator(annotatedClassExtractor, constructorLocator, constructorInstantiator);
     }
 }

@@ -16,61 +16,68 @@
 package com.googlecode.pinthura.factory.instantiator;
 
 import com.googlecode.pinthura.annotation.AnnotationFinder;
+import com.googlecode.pinthura.annotation.SuppressionReason;
 import com.googlecode.pinthura.boundary.java.lang.ClassBoundary;
-import com.googlecode.pinthura.boundary.java.lang.ClassBoundaryImpl;
+import com.googlecode.pinthura.boundary.java.lang.ClassBoundaryFactory;
 import com.googlecode.pinthura.boundary.java.lang.reflect.MethodBoundary;
-import com.googlecode.pinthura.data.SquareImpl;
-import com.googlecode.pinthura.data.UrlBoundaryImpl;
+import com.googlecode.pinthura.data.Square;
+import com.googlecode.pinthura.data.UrlBoundary;
 import com.googlecode.pinthura.factory.Implementation;
 import com.googlecode.pinthura.factory.MethodParam;
+import com.googlecode.pinthura.test.types.Deux;
+import com.googlecode.pinthura.test.types.Tres;
+import com.googlecode.pinthura.util.builder.RandomDataChooserBuilder;
 import org.easymock.EasyMock;
 import org.easymock.IMocksControl;
-import static org.hamcrest.core.IsEqual.equalTo;
+import static org.hamcrest.core.IsSame.sameInstance;
 import static org.junit.Assert.assertThat;
 import org.junit.Before;
 import org.junit.Test;
 
 public final class AnAnnotatedClassExtractorUnderTest {
 
-    private final IMocksControl mockControl = EasyMock.createControl();
-    private AnnotatedClassExtractor extractor;
+    private IMocksControl mockControl;
     private AnnotationFinder mockAnnotationFinder;
     private MethodParam mockMethodParam;
+    private ClassBoundaryFactory mockClassBoundaryFactory;
+    private Class<?> randomClass;
 
     @Before
     public void setup() {
+        mockControl = EasyMock.createControl();
         mockAnnotationFinder = mockControl.createMock(AnnotationFinder.class);
         mockMethodParam = mockControl.createMock(MethodParam.class);
-        extractor = new AnnotatedClassExtractorImpl(mockAnnotationFinder);
+        mockClassBoundaryFactory = mockControl.createMock(ClassBoundaryFactory.class);
+        randomClass = new RandomDataChooserBuilder().build().<Class>chooseOneOf(UrlBoundary.class, Square.class, Deux.class, Tres.class);
     }
 
     @Test
     public void shouldRetreiveASetClass() {
-        expectClassSet(UrlBoundaryImpl.class);
+        expectClassSet(randomClass);
     }
 
-    @Test
-    public void shouldRetreiveAnotherSetClass() {
-        expectClassSet(SquareImpl.class);
-    }
-
+    @SuppressWarnings("unchecked")
+    @SuppressionReason(SuppressionReason.Reason.CANT_INFER_GENERICS_ON_MOCKS)
     private <T> void expectClassSet(final Class<T> value) {
+        ClassBoundary<Implementation> mockImplementationClassBoundary = mockControl.createMock(ClassBoundary.class);
+        EasyMock.expect(mockClassBoundaryFactory.create(Implementation.class)).andReturn(mockImplementationClassBoundary);
+
         MethodBoundary mockMethodBoundary = mockControl.createMock(MethodBoundary.class);
         EasyMock.expect(mockMethodParam.getMethod()).andReturn(mockMethodBoundary);
-        Implementation mockImplementation = mockControl.createMock(Implementation.class);
-        ClassBoundary<Implementation> annotationClass = createAnnotationClass();
-        EasyMock.expect(mockAnnotationFinder.find(mockMethodBoundary, annotationClass)).andReturn(mockImplementation);
-        EasyMock.expect(mockImplementation.value());
+
+        Implementation mockImplementationAnnotation = mockControl.createMock(Implementation.class);
+        EasyMock.expect(mockAnnotationFinder.find(mockMethodBoundary, mockImplementationClassBoundary)).andReturn(mockImplementationAnnotation);
+        EasyMock.expect(mockImplementationAnnotation.value());
         EasyMock.expectLastCall().andReturn(value);
+
+        ClassBoundary mockSuppliedClassBoundary = mockControl.createMock(ClassBoundary.class);
+        EasyMock.expect(mockClassBoundaryFactory.create(value)).andReturn(mockSuppliedClassBoundary);
         mockControl.replay();
 
+        AnnotatedClassExtractor extractor = new AnnotatedClassExtractorImpl(mockAnnotationFinder, mockClassBoundaryFactory);
         ClassBoundary<T> result = extractor.extract(mockMethodParam);
-        assertThat((result.equals(new ClassBoundaryImpl<T>(value))), equalTo(true));
+        assertThat(result, sameInstance(mockSuppliedClassBoundary));
 
         mockControl.verify();
-    }
-
-    private ClassBoundary<Implementation> createAnnotationClass() {
-        return new ClassBoundaryImpl<Implementation>(Implementation.class);
     }
 }
