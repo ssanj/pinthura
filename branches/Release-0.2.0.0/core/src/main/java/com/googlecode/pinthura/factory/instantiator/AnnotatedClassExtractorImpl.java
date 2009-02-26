@@ -16,8 +16,9 @@
 package com.googlecode.pinthura.factory.instantiator;
 
 import com.googlecode.pinthura.annotation.AnnotationFinder;
+import com.googlecode.pinthura.annotation.SuppressionReason;
 import com.googlecode.pinthura.boundary.java.lang.ClassBoundary;
-import com.googlecode.pinthura.boundary.java.lang.ClassBoundaryImpl;
+import com.googlecode.pinthura.boundary.java.lang.ClassBoundaryFactory;
 import com.googlecode.pinthura.factory.Implementation;
 import com.googlecode.pinthura.factory.MethodParam;
 
@@ -28,15 +29,17 @@ public final class AnnotatedClassExtractorImpl implements AnnotatedClassExtracto
 
     private final AnnotationFinder annotationFinder;
     private final ClassBoundary<Implementation> annotatation;
+    private final ClassBoundaryFactory classBoundaryFactory;
 
-    public AnnotatedClassExtractorImpl(final AnnotationFinder annotationFinder) {
+    public AnnotatedClassExtractorImpl(final AnnotationFinder annotationFinder, final ClassBoundaryFactory classBoundaryFactory) {
         this.annotationFinder = annotationFinder;
-        //TODO: Pass in a ClassBoundaryFactory.
-        annotatation = new ClassBoundaryImpl<Implementation>(Implementation.class);
+        this.classBoundaryFactory = classBoundaryFactory;
+        annotatation = classBoundaryFactory.create(Implementation.class);
     }
 
     @SuppressWarnings("unchecked")
+    @SuppressionReason(SuppressionReason.Reason.CANT_INFER_GENERICS)
     public <T> ClassBoundary<T> extract(final MethodParam methodParam) {
-        return new ClassBoundaryImpl(annotationFinder.find(methodParam.getMethod(), annotatation).value());
+        return (ClassBoundary<T>) classBoundaryFactory.create(annotationFinder.find(methodParam.getMethod(), annotatation).value());
     }
 }

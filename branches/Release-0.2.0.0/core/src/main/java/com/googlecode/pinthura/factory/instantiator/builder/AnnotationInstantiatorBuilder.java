@@ -17,6 +17,7 @@ package com.googlecode.pinthura.factory.instantiator.builder;
 
 import com.googlecode.pinthura.annotation.AnnotationFinder;
 import com.googlecode.pinthura.annotation.AnnotationFinderImpl;
+import com.googlecode.pinthura.boundary.java.lang.ClassBoundaryFactoryImpl;
 import com.googlecode.pinthura.factory.instantiator.AnnotatedClassExtractor;
 import com.googlecode.pinthura.factory.instantiator.AnnotatedClassExtractorImpl;
 import com.googlecode.pinthura.factory.instantiator.AnnotationInstantiator;
@@ -40,7 +41,7 @@ public final class AnnotationInstantiatorBuilder {
         constructorLocator = new ConstructorLocatorImpl(arrayz);
         constructorInstantiator = new ConstructorInstantiatorImpl(arrayz);
         annotationFinder = new AnnotationFinderImpl();
-        annotatedClassExtractor = new AnnotatedClassExtractorImpl(annotationFinder);
+        annotatedClassExtractor = new AnnotatedClassExtractorImpl(annotationFinder, new ClassBoundaryFactoryImpl());
     }
 
     public AnnotationInstantiatorBuilder withArrayz(final Arrayz arrayz) {

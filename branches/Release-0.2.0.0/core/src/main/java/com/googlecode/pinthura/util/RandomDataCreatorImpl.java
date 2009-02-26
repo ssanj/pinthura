@@ -23,7 +23,7 @@ public final class RandomDataCreatorImpl implements RandomDataCreator {
 
     private final MathBoundary mathBoundary;
     private final List<Character> characterList;
-    private int numberLettersInTotal;
+    private final int numberLettersInTotal;
 
     public RandomDataCreatorImpl(final MathBoundary mathBoundary, final LetterWrangler letterWrangler) {
         this.mathBoundary = mathBoundary;
