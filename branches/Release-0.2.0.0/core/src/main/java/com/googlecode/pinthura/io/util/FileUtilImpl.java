@@ -20,6 +20,7 @@ import com.googlecode.pinthura.boundary.java.io.FileBoundaryImpl;
 
 public final class FileUtilImpl implements FileUtil {
 
+    //TODO: Check for file without a path.
     public void createPathIfNeeded(final String pathToFle) {
         FileBoundary file = new FileBoundaryImpl(pathToFle);
 
