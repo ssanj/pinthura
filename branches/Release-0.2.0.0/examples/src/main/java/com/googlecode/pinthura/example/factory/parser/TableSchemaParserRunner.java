@@ -43,7 +43,7 @@ public final class TableSchemaParserRunner {
     private static void withoutFactoryCreator() {
         StringTrimmerFactory trimmerFactory = new StringTrimmerFactoryImpl();
         TableDataExtractorFactory extractorFactor = new TableDataExtractorFactoryImpl(trimmerFactory, new ColumnCleanerFactoryImpl());
-        TableSchemaParserImpl parser = new TableSchemaParserImpl(extractorFactor, new TableFactoryImpl(), trimmerFactory);
+        TableSchemaParser parser = new TableSchemaParserImpl(extractorFactor, new TableFactoryImpl(), trimmerFactory);
 
         System.out.println(parser.parse(SCHEMA));
     }
