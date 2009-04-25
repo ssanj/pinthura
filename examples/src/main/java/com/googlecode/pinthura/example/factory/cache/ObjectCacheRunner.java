@@ -26,10 +26,10 @@ public final class ObjectCacheRunner {
 
     public static void main(final String[] args) {
         System.out.println("Without Dynamic Factories");
-        exerciseCache(withDynamicFactories());
+        exerciseCache(withoutDynamicFactories());
         System.out.println();
         System.out.println("With Dynamic Factories");
-        exerciseCache(withoutDynamicFactories());
+        exerciseCache(withDynamicFactories());
     }
 
     private static ObjectCache withoutDynamicFactories() {
