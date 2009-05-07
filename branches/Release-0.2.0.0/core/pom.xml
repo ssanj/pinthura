@@ -1,13 +1,44 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.googlecode.pinthura</groupId>
     <artifactId>pinthura-core</artifactId>
     <packaging>jar</packaging>
+    <description>Pinthura API</description>
     <version>0.0.1-SNAPSHOT</version>
     <name>Pinthura Core</name>
-    <url />
+    <url>http://code.google.com/p/pinthura/</url>
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    <scm>
+         <url>http://pinthura.googlecode.com/svn/</url>
+     </scm>
+    <distributionManagement>
+        <repository>
+            <id>pinthura-repo</id>
+            <name>Pinthura Googlecode Repository</name>
+            <url>dav:https://pinthura.googlecode.com/svn/maven/repository</url>
+        </repository>
+        <snapshotRepository>
+                <id>pinthura-repo</id>
+                <url>dav:https://pinthura.googlecode.com/svn/maven/repository-snapshot</url>
+                <uniqueVersion>false</uniqueVersion>
+        </snapshotRepository>
+    </distributionManagement>
+
     <build>
+        <extensions>
+                <extension>
+                        <groupId>org.apache.maven.wagon</groupId>
+                        <artifactId>wagon-webdav</artifactId>
+                        <version>1.0-beta-2</version>
+                </extension>
+        </extensions>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -29,10 +60,10 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.4.2</version>
                 <configuration>
-                  <includes>
-                    <include>**/*UnderTest.java</include>
-                    <include>**/*UnderIntTest.java</include>
-                  </includes>
+                    <includes>
+                        <include>**/*UnderTest.java</include>
+                        <include>**/*UnderIntTest.java</include>
+                    </includes>
                 </configuration>
             </plugin>
             <plugin>
@@ -50,32 +81,32 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>cobertura-maven-plugin</artifactId>
                 <configuration>
-                  <instrumentation>
-                    <excludes>
-                      <exclude>**/*UnderTest.class</exclude>
-                      <exclude>**/*BoundaryImpl.class</exclude>
-                      <exclude>**/*Builder.class</exclude>
-                      <exclude>**/*Exception.class</exclude>
-                      <exclude>**/*FactoryImpl.class</exclude>
-                    </excludes>
-                  </instrumentation>
+                    <instrumentation>
+                        <excludes>
+                            <exclude>**/*UnderTest.class</exclude>
+                            <exclude>**/*BoundaryImpl.class</exclude>
+                            <exclude>**/*Builder.class</exclude>
+                            <exclude>**/*Exception.class</exclude>
+                            <exclude>**/*FactoryImpl.class</exclude>
+                        </excludes>
+                    </instrumentation>
                 </configuration>
                 <executions>
-                  <execution>
-                    <goals>
-                      <goal>clean</goal>
-                    </goals>
-                  </execution>
+                    <execution>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                    </execution>
                 </executions>
             </plugin>
         </plugins>
-    </build>                                                                          le
+    </build>
     <dependencies>
         <dependency>
-          <groupId>junit</groupId>
-          <artifactId>junit</artifactId>
-          <version>4.4</version>
-          <scope>compile</scope>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.4</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.easymock</groupId>
