@@ -5,7 +5,7 @@
     <artifactId>pinthura-core</artifactId>
     <packaging>jar</packaging>
     <description>Pinthura API</description>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.2-SNAPSHOT</version>
     <name>Pinthura Core</name>
     <url>http://code.google.com/p/pinthura/</url>
     <licenses>
