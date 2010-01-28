@@ -1,5 +1,5 @@
 #summary Separates the navigation of a Collection from its elements.
-#labels Phase-Implementation,CollectionTraverser,StartingPoint
+#labels Phase-Implementation,CollectionTraverser,StartingPoint,Featured
 
 = Introduction =
 
