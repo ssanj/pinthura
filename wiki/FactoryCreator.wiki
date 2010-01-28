@@ -1,5 +1,5 @@
 #summary Describes how to dynamically create factory implementations.
-#labels Phase-Implementation,FactoryCreatorImpl,StartingPoint
+#labels Phase-Implementation,FactoryCreatorImpl,StartingPoint,Featured
 
 == A simple example ==
 
